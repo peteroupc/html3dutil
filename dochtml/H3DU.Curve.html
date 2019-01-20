@@ -150,7 +150,11 @@ start.<p>
 When converting to an arc length parameterization, the curve
 should be continuous and have a speed greater than 0 at every
 point on the curve. The arc length parameterization used in
-this method is approximate.<h4> Return Value</h4>Return value. Returns this object if this curve already uses an arc length parameterization. (Type: Curve)<a name='H3DU.Curve_velocity'></a>
+this method is approximate.<h4> Return Value</h4>Return value. Returns this object if this curve already uses an arc length parameterization. (Type: Curve)<h4> Examples</h4><p>The following example uses the arc-length
+parameterization to generate, uniformly at random, a point that lies anywhere
+on the curve.</p><pre>
+var arclen = curve.toArcLengthParam();
+var point = arclen.evaluate(Math.random()*arclen.getLength())</pre><a name='H3DU.Curve_velocity'></a>
 <h3> H3DU.Curve#velocity(u)</h3>Finds an approximate velocity vector at the given U coordinate of this curve.
 The implementation in Curve calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using

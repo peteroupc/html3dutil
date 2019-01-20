@@ -52,8 +52,8 @@ Surface.prototype.tangent = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.tangent !== "undefined" && this.surface.tangent !== null)) {
     return this.surface.tangent(u, v);
   } else {
-    var du = Surface._EPSILON;
-    var vector = this.evaluate(u + du, v);
+    let du = Surface._EPSILON;
+    let vector = this.evaluate(u + du, v);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -87,8 +87,8 @@ Surface.prototype.bitangent = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.bitangent !== "undefined" && this.surface.bitangent !== null)) {
     return this.surface.bitangent(u, v);
   } else {
-    var du = Surface._EPSILON;
-    var vector = this.evaluate(u, v + du);
+    let du = Surface._EPSILON;
+    let vector = this.evaluate(u, v + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -154,18 +154,18 @@ Surface.prototype.gradient = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.gradient !== "undefined" && this.surface.gradient !== null)) {
     return this.surface.gradient(u, v);
   } else {
-    var tan = this.tangent(u, v);
-    var bitan = this.bitangent(u, v);
+    let tan = this.tangent(u, v);
+    let bitan = this.bitangent(u, v);
     if(MathInternal.vecLength(bitan) === 0) {
       return tan;
     }
     if(MathInternal.vecLength(tan) !== 0) {
       if(tan.length !== 3 || bitan.length !== 3) {
-        var dims = tan.length;
-        var ret = MathInternal.vecZeros(dims);
+        const dims = tan.length;
+        const ret = MathInternal.vecZeros(dims);
         tan = [tan[0] || 0, tan[1] || 0, tan[2] || 0];
         bitan = [bitan[0] || 0, bitan[1] || 0, bitan[2] || 0];
-        var cr = MathUtil.vec3cross(tan, bitan);
+        const cr = MathUtil.vec3cross(tan, bitan);
         ret[0] = cr[0];
         ret[1] = cr[1];
         ret[2] = cr[2];

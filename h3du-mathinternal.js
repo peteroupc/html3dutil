@@ -9,52 +9,52 @@
 /** @ignore */
 export var MathInternal = {
   "vecZeros":function(count) {
-    var vec = [];
-    for(var i = 0; i < count; i++) {
+    const vec = [];
+    for(let i = 0; i < count; i++) {
       vec[i] = 0;
     }
     return vec;
   },
   "vecSub":function(vec, subVec) {
-    var ret = [];
-    for(var i = 0; i < vec.length; i++) {
+    const ret = [];
+    for(let i = 0; i < vec.length; i++) {
       ret[i] = vec[i] - subVec[i];
     }
     return ret;
   },
   "vecSubInPlace":function(vec, subVec) {
-    for(var i = 0; i < vec.length; i++) {
+    for(let i = 0; i < vec.length; i++) {
       vec[i] -= subVec[i];
     }
     return vec;
   },
   "vecScale":function(vec, scalar) {
-    var ret = [];
-    for(var i = 0; i < vec.length; i++) {
+    const ret = [];
+    for(let i = 0; i < vec.length; i++) {
       ret[i] = vec[i] * scalar;
     }
     return ret;
   },
   "vecSubScaleInPlace":function(vec, subVec, scaleNum) {
-    for(var i = 0; i < vec.length; i++) {
+    for(let i = 0; i < vec.length; i++) {
       vec[i] = (vec[i] - subVec[i]) * scaleNum;
     }
     return vec;
   },
   "vecScaleInPlace":function(vec, scaleNum) {
-    for(var i = 0; i < vec.length; i++) {
+    for(let i = 0; i < vec.length; i++) {
       vec[i] *= scaleNum;
     }
     return vec;
   },
   "vecNormalizeInPlace":function(vec) {
-    var len = 0;
+    let len = 0;
     for(var i = 0; i < vec.length; i++) {
       len += vec[i] * vec[i];
     }
     len = Math.sqrt(len);
     if(len !== 0) {
-      var invlen = 1.0 / len;
+      const invlen = 1.0 / len;
       for(i = 0; i < vec.length; i++) {
         vec[i] *= invlen;
       }
@@ -62,8 +62,8 @@ export var MathInternal = {
     return vec;
   },
   "vecLength":function(vec) {
-    var dsq = 0;
-    for(var i = 0; i < vec.length; i++) {
+    let dsq = 0;
+    for(let i = 0; i < vec.length; i++) {
       dsq += vec[i] * vec[i];
     }
     return Math.sqrt(dsq);

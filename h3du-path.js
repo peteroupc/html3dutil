@@ -16,7 +16,7 @@ import {PiecewiseCurve} from "./h3du-piecewisecurve";
 /** @ignore
  * @private
  * @constructor */
-var LinkedListNode = function(item) {
+const LinkedListNode = function(item) {
   this.data = item;
   this.prev = null;
   this.next = null;
@@ -24,12 +24,12 @@ var LinkedListNode = function(item) {
 
 /** @ignore
  * @constructor */
-var LinkedList = function() {
+const LinkedList = function() {
   this.root = null;
   this._last = null;
   this.size = function() {
-    var k = this.root;
-    var ret = 0;
+    let k = this.root;
+    let ret = 0;
     while(k) {
       ret++;
       k = k.next;
@@ -86,10 +86,10 @@ var LinkedList = function() {
     return this;
   };
   this.insertAfter = function(item, node) {
-    var newNode = new LinkedListNode(item);
+    const newNode = new LinkedListNode(item);
     if(node === this._last)
       this._last = newNode;
-    var oldNext = node.next;
+    const oldNext = node.next;
     node.next = newNode;
     newNode.prev = node;
     newNode.next = oldNext;
@@ -102,7 +102,7 @@ var LinkedList = function() {
     if(!this.root) {
       this.root = this._last = new LinkedListNode(item);
     } else {
-      var node = new LinkedListNode(item);
+      const node = new LinkedListNode(item);
       this._last.next = node;
       node.prev = this._last;
       this._last = node;
@@ -110,14 +110,14 @@ var LinkedList = function() {
     return this;
   };
   this.reverse = function() {
-    var s = this.root;
-    var e = this._last;
+    let s = this.root;
+    const e = this._last;
     if(!s)return;
-    var oldlast = e;
-    var oldroot = s;
+    const oldlast = e;
+    const oldroot = s;
     while(s) {
-      var n = s.next;
-      var p = s.prev;
+      const n = s.next;
+      const p = s.prev;
       s.prev = n;
       s.next = p;
       s = n;
@@ -130,7 +130,7 @@ var LinkedList = function() {
     if(!this.root) {
       this.root = this._last = new LinkedListNode(item);
     } else {
-      var node = new LinkedListNode(item);
+      const node = new LinkedListNode(item);
       this.root.prev = node;
       node.next = this.root;
       this.root = node;
@@ -183,11 +183,11 @@ LineCurve.prototype.velocity = function() {
 };
 /** @ignore */
 LineCurve.prototype.arcLength = function(u) {
-  var x = this.x1 + (this.x2 - this.x1) * u;
-  var y = this.y1 + (this.y2 - this.y1) * u;
-  var dx = x - this.x1;
-  var dy = y - this.y1;
-  var ret = Math.sqrt(dx * dx + dy * dy);
+  const x = this.x1 + (this.x2 - this.x1) * u;
+  const y = this.y1 + (this.y2 - this.y1) * u;
+  const dx = x - this.x1;
+  const dy = y - this.y1;
+  let ret = Math.sqrt(dx * dx + dy * dy);
   if(u < 0)ret = -ret;
   return ret;
 };
@@ -200,8 +200,8 @@ function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
   this.y2 = y2;
   this.rx = rx;
   this.ry = ry;
-  var cr = Math.cos(rot);
-  var sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
+  const cr = Math.cos(rot);
+  const sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
   this.cr = cr;
   this.sr = sr;
   this.cx = cx;
@@ -215,20 +215,20 @@ ArcCurve.prototype.constructor = ArcCurve;
 ArcCurve.prototype.evaluate = function(t) {
   if(t === 0)return [this.x1, this.y1, 0];
   if(t === 1)return [this.x2, this.y2, 0];
-  var angle = this.theta + this.delta * t;
-  var ca = Math.cos(angle);
-  var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+  const angle = this.theta + this.delta * t;
+  const ca = Math.cos(angle);
+  const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
   return [
     this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
     this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
 };
 /** @ignore */
 ArcCurve.prototype.velocity = function(t) {
-  var angle = this.theta + this.delta * t;
-  var ca = Math.cos(angle);
-  var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-  var caDeriv = -sa * this.delta;
-  var saDeriv = ca * this.delta;
+  const angle = this.theta + this.delta * t;
+  const ca = Math.cos(angle);
+  const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+  const caDeriv = -sa * this.delta;
+  const saDeriv = ca * this.delta;
   return [
     this.cr * caDeriv * this.rx - this.sr * saDeriv * this.rx,
     this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
@@ -271,7 +271,7 @@ export var GraphicsPath = function() {
   this.endPos = [0, 0];
 };
   /** @ignore */
-var Triangulate = {};
+const Triangulate = {};
 /** @ignore */
 GraphicsPath.CLOSE = 0;
 /** @ignore */
@@ -313,7 +313,7 @@ GraphicsPath._endPoint = function(a) {
 };
 /** @ignore */
 GraphicsPath._point = function(seg, t) {
-  var a, b, x, y;
+  let a, b, x, y;
   if(seg[0] === GraphicsPath.CLOSE) {
     return [0, 0];
   } else if(seg[0] === GraphicsPath.LINE) {
@@ -322,9 +322,9 @@ GraphicsPath._point = function(seg, t) {
       seg[2] + (seg[4] - seg[2]) * t
     ];
   } else if(seg[0] === GraphicsPath.QUAD) {
-    var mt = 1 - t;
-    var mtsq = mt * mt;
-    var mt2 = mt + mt;
+    const mt = 1 - t;
+    const mtsq = mt * mt;
+    const mt2 = mt + mt;
     a = seg[1] * mtsq;
     b = seg[3] * mt2;
     x = a + t * (b + t * seg[5]);
@@ -335,7 +335,7 @@ GraphicsPath._point = function(seg, t) {
   } else if(seg[0] === GraphicsPath.CUBIC) {
     a = (seg[3] - seg[1]) * 3;
     b = (seg[5] - seg[3]) * 3 - a;
-    var c = seg[7] - a - b - seg[1];
+    let c = seg[7] - a - b - seg[1];
     x = seg[1] + t * (a + t * (b + t * c));
     a = (seg[4] - seg[2]) * 3;
     b = (seg[6] - seg[4]) * 3 - a;
@@ -345,18 +345,18 @@ GraphicsPath._point = function(seg, t) {
   } else if(seg[0] === GraphicsPath.ARC) {
     if(t === 0)return [seg[1], seg[2]];
     if(t === 1)return [seg[8], seg[9]];
-    var rx = seg[3];
-    var ry = seg[4];
-    var cx = seg[10];
-    var cy = seg[11];
-    var theta = seg[12];
-    var delta = seg[13] - seg[12];
-    var rot = seg[5];
-    var angle = theta + delta * t;
-    var cr = Math.cos(rot);
-    var sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
-    var ca = Math.cos(angle);
-    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+    const rx = seg[3];
+    const ry = seg[4];
+    const cx = seg[10];
+    const cy = seg[11];
+    const theta = seg[12];
+    const delta = seg[13] - seg[12];
+    const rot = seg[5];
+    const angle = theta + delta * t;
+    const cr = Math.cos(rot);
+    const sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
+    const ca = Math.cos(angle);
+    const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
     return [
       cr * ca * rx - sr * sa * ry + cx,
       sr * ca * rx + cr * sa * ry + cy];
@@ -375,13 +375,13 @@ GraphicsPath._segToCurve = function(seg) {
     return BSplineCurve.fromBezierCurve([
       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
   } else if(seg[0] === GraphicsPath.ARC) {
-    var rx = seg[3];
-    var ry = seg[4];
-    var cx = seg[10];
-    var cy = seg[11];
-    var theta = seg[12];
-    var delta = seg[13] - seg[12];
-    var rot = seg[5];
+    const rx = seg[3];
+    const ry = seg[4];
+    const cx = seg[10];
+    const cy = seg[11];
+    const theta = seg[12];
+    const delta = seg[13] - seg[12];
+    const rot = seg[5];
     return new ArcCurve(seg[1], seg[2], seg[8], seg[9], rx, ry, rot, cx, cy, theta, delta);
   } else {
     throw new Error();
@@ -390,38 +390,38 @@ GraphicsPath._segToCurve = function(seg) {
 
 /** @ignore */
 GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, list, flatness, mode, depth) {
-  var x1 = a1 + (a3 - a1) * tcut;
-  var x2 = a3 + (a5 - a3) * tcut;
-  var xc1 = x1 + (x2 - x1) * tcut;
-  var x3 = a5 + (a7 - a5) * tcut;
-  var xc2 = x2 + (x3 - x2) * tcut;
-  var xd = xc1 + (xc2 - xc1) * tcut;
-  var y1 = a2 + (a4 - a2) * tcut;
-  var y2 = a4 + (a6 - a4) * tcut;
-  var yc1 = y1 + (y2 - y1) * tcut;
-  var y3 = a6 + (a8 - a6) * tcut;
-  var yc2 = y2 + (y3 - y2) * tcut;
-  var yd = yc1 + (yc2 - yc1) * tcut;
-  var tmid = t1 + (t2 - t1) * tcut;
+  const x1 = a1 + (a3 - a1) * tcut;
+  const x2 = a3 + (a5 - a3) * tcut;
+  const xc1 = x1 + (x2 - x1) * tcut;
+  const x3 = a5 + (a7 - a5) * tcut;
+  const xc2 = x2 + (x3 - x2) * tcut;
+  const xd = xc1 + (xc2 - xc1) * tcut;
+  const y1 = a2 + (a4 - a2) * tcut;
+  const y2 = a4 + (a6 - a4) * tcut;
+  const yc1 = y1 + (y2 - y1) * tcut;
+  const y3 = a6 + (a8 - a6) * tcut;
+  const yc2 = y2 + (y3 - y2) * tcut;
+  const yd = yc1 + (yc2 - yc1) * tcut;
+  const tmid = t1 + (t2 - t1) * tcut;
   GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
   GraphicsPath._flattenCubic(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, list, flatness, mode, depth + 1);
 };
 /** @ignore */
 GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, tcut2, list, flatness, mode, depth) {
-  var x1 = a1 + (a3 - a1) * tcut;
-  var x2 = a3 + (a5 - a3) * tcut;
-  var xc1 = x1 + (x2 - x1) * tcut;
-  var x3 = a5 + (a7 - a5) * tcut;
-  var xc2 = x2 + (x3 - x2) * tcut;
-  var xd = xc1 + (xc2 - xc1) * tcut;
-  var y1 = a2 + (a4 - a2) * tcut;
-  var y2 = a4 + (a6 - a4) * tcut;
-  var yc1 = y1 + (y2 - y1) * tcut;
-  var y3 = a6 + (a8 - a6) * tcut;
-  var yc2 = y2 + (y3 - y2) * tcut;
-  var yd = yc1 + (yc2 - yc1) * tcut;
-  var tmid = t1 + (t2 - t1) * tcut;
-  var tcutx = (tcut2 - tmid) / (t2 - tmid);
+  const x1 = a1 + (a3 - a1) * tcut;
+  const x2 = a3 + (a5 - a3) * tcut;
+  const xc1 = x1 + (x2 - x1) * tcut;
+  const x3 = a5 + (a7 - a5) * tcut;
+  const xc2 = x2 + (x3 - x2) * tcut;
+  const xd = xc1 + (xc2 - xc1) * tcut;
+  const y1 = a2 + (a4 - a2) * tcut;
+  const y2 = a4 + (a6 - a4) * tcut;
+  const yc1 = y1 + (y2 - y1) * tcut;
+  const y3 = a6 + (a8 - a6) * tcut;
+  const yc2 = y2 + (y3 - y2) * tcut;
+  const yd = yc1 + (yc2 - yc1) * tcut;
+  const tmid = t1 + (t2 - t1) * tcut;
+  const tcutx = (tcut2 - tmid) / (t2 - tmid);
   GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
   GraphicsPath._subdivide2(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, tcutx, list, flatness, mode, depth + 1);
 };
@@ -433,9 +433,9 @@ GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, li
     if(mode === 0) {
       list.push([a1, a2, a7, a8]);
     } else {
-      var dx = a7 - a1;
-      var dy = a8 - a2;
-      var length = Math.sqrt(dx * dx + dy * dy);
+      const dx = a7 - a1;
+      const dy = a8 - a2;
+      const length = Math.sqrt(dx * dx + dy * dy);
       list.push(t1, t2, length);
     }
   } else {
@@ -449,48 +449,48 @@ GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatn
     if(mode === 0) {
       list.push([a1, a2, a5, a6]);
     } else {
-      var dx = a5 - a1;
-      var dy = a6 - a2;
-      var length = Math.sqrt(dx * dx + dy * dy);
+      const dx = a5 - a1;
+      const dy = a6 - a2;
+      const length = Math.sqrt(dx * dx + dy * dy);
       list.push(t1, t2, length);
     }
   } else {
-    var x1 = (a1 + a3) * 0.5;
-    var x2 = (a3 + a5) * 0.5;
-    var xc = (x1 + x2) * 0.5;
-    var y1 = (a2 + a4) * 0.5;
-    var y2 = (a4 + a6) * 0.5;
-    var yc = (y1 + y2) * 0.5;
-    var tmid = (t1 + t2) * 0.5;
+    const x1 = (a1 + a3) * 0.5;
+    const x2 = (a3 + a5) * 0.5;
+    const xc = (x1 + x2) * 0.5;
+    const y1 = (a2 + a4) * 0.5;
+    const y2 = (a4 + a6) * 0.5;
+    const yc = (y1 + y2) * 0.5;
+    const tmid = (t1 + t2) * 0.5;
     GraphicsPath._flattenQuad(a1, a2, x1, y1, xc, yc, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._flattenQuad(xc, yc, x2, y2, a5, a6, tmid, t2, list, flatness, mode, depth + 1);
   }
 };
 /** @ignore */
 GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
-  var rot = a[5];
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
+  const rot = a[5];
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
   GraphicsPath._flattenArcInternal(ellipseInfo, a[1], a[2], a[8], a[9], a[12], a[13], t1, t2, list, flatness, mode, depth);
 };
 /** @ignore */
 GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
   if(typeof depth === "undefined" || depth === null)depth = 0;
-  var thetaMid = (theta1 + theta2) * 0.5;
-  var tmid = (t1 + t2) * 0.5;
-  var ca = Math.cos(thetaMid);
-  var sa = thetaMid >= 0 && thetaMid < 6.283185307179586 ? thetaMid <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(thetaMid);
-  var xmid = ellipseInfo[4] * ca * ellipseInfo[0] - ellipseInfo[5] * sa * ellipseInfo[1] + ellipseInfo[2];
-  var ymid = ellipseInfo[5] * ca * ellipseInfo[0] + ellipseInfo[4] * sa * ellipseInfo[1] + ellipseInfo[3];
+  const thetaMid = (theta1 + theta2) * 0.5;
+  const tmid = (t1 + t2) * 0.5;
+  const ca = Math.cos(thetaMid);
+  const sa = thetaMid >= 0 && thetaMid < 6.283185307179586 ? thetaMid <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(thetaMid);
+  const xmid = ellipseInfo[4] * ca * ellipseInfo[0] - ellipseInfo[5] * sa * ellipseInfo[1] + ellipseInfo[2];
+  const ymid = ellipseInfo[5] * ca * ellipseInfo[0] + ellipseInfo[4] * sa * ellipseInfo[1] + ellipseInfo[3];
   if(depth >= 20 || Math.abs(x1 - xmid - xmid + x2) + Math.abs(y1 - ymid - ymid + y2) <= flatness) {
     if(mode === 0) {
       list.push([x1, y1, xmid, ymid]);
       list.push([xmid, ymid, x2, y2]);
     } else {
-      var dx = xmid - x1;
-      var dy = ymid - y1;
-      var length = Math.sqrt(dx * dx + dy * dy);
+      let dx = xmid - x1;
+      let dy = ymid - y1;
+      let length = Math.sqrt(dx * dx + dy * dy);
       list.push(t1, tmid, length);
       dx = x2 - xmid;
       dy = y2 - ymid;
@@ -504,16 +504,16 @@ GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1,
 };
 /** @ignore */
 GraphicsPath.prototype._start = function() {
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
   }
   return [0, 0];
 };
 /** @ignore */
 GraphicsPath.prototype._end = function() {
-  for(var i = this.segments.length - 1; i >= 0; i--) {
-    var s = this.segments[i];
+  for(let i = this.segments.length - 1; i >= 0; i--) {
+    const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
   }
   return [0, 0];
@@ -526,15 +526,15 @@ GraphicsPath.prototype._end = function() {
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.merge = function(path) {
-  var oldpos = null;
+  let oldpos = null;
   if(!path)return this;
-  var segsLength = path.segments.length;
-  for(var i = 0; i < segsLength; i++) {
-    var a = path.segments[i];
+  const segsLength = path.segments.length;
+  for(let i = 0; i < segsLength; i++) {
+    const a = path.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       this.closePath();
     } else {
-      var start = GraphicsPath._startPoint(a);
+      const start = GraphicsPath._startPoint(a);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         this.moveTo(start[0], start[1]);
       }
@@ -549,8 +549,8 @@ GraphicsPath.prototype.merge = function(path) {
         this.bezierCurveTo(a[3], a[4], a[5], a[6], a[7], a[8]);
       }
       if(a[0] === GraphicsPath.ARC) {
-        var delta = a[13] - a[12];
-        var largeArc = Math.abs(delta) > Math.PI;
+        const delta = a[13] - a[12];
+        const largeArc = Math.abs(delta) > Math.PI;
         this.arcSvgTo(a[3], a[4], a[5] * GraphicsPath._toDegrees,
           largeArc, delta > 0, a[8], a[9]);
       }
@@ -566,15 +566,15 @@ GraphicsPath.prototype.merge = function(path) {
  * format.
  */
 GraphicsPath.prototype.toString = function() {
-  var oldpos = null;
-  var ret = "";
+  let oldpos = null;
+  let ret = "";
 
-  for(var i = 0; i < this.segments.length; i++) {
-    var a = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const a = this.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       ret += "Z";
     } else {
-      var start = GraphicsPath._startPoint(a);
+      const start = GraphicsPath._startPoint(a);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         ret += "M" + start[0] + "," + start[1];
       }
@@ -589,8 +589,8 @@ GraphicsPath.prototype.toString = function() {
         ret += "C" + a[3] + "," + a[4] + "," + a[5] + "," + a[6] + "," + a[7] + "," + a[8];
       }
       if(a[0] === GraphicsPath.ARC) {
-        var delta = a[13] - a[12];
-        var largeArc = Math.abs(delta) > Math.PI;
+        const delta = a[13] - a[12];
+        const largeArc = Math.abs(delta) > Math.PI;
         ret += "A" + a[3] + "," + a[4] + "," + a[5] * 180 / Math.PI + "," +
       (largeArc ? "1" : "0") + (delta > 0 ? "1" : "0") + a[8] + "," + a[9];
       }
@@ -624,10 +624,10 @@ GraphicsPath.prototype.pathLength = function(flatness) {
  * Y coordinates of the end point, respectively.
  */
 GraphicsPath.prototype.getLines = function(flatness) {
-  var ret = [];
+  const ret = [];
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
         s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
@@ -653,19 +653,19 @@ GraphicsPath.prototype.getLines = function(flatness) {
  * segments and close commands.
  */
 GraphicsPath.prototype.toLinePath = function(flatness) {
-  var ret = [];
-  var path = new GraphicsPath();
-  var last = null;
+  const ret = [];
+  const path = new GraphicsPath();
+  let last = null;
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
     var j;
-    var endpt = GraphicsPath._endPoint(s);
-    var startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
+    const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
       path.moveTo(startpt[0], startpt[1]);
     }
@@ -704,17 +704,17 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
  * segments, B&eacute;zier curves, and close commands.
  */
 GraphicsPath.prototype.toCurvePath = function() {
-  var path = new GraphicsPath();
-  var last = null;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  const path = new GraphicsPath();
+  let last = null;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
     var j;
-    var endpt = GraphicsPath._endPoint(s);
-    var startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
+    const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
       path.moveTo(startpt[0], startpt[1]);
     }
@@ -726,7 +726,7 @@ GraphicsPath.prototype.toCurvePath = function() {
       path.bezierCurveTo(s[3], s[4],
         s[5], s[6], s[7], s[8]);
     } else if(s[0] === GraphicsPath.ARC) {
-      var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
+      const curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
       for(j = 0; j < curves.length; j++) {
         path.bezierCurveTo(curves[j][2], curves[j][3], curves[j][4],
           curves[j][5], curves[j][6], curves[j][7]);
@@ -741,7 +741,7 @@ GraphicsPath.prototype.toCurvePath = function() {
 /** @ignore */
 GraphicsPath._accBounds = function(ret, s, t) {
   if(t >= 0 && t <= 1) {
-    var pt = GraphicsPath._point(s, t);
+    const pt = GraphicsPath._point(s, t);
     ret[0] = Math.min(pt[0], ret[0]);
     ret[1] = Math.min(pt[1], ret[1]);
     ret[2] = Math.max(pt[0], ret[2]);
@@ -757,10 +757,10 @@ GraphicsPath._accBoundsPoint = function(ret, x, y) {
 };
 /** @ignore */
 GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
-  var ca = Math.cos(angle);
-  var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-  var px = cphi * ca * rx - sphi * sa * ry + cx;
-  var py = sphi * ca * rx + cphi * sa * ry + cy;
+  const ca = Math.cos(angle);
+  const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+  const px = cphi * ca * rx - sphi * sa * ry + cx;
+  const py = sphi * ca * rx + cphi * sa * ry + cy;
   ret[0] = Math.min(px, ret[0]);
   ret[1] = Math.min(py, ret[1]);
   ret[2] = Math.max(px, ret[2]);
@@ -768,8 +768,8 @@ GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
 };
 /** @ignore */
 GraphicsPath._normAngleRadians = function(angle) {
-  var twopi = Math.PI * 2;
-  var normAngle = angle;
+  const twopi = Math.PI * 2;
+  let normAngle = angle;
   if(normAngle >= 0) {
     normAngle = normAngle < twopi ? normAngle : normAngle % twopi;
   } else {
@@ -780,12 +780,12 @@ GraphicsPath._normAngleRadians = function(angle) {
 };
 /** @ignore */
 GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
-  var twopi = Math.PI * 2;
-  var diff = endAngle - startAngle;
+  const twopi = Math.PI * 2;
+  const diff = endAngle - startAngle;
   if(Math.abs(diff) >= twopi)return true;
-  var normAngle = GraphicsPath._normAngleRadians(angle);
-  var normStart = GraphicsPath._normAngleRadians(startAngle);
-  var normEnd = GraphicsPath._normAngleRadians(endAngle);
+  const normAngle = GraphicsPath._normAngleRadians(angle);
+  const normStart = GraphicsPath._normAngleRadians(startAngle);
+  const normEnd = GraphicsPath._normAngleRadians(endAngle);
   if(startAngle === endAngle) {
     return normAngle === normStart;
   } else if(startAngle < endAngle) {
@@ -810,15 +810,15 @@ GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
  * returns the array (Infinity, Infinity, -Infinity, -Infinity).
  */
 GraphicsPath.prototype.getBounds = function() {
-  var inf = Number.POSITIVE_INFINITY;
-  var ret = [inf, inf, -inf, inf];
-  var first = true;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  const inf = Number.POSITIVE_INFINITY;
+  const ret = [inf, inf, -inf, inf];
+  let first = true;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     var ax, ay;
     if(s[0] === GraphicsPath.CLOSE)continue;
-    var endpt = GraphicsPath._endPoint(s);
-    var x1 = s[1],
+    const endpt = GraphicsPath._endPoint(s);
+    let x1 = s[1],
       y1 = s[2],
       x2 = endpt[0],
       y2 = endpt[1];
@@ -848,8 +848,8 @@ GraphicsPath.prototype.getBounds = function() {
     } else if(s[0] === GraphicsPath.CUBIC) {
       x2 = s[7];
       y2 = s[8];
-      var denomX = x1 - 3 * s[3] + 3 * s[5] - x2;
-      var denomY = y1 - 3 * s[4] + 3 * s[6] - y2;
+      const denomX = x1 - 3 * s[3] + 3 * s[5] - x2;
+      const denomY = y1 - 3 * s[4] + 3 * s[6] - y2;
       if(denomX !== 0 || denomY !== 0) {
         ax = x1 - 2 * s[3] + s[5];
         ay = y1 - 2 * s[4] + s[6];
@@ -867,13 +867,13 @@ GraphicsPath.prototype.getBounds = function() {
         }
       }
     } else if(s[0] === GraphicsPath.ARC) {
-      var rx = s[3];
-      var ry = s[4];
-      var cx = s[10];
-      var cy = s[11];
-      var theta = s[12];
-      var delta = s[13];
-      var rot = s[5]; // Rotation in radians
+      const rx = s[3];
+      const ry = s[4];
+      const cx = s[10];
+      const cy = s[11];
+      const theta = s[12];
+      const delta = s[13];
+      const rot = s[5]; // Rotation in radians
       var cosp, sinp;
       if(Math.abs(delta - theta) >= Math.PI * 2) {
         // This arc goes around the entire ellipse, giving
@@ -900,7 +900,7 @@ GraphicsPath.prototype.getBounds = function() {
       } else if(delta !== theta) { // NOTE: Endpoints were already included in case delta==theta
         cosp = Math.cos(rot);
         sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
-        var angles = [];
+        const angles = [];
         var angle;
         if(cosp !== 0 && sinp !== 0) {
           angle = Math.atan2(-ry * sinp / cosp, rx);
@@ -910,7 +910,7 @@ GraphicsPath.prototype.getBounds = function() {
         } else {
           angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
         }
-        for(var k = 0; k < angles.length; k++) {
+        for(let k = 0; k < angles.length; k++) {
           if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
             GraphicsPath._accBoundsArc(ret, rx, ry, cosp, sinp, cx, cy, angles[k]);
           }
@@ -927,16 +927,16 @@ GraphicsPath.prototype.getBounds = function() {
  * object with its path segments reversed.
  */
 GraphicsPath.prototype.reverse = function() {
-  var lastptx = 0;
-  var lastpty = 0;
-  var lastClosed = false;
-  var pathStartX = 0;
-  var pathStartY = 0;
-  var ret = new GraphicsPath();
-  for(var i = this.segments.length - 1; i >= 0; i--) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+  let lastptx = 0;
+  let lastpty = 0;
+  let lastClosed = false;
+  let pathStartX = 0;
+  let pathStartY = 0;
+  const ret = new GraphicsPath();
+  for(let i = this.segments.length - 1; i >= 0; i--) {
+    const s = this.segments[i];
+    let startpt = GraphicsPath._startPoint(s);
+    let endpt = GraphicsPath._endPoint(s);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(i === this.segments.length - 1) {
         ret.moveTo(endpt[0], endpt[1]);
@@ -955,8 +955,8 @@ GraphicsPath.prototype.reverse = function() {
         ret.closePath();
       }
       lastClosed = true;
-      var havePathStart = false;
-      for(var j = i - 1; j >= 0; j--) {
+      let havePathStart = false;
+      for(let j = i - 1; j >= 0; j--) {
         if(this.segments[j][0] === GraphicsPath.CLOSE) {
           break;
         }
@@ -985,9 +985,9 @@ GraphicsPath.prototype.reverse = function() {
     } else if(s[0] === GraphicsPath.CUBIC) {
       ret.bezierCurveTo(s[5], s[6], s[3], s[4], s[1], s[2]);
     } else if(s[0] === GraphicsPath.ARC) {
-      var delta = s[13] - s[12];
-      var reversedSweep = delta < 0;
-      var largeArc = Math.abs(delta) > Math.PI;
+      const delta = s[13] - s[12];
+      const reversedSweep = delta < 0;
+      const largeArc = Math.abs(delta) > Math.PI;
       ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
         largeArc, reversedSweep, s[1], s[2]);
     } else if(s[0] === GraphicsPath.LINE) {
@@ -1011,18 +1011,18 @@ GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
 
 /** @ignore */
 GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
-  var tmp = [];
-  var subpaths = [];
-  var j;
+  const tmp = [];
+  const subpaths = [];
+  let j;
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  var lastptx = 0;
-  var lastpty = 0;
-  var first = true;
-  var curPath = null;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+  let lastptx = 0;
+  let lastpty = 0;
+  let first = true;
+  let curPath = null;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
+    const startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
     tmp.splice(0, tmp.length);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
@@ -1090,18 +1090,18 @@ GraphicsPath.prototype.interpolate = function(other, t) {
   if(!other || other.segments.length !== this.segments.length) {
     return null;
   }
-  var tmpThis = [];
-  var tmpOther = [];
-  var tmp = [];
-  var j;
-  var ret = new GraphicsPath();
-  var oldpos;
-  for(var i = 0; i < this.segments.length; i++) {
-    var segThis = this.segments[i];
-    var segOther = other.segments[i];
-    var domove = false;
+  const tmpThis = [];
+  const tmpOther = [];
+  const tmp = [];
+  let j;
+  const ret = new GraphicsPath();
+  let oldpos;
+  for(let i = 0; i < this.segments.length; i++) {
+    let segThis = this.segments[i];
+    let segOther = other.segments[i];
+    let domove = false;
     if(segThis[0] !== GraphicsPath.CLOSE) {
-      var start = GraphicsPath._startPoint(segThis);
+      const start = GraphicsPath._startPoint(segThis);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         domove = true;
       }
@@ -1158,20 +1158,20 @@ GraphicsPath.prototype.interpolate = function(other, t) {
         ret.bezierCurveTo(tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8]);
       break;
     case GraphicsPath.ARC:{
-      var deltaThis = segThis[13] - segThis[12];
-      var largeArcThis = Math.abs(deltaThis) > Math.PI;
-      var deltaOther = segOther[13] - segOther[12];
-      var largeArcOther = Math.abs(deltaOther) > Math.PI;
+      const deltaThis = segThis[13] - segThis[12];
+      const largeArcThis = Math.abs(deltaThis) > Math.PI;
+      const deltaOther = segOther[13] - segOther[12];
+      const largeArcOther = Math.abs(deltaOther) > Math.PI;
 
-      var largeArc = t < 0.5 ? largeArcThis : largeArcOther;
-      var sweep = t < 0.5 ? deltaThis > 0 : deltaOther > 0;
-      var sx = segThis[1] + (segOther[1] - segThis[1]) * t;
-      var sy = segThis[2] + (segOther[2] - segThis[2]) * t;
-      var rx = segThis[3] + (segOther[3] - segThis[3]) * t;
-      var ry = segThis[4] + (segOther[4] - segThis[4]) * t;
-      var rot = segThis[5] + (segOther[5] - segThis[5]) * t;
-      var ex = segThis[8] + (segOther[8] - segThis[8]) * t;
-      var ey = segThis[9] + (segOther[9] - segThis[9]) * t;
+      const largeArc = t < 0.5 ? largeArcThis : largeArcOther;
+      const sweep = t < 0.5 ? deltaThis > 0 : deltaOther > 0;
+      const sx = segThis[1] + (segOther[1] - segThis[1]) * t;
+      const sy = segThis[2] + (segOther[2] - segThis[2]) * t;
+      const rx = segThis[3] + (segOther[3] - segThis[3]) * t;
+      const ry = segThis[4] + (segOther[4] - segThis[4]) * t;
+      const rot = segThis[5] + (segOther[5] - segThis[5]) * t;
+      const ex = segThis[8] + (segOther[8] - segThis[8]) * t;
+      const ey = segThis[9] + (segOther[9] - segThis[9]) * t;
       if(domove)ret.moveTo(sx, sy);
       ret.arcSvgTo(rx, ry, rot * GraphicsPath._toDegrees,
         largeArc, sweep, ex, ey);
@@ -1215,18 +1215,18 @@ GraphicsPath._addSegment = function(a, c) {
 GraphicsPath.prototype.getCurves = function() {
   // TODO: Consider returning a list of curves and require
   // callers to use PiecewiseCurve to get the prior behavior
-  var subpaths = [];
-  var curves = [];
-  var lastptx = 0;
-  var lastpty = 0;
-  var startptx = 0;
-  var startpty = 0;
-  var first = true;
-  var curPath = null;
+  const subpaths = [];
+  const curves = [];
+  let lastptx = 0;
+  let lastpty = 0;
+  let startptx = 0;
+  let startpty = 0;
+  let first = true;
+  let curPath = null;
   for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+    const s = this.segments[i];
+    const startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
         curPath = [];
@@ -1255,16 +1255,16 @@ GraphicsPath.prototype.getCurves = function() {
  * @returns {*} Return value.
  */
 GraphicsPath.prototype.getSubpaths = function() {
-  var subpaths = [];
-  var lastptx = 0;
-  var lastpty = 0;
+  const subpaths = [];
+  let lastptx = 0;
+  let lastpty = 0;
 
-  var first = true;
-  var curPath = null;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+  let first = true;
+  let curPath = null;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
+    const startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
         curPath = new GraphicsPath().moveTo(startpt[0], startpt[1]);
@@ -1293,12 +1293,12 @@ GraphicsPath.prototype.getSubpaths = function() {
  * line segments approximating the path.
  */
 GraphicsPath.prototype.getLinePoints = function(flatness) {
-  var lines = this.getLines(flatness);
-  var points = [];
-  var lastx = 0;
-  var lasty = 0;
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const lines = this.getLines(flatness);
+  const points = [];
+  let lastx = 0;
+  let lasty = 0;
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push([line[0], line[1]]);
     }
@@ -1325,12 +1325,12 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
  * .setFromPoints(points);
  */
 GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
-  var lines = this.getLines(flatness);
-  var points = [];
-  var lastx = 0;
-  var lasty = 0;
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const lines = this.getLines(flatness);
+  const points = [];
+  let lastx = 0;
+  let lasty = 0;
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push({
         "x":line[0],
@@ -1366,11 +1366,11 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
   if(numPoints === 2) {
     return [this._start(), this._end()];
   }
-  var curves = this.getCurves();
-  var points = [];
-  for(var i = 0; i < numPoints; i++) {
-    var t = i / (numPoints - 1);
-    var ev = curves.evaluate(t);
+  const curves = this.getCurves();
+  const points = [];
+  for(let i = 0; i < numPoints; i++) {
+    const t = i / (numPoints - 1);
+    const ev = curves.evaluate(t);
     points.push([ev[0], ev[1]]);
   }
   return points;
@@ -1395,15 +1395,15 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
 GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   if(numPoints < 1 || this.segments.length === 0)return [];
   if(numPoints === 1) {
-    var pt = this._start();
+    const pt = this._start();
     return [{
       "x":pt[0],
       "y":pt[1]
     }];
   }
   if(numPoints === 2) {
-    var pt1 = this._start();
-    var pt2 = this._end();
+    const pt1 = this._start();
+    const pt2 = this._end();
     return [{
       "x":pt1[0],
       "y":pt1[1]
@@ -1413,11 +1413,11 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
       "y":pt2[1]
     }];
   }
-  var curves = this.getCurves();
-  var points = [];
-  for(var i = 0; i < numPoints; i++) {
-    var t = i / (numPoints - 1);
-    var ev = curves.evaluate(t);
+  const curves = this.getCurves();
+  const points = [];
+  for(let i = 0; i < numPoints; i++) {
+    const t = i / (numPoints - 1);
+    const ev = curves.evaluate(t);
     points.push({
       "x":ev[0],
       "y":ev[1]
@@ -1491,16 +1491,16 @@ GraphicsPath.prototype.getCurrentPoint = function() {
 
 /** @ignore */
 GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
-  var t1 = x1 - x0;
-  var t2 = y1 - y0;
-  var t3 = [x2 - x0, y2 - y0];
-  var denom = t1 * t1 + t2 * t2;
+  const t1 = x1 - x0;
+  const t2 = y1 - y0;
+  const t3 = [x2 - x0, y2 - y0];
+  const denom = t1 * t1 + t2 * t2;
   if(denom === 0) {
     return true; // first two points are the same
   }
-  var t4 = (t1 * t3[0] + t2 * t3[1]) / denom;
-  var t5 = [x0 + t4 * t1, y0 + t4 * t2];
-  var t6 = [x2 - t5[0], y2 - t5[1]];
+  const t4 = (t1 * t3[0] + t2 * t3[1]) / denom;
+  const t5 = [x0 + t4 * t1, y0 + t4 * t2];
+  const t6 = [x2 - t5[0], y2 - t5[1]];
   return t6[0] * t6[0] + t6[1] * t6[1] === 0;
 };
 /**
@@ -1528,26 +1528,26 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
   if(radius < 0) {
     throw new Error("IndexSizeError");
   }
-  var x0 = this.endPos[0];
-  var y0 = this.endPos[1];
+  const x0 = this.endPos[0];
+  const y0 = this.endPos[1];
   if(radius === 0 || x0 === x1 && y0 === y1 || x1 === x2 && y1 === y2 ||
    GraphicsPath._areCollinear(x0, y0, x1, y1, x2, y2)) {
     return this.lineTo(x1, y1);
   }
-  var t1 = [x0 - x1, y0 - y1];
-  var t2 = 1.0 / Math.sqrt(t1[0] * t1[0] + t1[1] * t1[1]);
-  var t3 = [t1[0] * t2, t1[1] * t2]; // tangent vector from p1 to p0
-  var t4 = [x2 - x1, y2 - y1];
-  var t5 = 1.0 / Math.sqrt(t4[0] * t4[0] + t4[1] * t4[1]);
-  var t6 = [t4[0] * t5, t4[1] * t5]; // tangent vector from p2 to p1
-  var cross = t3[0] * t6[1] - t3[1] * t6[0];
-  var t7 = (1.0 + (t3[0] * t6[0] + t3[1] * t6[1])) * radius / Math.abs(cross);
-  var t8 = [t3[0] * t7, t3[1] * t7];
-  var t10 = [t6[0] * t7, t6[1] * t7];
-  var startTangent = [x1 + t8[0], y1 + t8[1]];
-  var endTangent = [x1 + t10[0], y1 + t10[1]];
+  const t1 = [x0 - x1, y0 - y1];
+  const t2 = 1.0 / Math.sqrt(t1[0] * t1[0] + t1[1] * t1[1]);
+  const t3 = [t1[0] * t2, t1[1] * t2]; // tangent vector from p1 to p0
+  const t4 = [x2 - x1, y2 - y1];
+  const t5 = 1.0 / Math.sqrt(t4[0] * t4[0] + t4[1] * t4[1]);
+  const t6 = [t4[0] * t5, t4[1] * t5]; // tangent vector from p2 to p1
+  const cross = t3[0] * t6[1] - t3[1] * t6[0];
+  const t7 = (1.0 + (t3[0] * t6[0] + t3[1] * t6[1])) * radius / Math.abs(cross);
+  const t8 = [t3[0] * t7, t3[1] * t7];
+  const t10 = [t6[0] * t7, t6[1] * t7];
+  const startTangent = [x1 + t8[0], y1 + t8[1]];
+  const endTangent = [x1 + t10[0], y1 + t10[1]];
   this.lineTo(startTangent[0], startTangent[1]);
-  var sweep = cross < 0;
+  const sweep = cross < 0;
   return this.arcSvgTo(radius, radius, 0, false, sweep, endTangent[0], endTangent[1]);
 };
 /**
@@ -1574,17 +1574,17 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
   if(radius < 0) {
     throw new Error("IndexSizeError");
   }
-  var normStart = GraphicsPath._normAngleRadians(startAngle);
-  var normEnd = GraphicsPath._normAngleRadians(endAngle);
-  var twopi = Math.PI * 2;
-  var cosStart = Math.cos(normStart);
-  var sinStart = normStart <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
-  var cosEnd = Math.cos(normEnd);
-  var sinEnd = normEnd <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
-  var startX = x + radius * cosStart;
-  var startY = y + radius * sinStart;
-  var endX = x + radius * cosEnd;
-  var endY = y + radius * sinEnd;
+  const normStart = GraphicsPath._normAngleRadians(startAngle);
+  const normEnd = GraphicsPath._normAngleRadians(endAngle);
+  const twopi = Math.PI * 2;
+  const cosStart = Math.cos(normStart);
+  const sinStart = normStart <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
+  const cosEnd = Math.cos(normEnd);
+  const sinEnd = normEnd <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
+  const startX = x + radius * cosStart;
+  const startY = y + radius * sinStart;
+  const endX = x + radius * cosEnd;
+  const endY = y + radius * sinEnd;
   if(drawLine) {
     this.lineTo(startX, startY);
   }
@@ -1598,9 +1598,9 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
       ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
       ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
   } else {
-    var delta = endAngle - startAngle;
+    let delta = endAngle - startAngle;
     if(delta >= twopi || delta < 0) {
-      var d = delta % twopi;
+      const d = delta % twopi;
       if(d === 0 && delta !== 0) {
         return this
           ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
@@ -1609,8 +1609,8 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
       }
       delta = d;
     }
-    var largeArc = !!(Math.abs(delta) > Math.PI ^ !!ccw ^ startAngle > endAngle);
-    var sweep = !!(delta > 0 ^ !!ccw ^ startAngle > endAngle);
+    const largeArc = !!(Math.abs(delta) > Math.PI ^ !!ccw ^ startAngle > endAngle);
+    const sweep = !!(delta > 0 ^ !!ccw ^ startAngle > endAngle);
     return this.lineTo(startX, startY)
       .arcSvgTo(radius, radius, 0, largeArc, sweep, endX, endY);
   }
@@ -1657,62 +1657,62 @@ GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
 
 /** @ignore */
 GraphicsPath._vecangle = function(a, b, c, d) {
-  var dot = a * c + b * d;
-  var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
+  let dot = a * c + b * d;
+  const denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
   dot /= denom;
-  var sgn = a * d - b * c;
+  const sgn = a * d - b * c;
   // avoid NaN when dot is just slightly out of range
   // for acos
   if(dot < -1)dot = -1;
   else if(dot > 1)dot = 1;
-  var ret = Math.acos(dot);
+  let ret = Math.acos(dot);
   if(sgn < 0)ret = -ret;
   return ret;
 };
 /** @ignore */
 GraphicsPath._arcSvgToCenterParam = function(a) {
-  var x1 = a[1];
-  var y1 = a[2];
-  var x2 = a[8];
-  var y2 = a[9];
-  var rx = a[3];
-  var ry = a[4];
-  var rot = a[5]; // rotation in radians
-  var xmid = (x1 - x2) * 0.5;
-  var ymid = (y1 - y2) * 0.5;
-  var xpmid = (x1 + x2) * 0.5;
-  var ypmid = (y1 + y2) * 0.5;
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var x1p = crot * xmid + srot * ymid;
-  var y1p = crot * ymid - srot * xmid;
-  var rxsq = rx * rx;
-  var rysq = ry * ry;
-  var x1psq = x1p * x1p;
-  var y1psq = y1p * y1p;
-  var rxXy = rxsq * y1psq + rysq * x1psq;
-  var cxsqrt = Math.sqrt(Math.max(0, (rxsq * rysq - rxXy) / rxXy));
-  var cxp = rx * y1p * cxsqrt / ry;
-  var cyp = ry * x1p * cxsqrt / rx;
+  const x1 = a[1];
+  const y1 = a[2];
+  const x2 = a[8];
+  const y2 = a[9];
+  const rx = a[3];
+  const ry = a[4];
+  const rot = a[5]; // rotation in radians
+  const xmid = (x1 - x2) * 0.5;
+  const ymid = (y1 - y2) * 0.5;
+  const xpmid = (x1 + x2) * 0.5;
+  const ypmid = (y1 + y2) * 0.5;
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const x1p = crot * xmid + srot * ymid;
+  const y1p = crot * ymid - srot * xmid;
+  const rxsq = rx * rx;
+  const rysq = ry * ry;
+  const x1psq = x1p * x1p;
+  const y1psq = y1p * y1p;
+  const rxXy = rxsq * y1psq + rysq * x1psq;
+  const cxsqrt = Math.sqrt(Math.max(0, (rxsq * rysq - rxXy) / rxXy));
+  let cxp = rx * y1p * cxsqrt / ry;
+  let cyp = ry * x1p * cxsqrt / rx;
   if(a[6] === a[7]) {
     cxp = -cxp;
   } else {
     cyp = -cyp;
   }
-  var cx = crot * cxp - srot * cyp + xpmid;
-  var cy = srot * cxp + crot * cyp + ypmid;
-  var vecx = (x1p - cxp) / rx;
-  var vecy = (y1p - cyp) / ry;
-  var nvecx = (-x1p - cxp) / rx;
-  var nvecy = (-y1p - cyp) / ry;
-  var cosTheta1 = vecx / Math.sqrt(vecx * vecx + vecy * vecy);
+  const cx = crot * cxp - srot * cyp + xpmid;
+  const cy = srot * cxp + crot * cyp + ypmid;
+  const vecx = (x1p - cxp) / rx;
+  const vecy = (y1p - cyp) / ry;
+  const nvecx = (-x1p - cxp) / rx;
+  const nvecy = (-y1p - cyp) / ry;
+  let cosTheta1 = vecx / Math.sqrt(vecx * vecx + vecy * vecy);
   // avoid NaN when cosTheta1 is just slightly out of range
   // for acos
   if(cosTheta1 < -1)cosTheta1 = -1;
   else if(cosTheta1 > 1)cosTheta1 = 1;
-  var theta1 = Math.acos(cosTheta1);
+  let theta1 = Math.acos(cosTheta1);
   if(vecy < 0)theta1 = -theta1;
-  var delta = GraphicsPath._vecangle(vecx, vecy, nvecx, nvecy);
+  let delta = GraphicsPath._vecangle(vecx, vecy, nvecx, nvecy);
   delta = delta < 0 ? Math.PI * 2 + delta : delta;
   if(!a[7] && delta > 0) {
     delta -= Math.PI * 2;
@@ -1726,35 +1726,35 @@ GraphicsPath._toRadians = Math.PI / 180;
 GraphicsPath._toDegrees = 180.0 / Math.PI;
 /** @ignore */
 GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var arcsize = Math.abs(angle2 - angle1);
-  var arcs = 16;
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const arcsize = Math.abs(angle2 - angle1);
+  let arcs = 16;
   if(arcsize < Math.PI / 8)arcs = 2;
   else if(arcsize < Math.PI / 4)arcs = 4;
   else if(arcsize < Math.PI / 2)arcs = 6;
   else if(arcsize < Math.PI)arcs = 10;
-  var third = 1 / 3;
-  var step = (angle2 - angle1) / arcs;
-  var ret = [];
-  var t5 = Math.tan(step * 0.5);
-  var t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
+  const third = 1 / 3;
+  let step = (angle2 - angle1) / arcs;
+  const ret = [];
+  const t5 = Math.tan(step * 0.5);
+  const t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
   step = Math.PI * 2.0 / arcs;
-  var cosStep = Math.cos(step);
-  var sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
-  var t2 = Math.cos(angle1);
-  var t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
-  for(var i = 0; i < arcs; i++) {
-    var ts = cosStep * t1 + sinStep * t2;
-    var tc = cosStep * t2 - sinStep * t1;
-    var t3 = ts;
-    var t4 = tc;
-    var t8 = [cx + rx * crot * t2 - ry * srot * t1, cy + rx * srot * t2 + ry * crot * t1];
-    var t9 = [cx + rx * crot * t4 - ry * srot * t3, cy + rx * srot * t4 + ry * crot * t3];
-    var t10 = [-rx * crot * t1 - ry * srot * t2, -rx * srot * t1 + ry * crot * t2];
-    var t11 = [-rx * crot * t3 - ry * srot * t4, -rx * srot * t3 + ry * crot * t4];
-    var t12 = [t8[0] + t10[0] * t7, t8[1] + t10[1] * t7];
-    var t13 = [t9[0] - t11[0] * t7, t9[1] - t11[1] * t7];
+  const cosStep = Math.cos(step);
+  const sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
+  let t2 = Math.cos(angle1);
+  let t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
+  for(let i = 0; i < arcs; i++) {
+    const ts = cosStep * t1 + sinStep * t2;
+    const tc = cosStep * t2 - sinStep * t1;
+    const t3 = ts;
+    const t4 = tc;
+    const t8 = [cx + rx * crot * t2 - ry * srot * t1, cy + rx * srot * t2 + ry * crot * t1];
+    const t9 = [cx + rx * crot * t4 - ry * srot * t3, cy + rx * srot * t4 + ry * crot * t3];
+    const t10 = [-rx * crot * t1 - ry * srot * t2, -rx * srot * t1 + ry * crot * t2];
+    const t11 = [-rx * crot * t3 - ry * srot * t4, -rx * srot * t3 + ry * crot * t4];
+    const t12 = [t8[0] + t10[0] * t7, t8[1] + t10[1] * t7];
+    const t13 = [t9[0] - t11[0] * t7, t9[1] - t11[1] * t7];
     ret.push([t8[0], t8[1], t12[0], t12[1], t13[0], t13[1], t9[0], t9[1]]);
     t2 = tc;
     t1 = ts;
@@ -1786,8 +1786,8 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
   if(rx === 0 || ry === 0) {
     return this.lineTo(x2, y2);
   }
-  var x1 = this.endPos[0];
-  var y1 = this.endPos[1];
+  const x1 = this.endPos[0];
+  const y1 = this.endPos[1];
   if(x1 === x2 && y1 === y2) {
     return this;
   }
@@ -1796,21 +1796,21 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
   rot *= GraphicsPath._toRadians;
   rx = Math.abs(rx);
   ry = Math.abs(ry);
-  var xmid = (x1 - x2) * 0.5;
-  var ymid = (y1 - y2) * 0.5;
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var x1p = crot * xmid + srot * ymid;
-  var y1p = crot * ymid - srot * xmid;
-  var lam = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
+  const xmid = (x1 - x2) * 0.5;
+  const ymid = (y1 - y2) * 0.5;
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const x1p = crot * xmid + srot * ymid;
+  const y1p = crot * ymid - srot * xmid;
+  let lam = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
   if(lam > 1) {
     lam = Math.sqrt(lam);
     rx *= lam;
     ry *= lam;
   }
-  var arc = [GraphicsPath.ARC,
+  const arc = [GraphicsPath.ARC,
     x1, y1, rx, ry, rot, !!largeArc, !!sweep, x2, y2];
-  var cp = GraphicsPath._arcSvgToCenterParam(arc);
+  const cp = GraphicsPath._arcSvgToCenterParam(arc);
   arc[6] = null; // unused
   arc[7] = null; // unused
   arc[10] = cp[0];
@@ -1826,7 +1826,7 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
 /** @ignore */
 GraphicsPath._nextAfterWs = function(str, index) {
   while(index[0] < str.length) {
-    var c = str.charCodeAt(index[0]);
+    const c = str.charCodeAt(index[0]);
     index[0]++;
     if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a)
       continue;
@@ -1836,10 +1836,10 @@ GraphicsPath._nextAfterWs = function(str, index) {
 };
 /** @ignore */
 GraphicsPath._nextAfterSepReq = function(str, index) {
-  var comma = false;
-  var havesep = false;
+  let comma = false;
+  let havesep = false;
   while(index[0] < str.length) {
-    var c = str.charCodeAt(index[0]);
+    const c = str.charCodeAt(index[0]);
     index[0]++;
     if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a) {
       havesep = true;
@@ -1856,9 +1856,9 @@ GraphicsPath._nextAfterSepReq = function(str, index) {
 };
 /** @ignore */
 GraphicsPath._nextAfterSep = function(str, index) {
-  var comma = false;
+  let comma = false;
   while(index[0] < str.length) {
-    var c = str.charCodeAt(index[0]);
+    const c = str.charCodeAt(index[0]);
     index[0]++;
     if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a)
       continue;
@@ -1872,22 +1872,22 @@ GraphicsPath._nextAfterSep = function(str, index) {
 };
 /** @ignore */
 GraphicsPath._peekNextNumber = function(str, index) {
-  var oldindex = index[0];
-  var ret = GraphicsPath._nextNumber(str, index, true) !== null;
+  const oldindex = index[0];
+  const ret = GraphicsPath._nextNumber(str, index, true) !== null;
   index[0] = oldindex;
   return ret;
 };
 /** @ignore */
 GraphicsPath._nextNumber = function(str, index, afterSep) {
-  var oldindex = index[0];
-  var c = afterSep ?
+  const oldindex = index[0];
+  let c = afterSep ?
     GraphicsPath._nextAfterSep(str, index) :
     GraphicsPath._nextAfterWs(str, index);
-  var startIndex = index[0] - 1;
-  var dot = false;
-  var digit = false;
-  var exponent = false;
-  var ret;
+  const startIndex = index[0] - 1;
+  let dot = false;
+  let digit = false;
+  let exponent = false;
+  let ret;
   if(c === 0x2e)dot = true;
   else if(c >= 0x30 && c <= 0x39)digit = true;
   else if(c !== 0x2d && c !== 0x2b) { // plus or minus
@@ -1993,21 +1993,21 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
  * @returns {GraphicsPath} The transformed version of this path.
  */
 GraphicsPath.prototype.transform = function(trans) {
-  var ret = new GraphicsPath();
-  var a = trans[0];
-  var b = trans[1];
-  var c = trans[2];
-  var d = trans[3];
-  var e = trans[4];
-  var f = trans[5];
-  var x, y, i, j;
-  var tmp = [0];
-  var oldpos = null;
+  const ret = new GraphicsPath();
+  const a = trans[0];
+  const b = trans[1];
+  const c = trans[2];
+  const d = trans[3];
+  const e = trans[4];
+  const f = trans[5];
+  let x, y, i, j;
+  const tmp = [0];
+  let oldpos = null;
   for(i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var domove = false;
+    const s = this.segments[i];
+    let domove = false;
     if(s[0] !== GraphicsPath.CLOSE) {
-      var start = GraphicsPath._startPoint(s);
+      const start = GraphicsPath._startPoint(s);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         domove = true;
       }
@@ -2053,14 +2053,14 @@ GraphicsPath.prototype.transform = function(trans) {
           largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
         break;
       }
-      var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
+      const curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
       curves[0][0] = s[1];
       curves[0][1] = s[2];
       curves[curves.length - 1][6] = s[8];
       curves[curves.length - 1][7] = s[9];
       for(j = 0; j < curves.length; j++) {
-        var cs = curves[j];
-        for(var k = 0; k < 8; k += 2) {
+        const cs = curves[j];
+        for(let k = 0; k < 8; k += 2) {
           x = a * cs[k] + c * cs[k + 1] + e;
           y = b * cs[k] + d * cs[k + 1] + f;
           cs[k] = x;
@@ -2123,11 +2123,11 @@ GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * Throws an error if "pointCoords" has an odd length.
  */
 GraphicsPath.prototype.polyline = function(pointCoords, closed) {
-  var closedValue = typeof closed !== "undefined" && closed !== null ? closed : false;
+  const closedValue = typeof closed !== "undefined" && closed !== null ? closed : false;
   if(pointCoords.length === 0)return this;
   if(pointCoords.length % 2 !== 0)throw new Error();
   this.moveTo(pointCoords[0], pointCoords[1]);
-  for(var i = 2; i < pointCoords.length; i += 2) {
+  for(let i = 2; i < pointCoords.length; i += 2) {
     this.lineTo(pointCoords[i], pointCoords[i + 1]);
   }
   if(closedValue)this.closePath();
@@ -2152,11 +2152,11 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  */
 GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  var px, py;
+  let px, py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
-  var harccx = arccx * 0.5;
-  var harccy = arccy * 0.5;
+  const harccx = arccx * 0.5;
+  const harccy = arccy * 0.5;
   px = x + harccx;
   py = y;
   this.moveTo(px, py);
@@ -2200,11 +2200,11 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  */
 GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  var px, py;
+  let px, py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
-  var harccx = arccx * 0.5;
-  var harccy = arccy * 0.5;
+  const harccx = arccx * 0.5;
+  const harccy = arccy * 0.5;
   px = x + harccx;
   py = y;
   this.moveTo(px, py);
@@ -2242,9 +2242,9 @@ GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
  */
 GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
   if(w < 0 || h < 0)return this;
-  var hw = w * 0.5;
-  var hh = h * 0.5;
-  var px = cx + hw;
+  const hw = w * 0.5;
+  const hh = h * 0.5;
+  const px = cx + hw;
   return this.moveTo(px, cy)
     .arcSvgTo(hw, hh, 0, false, true, px - w, cy)
     .arcSvgTo(hw, hh, 0, false, true, px, cy)
@@ -2288,18 +2288,18 @@ GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  */
 GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   if(w < 0 || h < 0)return this;
-  var pidiv180 = Math.PI / 180;
-  var e = start + sweep;
-  var hw = w * 0.5;
-  var hh = h * 0.5;
-  var eRad = (e >= 0 && e < 360 ? e : e % 360 + (e < 0 ? 360 : 0)) * pidiv180;
-  var startRad = (start >= 0 && start < 360 ? start : start % 360 + (start < 0 ? 360 : 0)) * pidiv180;
-  var cosEnd = Math.cos(eRad);
-  var sinEnd = eRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
-  var cosStart = Math.cos(startRad);
-  var sinStart = startRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
+  const pidiv180 = Math.PI / 180;
+  const e = start + sweep;
+  const hw = w * 0.5;
+  const hh = h * 0.5;
+  const eRad = (e >= 0 && e < 360 ? e : e % 360 + (e < 0 ? 360 : 0)) * pidiv180;
+  const startRad = (start >= 0 && start < 360 ? start : start % 360 + (start < 0 ? 360 : 0)) * pidiv180;
+  const cosEnd = Math.cos(eRad);
+  const sinEnd = eRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
+  const cosStart = Math.cos(startRad);
+  const sinStart = startRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
   this.moveTo(x + cosStart * hw, y + sinStart * hh);
-  var angleInit, angleStep, cw;
+  let angleInit, angleStep, cw;
   if(sweep > 0) {
     angleInit = start + 180;
     angleStep = 180;
@@ -2309,10 +2309,10 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
     angleStep = -180;
     cw = false;
   }
-  for(var a = angleInit; cw ? a < e : a > e; a += angleStep) {
-    var angleRad = (a >= 0 && a < 360 ? a : a % 360 + (a < 0 ? 360 : 0)) * pidiv180;
-    var cosAng = Math.cos(angleRad);
-    var sinAng = angleRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosAng * cosAng) : -Math.sqrt(1.0 - cosAng * cosAng);
+  for(let a = angleInit; cw ? a < e : a > e; a += angleStep) {
+    const angleRad = (a >= 0 && a < 360 ? a : a % 360 + (a < 0 ? 360 : 0)) * pidiv180;
+    const cosAng = Math.cos(angleRad);
+    const sinAng = angleRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosAng * cosAng) : -Math.sqrt(1.0 - cosAng * cosAng);
     this.arcSvgTo(hw, hh, 0, false, cw, x + cosAng * hw, y + sinAng * hh);
   }
   this.arcSvgTo(hw, hh, 0, false, cw, x + cosEnd * hw, y + sinEnd * hh);
@@ -2363,18 +2363,18 @@ GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type)
  * from (x0, y0) and (x1, y1) is 0 or extremely close to 0.
  */
 GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, tailWidth) {
-  var dx = x1 - x0;
-  var dy = y1 - y0;
-  var arrowLen = Math.sqrt(dx * dx + dy * dy);
+  const dx = x1 - x0;
+  const dy = y1 - y0;
+  const arrowLen = Math.sqrt(dx * dx + dy * dy);
   if(arrowLen === 0)return this;
-  var halfTailWidth = tailWidth * 0.5;
-  var halfHeadWidth = headWidth * 0.5;
-  var invArrowLen = 1.0 / arrowLen;
-  var cosRot = dx * invArrowLen;
-  var sinRot = dy * invArrowLen;
+  const halfTailWidth = tailWidth * 0.5;
+  const halfHeadWidth = headWidth * 0.5;
+  const invArrowLen = 1.0 / arrowLen;
+  const cosRot = dx * invArrowLen;
+  const sinRot = dy * invArrowLen;
   headLength = Math.min(headLength, arrowLen);
-  var shaftLength = arrowLen - headLength;
-  var x, y;
+  const shaftLength = arrowLen - headLength;
+  let x, y;
   this.moveTo(x0, y0);
   x = halfTailWidth * sinRot + x0;
   y = -halfTailWidth * cosRot + y0;
@@ -2412,25 +2412,25 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
  */
 GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   if(sides <= 2)return this;
-  var phase = phaseInDegrees === null ? phaseInDegrees : 0;
+  let phase = phaseInDegrees === null ? phaseInDegrees : 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
-  var angleStep = MathUtil.PiTimes2 / sides;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var c = Math.cos(phase);
-  var s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(var i = 0; i < sides; i++) {
-    var x = cx + c * radius;
-    var y = cy + s * radius;
+  const angleStep = MathUtil.PiTimes2 / sides;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let c = Math.cos(phase);
+  let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
+  for(let i = 0; i < sides; i++) {
+    const x = cx + c * radius;
+    const y = cy + s * radius;
     if(i === 0) {
       this.moveTo(x, y);
     } else {
       this.lineTo(x, y);
     }
-    var ts = cosStep * s + sinStep * c;
-    var tc = cosStep * c - sinStep * s;
+    const ts = cosStep * s + sinStep * c;
+    const tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
@@ -2451,27 +2451,27 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
  */
 GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
   if(points <= 0)return this;
-  var phase = phaseInDegrees || 0;
+  let phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
-  var sides = points * 2;
-  var angleStep = MathUtil.PiTimes2 / sides;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var c = Math.cos(phase);
-  var s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(var i = 0; i < sides; i++) {
-    var radius = (i & 1) === 0 ? radiusOut : radiusIn;
-    var x = cx + c * radius;
-    var y = cy + s * radius;
+  const sides = points * 2;
+  const angleStep = MathUtil.PiTimes2 / sides;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let c = Math.cos(phase);
+  let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
+  for(let i = 0; i < sides; i++) {
+    const radius = (i & 1) === 0 ? radiusOut : radiusIn;
+    const x = cx + c * radius;
+    const y = cy + s * radius;
     if(i === 0) {
       this.moveTo(x, y);
     } else {
       this.lineTo(x, y);
     }
-    var ts = cosStep * s + sinStep * c;
-    var tc = cosStep * c - sinStep * s;
+    const ts = cosStep * s + sinStep * c;
+    const tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
@@ -2523,14 +2523,14 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
  * var path=GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
  */
 GraphicsPath.fromString = function(str) {
-  var index = [0];
-  var started = false;
-  var ret = new GraphicsPath();
-  var failed = false;
-  var endx, endy;
-  var sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
+  const index = [0];
+  let started = false;
+  const ret = new GraphicsPath();
+  let failed = false;
+  let endx, endy;
+  let sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
   while(!failed && index[0] < str.length) {
-    var c = GraphicsPath._nextAfterWs(str, index);
+    const c = GraphicsPath._nextAfterWs(str, index);
     if(!started && c !== 0x4d && c !== 0x6d) {
       // not a move-to command when path
       // started
@@ -2618,15 +2618,15 @@ GraphicsPath.fromString = function(str) {
           if(!sep)failed = true; break;
         }
 
-        var arr = [];
-        for(var k = 0; k < 5; k++) {
+        const arr = [];
+        for(let k = 0; k < 5; k++) {
           arr[k] = GraphicsPath._nextNumber(str, index, true);
           if(typeof arr[k] === "undefined" || arr[k] === null) {
             failed = true; break;
           }
         }
         if(failed)break;
-        y = arr[0]; x2 = arr[1]; y2 = arr[2]; var x3 = arr[3]; var y3 = arr[4];
+        y = arr[0]; x2 = arr[1]; y2 = arr[2]; const x3 = arr[3]; const y3 = arr[4];
         ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
           curx + x3, cury + y3);
         sep = true;
@@ -2672,12 +2672,12 @@ GraphicsPath.fromString = function(str) {
         if(typeof y === "undefined" || y === null) {
           failed = true; break;
         }
-        var rot = GraphicsPath._nextNumber(str, index, true);
+        const rot = GraphicsPath._nextNumber(str, index, true);
         if(typeof rot === "undefined" || rot === null) {
           failed = true; break;
         }
-        var largeArc = GraphicsPath._nextAfterSepReq(str, index);
-        var sweep = GraphicsPath._nextAfterSep(str, index);
+        const largeArc = GraphicsPath._nextAfterSepReq(str, index);
+        const sweep = GraphicsPath._nextAfterSep(str, index);
         if(largeArc === -1 || sweep === -1) {
           failed = true; break;
         }
@@ -2775,16 +2775,16 @@ Triangulate._CONVEX = 1;
 Triangulate._EAR = 2;
 Triangulate._REFLEX = 3;
 
-var EPSILON = 1.1102230246251565e-16;
-var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
+const EPSILON = 1.1102230246251565e-16;
+const ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 
 // orient2D was
 // Adapted by Peter O. from the HE_Mesh library
 // written by Frederik Vanhoutte.
 
 function orient2D(pa, pb, pc) {
-  var detleft, detright, det;
-  var detsum, errbound;
+  let detleft, detright, det;
+  let detsum, errbound;
 
   detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
   detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
@@ -2821,17 +2821,17 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
   if(p[0] === i1[0] && p[1] === i1[1])return false;
   if(p[0] === i2[0] && p[1] === i2[1])return false;
   if(p[0] === i3[0] && p[1] === i3[1])return false;
-  var t3 = i2[0] - i3[0];
-  var t4 = i2[1] - i3[1];
-  var t5 = i2[0] - i1[0];
-  var t6 = i2[1] - i1[1];
-  var t7 = t5 * t3 + t6 * t4;
-  var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
+  const t3 = i2[0] - i3[0];
+  const t4 = i2[1] - i3[1];
+  const t5 = i2[0] - i1[0];
+  const t6 = i2[1] - i1[1];
+  const t7 = t5 * t3 + t6 * t4;
+  const t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
     t3 * t3 + t4 * t4);
   if (Math.sqrt(Math.abs(t8)) > 1e-9) {
-    var p1 = orient2D(i2, i3, p);
-    var p2 = orient2D(i2, i3, i1);
-    var b = p1 === 0 || p2 === 0 || p1 === p2;
+    let p1 = orient2D(i2, i3, p);
+    let p2 = orient2D(i2, i3, i1);
+    let b = p1 === 0 || p2 === 0 || p1 === p2;
     p1 = orient2D(i1, i3, p);
     p2 = orient2D(i1, i3, i2);
     b = b && (p1 === 0 || p2 === 0 || p1 === p2);
@@ -2847,7 +2847,7 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
  * @constructor */
 Triangulate._Contour = function(vertices) {
   this.vertexList = new LinkedList();
-  var vertLength = vertices.length;
+  let vertLength = vertices.length;
   // For convenience, eliminate the last
   // vertex if it matches the first vertex
   if(vertLength >= 4 &&
@@ -2855,18 +2855,18 @@ Triangulate._Contour = function(vertices) {
     vertices[1] === vertices[vertLength - 1]) {
     vertLength -= 2;
   }
-  var lastX = -1;
-  var lastY = -1;
-  var maxXNode = null;
-  var maxX = -1;
-  var inf = Number.POSITIVE_INFINITY;
-  var bounds = [inf, inf, -inf, -inf];
-  var firstVertex = true;
+  let lastX = -1;
+  let lastY = -1;
+  let maxXNode = null;
+  let maxX = -1;
+  const inf = Number.POSITIVE_INFINITY;
+  const bounds = [inf, inf, -inf, -inf];
+  let firstVertex = true;
   this.vertexCount = 0;
-  var i;
+  let i;
   for(i = 0; i < vertLength; i += 2) {
-    var x = vertices[i];
-    var y = vertices[i + 1];
+    const x = vertices[i];
+    const y = vertices[i + 1];
     if(i > 0 && x === lastX && y === lastY) {
       // skip consecutive duplicate points
       continue;
@@ -2893,17 +2893,17 @@ Triangulate._Contour = function(vertices) {
   this.maxXNode = maxXNode;
   this.bounds = bounds;
   // Find the prevailing winding of the polygon
-  var ori = 0;
-  var convex = true;
-  var convexOri = -2;
-  var vert = this.vertexList.first();
-  var lastVert = this.vertexList.last().data;
-  var firstVert = vert.data;
+  let ori = 0;
+  let convex = true;
+  let convexOri = -2;
+  let vert = this.vertexList.first();
+  const lastVert = this.vertexList.last().data;
+  const firstVert = vert.data;
   while(vert) {
-    var vn = vert.next ? vert.next.data : firstVert;
-    var vp = vert.prev ? vert.prev.data : lastVert;
+    const vn = vert.next ? vert.next.data : firstVert;
+    const vp = vert.prev ? vert.prev.data : lastVert;
     if(convex) {
-      var cori = orient2D(vp, vert.data, vn);
+      const cori = orient2D(vp, vert.data, vn);
       if(convexOri !== -2 && cori !== convexOri)convex = false;
       convexOri = cori;
     }
@@ -2914,23 +2914,23 @@ Triangulate._Contour = function(vertices) {
   this.winding = ori === 0 ? 0 : ori < 0 ? -1 : 1;
 };
 Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
-  var vert = this.vertexList.first();
+  let vert = this.vertexList.first();
   if(typeof vert === "undefined" || vert === null)return null;
-  var bounds = this.bounds;
+  const bounds = this.bounds;
   if(x < bounds[0] || y < bounds[1] || x > bounds[2] || y > bounds[2])return null;
-  var lastVert = this.vertexList.last();
-  var firstVert = vert;
-  var closeVertices = [];
+  const lastVert = this.vertexList.last();
+  const firstVert = vert;
+  let closeVertices = [];
   while(vert) {
-    var vn = vert.next ? vert.next : firstVert;
-    var x1 = vert.data[0];
-    var x2 = vn.data[0];
-    var y1 = vert.data[1];
-    var y2 = vn.data[1];
-    var xmin = Math.min(x1, x2);
-    var xmax = Math.max(x1, x2);
-    var ymin = Math.min(y1, y2);
-    var ymax = Math.max(y1, y2);
+    const vn = vert.next ? vert.next : firstVert;
+    const x1 = vert.data[0];
+    const x2 = vn.data[0];
+    const y1 = vert.data[1];
+    const y2 = vn.data[1];
+    const xmin = Math.min(x1, x2);
+    const xmax = Math.max(x1, x2);
+    const ymin = Math.min(y1, y2);
+    const ymax = Math.max(y1, y2);
     if(x1 === x && y1 === y) {
       return vert;
     } else if(x2 === x && y2 === y) {
@@ -2942,9 +2942,9 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
         closeVertices.push([
           xmin, xmin === vert.data[0] ? vert : vn, true]);
       } else {
-        var dx = x2 - x1;
-        var t = (y - y1) / (y2 - y1);
-        var xi = x + dx * t;
+        const dx = x2 - x1;
+        const t = (y - y1) / (y2 - y1);
+        const xi = x + dx * t;
         if(xi >= x) {
           if(xi === x1) {
             closeVertices.push([xi, vert, true]);
@@ -2974,26 +2974,26 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     return closeVertices[0][1];
   }
   vert = closeVertices[0][1];
-  var nextVert = vert.next ? vert.next : firstVert;
-  var triangle1 = [x, y];
-  var triangle2 = [closeVertices[0][0], y];
-  var iterVert = firstVert;
-  var innerReflexes = [];
+  const nextVert = vert.next ? vert.next : firstVert;
+  const triangle1 = [x, y];
+  const triangle2 = [closeVertices[0][0], y];
+  let iterVert = firstVert;
+  let innerReflexes = [];
   while(iterVert) {
     if(iterVert !== nextVert) {
-      var iterPrev = iterVert.prev ? iterVert.prev : lastVert;
-      var iterNext = iterVert.next ? iterVert.next : firstVert;
-      var orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
+      const iterPrev = iterVert.prev ? iterVert.prev : lastVert;
+      const iterNext = iterVert.next ? iterVert.next : firstVert;
+      const orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
       if(orient !== 0 && orient !== this.vertexList.winding) {
         // This is a reflex vertex
-        var pointIn = Triangulate._pointInTri(
+        const pointIn = Triangulate._pointInTri(
           triangle1, triangle2, nextVert.data, iterVert.data);
         if(pointIn) {
           // The reflex vertex is in the triangle
-          var t1 = iterVert.data[0] - triangle1[0];
-          var t2 = iterVert.data[1] - triangle1[1];
-          var distance = Math.sqrt(t1 * t1 + t2 * t2);
-          var angle = t1 / distance;
+          const t1 = iterVert.data[0] - triangle1[0];
+          const t2 = iterVert.data[1] - triangle1[1];
+          const distance = Math.sqrt(t1 * t1 + t2 * t2);
+          let angle = t1 / distance;
           if(angle < -1)angle = -1;
           if(angle > 1)angle = 1;
           innerReflexes.push([Math.acos(angle), distance, iterVert]);
@@ -3072,7 +3072,7 @@ function decomposePolygon(pointlist, accumulator) {
 }
 
 function decomposeTriangles(points, tris, isConvex) {
-  var polys = [];
+  const polys = [];
   if(isConvex) {
     // Already found to be convex, so
     // this is trivial
@@ -3081,9 +3081,9 @@ function decomposeTriangles(points, tris, isConvex) {
     decomposePolygon(points, polys);
   }
   if(points.length > 0 && polys.length === 0)throw new Error();
-  for(var i = 0; i < polys.length; i++) {
-    var poly = polys[i];
-    for(var j = 0; j < poly.length - 2; j++) {
+  for(let i = 0; i < polys.length; i++) {
+    const poly = polys[i];
+    for(let j = 0; j < poly.length - 2; j++) {
       tris.push([
         poly[0][0], poly[0][1],
         poly[j + 1][0], poly[j + 1][1],
@@ -3114,14 +3114,14 @@ function decomposeTriangles(points, tris, isConvex) {
 GraphicsPath.prototype.getTriangles = function(flatness) {
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
   // NOTE: _getSubpaths doesn't add degenerate line segments
-  var subpaths = this._getSubpaths(flatness, true);
-  var contours1 = [];
-  var contours2 = [];
-  var firstOrient = 0;
-  var tris = [];
-  var i, j;
+  const subpaths = this._getSubpaths(flatness, true);
+  const contours1 = [];
+  const contours2 = [];
+  let firstOrient = 0;
+  const tris = [];
+  let i, j;
   for(i = 0; i < subpaths.length; i++) {
-    var contour = new Triangulate._Contour(subpaths[i]);
+    const contour = new Triangulate._Contour(subpaths[i]);
     // NOTE: Ignores contours with winding 0
     // (empty, zero area, sometimes self-intersecting)
     if(contour.winding > 0) {
@@ -3134,7 +3134,7 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
   }
   if(contours2.length === 0 || contours1.length === 0) {
     // All the contours have the same winding order
-    var c = contours2.length === 0 ? contours1 : contours2;
+    const c = contours2.length === 0 ? contours1 : contours2;
     for(i = 0; i < c.length; i++) {
       Triangulate._triangulate(c[i], tris);
     }
@@ -3143,16 +3143,16 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
     // throw new Error()
     // }
   } else {
-    var c1 = firstOrient > 0 ? contours1 : contours2;
-    var c2 = firstOrient > 0 ? contours2 : contours1;
+    const c1 = firstOrient > 0 ? contours1 : contours2;
+    const c2 = firstOrient > 0 ? contours2 : contours1;
     for(i = 0; i < c2.length; i++) {
       if(!c2[i])continue;
       for(j = 0; j < c1.length; j++) {
         if(!c1[j])continue;
-        var maxPoint = c2[i].maxXNode;
+        const maxPoint = c2[i].maxXNode;
         // Find out if the contour is inside another contour,
         // and if so, connect its vertices to that contour
-        var vp = c1[j].findVisiblePoint(
+        const vp = c1[j].findVisiblePoint(
           maxPoint.data[0], maxPoint.data[1]);
         if(vp) {
           c1[j].vertexCount += Triangulate._connectContours(
@@ -3183,10 +3183,10 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
  */
 GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
-  var tris = this.getTriangles(flatness);
-  var vertices = [];
-  for(var i = 0; i < tris.length; i++) {
-    var tri = tris[i];
+  const tris = this.getTriangles(flatness);
+  const vertices = [];
+  for(let i = 0; i < tris.length; i++) {
+    const tri = tris[i];
     // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
     vertices.push(
       tri[0], tri[1], z, 0, 0, 1, tri[0], tri[1],
@@ -3206,10 +3206,10 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
  */
 GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
-  var lines = this.getLines(flatness);
-  var vertices = [];
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const lines = this.getLines(flatness);
+  const vertices = [];
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
   }
@@ -3228,15 +3228,15 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
  */
 GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
   if((typeof zStart === "undefined" || zStart === null) || zEnd === null)throw new Error();
-  var lines = this.getLines(flatness);
-  var z1 = Math.min(zStart, zEnd);
-  var z2 = Math.max(zStart, zEnd);
-  var vertices = [];
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
-    var dx = line[2] - line[0];
-    var dy = line[3] - line[1];
-    var dot = dx * dx + dy * dy;
+  const lines = this.getLines(flatness);
+  const z1 = Math.min(zStart, zEnd);
+  const z2 = Math.max(zStart, zEnd);
+  const vertices = [];
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const dx = line[2] - line[0];
+    const dy = line[3] - line[1];
+    const dot = dx * dx + dy * dy;
     if(dot === 0)continue;
     vertices.push(line[0], line[1], z1,
       line[2], line[3], z1,
@@ -3251,9 +3251,9 @@ GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
 
 /** @ignore */
 Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
-  var vpnode = dstNode;
-  var c2node = maxPoint;
-  var count = 0;
+  let vpnode = dstNode;
+  let c2node = maxPoint;
+  let count = 0;
   while(c2node) {
     vpnode = dst.insertAfter(c2node.data, vpnode);
     c2node = c2node.next;
@@ -3275,7 +3275,7 @@ Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
 };
 /** @ignore */
 Triangulate._triangulate = function(contour, tris) {
-  var t1, tri;
+  let t1, tri;
   if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
     // too few vertices, or the winding
     // suggests a zero area or even a certain
@@ -3292,9 +3292,9 @@ Triangulate._triangulate = function(contour, tris) {
     tris.push(tri);
     return;
   }
-  var first = contour.vertexList.first();
-  var vertices = [];
-  var vert = first;
+  const first = contour.vertexList.first();
+  const vertices = [];
+  let vert = first;
   while(vert) {
     vertices.push([vert.data[0], vert.data[1]]);
     vert = vert.next;
@@ -3308,7 +3308,7 @@ Triangulate._triangulate = function(contour, tris) {
 
 /** @ignore
  * @constructor */
-var PriorityQueue = function(comparer) {
+const PriorityQueue = function(comparer) {
   // Based on Doug Lea's public domain Heap class in Java
   this.comparer = comparer;
   this.nodes = [];
@@ -3325,9 +3325,9 @@ var PriorityQueue = function(comparer) {
     }
   };
   this.push = function(item) {
-    var x = this._size;
+    let x = this._size;
     while(x > 0) {
-      var p = (x - 1) / 2 | 0;
+      const p = (x - 1) / 2 | 0;
       // NOTE: comparer > 0, not comparer < 0, as
       // in Doug Lea's implementation
       if(this.comparer(item, this.nodes[p]) > 0) {
@@ -3342,17 +3342,17 @@ var PriorityQueue = function(comparer) {
   // NOTE: Pops out the greatest element, not
   // the least, as in Doug Lea's implementation
   this.pop = function() {
-    var data = null;
+    let data = null;
     if(this._size > 0) {
-      var k = 0;
+      let k = 0;
       data = this.nodes[k];
       this._size--;
-      var x = this.nodes[this._size];
+      const x = this.nodes[this._size];
       for (;;) {
-        var left = 1 + 2 * k;
-        var right = 2 * (k + 1);
+        const left = 1 + 2 * k;
+        const right = 2 * (k + 1);
         if(left < this._size) {
-          var child = right >= this._size ||
+          const child = right >= this._size ||
         this.comparer(this.nodes[left], this.nodes[right]) > 0 ? left : right;
           if(this.comparer(x, this.nodes[child]) < 0) {
             this.nodes[k] = this.nodes[child];
@@ -3379,7 +3379,7 @@ var RedBlackTreeNode = function(data) {
     return dir ? this.right : this.left;
   };
   this.copy = function() {
-    var c = new RedBlackTreeNode(this.data);
+    const c = new RedBlackTreeNode(this.data);
     c.left = this.left;
     c.right = this.right;
     c.red = this.red;
@@ -3399,13 +3399,13 @@ var RedBlackTreeNode = function(data) {
   };
   this.prev = function() {
     if(typeof this.left !== "undefined" && this.left !== null) {
-      var r = this.left;
+      let r = this.left;
       while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
       return r;
     } else {
-      var p = this.p;
-      var that = this;
-      var tmp = that;
+      let p = this.p;
+      const that = this;
+      let tmp = that;
       while(typeof p !== "undefined" && p !== null && tmp === p.left) {
         tmp = p;
         p = p.p;
@@ -3415,13 +3415,13 @@ var RedBlackTreeNode = function(data) {
   };
   this.next = function() {
     if(typeof this.right !== "undefined" && this.right !== null) {
-      var r = this.right;
+      let r = this.right;
       while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
       return r;
     } else {
-      var p = this.p;
-      var that = this;
-      var tmp = that;
+      let p = this.p;
+      const that = this;
+      let tmp = that;
       while(typeof p !== "undefined" && p !== null && tmp === p.right) {
         tmp = p;
         p = p.p;
@@ -3451,23 +3451,23 @@ RedBlackTree._defaultCompare = function(a, b) {
 };
 /** @ignore */
 RedBlackTree.prototype.first = function() {
-  var r = this.root;
+  let r = this.root;
   if(typeof r === "undefined" || r === null)return null;
   while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
   return r;
 };
 /** @ignore */
 RedBlackTree.prototype.last = function() {
-  var r = this.root;
+  let r = this.root;
   if(typeof r === "undefined" || r === null)return null;
   while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
   return r;
 };
 /** @ignore */
 RedBlackTree.prototype.find = function(data) {
-  var it = this.root;
+  let it = this.root;
   while(typeof it !== "undefined" && it !== null) {
-    var cmp = this.comparer(it.data, data);
+    const cmp = this.comparer(it.data, data);
     if(cmp === 0)break;
     it = cmp < 0 ? it.right : it.left;
   }
@@ -3479,7 +3479,7 @@ RedBlackTree._red = function(node) {
 };
 /** @ignore */
 RedBlackTree._single = function(root, dir) {
-  var save = root.link(!dir);
+  const save = root.link(!dir);
   root.setLink(!dir, save.link(dir));
   save.setLink(dir, root);
   root.red = true;
@@ -3494,10 +3494,10 @@ RedBlackTree._double = function(root, dir) {
 /** @ignore */
 RedBlackTree.prototype.erase = function(data) {
   if(typeof this.root !== "undefined" && this.root !== null) {
-    var head = new RedBlackTreeNode(null); /* False tree root */
-    var q, p, g; /* Helpers */
-    var f = null; /* Found item */
-    var dir = true;
+    const head = new RedBlackTreeNode(null); /* False tree root */
+    let q, p, g; /* Helpers */
+    let f = null; /* Found item */
+    let dir = true;
 
     /* Set up our helpers */
     q = head;
@@ -3509,13 +3509,13 @@ RedBlackTree.prototype.erase = function(data) {
       to fix red violations as we go
     */
     while( q.link(dir) !== null ) {
-      var last = dir;
+      const last = dir;
 
       /* Move the helpers down */
       g = p;
       p = q;
       q = q.link(dir);
-      var cmp = this.comparer( q.data, data );
+      const cmp = this.comparer( q.data, data );
       dir = cmp < 0;
       /*
         Save the node with matching data and keep
@@ -3528,7 +3528,7 @@ RedBlackTree.prototype.erase = function(data) {
         if( RedBlackTree._red( q.link(!dir) ) )
           p.setLink(last, p = RedBlackTree._single( q, dir ));
         else if( !RedBlackTree._red( q.link(!dir) ) ) {
-          var s = p.link(!last);
+          const s = p.link(!last);
           if( typeof s !== "undefined" && s !== null ) {
             if( !RedBlackTree._red( s.link(!last) ) && !RedBlackTree._red( s.link(last) ) ) {
               /* Color flip */
@@ -3536,7 +3536,7 @@ RedBlackTree.prototype.erase = function(data) {
               s.red = true;
               q.red = true;
             } else {
-              var dir2 = g.right === p;
+              const dir2 = g.right === p;
 
               if( RedBlackTree._red( s.link(last) ) )
                 g.setLink(dir2, RedBlackTree._double( p, last ));
@@ -3572,7 +3572,7 @@ RedBlackTree.prototype.erase = function(data) {
 /** @ignore */
 RedBlackTree.prototype.insert = function(data) {
   if(!data)throw new Error();
-  var retval = null;
+  let retval = null;
   if (typeof this.root === "undefined" || this.root === null) {
     /*
       We have an empty tree; attach the
@@ -3581,10 +3581,10 @@ RedBlackTree.prototype.insert = function(data) {
     this.root = new RedBlackTreeNode(data);
     retval = this.root;
   } else {
-    var head = new RedBlackTreeNode(null); /* False tree root */
-    var g, t; /* Grandparent & parent */
-    var p, q; /* Iterator & parent */
-    var dir = false,
+    const head = new RedBlackTreeNode(null); /* False tree root */
+    let g, t; /* Grandparent & parent */
+    let p, q; /* Iterator & parent */
+    let dir = false,
       last = false;
 
     /* Set up our helpers */
@@ -3607,7 +3607,7 @@ RedBlackTree.prototype.insert = function(data) {
 
       if ( RedBlackTree._red( q ) && RedBlackTree._red( p ) ) {
         /* Hard red violation: rotations necessary */
-        var dir2 = t.right === g;
+        const dir2 = t.right === g;
         if ( q === p.link(last) )
           t.setLink(dir2, RedBlackTree._single( g, !last ));
         else
@@ -3617,7 +3617,7 @@ RedBlackTree.prototype.insert = function(data) {
         Stop working if we inserted a node. This
         check also disallows duplicates in the tree
       */
-      var cmp = this.comparer( q.data, data );
+      const cmp = this.comparer( q.data, data );
       if ( cmp === 0 ) {
         retval = q;
         break;
@@ -3658,7 +3658,7 @@ var Polygon = function(path, flatness) {
   if(typeof path !== "undefined" && path !== null) {
     // Ignore degenerate line segments
     this.subpaths = path._getSubpaths(flatness, true);
-    for(var i = 0; i < this.subpaths.length; i++) {
+    for(let i = 0; i < this.subpaths.length; i++) {
       this.contours[i] = new Polygon._Contour(this.subpaths[i]);
     }
   }
@@ -3676,11 +3676,11 @@ var Polygon = function(path, flatness) {
     this.contours.push(c);
   };
   this.toPath = function() {
-    var p = new GraphicsPath();
-    for(var i = 0; i < this.contours.length; i++) {
-      var c = this.contours[i];
-      var cv = c.vertices;
-      for(var j = 0; j < cv.length; j += 2) {
+    const p = new GraphicsPath();
+    for(let i = 0; i < this.contours.length; i++) {
+      const c = this.contours[i];
+      const cv = c.vertices;
+      for(let j = 0; j < cv.length; j += 2) {
         if(j === 0) {
           p.moveTo(cv[j], cv[j + 1]);
         } else {
@@ -3813,13 +3813,13 @@ Polygon.PointChain.prototype.linkPointChain = function(chain) {
 };
 /** @ignore */
 Connector.prototype.add = function(s) {
-  var j = this.openPolygons.first();
+  let j = this.openPolygons.first();
   while(j) {
     if(j.data.linkSegment(s)) {
       if(j.data.closed())
         this.closedPolygons.spliceOneToEnd(this.openPolygons, j);
       else {
-        var k = j.next;
+        let k = j.next;
         while(k) {
           if(j.data.linkPointChain(k.data)) {
             this.openPolygons.erase(k);
@@ -3833,17 +3833,17 @@ Connector.prototype.add = function(s) {
     j = j.next;
   }
   // The segment cannot be connected with any open polygon
-  var chain = new Polygon.PointChain();
+  const chain = new Polygon.PointChain();
   chain.init(s);
   this.openPolygons.push(chain);
 };
 /** @ignore */
 Connector.prototype.toPolygon = function() {
-  var polygon = new Polygon(null, null);
-  var j = this.closedPolygons.first();
+  const polygon = new Polygon(null, null);
+  let j = this.closedPolygons.first();
   while(j) {
-    var contour = new Polygon._Contour([]);
-    var k = j.data.first();
+    const contour = new Polygon._Contour([]);
+    let k = j.data.first();
     while(k) {
       contour.vertices.push(k.data[0], k.data[1]);
       k = k.next;
@@ -3891,10 +3891,10 @@ Clipper.SweepEvent = function(pp, b, apl, o, t) {
 };
 /** @ignore */
 Clipper.signedArea = function(a, b, c) {
-  var xa = a[0] - c[0];
-  var ya = a[1] - c[1];
-  var xb = b[0] - c[0];
-  var yb = b[1] - c[1];
+  const xa = a[0] - c[0];
+  const ya = a[1] - c[1];
+  const xb = b[0] - c[0];
+  const yb = b[1] - c[1];
   return 0.5 * (xa * yb - xb * ya);
 };
 /** @ignore */
@@ -3974,15 +3974,15 @@ Clipper.prototype.compute = function(op) {
       return this.subject.ncontours() === 0 ? this.clipping : this.subject;
     return new Polygon(null, null);
   }
-  var i, j;
-  var result = new Polygon(null, null);
+  let i, j;
+  let result = new Polygon(null, null);
   // Test 2 for trivial result case
-  var subjBounds = this.subject.getBounds();
-  var clipBounds = this.clipping.getBounds();
-  var minsubj = [subjBounds[0], subjBounds[1]];
-  var maxsubj = [subjBounds[2], subjBounds[3]];
-  var minclip = [clipBounds[0], clipBounds[1]];
-  var maxclip = [clipBounds[2], clipBounds[3]];
+  const subjBounds = this.subject.getBounds();
+  const clipBounds = this.clipping.getBounds();
+  const minsubj = [subjBounds[0], subjBounds[1]];
+  const maxsubj = [subjBounds[2], subjBounds[3]];
+  const minclip = [clipBounds[0], clipBounds[1]];
+  const maxclip = [clipBounds[2], clipBounds[3]];
   if(minsubj[0] > maxclip[0] || minclip[0] > maxsubj[0] ||
      minsubj[1] > maxclip[1] || minclip[1] > maxsubj[1]) {
     // the bounding boxes do not overlap
@@ -4003,11 +4003,11 @@ Clipper.prototype.compute = function(op) {
   for(i = 0; i < this.clipping.ncontours(); i++)
     for(j = 0; j < this.clipping.contour(i).nvertices(); j++)
       this.processSegment(this.clipping.contour(i).segment(j), CLIPPING);
-  var S = new RedBlackTree(Clipper.segmentCompNum);
-  var it, sli, prev, next;
-  var connector = new Connector(); // to connect the edge solutions
-  var e;
-  var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
+  const S = new RedBlackTree(Clipper.segmentCompNum);
+  let it, sli, prev, next;
+  const connector = new Connector(); // to connect the edge solutions
+  let e;
+  const minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
   while(this.eq.size() > 0) {
     e = this.eq.pop();
     // console.log("Process event:  "+e.toString())
@@ -4143,8 +4143,8 @@ Clipper.prototype.compute = function(op) {
 Clipper.prototype.processSegment = function(s, pl) {
   if(Clipper._ptEq(s[0], s[1])) // if the two edge endPoints are equal the segment is discarded
     return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
-  var e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null, NORMAL));
-  var e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1, NORMAL));
+  const e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null, NORMAL));
+  const e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1, NORMAL));
   e1.other = e2;
   if(e1.p[0] < e2.p[0]) {
     e2.left = false;
@@ -4160,7 +4160,7 @@ Clipper.prototype.processSegment = function(s, pl) {
 };
 /** @ignore */
 Clipper.findIntersection = function(a, b, e, f) {
-  var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
+  const ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
     b[0][0], b[0][1], b[1][0], b[1][1]);
   if(ret.length > 0) {
     e[0] = ret[0][0];
@@ -4174,27 +4174,27 @@ Clipper.findIntersection = function(a, b, e, f) {
 };
 /** @ignore */
 Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
-  var dpdeltad0;
-  var t2 = a2x - a1x;
-  var t3 = a2y - a1y;
-  var t4 = b2x - b1x;
-  var t5 = b2y - b1y;
-  var t6 = t2 * t2 + t3 * t3;
-  var t7 = t4 * t4 + t5 * t5;
-  var ret = [];
-  var smin, smax;
+  let dpdeltad0;
+  const t2 = a2x - a1x;
+  const t3 = a2y - a1y;
+  const t4 = b2x - b1x;
+  const t5 = b2y - b1y;
+  const t6 = t2 * t2 + t3 * t3;
+  const t7 = t4 * t4 + t5 * t5;
+  const ret = [];
+  let smin, smax;
   if (t6 === 0.0) {
     if (t7 === 0.0) {
       if (a1x === b1x && a1y === b1y) {
         ret.push([a1x, a1y]);
       }
     } else {
-      var t9 = ((a1x - b1x) * t4 + (a1y - b1y) * t5) / t7;
+      const t9 = ((a1x - b1x) * t4 + (a1y - b1y) * t5) / t7;
       if (t9 >= 0.0 && t9 <= 1.0) {
-        var t10 = [b1x + t4 * t9, b1y + t5 * t9];
-        var t11 = a1x - t10[0];
-        var t12 = a1y - t10[1];
-        var t13 = Math.sqrt(t11 * t11 + t12 * t12);
+        const t10 = [b1x + t4 * t9, b1y + t5 * t9];
+        const t11 = a1x - t10[0];
+        const t12 = a1y - t10[1];
+        const t13 = Math.sqrt(t11 * t11 + t12 * t12);
         if (t13 <= 1e-09) {
           ret.push([a1x, a1y]);
         }
@@ -4202,27 +4202,27 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
     }
     return ret;
   } else if (t7 === 0.0) {
-    var t15 = ((b1x - a1x) * t2 + (b1y - a1y) * t3) / t6;
+    const t15 = ((b1x - a1x) * t2 + (b1y - a1y) * t3) / t6;
     if (t15 >= 0.0 && t15 <= 1.0) {
-      var t16 = [a1x + t2 * t15, a1y + t3 * t15];
-      var t17 = b1x - t16[0];
-      var t18 = b1y - t16[1];
-      var t19 = Math.sqrt(t17 * t17 + t18 * t18);
+      const t16 = [a1x + t2 * t15, a1y + t3 * t15];
+      const t17 = b1x - t16[0];
+      const t18 = b1y - t16[1];
+      const t19 = Math.sqrt(t17 * t17 + t18 * t18);
       if (t19 <= 1e-09) {
         ret.push([b1x, b1y]);
       }
     }
     return ret;
   }
-  var t21 = t2 * t5 - t4 * t3;
-  var t22 = b1x - a1x;
-  var t23 = b1y - a1y;
-  var t24 = t22 * t5 - t4 * t23;
+  const t21 = t2 * t5 - t4 * t3;
+  const t22 = b1x - a1x;
+  const t23 = b1y - a1y;
+  const t24 = t22 * t5 - t4 * t23;
   dpdeltad0 = t22 * t3 - t2 * t23;
   if (t21 === 0.0) {
     if (t24 === 0.0 && dpdeltad0 === 0) {
-      var s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
-      var s2 = (t2 * (b2x - a1x) + t3 * (b2y - a1y)) / (t2 * t2 + t3 * t3);
+      const s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
+      const s2 = (t2 * (b2x - a1x) + t3 * (b2y - a1y)) / (t2 * t2 + t3 * t3);
       if(s1 <= 0 && s2 >= 1 || s1 >= 1 && s2 <= 0) {
         // first line contains second line
         return [[a1x, a1y], [a2x, a2y]];
@@ -4258,10 +4258,10 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
       // console.log("parallel")
     }
   } else {
-    var t29 = t24 / t21;
-    var t30 = dpdeltad0 / t21;
+    const t29 = t24 / t21;
+    const t30 = dpdeltad0 / t21;
     if (t29 >= 0.0 && t29 <= 1.0 && t30 >= 0.0 && t30 <= 1.0) {
-      var t31 = [a1x + t2 * t29, a1y + t3 * t29];
+      const t31 = [a1x + t2 * t29, a1y + t3 * t29];
       ret.push(t31);
     }
   }
@@ -4273,9 +4273,9 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
   // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
   // return false;
 
-  var ip1 = [];
-  var ip2 = []; // intersection points
-  var nintersections;
+  const ip1 = [];
+  const ip2 = []; // intersection points
+  let nintersections;
   // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
   if(!(nintersections = Clipper.findIntersection(e1.segment(), e2.segment(), ip1, ip2)))
     return;
@@ -4298,7 +4298,7 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
   }
 
   // The line segments overlap
-  var sortedEvents = [];
+  const sortedEvents = [];
   if(Clipper._ptEq(e1.p, e2.p)) {
     sortedEvents.push(null);
   } else if(Clipper.sweepEventComp(e1, e2)) {
@@ -4348,9 +4348,9 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
 /** @ignore */
 Clipper.prototype._divideSegment = function(e, p) {
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
-  var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
+  const r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
   // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
-  var l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
+  const l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
   if(Clipper.sweepEventComp(l, e.other)) { // avoid a rounding error. The left event would be processed after the right event
     // console.log("Oops")
     e.other.left = true;
@@ -4386,9 +4386,9 @@ Clipper.prototype._divideSegment = function(e, p) {
  */
 GraphicsPath.prototype.union = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(UNION);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(UNION);
   return retval.toPath();
 };
 /**
@@ -4405,9 +4405,9 @@ GraphicsPath.prototype.union = function(path, flatness) {
  */
 GraphicsPath.prototype.difference = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(DIFFERENCE);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(DIFFERENCE);
   return retval.toPath();
 };
 /**
@@ -4424,9 +4424,9 @@ GraphicsPath.prototype.difference = function(path, flatness) {
  */
 GraphicsPath.prototype.intersection = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(INTERSECTION);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(INTERSECTION);
   return retval.toPath();
 };
 /**
@@ -4443,8 +4443,8 @@ GraphicsPath.prototype.intersection = function(path, flatness) {
  */
 GraphicsPath.prototype.xor = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(XOR);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(XOR);
   return retval.toPath();
 };

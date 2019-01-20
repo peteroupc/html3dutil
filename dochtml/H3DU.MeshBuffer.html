@@ -6,7 +6,30 @@ the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.<p>
 This constructor creates an empty mesh buffer and sets the array
-of vertex indices to null.<h3> Members</h3><ul><li><a href='#H3DU.MeshBuffer.LINES'>LINES</a><br>TODO: Not documented yet.<li><a href='#H3DU.MeshBuffer.POINTS'>POINTS</a><br>TODO: Not documented yet.<li><a href='#H3DU.MeshBuffer.TRIANGLES'>TRIANGLES</a><br>TODO: Not documented yet.</ul><h3> Methods</h3><ul><li><a href='#H3DU.MeshBuffer.fromPositions'>fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.<li><a href='#H3DU.MeshBuffer.fromPositionsNormals'>fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
+of vertex indices to null.<h4> Examples</h4><p>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). This example requires the three.js library.</p><pre>
+function toBufferGeometry(mesh) {
+var p=mesh.getAttribute("POSITION")
+var n=mesh.getAttribute("NORMAL")
+var t=mesh.getAttribute("TEXCOORD_0")
+var c=mesh.getAttribute("COLOR")
+var ind=mesh.getIndices()
+var geom=new THREE.BufferGeometry()
+var attributes=[p,n,t,c]
+var attributeNames=["position","normal","uv","color"]
+for(var i=0;i<attributes.length;i++) {
+if(attributes[i]) {
+var a=attributes[i]
+//console.log(a)
+var attr=new THREE.InterleavedBufferAttribute(
+new THREE.InterleavedBuffer(a.buffer,a.stride),
+a.countPerValue,a.offset)
+geom.addAttribute(attributeNames[i],attr)
+}
+}
+if(ind)geom.index=new THREE.BufferAttribute(
+ind,1)
+return geom
+}</pre><h3> Members</h3><ul><li><a href='#H3DU.MeshBuffer.LINES'>LINES</a><br>TODO: Not documented yet.<li><a href='#H3DU.MeshBuffer.POINTS'>POINTS</a><br>TODO: Not documented yet.<li><a href='#H3DU.MeshBuffer.TRIANGLES'>TRIANGLES</a><br>TODO: Not documented yet.</ul><h3> Methods</h3><ul><li><a href='#H3DU.MeshBuffer.fromPositions'>fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.<li><a href='#H3DU.MeshBuffer.fromPositionsNormals'>fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.<li><a href='#H3DU.MeshBuffer.fromPositionsNormalsUV'>fromPositionsNormalsUV</a><br>Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.<li><a href='#H3DU.MeshBuffer.fromPositionsUV'>fromPositionsUV</a><br>Creates a new mesh buffer with the given array of vertex positions
 and texture coordinates.<li><a href='#H3DU.MeshBuffer_getAttribute'>getAttribute</a><br>Gets a vertex attribute included in this mesh buffer.<li><a href='#H3DU.MeshBuffer_getBounds'>getBounds</a><br>Finds the tightest

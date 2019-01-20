@@ -15,6 +15,34 @@ can store vertices that make up triangles, line segments, or points.
 This constructor creates an empty mesh buffer and sets the array
 of vertex indices to null.
 
+#### Examples
+
+The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). This example requires the three.js library.
+
+    function toBufferGeometry(mesh) {
+    var p=mesh.getAttribute("POSITION")
+    var n=mesh.getAttribute("NORMAL")
+    var t=mesh.getAttribute("TEXCOORD_0")
+    var c=mesh.getAttribute("COLOR")
+    var ind=mesh.getIndices()
+    var geom=new THREE.BufferGeometry()
+    var attributes=[p,n,t,c]
+    var attributeNames=["position","normal","uv","color"]
+    for(var i=0;i<attributes.length;i++) {
+    if(attributes[i]) {
+    var a=attributes[i]
+    //console.log(a)
+    var attr=new THREE.InterleavedBufferAttribute(
+    new THREE.InterleavedBuffer(a.buffer,a.stride),
+    a.countPerValue,a.offset)
+    geom.addAttribute(attributeNames[i],attr)
+    }
+    }
+    if(ind)geom.index=new THREE.BufferAttribute(
+    ind,1)
+    return geom
+    }
+
 ### Members
 
 * [LINES](#H3DU.MeshBuffer.LINES)<br>TODO: Not documented yet.

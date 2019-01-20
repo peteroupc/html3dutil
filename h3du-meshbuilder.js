@@ -44,27 +44,27 @@ export var SurfaceBuilder = function() {
 
 /** @ignore */
 CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
-  var maxIndex = 0;
+  let maxIndex = 0;
   for(var i = indices.length - 1; i >= 0; i--) {
     maxIndex = Math.max(maxIndex, indices[i]);
     if(maxIndex >= 65536)break;
   }
-  var mb = new MeshBuffer();
-  var indexArray = maxIndex < 65536 ?
+  const mb = new MeshBuffer();
+  const indexArray = maxIndex < 65536 ?
     new Uint16Array(indices) :
     new Uint32Array(indices);
   mb.setPrimitiveType(mode);
   mb.setIndices(indexArray);
   for(i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+    const a = attributes[i];
     mb.setAttributeEx(a[0], a[1], a[3], a[2]);
   }
   return mb;
 };
 /** @ignore */
 CurveBuilder._blank = function(count) {
-  var ret = [];
-  for(var i = 0; i < count; i++) {
+  const ret = [];
+  for(let i = 0; i < count; i++) {
     ret.push(0);
   }
   return ret;
@@ -72,13 +72,13 @@ CurveBuilder._blank = function(count) {
 /** @ignore */
 CurveBuilder._resize = function(a, newsize) {
   if(a[2] !== newsize) {
-    var oldcount = a[3].length / a[2];
-    var minsize = Math.min(a[2], newsize);
-    var arr = CurveBuilder._blank(oldcount * newsize);
-    var oldindex = 0;
-    var newindex = 0;
-    for(var i = 0; i < oldcount; i++) {
-      for(var j = 0; j < minsize; j++) {
+    const oldcount = a[3].length / a[2];
+    const minsize = Math.min(a[2], newsize);
+    const arr = CurveBuilder._blank(oldcount * newsize);
+    let oldindex = 0;
+    let newindex = 0;
+    for(let i = 0; i < oldcount; i++) {
+      for(let j = 0; j < minsize; j++) {
         arr[newindex + j] = a[3][oldindex + j];
       }
       oldindex += a[2];
@@ -90,7 +90,7 @@ CurveBuilder._resize = function(a, newsize) {
 };
 /** @ignore */
 CurveBuilder._addValue = function(a, value) {
-  var mm = Math.min(value.length, a[2]);
+  const mm = Math.min(value.length, a[2]);
   for(var i = 0; i < mm; i++) {
     a[3].push(value[i]);
   }
@@ -100,10 +100,10 @@ CurveBuilder._addValue = function(a, value) {
 };
 /** @ignore */
 CurveBuilder._defaultEndPointsCurve = function(attributes) {
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
-      var a4 = a[4];
+      const a4 = a[4];
       if(typeof a4.endPoints !== "undefined" && a4.endPoints !== null) {
         return a[4].endPoints();
       }
@@ -115,10 +115,10 @@ CurveBuilder._defaultEndPointsCurve = function(attributes) {
 
 /** @ignore */
 CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
-      var a4 = a[4];
+      const a4 = a[4];
       return Math.max(200, Math.ceil(new Curve(a4).getLength() / 4));
     }
   }
@@ -126,10 +126,10 @@ CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
 };
 /** @ignore */
 CurveBuilder._defaultEndPointsSurface = function(attributes) {
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
-      var a4 = a[4];
+      const a4 = a[4];
       if(typeof a4 !== "undefined" && a4 !== null && (typeof a4.endPoints !== "undefined" && a4.endPoints !== null)) {
         return a[4].endPoints();
       }
@@ -153,16 +153,16 @@ CurveBuilder._toSurface = function(surface) {
 CurveBuilder._setAttribute = function(
   attributes, vertexCount, curve, semantic, semanticIndex, size
 ) {
-  var sizeValue = typeof size === "undefined" || size === null ? 3 : size;
-  var semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ?
+  const sizeValue = typeof size === "undefined" || size === null ? 3 : size;
+  const semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ?
     0 : semanticIndex;
-  var iscurve = typeof curve !== "undefined" && curve !== null;
+  const iscurve = typeof curve !== "undefined" && curve !== null;
   if(size <= 0)throw new Error("Invalid attribute size");
-  var sem = MeshBuffer._resolveSemantic(semantic,
+  const sem = MeshBuffer._resolveSemantic(semantic,
     semanticIndexValue);
   if(typeof sem === "undefined" || sem === null)throw new Error();
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === sem[0] && a[1] === sem[1]) {
       if(iscurve) {
         a[4] = curve;
@@ -176,7 +176,7 @@ CurveBuilder._setAttribute = function(
     }
   }
   if(iscurve) {
-    var newAttr = [sem[0], sem[1], sizeValue,
+    const newAttr = [sem[0], sem[1], sizeValue,
       CurveBuilder._blank(sizeValue * vertexCount), curve];
     attributes.push(newAttr);
   }
@@ -205,7 +205,7 @@ CurveBuilder._NormalSurface = function(surface) {
 CurveBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
-  for(var i = 0; i < this.attributes.length; i++) {
+  for(let i = 0; i < this.attributes.length; i++) {
     this.attributes[i][3] = [];
   }
   return this;
@@ -306,7 +306,7 @@ CurveBuilder.prototype.constantAttribute = function(
  * curve.constantColor("red");
  */
 CurveBuilder.prototype.constantColor = function(color, semanticIndex) {
-  var c = toGLColor(color);
+  const c = toGLColor(color);
   return this.constantAttribute([c[0], c[1], c[2]],
     Semantic.COLOR, semanticIndex);
 };
@@ -341,7 +341,7 @@ CurveBuilder.curveToBuffer = function(curve, mode, n, u1, u2) {
 SurfaceBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
-  for(var i = 0; i < this.attributes.length; i++) {
+  for(let i = 0; i < this.attributes.length; i++) {
     this.attributes[i][3] = [];
   }
   return this;
@@ -395,7 +395,7 @@ SurfaceBuilder.prototype.texCoord = function(surface, size) {
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormal = function(surface, size) {
-  var norm = typeof surface !== "undefined" && surface !== null ? new CurveBuilder._NormalSurface(surface) : null;
+  const norm = typeof surface !== "undefined" && surface !== null ? new CurveBuilder._NormalSurface(surface) : null;
   return this.attribute(surface, Semantic.POSITION, 0, size)
     .attribute(norm, Semantic.NORMAL, 0, size);
 };
@@ -403,7 +403,7 @@ SurfaceBuilder.prototype.positionNormal = function(surface, size) {
  * @constructor
  * @ignore */
 SurfaceBuilder._TexCoord = function(s) {
-  var ep = new Surface(s).endPoints();
+  const ep = new Surface(s).endPoints();
   this.u1 = ep[0];
   this.v1 = ep[2];
   this.uinv = ep[0] === ep[1] ? 0 : 1 / (ep[1] - ep[0]);
@@ -427,7 +427,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
-  var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
+  const tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
   return this.attribute(surface, Semantic.POSITION, 0, size)
     .attribute(tc, Semantic.TEXCOORD, 0, 2);
 };
@@ -447,7 +447,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
-  var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
+  const tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
   return this.positionNormal(surface, size)
     .attribute(tc, Semantic.TEXCOORD, 0, 2);
 };
@@ -533,7 +533,7 @@ SurfaceBuilder.prototype.constantAttribute = function(constantValue, semantic, s
  * surface.constantColor("red");
  */
 SurfaceBuilder.prototype.constantColor = function(color, semanticIndex) {
-  var c = toGLColor(color);
+  const c = toGLColor(color);
   return this.constantAttribute([c[0], c[1], c[2]],
     Semantic.COLOR, semanticIndex);
 };
@@ -595,13 +595,13 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
   if(typeof u1 === "undefined" || u1 === null ||
      (typeof u2 === "undefined" || u2 === null)) {
-    var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
+    const ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
     u2 = ep[1];
   }
-  var i;
-  var uv = (u2 - u1) / n;
-  var firstIndex = this.vertexCount;
+  let i;
+  const uv = (u2 - u1) / n;
+  const firstIndex = this.vertexCount;
   if(mode === MeshBuffer.LINES || (typeof mode === "undefined" || mode === null)) {
     for(i = 0; i < n; i++) {
       this.indices.push(firstIndex + i, firstIndex + i + 1);
@@ -617,10 +617,10 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   }
   this.mode = mode;
   for(i = 0; i <= n; i++) {
-    var u = u1 + i * uv;
-    for(var j = 0; j < this.attributes.length; j++) {
-      var a = this.attributes[j];
-      var value = typeof a[4] !== "undefined" && a[4] !== null ? a[4].evaluate(u) : [];
+    const u = u1 + i * uv;
+    for(let j = 0; j < this.attributes.length; j++) {
+      const a = this.attributes[j];
+      const value = typeof a[4] !== "undefined" && a[4] !== null ? a[4].evaluate(u) : [];
       CurveBuilder._addValue(a, value);
     }
   }
@@ -655,7 +655,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   if(vn <= 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.TRIANGLES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null) || (typeof v1 === "undefined" || v1 === null) || (typeof v2 === "undefined" || v2 === null)) {
-    var ep = CurveBuilder._defaultEndPointsSurface(this.attributes);
+    const ep = CurveBuilder._defaultEndPointsSurface(this.attributes);
     u1 = ep[0];
     u2 = ep[1];
     v1 = ep[2];
@@ -664,19 +664,19 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   if(mode !== MeshBuffer.TRIANGLES && mode !== MeshBuffer.LINES && mode !== MeshBuffer.POINTS) {
     return this;
   }
-  var u, v, i, j;
-  var du = (u2 - u1) / un;
-  var dv = (v2 - v1) / vn;
-  var numVertices = (vn + 1) * (un + 1);
-  var firstVertex = this.vertexCount;
+  let u, v, i, j;
+  const du = (u2 - u1) / un;
+  const dv = (v2 - v1) / vn;
+  const numVertices = (vn + 1) * (un + 1);
+  const firstVertex = this.vertexCount;
   this.vertexCount += numVertices;
   for(i = 0; i <= vn; i++) {
     for(j = 0; j <= un; j++) {
       u = j * du + u1;
       v = i * dv + v1;
-      for(var k = 0; k < this.attributes.length; k++) {
-        var a = this.attributes[k];
-        var value = typeof a[4] !== "undefined" && a[4] !== null ?
+      for(let k = 0; k < this.attributes.length; k++) {
+        const a = this.attributes[k];
+        const value = typeof a[4] !== "undefined" && a[4] !== null ?
           a[4].evaluate(u, v) : [];
         CurveBuilder._addValue(a, value);
       }
@@ -685,18 +685,18 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   this.mode = mode;
   if(mode === MeshBuffer.TRIANGLES) {
     var unp1 = un + 1;
-    for(var y = 0; y < vn; y++) {
-      for(var x = 0; x < un; x++) {
-        var index0 = y * unp1 + x + firstVertex;
+    for(let y = 0; y < vn; y++) {
+      for(let x = 0; x < un; x++) {
+        const index0 = y * unp1 + x + firstVertex;
         var index1 = index0 + unp1;
         var index2 = index0 + 1;
-        var index3 = index1 + 1;
+        const index3 = index1 + 1;
         this.indices.push(index0, index1, index2);
         this.indices.push(index2, index1, index3);
       }
     }
   } else if(mode === MeshBuffer.POINTS) {
-    var lastVertex = this.vertexCount;
+    const lastVertex = this.vertexCount;
     for(i = firstVertex; i < lastVertex; i++) {
       this.indices.push(i);
     }

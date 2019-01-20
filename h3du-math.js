@@ -18,145 +18,145 @@
 var MathUtil = {
 /** @ignore */
   "_frustumPoints":function(frustum) {
-    var p0 = frustum[0];
-    var p1 = frustum[1];
-    var p2 = frustum[2];
-    var p3 = frustum[3];
-    var p4 = frustum[4];
-    var p5 = frustum[5];
+    const p0 = frustum[0];
+    const p1 = frustum[1];
+    const p2 = frustum[2];
+    const p3 = frustum[3];
+    const p4 = frustum[4];
+    const p5 = frustum[5];
     // left-top-near, left-bottom-near, right-top-near, ..., right-bottom-far
-    var ret = [];
-    var t1 = p2[1] * p4[2];
-    var t2 = p2[2] * p4[1];
-    var t3 = t1 - t2;
-    var t4 = p2[2] * p4[0];
-    var t5 = p2[0] * p4[2];
-    var t6 = t4 - t5;
-    var t7 = p2[0] * p4[1];
-    var t8 = p2[1] * p4[0];
-    var t9 = t7 - t8;
-    var t10 = p0[2] * p2[0];
-    var t11 = p0[0] * p2[2];
-    var t12 = p0[0] * p2[1];
-    var t13 = p0[1] * p2[0];
-    var t14 = p4[2] * p0[0];
-    var t15 = p4[0] * p0[2];
-    var t16 = p4[0] * p0[1];
-    var t17 = p4[1] * p0[0];
-    var t18 = 1.0 / (p0[0] * t3 + p0[1] * t6 + p0[2] * t9);
-    var t19 = p4[1] * p0[2];
-    var t20 = p4[2] * p0[1];
-    var t21 = p0[1] * p2[2];
-    var t22 = p0[2] * p2[1];
-    var t23 = -p0[3];
-    var t24 = -p2[3];
-    var t25 = -p4[3];
+    const ret = [];
+    const t1 = p2[1] * p4[2];
+    const t2 = p2[2] * p4[1];
+    const t3 = t1 - t2;
+    const t4 = p2[2] * p4[0];
+    const t5 = p2[0] * p4[2];
+    const t6 = t4 - t5;
+    const t7 = p2[0] * p4[1];
+    const t8 = p2[1] * p4[0];
+    const t9 = t7 - t8;
+    const t10 = p0[2] * p2[0];
+    const t11 = p0[0] * p2[2];
+    const t12 = p0[0] * p2[1];
+    const t13 = p0[1] * p2[0];
+    const t14 = p4[2] * p0[0];
+    const t15 = p4[0] * p0[2];
+    const t16 = p4[0] * p0[1];
+    const t17 = p4[1] * p0[0];
+    const t18 = 1.0 / (p0[0] * t3 + p0[1] * t6 + p0[2] * t9);
+    const t19 = p4[1] * p0[2];
+    const t20 = p4[2] * p0[1];
+    const t21 = p0[1] * p2[2];
+    const t22 = p0[2] * p2[1];
+    const t23 = -p0[3];
+    const t24 = -p2[3];
+    const t25 = -p4[3];
     ret[0] = (t3 * t23 + (t19 - t20) * t24 + (t21 - t22) * t25) * t18;
     ret[1] = (t6 * t23 + (t14 - t15) * t24 + (t10 - t11) * t25) * t18;
     ret[2] = (t9 * t23 + (t16 - t17) * t24 + (t12 - t13) * t25) * t18;
-    var t26 = p3[1] * p4[2];
-    var t27 = p3[2] * p4[1];
-    var t28 = t26 - t27;
-    var t29 = p3[2] * p4[0];
-    var t30 = p3[0] * p4[2];
-    var t31 = t29 - t30;
-    var t32 = p3[0] * p4[1];
-    var t33 = p3[1] * p4[0];
-    var t34 = t32 - t33;
-    var t35 = p0[2] * p3[0];
-    var t36 = p0[0] * p3[2];
-    var t37 = p0[0] * p3[1];
-    var t38 = p0[1] * p3[0];
-    var t39 = 1.0 / (p0[0] * t28 + p0[1] * t31 + p0[2] * t34);
-    var t40 = p0[1] * p3[2];
-    var t41 = p0[2] * p3[1];
-    var t42 = -p3[3];
+    const t26 = p3[1] * p4[2];
+    const t27 = p3[2] * p4[1];
+    const t28 = t26 - t27;
+    const t29 = p3[2] * p4[0];
+    const t30 = p3[0] * p4[2];
+    const t31 = t29 - t30;
+    const t32 = p3[0] * p4[1];
+    const t33 = p3[1] * p4[0];
+    const t34 = t32 - t33;
+    const t35 = p0[2] * p3[0];
+    const t36 = p0[0] * p3[2];
+    const t37 = p0[0] * p3[1];
+    const t38 = p0[1] * p3[0];
+    const t39 = 1.0 / (p0[0] * t28 + p0[1] * t31 + p0[2] * t34);
+    const t40 = p0[1] * p3[2];
+    const t41 = p0[2] * p3[1];
+    const t42 = -p3[3];
     ret[3] = (t28 * t23 + (t19 - t20) * t42 + (t40 - t41) * t25) * t39;
     ret[4] = (t31 * t23 + (t14 - t15) * t42 + (t35 - t36) * t25) * t39;
     ret[5] = (t34 * t23 + (t16 - t17) * t42 + (t37 - t38) * t25) * t39;
-    var t43 = t1 - t2;
-    var t44 = t4 - t5;
-    var t45 = t7 - t8;
-    var t46 = p1[2] * p2[0];
-    var t47 = p1[0] * p2[2];
-    var t48 = p1[0] * p2[1];
-    var t49 = p1[1] * p2[0];
-    var t50 = p4[2] * p1[0];
-    var t51 = p4[0] * p1[2];
-    var t52 = p4[0] * p1[1];
-    var t53 = p4[1] * p1[0];
-    var t54 = 1.0 / (p1[0] * t43 + p1[1] * t44 + p1[2] * t45);
-    var t55 = p4[1] * p1[2];
-    var t56 = p4[2] * p1[1];
-    var t57 = p1[1] * p2[2];
-    var t58 = p1[2] * p2[1];
-    var t59 = -p1[3];
+    const t43 = t1 - t2;
+    const t44 = t4 - t5;
+    const t45 = t7 - t8;
+    const t46 = p1[2] * p2[0];
+    const t47 = p1[0] * p2[2];
+    const t48 = p1[0] * p2[1];
+    const t49 = p1[1] * p2[0];
+    const t50 = p4[2] * p1[0];
+    const t51 = p4[0] * p1[2];
+    const t52 = p4[0] * p1[1];
+    const t53 = p4[1] * p1[0];
+    const t54 = 1.0 / (p1[0] * t43 + p1[1] * t44 + p1[2] * t45);
+    const t55 = p4[1] * p1[2];
+    const t56 = p4[2] * p1[1];
+    const t57 = p1[1] * p2[2];
+    const t58 = p1[2] * p2[1];
+    const t59 = -p1[3];
     ret[6] = (t43 * t59 + (t55 - t56) * t24 + (t57 - t58) * t25) * t54;
     ret[7] = (t44 * t59 + (t50 - t51) * t24 + (t46 - t47) * t25) * t54;
     ret[8] = (t45 * t59 + (t52 - t53) * t24 + (t48 - t49) * t25) * t54;
-    var t60 = t26 - t27;
-    var t61 = t29 - t30;
-    var t62 = t32 - t33;
-    var t63 = p1[2] * p3[0];
-    var t64 = p1[0] * p3[2];
-    var t65 = p1[0] * p3[1];
-    var t66 = p1[1] * p3[0];
-    var t67 = 1.0 / (p1[0] * t60 + p1[1] * t61 + p1[2] * t62);
-    var t68 = p1[1] * p3[2];
-    var t69 = p1[2] * p3[1];
+    const t60 = t26 - t27;
+    const t61 = t29 - t30;
+    const t62 = t32 - t33;
+    const t63 = p1[2] * p3[0];
+    const t64 = p1[0] * p3[2];
+    const t65 = p1[0] * p3[1];
+    const t66 = p1[1] * p3[0];
+    const t67 = 1.0 / (p1[0] * t60 + p1[1] * t61 + p1[2] * t62);
+    const t68 = p1[1] * p3[2];
+    const t69 = p1[2] * p3[1];
     ret[9] = (t60 * t59 + (t55 - t56) * t42 + (t68 - t69) * t25) * t67;
     ret[10] = (t61 * t59 + (t50 - t51) * t42 + (t63 - t64) * t25) * t67;
     ret[11] = (t62 * t59 + (t52 - t53) * t42 + (t65 - t66) * t25) * t67;
-    var t70 = p2[1] * p5[2];
-    var t71 = p2[2] * p5[1];
-    var t72 = t70 - t71;
-    var t73 = p2[2] * p5[0];
-    var t74 = p2[0] * p5[2];
-    var t75 = t73 - t74;
-    var t76 = p2[0] * p5[1];
-    var t77 = p2[1] * p5[0];
-    var t78 = t76 - t77;
-    var t79 = p5[2] * p0[0];
-    var t80 = p5[0] * p0[2];
-    var t81 = p5[0] * p0[1];
-    var t82 = p5[1] * p0[0];
-    var t83 = 1.0 / (p0[0] * t72 + p0[1] * t75 + p0[2] * t78);
-    var t84 = p5[1] * p0[2];
-    var t85 = p5[2] * p0[1];
-    var t86 = -p5[3];
+    const t70 = p2[1] * p5[2];
+    const t71 = p2[2] * p5[1];
+    const t72 = t70 - t71;
+    const t73 = p2[2] * p5[0];
+    const t74 = p2[0] * p5[2];
+    const t75 = t73 - t74;
+    const t76 = p2[0] * p5[1];
+    const t77 = p2[1] * p5[0];
+    const t78 = t76 - t77;
+    const t79 = p5[2] * p0[0];
+    const t80 = p5[0] * p0[2];
+    const t81 = p5[0] * p0[1];
+    const t82 = p5[1] * p0[0];
+    const t83 = 1.0 / (p0[0] * t72 + p0[1] * t75 + p0[2] * t78);
+    const t84 = p5[1] * p0[2];
+    const t85 = p5[2] * p0[1];
+    const t86 = -p5[3];
     ret[12] = (t72 * t23 + (t84 - t85) * t24 + (t21 - t22) * t86) * t83;
     ret[13] = (t75 * t23 + (t79 - t80) * t24 + (t10 - t11) * t86) * t83;
     ret[14] = (t78 * t23 + (t81 - t82) * t24 + (t12 - t13) * t86) * t83;
-    var t87 = p3[1] * p5[2];
-    var t88 = p3[2] * p5[1];
-    var t89 = t87 - t88;
-    var t90 = p3[2] * p5[0];
-    var t91 = p3[0] * p5[2];
-    var t92 = t90 - t91;
-    var t93 = p3[0] * p5[1];
-    var t94 = p3[1] * p5[0];
-    var t95 = t93 - t94;
-    var t96 = 1.0 / (p0[0] * t89 + p0[1] * t92 + p0[2] * t95);
+    const t87 = p3[1] * p5[2];
+    const t88 = p3[2] * p5[1];
+    const t89 = t87 - t88;
+    const t90 = p3[2] * p5[0];
+    const t91 = p3[0] * p5[2];
+    const t92 = t90 - t91;
+    const t93 = p3[0] * p5[1];
+    const t94 = p3[1] * p5[0];
+    const t95 = t93 - t94;
+    const t96 = 1.0 / (p0[0] * t89 + p0[1] * t92 + p0[2] * t95);
     ret[15] = (t89 * t23 + (t84 - t85) * t42 + (t40 - t41) * t86) * t96;
     ret[16] = (t92 * t23 + (t79 - t80) * t42 + (t35 - t36) * t86) * t96;
     ret[17] = (t95 * t23 + (t81 - t82) * t42 + (t37 - t38) * t86) * t96;
-    var t97 = t70 - t71;
-    var t98 = t73 - t74;
-    var t99 = t76 - t77;
-    var t100 = p5[2] * p1[0];
-    var t101 = p5[0] * p1[2];
-    var t102 = p5[0] * p1[1];
-    var t103 = p5[1] * p1[0];
-    var t104 = 1.0 / (p1[0] * t97 + p1[1] * t98 + p1[2] * t99);
-    var t105 = p5[1] * p1[2];
-    var t106 = p5[2] * p1[1];
+    const t97 = t70 - t71;
+    const t98 = t73 - t74;
+    const t99 = t76 - t77;
+    const t100 = p5[2] * p1[0];
+    const t101 = p5[0] * p1[2];
+    const t102 = p5[0] * p1[1];
+    const t103 = p5[1] * p1[0];
+    const t104 = 1.0 / (p1[0] * t97 + p1[1] * t98 + p1[2] * t99);
+    const t105 = p5[1] * p1[2];
+    const t106 = p5[2] * p1[1];
     ret[18] = (t97 * t59 + (t105 - t106) * t24 + (t57 - t58) * t86) * t104;
     ret[19] = (t98 * t59 + (t100 - t101) * t24 + (t46 - t47) * t86) * t104;
     ret[20] = (t99 * t59 + (t102 - t103) * t24 + (t48 - t49) * t86) * t104;
-    var t107 = t87 - t88;
-    var t108 = t90 - t91;
-    var t109 = t93 - t94;
-    var t110 = 1.0 / (p1[0] * t107 + p1[1] * t108 + p1[2] * t109);
+    const t107 = t87 - t88;
+    const t108 = t90 - t91;
+    const t109 = t93 - t94;
+    const t110 = 1.0 / (p1[0] * t107 + p1[1] * t108 + p1[2] * t109);
     ret[21] = (t107 * t59 + (t105 - t106) * t42 + (t68 - t69) * t86) * t110;
     ret[22] = (t108 * t59 + (t100 - t101) * t42 + (t63 - t64) * t86) * t110;
     ret[23] = (t109 * t59 + (t102 - t103) * t42 + (t65 - t66) * t86) * t110;
@@ -274,11 +274,11 @@ var MathUtil = {
       return false;
     }
     for(var i = 0; i < 6; i++) {
-      var plane = frustum[i];
-      var p3 = plane[3];
-      var p0b0 = plane[0] * box[0];
-      var p2b2 = plane[2] * box[2];
-      var p1b1 = plane[1] * box[1];
+      const plane = frustum[i];
+      const p3 = plane[3];
+      const p0b0 = plane[0] * box[0];
+      const p2b2 = plane[2] * box[2];
+      const p1b1 = plane[1] * box[1];
       if( p0b0 + p1b1 + p2b2 + p3 <= 0.0 &&
       plane[0] * box[3] + plane[1] * box[4] + plane[2] * box[5] + p3 <= 0.0 &&
       p0b0 + plane[1] * box[4] + p2b2 + p3 <= 0.0 &&
@@ -292,15 +292,15 @@ var MathUtil = {
     }
     // To increase robustness in frustum culling; see
     // <http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm>
-    var pts = MathUtil._frustumPoints(frustum);
+    const pts = MathUtil._frustumPoints(frustum);
     for(i = 0; i < 3; i++) {
-      var minval = box[i];
+      const minval = box[i];
       if(pts[i] < minval && pts[3 + i] < minval && pts[6 + i] < minval &&
       pts[9 + i] < minval && pts[12 + i] < minval && pts[15 + i] < minval &&
     pts[18 + i] < minval && pts[21 + i] < minval) {
         return false;
       }
-      var maxval = box[i + 3];
+      const maxval = box[i + 3];
       if(pts[i] > maxval && pts[3 + i] > maxval && pts[6 + i] > maxval &&
       pts[9 + i] > maxval && pts[12 + i] > maxval && pts[15 + i] > maxval &&
     pts[18 + i] > maxval && pts[21 + i] > maxval) {
@@ -326,8 +326,8 @@ var MathUtil = {
    * otherwise false;
    */
   "frustumHasPoint":function(frustum, x, y, z) {
-    for(var i = 0; i < 6; i++) {
-      var d = frustum[i][0] * x + frustum[i][1] * y +
+    for(let i = 0; i < 6; i++) {
+      const d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
       if(d <= 0)return false;
     }
@@ -354,9 +354,9 @@ var MathUtil = {
    */
   "frustumHasSphere":function(frustum, x, y, z, radius) {
     if(radius < 0)throw new Error("radius is negative");
-    for(var i = 0; i < 6; i++) {
-      var plane = frustum[i];
-      var dot = plane[3] + plane[0] * x +
+    for(let i = 0; i < 6; i++) {
+      const plane = frustum[i];
+      const dot = plane[3] + plane[0] * x +
      plane[1] * y + plane[2] * z;
       if(dot < -radius)return false;
     }
@@ -386,11 +386,11 @@ var MathUtil = {
    * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
    */
   "mat3invert":function(m) {
-    var ret = [];
-    var t4 = m[4] * m[8] - m[5] * m[7];
-    var t5 = m[5] * m[6] - m[3] * m[8];
-    var t6 = m[3] * m[7] - m[4] * m[6];
-    var t7 = 1.0 / (
+    const ret = [];
+    const t4 = m[4] * m[8] - m[5] * m[7];
+    const t5 = m[5] * m[6] - m[3] * m[8];
+    const t6 = m[3] * m[7] - m[4] * m[6];
+    const t7 = 1.0 / (
       m[0] * t4 + m[1] * t5 + m[2] * t6);
     if(t7 === 0)return MathUtil.mat3identity();
     ret[0] = t4 * t7;
@@ -420,7 +420,7 @@ var MathUtil = {
    * @returns {Array<number>} The resulting 3x3 matrix.
    */
   "mat3multiply":function(a, b) {
-    var ret = [];
+    const ret = [];
     ret[0] = b[0] * a[0] + b[1] * a[3] + b[2] * a[6];
     ret[1] = b[0] * a[1] + b[1] * a[4] + b[2] * a[7];
     ret[2] = b[0] * a[2] + b[1] * a[5] + b[2] * a[8];
@@ -452,7 +452,7 @@ var MathUtil = {
    * @returns {Array<number>} The transformed vector.
    */
   "mat3transform":function(mat, v, vy, vz) {
-    var x, y, z;
+    let x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -483,7 +483,7 @@ var MathUtil = {
    * @returns {Array<number>} The parameter "mat".
    */
   "mat3transposeInPlace":function(mat) {
-    var tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
+    let tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
     tmp = mat[2]; mat[2] = mat[6]; mat[6] = tmp;
     tmp = mat[5]; mat[5] = mat[7]; mat[7] = tmp;
     return mat;
@@ -543,10 +543,10 @@ var MathUtil = {
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4frustum":function(l, r, b, t, near, far) {
-    var dn = 2 * near;
-    var onedx = 1 / (r - l);
-    var onedy = 1 / (t - b);
-    var onedz = 1 / (far - near);
+    const dn = 2 * near;
+    const onedx = 1 / (r - l);
+    const onedy = 1 / (t - b);
+    const onedz = 1 / (far - near);
     return [
       dn * onedx, 0, 0, 0,
       0, dn * onedy, 0, 0,
@@ -588,9 +588,9 @@ var MathUtil = {
         return [1, 0, 0, 0, 1, 0, 0, 0, 1];
       }
     }
-    var m = [m4[0], m4[1], m4[2], m4[4], m4[5], m4[6],
+    const m = [m4[0], m4[1], m4[2], m4[4], m4[5], m4[6],
       m4[8], m4[9], m4[10]];
-    var det = m[0] * m[4] * m[8] +
+    let det = m[0] * m[4] * m[8] +
 m[3] * m[7] * m[2] +
 m[6] * m[1] * m[5] -
 m[6] * m[4] * m[2] -
@@ -618,62 +618,62 @@ m[0] * m[7] * m[5];
    * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
    */
   "mat4invert":function(m) {
-    var tvar0 = m[0] * m[10];
-    var tvar1 = m[0] * m[11];
-    var tvar2 = m[0] * m[5];
-    var tvar3 = m[0] * m[6];
-    var tvar4 = m[0] * m[7];
-    var tvar5 = m[0] * m[9];
-    var tvar6 = m[10] * m[12];
-    var tvar7 = m[10] * m[13];
-    var tvar8 = m[10] * m[15];
-    var tvar9 = m[11] * m[12];
-    var tvar10 = m[11] * m[13];
-    var tvar11 = m[11] * m[14];
-    var tvar14 = m[1] * m[4];
-    var tvar15 = m[1] * m[6];
-    var tvar16 = m[1] * m[7];
-    var tvar17 = m[1] * m[8];
-    var tvar19 = m[2] * m[4];
-    var tvar20 = m[2] * m[5];
-    var tvar21 = m[2] * m[7];
-    var tvar22 = m[2] * m[8];
-    var tvar23 = m[2] * m[9];
-    var tvar25 = m[3] * m[4];
-    var tvar26 = m[3] * m[5];
-    var tvar27 = m[3] * m[6];
-    var tvar28 = m[3] * m[8];
-    var tvar29 = m[3] * m[9];
-    var tvar32 = m[4] * m[9];
-    var tvar35 = m[5] * m[8];
-    var tvar37 = m[6] * m[8];
-    var tvar38 = m[6] * m[9];
-    var tvar40 = m[7] * m[8];
-    var tvar41 = m[7] * m[9];
-    var tvar42 = m[8] * m[13];
-    var tvar43 = m[8] * m[14];
-    var tvar44 = m[8] * m[15];
-    var tvar45 = m[9] * m[12];
-    var tvar46 = m[9] * m[14];
-    var tvar47 = m[9] * m[15];
-    var tvar48 = tvar14 - tvar2;
-    var tvar49 = tvar15 - tvar20;
-    var tvar50 = tvar16 - tvar26;
-    var tvar51 = tvar19 - tvar3;
-    var tvar52 = tvar2 - tvar14;
-    var tvar53 = tvar20 - tvar15;
-    var tvar54 = tvar21 - tvar27;
-    var tvar55 = tvar25 - tvar4;
-    var tvar56 = tvar26 - tvar16;
-    var tvar57 = tvar27 - tvar21;
-    var tvar58 = tvar3 - tvar19;
-    var tvar59 = tvar4 - tvar25;
-    var det = tvar45 * tvar57 + tvar6 * tvar50 + tvar9 * tvar53 + tvar42 * tvar54 + tvar7 * tvar55 +
+    const tvar0 = m[0] * m[10];
+    const tvar1 = m[0] * m[11];
+    const tvar2 = m[0] * m[5];
+    const tvar3 = m[0] * m[6];
+    const tvar4 = m[0] * m[7];
+    const tvar5 = m[0] * m[9];
+    const tvar6 = m[10] * m[12];
+    const tvar7 = m[10] * m[13];
+    const tvar8 = m[10] * m[15];
+    const tvar9 = m[11] * m[12];
+    const tvar10 = m[11] * m[13];
+    const tvar11 = m[11] * m[14];
+    const tvar14 = m[1] * m[4];
+    const tvar15 = m[1] * m[6];
+    const tvar16 = m[1] * m[7];
+    const tvar17 = m[1] * m[8];
+    const tvar19 = m[2] * m[4];
+    const tvar20 = m[2] * m[5];
+    const tvar21 = m[2] * m[7];
+    const tvar22 = m[2] * m[8];
+    const tvar23 = m[2] * m[9];
+    const tvar25 = m[3] * m[4];
+    const tvar26 = m[3] * m[5];
+    const tvar27 = m[3] * m[6];
+    const tvar28 = m[3] * m[8];
+    const tvar29 = m[3] * m[9];
+    const tvar32 = m[4] * m[9];
+    const tvar35 = m[5] * m[8];
+    const tvar37 = m[6] * m[8];
+    const tvar38 = m[6] * m[9];
+    const tvar40 = m[7] * m[8];
+    const tvar41 = m[7] * m[9];
+    const tvar42 = m[8] * m[13];
+    const tvar43 = m[8] * m[14];
+    const tvar44 = m[8] * m[15];
+    const tvar45 = m[9] * m[12];
+    const tvar46 = m[9] * m[14];
+    const tvar47 = m[9] * m[15];
+    const tvar48 = tvar14 - tvar2;
+    const tvar49 = tvar15 - tvar20;
+    const tvar50 = tvar16 - tvar26;
+    const tvar51 = tvar19 - tvar3;
+    const tvar52 = tvar2 - tvar14;
+    const tvar53 = tvar20 - tvar15;
+    const tvar54 = tvar21 - tvar27;
+    const tvar55 = tvar25 - tvar4;
+    const tvar56 = tvar26 - tvar16;
+    const tvar57 = tvar27 - tvar21;
+    const tvar58 = tvar3 - tvar19;
+    const tvar59 = tvar4 - tvar25;
+    let det = tvar45 * tvar57 + tvar6 * tvar50 + tvar9 * tvar53 + tvar42 * tvar54 + tvar7 * tvar55 +
 tvar10 * tvar58 + tvar43 * tvar56 + tvar46 * tvar59 + tvar11 * tvar48 + tvar44 * tvar49 +
 tvar47 * tvar51 + tvar8 * tvar52;
     if(det === 0)return MathUtil.mat4identity();
     det = 1.0 / det;
-    var r = [];
+    const r = [];
     r[0] = m[6] * tvar10 - m[7] * tvar7 + tvar41 * m[14] - m[5] * tvar11 - tvar38 * m[15] + m[5] * tvar8;
     r[1] = m[3] * tvar7 - m[2] * tvar10 - tvar29 * m[14] + m[1] * tvar11 + tvar23 * m[15] - m[1] * tvar8;
     r[2] = m[13] * tvar54 + m[14] * tvar56 + m[15] * tvar49;
@@ -690,7 +690,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     r[13] = m[1] * tvar6 - tvar23 * m[12] + m[13] * (tvar22 - tvar0) + m[14] * (tvar5 - tvar17);
     r[14] = m[12] * tvar53 + m[13] * tvar58 + m[14] * tvar48;
     r[15] = m[8] * tvar49 + m[9] * tvar51 + m[10] * tvar52;
-    for(var i = 0; i < 16; i++) {
+    for(let i = 0; i < 16; i++) {
       r[i] *= det;
     }
     return r;
@@ -784,8 +784,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "mat4lookat":function(viewerPos, lookingAt, up) {
     if(typeof up === "undefined" || up === null)up = [0, 1, 0];
     if(typeof lookingAt === "undefined" || lookingAt === null)lookingAt = [0, 0, 0];
-    var f = MathUtil.vec3sub(lookingAt, viewerPos);
-    var len = MathUtil.vec3length(f);
+    const f = MathUtil.vec3sub(lookingAt, viewerPos);
+    const len = MathUtil.vec3length(f);
     if(len < 1e-6) {
       return MathUtil.mat4identity();
     }
@@ -795,10 +795,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
     up = MathUtil.vec3normalize(up);
     // make "s" a vector perpendicular to "f" and "up" vector;
     // "s" will point rightward from the camera's viewpoint.
-    var s = MathUtil.vec3cross(f, up);
+    const s = MathUtil.vec3cross(f, up);
     MathUtil.vec3normalizeInPlace(s);
     // orthogonalize the "up" vector
-    var u = MathUtil.vec3cross(s, f);
+    const u = MathUtil.vec3cross(s, f);
     MathUtil.vec3normalizeInPlace(u);
     // negate the "f" vector so that it points forward from
     // the camera's viewpoint
@@ -824,9 +824,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4multiply":function(a, b) {
-    var dst = [];
-    for(var i = 0; i < 16; i += 4) {
-      for(var j = 0; j < 4; j++) {
+    const dst = [];
+    for(let i = 0; i < 16; i += 4) {
+      for(let j = 0; j < 4; j++) {
         dst[i + j] =
     b[i] * a[j] +
     b[i + 1] * a[j + 4] +
@@ -850,13 +850,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4oblique":function(alpha, phi) {
-    var alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
-    var phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
-    var ca = Math.cos(alphaAngle);
-    var sa = alphaAngle >= 0 && alphaAngle < 6.283185307179586 ? alphaAngle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(alphaAngle);
-    var cp = Math.cos(phiAngle);
-    var sp = phiAngle >= 0 && phiAngle < 6.283185307179586 ? phiAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cp * cp) : -Math.sqrt(1.0 - cp * cp) : Math.sin(phiAngle);
-    var cota = ca / sa;
+    const alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
+    const phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
+    const ca = Math.cos(alphaAngle);
+    const sa = alphaAngle >= 0 && alphaAngle < 6.283185307179586 ? alphaAngle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(alphaAngle);
+    const cp = Math.cos(phiAngle);
+    const sp = phiAngle >= 0 && phiAngle < 6.283185307179586 ? phiAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cp * cp) : -Math.sqrt(1.0 - cp * cp) : Math.sin(phiAngle);
+    const cota = ca / sa;
     return [
       1, 0, 0, 0,
       0, 1, 0, 0,
@@ -897,9 +897,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4ortho":function(l, r, b, t, n, f) {
-    var width = 1 / (r - l);
-    var height = 1 / (t - b);
-    var depth = 1 / (f - n);
+    const width = 1 / (r - l);
+    const height = 1 / (t - b);
+    const depth = 1 / (f - n);
     return [
       2 * width, 0, 0, 0,
       0, 2 * height, 0, 0,
@@ -987,11 +987,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
-    var newDim;
-    var boxAspect = Math.abs((r - l) / (t - b));
+    let newDim;
+    const boxAspect = Math.abs((r - l) / (t - b));
     aspect /= boxAspect;
-    var w = Math.abs(r - l);
-    var h = Math.abs(t - b);
+    const w = Math.abs(r - l);
+    const h = Math.abs(t - b);
     if (aspect < 1.0) {
       newDim = h / aspect;
       if(t > b) {
@@ -1054,9 +1054,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
     // NOTE: Converts fovY to radians then divides it by 2
-    var fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
-    var f = 1 / Math.tan(fov);
-    var nmf = near - far;
+    const fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
+    const f = 1 / Math.tan(fov);
+    let nmf = near - far;
     nmf = 1 / nmf;
     return [f / aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
       nmf * (near + far), -1, 0, 0, nmf * near * far * 2, 0];
@@ -1103,9 +1103,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
     // NOTE: Converts fovX to radians then divides it by 2
-    var fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
+    const fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
     // NOTE: Converts to degrees then multiplies by 2
-    var fovY = MathUtil.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
+    const fovY = MathUtil.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
     return MathUtil.mat4perspective(fovY, aspectRatio, near, far);
   },
   /**
@@ -1140,7 +1140,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the transformed vector's X, Y, and Z coordinates.
    */
   "mat4projectVec3":function(mat, v, vy, vz) {
-    var x, y, z;
+    let x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -1150,10 +1150,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
       y = v[1];
       z = v[2];
     }
-    var x1 = x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
-    var y1 = x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
-    var z1 = x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
-    var w = 1.0 / (x * mat[3] + y * mat[7] + z * mat[11] + mat[15]);
+    const x1 = x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
+    const y1 = x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
+    const z1 = x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
+    const w = 1.0 / (x * mat[3] + y * mat[7] + z * mat[11] + mat[15]);
     return [x1 * w, y1 * w, z1 * w];
   },
   /**
@@ -1180,7 +1180,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4rotate":function(mat, angle, v, vy, vz) {
-    var v0, v1, v2, ang;
+    let v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -1198,8 +1198,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ang = angle;
     }
     ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
-    var cost = Math.cos(ang);
-    var sint = ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost);
+    const cost = Math.cos(ang);
+    const sint = ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost);
     if( v0 === 1 && v1 === 0 && v2 === 0 ) {
       return [mat[0], mat[1], mat[2], mat[3],
         cost * mat[4] + mat[8] * sint, cost * mat[5] + mat[9] * sint, cost * mat[6] + mat[10] * sint, cost * mat[7] + mat[11] * sint,
@@ -1217,35 +1217,35 @@ tvar47 * tvar51 + tvar8 * tvar52;
     } else if(v0 === 0 && v1 === 0 && v2 === 0) {
       return MathUtil.mat4copy(mat);
     } else {
-      var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      const iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
-      var x2 = v0 * v0;
-      var y2 = v1 * v1;
-      var z2 = v2 * v2;
-      var mcos = 1.0 - cost;
-      var xy = v0 * v1;
-      var xz = v0 * v2;
-      var yz = v1 * v2;
-      var xs = v0 * sint;
-      var ys = v1 * sint;
-      var zs = v2 * sint;
+      const x2 = v0 * v0;
+      const y2 = v1 * v1;
+      const z2 = v2 * v2;
+      const mcos = 1.0 - cost;
+      const xy = v0 * v1;
+      const xz = v0 * v2;
+      const yz = v1 * v2;
+      const xs = v0 * sint;
+      const ys = v1 * sint;
+      const zs = v2 * sint;
       v1 = mcos * x2;
-      var v10 = mcos * yz;
-      var v12 = mcos * z2;
-      var v3 = mcos * xy;
-      var v5 = mcos * xz;
-      var v7 = mcos * y2;
-      var v15 = cost + v1;
-      var v16 = v3 + zs;
-      var v17 = v5 - ys;
-      var v18 = cost + v7;
-      var v19 = v3 - zs;
-      var v20 = v10 + xs;
-      var v21 = cost + v12;
-      var v22 = v5 + ys;
-      var v23 = v10 - xs;
+      const v10 = mcos * yz;
+      const v12 = mcos * z2;
+      const v3 = mcos * xy;
+      const v5 = mcos * xz;
+      const v7 = mcos * y2;
+      const v15 = cost + v1;
+      const v16 = v3 + zs;
+      const v17 = v5 - ys;
+      const v18 = cost + v7;
+      const v19 = v3 - zs;
+      const v20 = v10 + xs;
+      const v21 = cost + v12;
+      const v22 = v5 + ys;
+      const v23 = v10 - xs;
       return [
         mat[0] * v15 + mat[4] * v16 + mat[8] * v17, mat[1] * v15 + mat[5] * v16 + mat[9] * v17,
         mat[10] * v17 + mat[2] * v15 + mat[6] * v16, mat[11] * v17 + mat[3] * v15 + mat[7] * v16,
@@ -1278,7 +1278,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
   "mat4rotated":function(angle, v, vy, vz) {
-    var v0, v1, v2, ang;
+    let v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -1334,8 +1334,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
         v2 * v2 * 2.0 - 1.0,
         0.0, 0.0, 0.0, 0.0, 1.0];
     }
-    var cost = Math.cos(ang);
-    var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
+    const cost = Math.cos(ang);
+    const sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
     if( v0 === 1 && v1 === 0 && v2 === 0 ) {
       return[1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1];
     } else if( v0 === 0 && v1 === 1 && v2 === 0 ) {
@@ -1349,16 +1349,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
-      var x2 = v0 * v0;
-      var y2 = v1 * v1;
-      var z2 = v2 * v2;
-      var xy = v0 * v1;
-      var xz = v0 * v2;
-      var yz = v1 * v2;
-      var xs = v0 * sint;
-      var ys = v1 * sint;
-      var zs = v2 * sint;
-      var mcos = 1.0 - cost;
+      const x2 = v0 * v0;
+      const y2 = v1 * v1;
+      const z2 = v2 * v2;
+      const xy = v0 * v1;
+      const xz = v0 * v2;
+      const yz = v1 * v2;
+      const xs = v0 * sint;
+      const ys = v1 * sint;
+      const zs = v2 * sint;
+      const mcos = 1.0 - cost;
       v0 = mcos * xy;
       v1 = mcos * xz;
       v2 = mcos * yz;
@@ -1379,7 +1379,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4scale":function(mat, v3, v3y, v3z) {
-    var scaleX, scaleY, scaleZ;
+    let scaleX, scaleY, scaleZ;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       scaleX = v3;
       scaleY = v3y;
@@ -1410,7 +1410,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The same parameter as "mat".
    */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
-    var x, y, z;
+    let x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -1472,7 +1472,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * will be normalized (see {@link MathUtil.planeNormalizeInPlace}).
    */
   "mat4toFrustumPlanes":function(matrix) {
-    var frustum = [[], [], [], [], [], []];
+    const frustum = [[], [], [], [], [], []];
     // Left clipping plane
     frustum[0] = MathUtil.planeNormalizeInPlace([
       matrix[3] + matrix[0],
@@ -1552,7 +1552,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed vector.
    */
   "mat4transform":function(mat, v, vy, vz, vw) {
-    var x, y, z, w;
+    let x, y, z, w;
     if(typeof vy !== "undefined" && typeof vz !== "undefined" &&
       typeof vw !== "undefined") {
       x = v;
@@ -1591,7 +1591,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed 3-element vector.
    */
   "mat4transformVec3":function(mat, v, vy, vz) {
-    var x, y, z;
+    let x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -1617,7 +1617,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translate":function(mat, v3, v3y, v3z) {
-    var x, y, z;
+    let x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -1648,7 +1648,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translated":function(v3, v3y, v3z) {
-    var x, y, z;
+    let x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -1677,7 +1677,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The parameter "mat".
    */
   "mat4transposeInPlace":function(mat) {
-    var tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
+    let tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
     tmp = mat[2]; mat[2] = mat[8]; mat[8] = tmp;
     tmp = mat[3]; mat[3] = mat[12]; mat[12] = tmp;
     tmp = mat[6]; mat[6] = mat[9]; mat[9] = tmp;
@@ -1692,7 +1692,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} A four-element array describing the plane.
    */
   "planeFromNormalAndPoint":function(normal, point) {
-    var d = -(normal[0] * point[0] + normal[1] * point[1] + normal[2] * point[2]);
+    const d = -(normal[0] * point[0] + normal[1] * point[1] + normal[2] * point[2]);
     return [normal[0], normal[1], normal[2], d];
   },
   /**
@@ -1727,11 +1727,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The parameter "plane".
    */
   "planeNormalizeInPlace":function(plane) {
-    var x = plane[0];
-    var y = plane[1];
-    var z = plane[2];
+    const x = plane[0];
+    const y = plane[1];
+    const z = plane[2];
 
-    var len = Math.sqrt(x * x + y * y + z * z);
+    let len = Math.sqrt(x * x + y * y + z * z);
     if(len !== 0) {
       len = 1.0 / len;
       plane[0] *= len;
@@ -1770,7 +1770,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * and its fourth element (W) is the cosine of half of "angle".
    */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
-    var v0, v1, v2, ang;
+    let v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -1788,10 +1788,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
       v2 = v[2];
       ang = (angle >= 0 && angle < 360 ? angle : angle % 360 + (angle < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
     }
-    var cost = Math.cos(ang);
-    var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
-    var vec = MathUtil.vec3normalizeInPlace([v0, v1, v2]);
-    var ret = [vec[0], vec[1], vec[2], cost];
+    const cost = Math.cos(ang);
+    const sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
+    const vec = MathUtil.vec3normalizeInPlace([v0, v1, v2]);
+    const ret = [vec[0], vec[1], vec[2], cost];
     ret[0] *= sint;
     ret[1] *= sint;
     ret[2] *= sint;
@@ -1806,15 +1806,15 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting quaternion.
    */
   "quatFromMat4":function(m) {
-    var ret = [];
-    var xy = m[1];
-    var xz = m[2];
-    var yx = m[4];
-    var yz = m[6];
-    var zx = m[8];
-    var zy = m[9];
-    var trace = m[0] + m[5] + m[10];
-    var s, t;
+    const ret = [];
+    const xy = m[1];
+    const xz = m[2];
+    const yx = m[4];
+    const yz = m[6];
+    const zx = m[8];
+    const zy = m[9];
+    const trace = m[0] + m[5] + m[10];
+    let s, t;
     if (trace >= 0.0) {
       s = Math.sqrt(trace + 1.0) * 0.5;
       t = 0.25 / s;
@@ -1873,7 +1873,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated quaternion.
    */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
-    var rollRad, pitchRad, yawRad;
+    let rollRad, pitchRad, yawRad;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(pitchDegrees.constructor === Array) {
@@ -1885,13 +1885,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
       pitchRad = (pitchDegrees >= 0 && pitchDegrees < 360 ? pitchDegrees : pitchDegrees % 360 + (pitchDegrees < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
       yawRad = (yawDegrees >= 0 && yawDegrees < 360 ? yawDegrees : yawDegrees % 360 + (yawDegrees < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
     }
-    var py = Math.cos(pitchRad);
-    var px = pitchRad >= 0 && pitchRad < 6.283185307179586 ? pitchRad <= 3.141592653589793 ? Math.sqrt(1.0 - py * py) : -Math.sqrt(1.0 - py * py) : Math.sin(pitchRad);
-    var yy = Math.cos(yawRad);
-    var yx = yawRad >= 0 && yawRad < 6.283185307179586 ? yawRad <= 3.141592653589793 ? Math.sqrt(1.0 - yy * yy) : -Math.sqrt(1.0 - yy * yy) : Math.sin(yawRad);
-    var ry = Math.cos(rollRad);
-    var rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
-    var t8, t7;
+    const py = Math.cos(pitchRad);
+    const px = pitchRad >= 0 && pitchRad < 6.283185307179586 ? pitchRad <= 3.141592653589793 ? Math.sqrt(1.0 - py * py) : -Math.sqrt(1.0 - py * py) : Math.sin(pitchRad);
+    const yy = Math.cos(yawRad);
+    const yx = yawRad >= 0 && yawRad < 6.283185307179586 ? yawRad <= 3.141592653589793 ? Math.sqrt(1.0 - yy * yy) : -Math.sqrt(1.0 - yy * yy) : Math.sin(yawRad);
+    const ry = Math.cos(rollRad);
+    const rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
+    let t8, t7;
     if(mode === MathUtil.GlobalPitchYawRoll || mode === MathUtil.GlobalPitchRollYaw) {
       t7 = [rx * yx, ry * yx, rx * yy, ry * yy];
       if(mode === MathUtil.GlobalPitchYawRoll)t7[0] = -t7[0];
@@ -1919,10 +1919,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * will be a unit vector.
    */
   "quatFromVectors":function(vec1, vec2) {
-    var ret = MathUtil.vec3cross(vec1, vec2);
+    let ret = MathUtil.vec3cross(vec1, vec2);
     if(MathUtil.vec3dot(ret, ret) < 1e-9) {
       // The vectors are parallel or close to parallel; there are two possible cases
-      var dot = MathUtil.vec3dot(vec1, vec2);
+      const dot = MathUtil.vec3dot(vec1, vec2);
       if(dot > 0) {
         // The vectors point in the same direction or almost so
         return [0, 0, 0, 1];
@@ -1932,7 +1932,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
         ret[3] = 0;
       }
     } else {
-      var vecLengths = MathUtil.vec3length(vec1) * MathUtil.vec3length(vec2);
+      let vecLengths = MathUtil.vec3length(vec1) * MathUtil.vec3length(vec2);
       if(vecLengths === 0)vecLengths = 1; // degenerate case
       ret[3] = vecLengths + MathUtil.vec3dot(vec1, vec2);
     }
@@ -1951,7 +1951,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @see {@link MathUtil.quatConjugate}
    */
   "quatInvert":function(quat) {
-    var lsq = 1.0 / MathUtil.quatDot(quat, quat);
+    const lsq = 1.0 / MathUtil.quatDot(quat, quat);
     return MathUtil.vec4scaleInPlace(
       MathUtil.quatConjugate(quat), lsq);
   },
@@ -2006,16 +2006,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * which will be a unit vector.
    */
   "quatNlerp":function(q1, q2, factor) {
-    var t1 = 1.0 - factor;
-    var t2 = q1[0] * t1;
-    var t3 = q1[1] * t1;
-    var t4 = q1[2] * t1;
-    var t5 = q1[3] * t1;
-    var t6 = q2[0] * factor;
-    var t7 = q2[1] * factor;
-    var t8 = q2[2] * factor;
-    var t9 = q2[3] * factor;
-    var t10 = q1[0] * q2[0] + q1[1] * q2[1] + q1[2] * q2[2] + q1[3] * q2[3];
+    const t1 = 1.0 - factor;
+    const t2 = q1[0] * t1;
+    const t3 = q1[1] * t1;
+    const t4 = q1[2] * t1;
+    const t5 = q1[3] * t1;
+    const t6 = q2[0] * factor;
+    const t7 = q2[1] * factor;
+    const t8 = q2[2] * factor;
+    const t9 = q2[3] * factor;
+    const t10 = q1[0] * q2[0] + q1[1] * q2[1] + q1[2] * q2[2] + q1[3] * q2[3];
     if (t10 < 0.0) {
       return MathUtil.quatNormalizeInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
     } else {
@@ -2074,13 +2074,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * for additional background
    */
   "quatSlerp":function(q1, q2, factor) {
-    var cosval = MathUtil.quatDot(q1, q2);
-    var qd = q2;
+    let cosval = MathUtil.quatDot(q1, q2);
+    let qd = q2;
     if(cosval < 0) {
       qd = [-q2[0], -q2[1], -q2[2], -q2[3]];
       cosval = MathUtil.quatDot(q1, qd);
     }
-    var angle = 0;
+    let angle = 0;
     if(cosval > -1) {
       if(cosval < 1) {
         angle = Math.acos(cosval);
@@ -2092,10 +2092,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
     } else {
       angle = Math.PI;
     }
-    var s = Math.sin(angle);
-    var sinv = 1.0 / s;
-    var c1 = Math.sin((1.0 - factor) * angle) * sinv;
-    var c2 = Math.sin(factor * angle) * sinv;
+    const s = Math.sin(angle);
+    const sinv = 1.0 / s;
+    const c1 = Math.sin((1.0 - factor) * angle) * sinv;
+    const c2 = Math.sin(factor * angle) * sinv;
     return [
       q1[0] * c1 + qd[0] * c2,
       q1[1] * c1 + qd[1] * c2,
@@ -2114,8 +2114,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of rotation will be a unit vector.
    */
   "quatToAxisAngle":function(a) {
-    var w = a[3];
-    var d = 1.0 - w * w;
+    const w = a[3];
+    let d = 1.0 - w * w;
     if(d > 0) {
       d = 1 / Math.sqrt(d);
       return [a[0] * d, a[1] * d, a[2] * d,
@@ -2131,7 +2131,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated 4x4 matrix.
    */
   "quatToMat4":function(quat) {
-    var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
+    let tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
     tx = 2.0 * quat[0];
     ty = 2.0 * quat[1];
     tz = 2.0 * quat[2];
@@ -2171,9 +2171,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
    */
   "quatToTaitBryan":function(a, mode) {
-    var c0 = a[3];
-    var c1, c2, c3;
-    var e = 1;
+    const c0 = a[3];
+    let c1, c2, c3;
+    let e = 1;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(mode === MathUtil.GlobalRollPitchYaw) {
@@ -2192,15 +2192,15 @@ tvar47 * tvar51 + tvar8 * tvar52;
     } else {
       c1 = a[0]; c2 = a[1]; c3 = a[2];
     }
-    var sq1 = c1 * c1;
-    var sq2 = c2 * c2;
-    var sq3 = c3 * c3;
-    var e1 = Math.atan2(2 * (c0 * c1 - e * c2 * c3), 1 - (sq1 + sq2) * 2);
-    var sine = 2 * (c0 * c2 + e * c1 * c3);
+    const sq1 = c1 * c1;
+    const sq2 = c2 * c2;
+    const sq3 = c3 * c3;
+    let e1 = Math.atan2(2 * (c0 * c1 - e * c2 * c3), 1 - (sq1 + sq2) * 2);
+    let sine = 2 * (c0 * c2 + e * c1 * c3);
     if(sine > 1.0)sine = 1.0; // for stability
     if(sine < -1.0)sine = -1.0; // for stability
-    var e2 = Math.asin(sine);
-    var e3 = Math.atan2(2 * (c0 * c3 - e * c1 * c2), 1 - (sq2 + sq3) * 2);
+    let e2 = Math.asin(sine);
+    let e3 = Math.atan2(2 * (c0 * c3 - e * c1 * c2), 1 - (sq2 + sq3) * 2);
     e1 *= MathUtil.Num180DividedByPi;
     e2 *= MathUtil.Num180DividedByPi;
     e3 *= MathUtil.Num180DividedByPi;
@@ -2212,7 +2212,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       if(isNaN(e1))e1 = 0;
     }
     // Return the pitch/yaw/roll angles in the standard order
-    var angles = [];
+    const angles = [];
     if(mode === MathUtil.GlobalRollPitchYaw) {
       angles[0] = e2; angles[1] = e1; angles[2] = e3;
     } else if(mode === MathUtil.GlobalPitchYawRoll) {
@@ -2241,10 +2241,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be returned instead.
    */
   "quatTransform":function(q, v) {
-    var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
-    var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
-    var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
-    var t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
+    const t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
+    const t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
+    const t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
+    const t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
     if(v.length === 3) {
       return [t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4,
         t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
@@ -2305,8 +2305,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec2addInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
+    const b0 = b[0];
+    const b1 = b[1];
     a[0] += b0;
     a[1] += b1;
     return a;
@@ -2343,8 +2343,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} max Highest possible value. Should not be less than "min".
    * @returns {Array<number>} The resulting vector. */
   "vec2clampInPlace":function(a, min, max) {
-    var x = Math.min(max, Math.max(min, a[0]));
-    var y = Math.min(max, Math.max(min, a[1]));
+    const x = Math.min(max, Math.max(min, a[0]));
+    const y = Math.min(max, Math.max(min, a[1]));
     a[0] = x;
     a[1] = y;
     return a;
@@ -2396,8 +2396,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} a A 2-element vector.
    * @returns {number} Return value. */
   "vec2length":function(a) {
-    var dx = a[0];
-    var dy = a[1];
+    const dx = a[0];
+    const dy = a[1];
     return Math.sqrt(dx * dx + dy * dy);
   },
   /**
@@ -2438,8 +2438,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec2mulInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
+    const b0 = b[0];
+    const b1 = b[1];
     a[0] *= b0;
     a[1] *= b1;
     return a;
@@ -2504,9 +2504,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
    */
   "vec2normalizeInPlace":function(vec) {
-    var x = vec[0];
-    var y = vec[1];
-    var len = Math.sqrt(x * x + y * y);
+    const x = vec[0];
+    const y = vec[1];
+    let len = Math.sqrt(x * x + y * y);
     if(len !== 0) {
       len = 1.0 / len;
       vec[0] *= len;
@@ -2543,7 +2543,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * length is 0 or extremely close to 0.
    */
   "vec2proj":function(vec, refVec) {
-    var lensq = MathUtil.vec2dot(refVec, refVec);
+    const lensq = MathUtil.vec2dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0];
     return MathUtil.vec2scale(refVec,
       MathUtil.vec2dot(vec, refVec) / lensq);
@@ -2615,8 +2615,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec2subInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
+    const b0 = b[0];
+    const b1 = b[1];
     a[0] -= b0;
     a[1] -= b1;
     return a;
@@ -2674,9 +2674,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec3addInPlace":function(a, b) {
     // Use variables in case a and b are the same
 
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
     a[0] += b0;
     a[1] += b1;
     a[2] += b2;
@@ -2715,9 +2715,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} max Highest possible value. Should not be less than "min".
    * @returns {Array<number>} The resulting vector. */
   "vec3clampInPlace":function(a, min, max) {
-    var x = Math.min(max, Math.max(min, a[0]));
-    var y = Math.min(max, Math.max(min, a[1]));
-    var z = Math.min(max, Math.max(min, a[2]));
+    const x = Math.min(max, Math.max(min, a[0]));
+    const y = Math.min(max, Math.max(min, a[1]));
+    const z = Math.min(max, Math.max(min, a[2]));
     a[0] = x;
     a[1] = y;
     a[2] = z;
@@ -2887,17 +2887,17 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of the unprojected point, in that order.
    */
   "vec3fromWindowPoint":function(vector, matrix, viewport, yUp) {
-    var halfWidth = viewport[2] * 0.5;
-    var halfHeight = viewport[3] * 0.5;
-    var x = 0;
-    var y = 0;
-    var z = vector[2] * 2.0 - 1.0;
+    const halfWidth = viewport[2] * 0.5;
+    const halfHeight = viewport[3] * 0.5;
+    let x = 0;
+    let y = 0;
+    const z = vector[2] * 2.0 - 1.0;
     if(halfWidth !== 0 && halfHeight !== 0) {
       x = (vector[0] - viewport[0] - halfWidth) / halfWidth;
       y = (vector[1] - viewport[1] - halfHeight) / halfHeight;
     }
     y = yUp ? y : -y;
-    var invMatrix = MathUtil.mat4invert(matrix);
+    const invMatrix = MathUtil.mat4invert(matrix);
     return MathUtil.mat4projectVec3(invMatrix, [x, y, z]);
   },
   /**
@@ -2913,9 +2913,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} a A 3-element vector.
    * @returns {number} Return value. */
   "vec3length":function(a) {
-    var dx = a[0];
-    var dy = a[1];
-    var dz = a[2];
+    const dx = a[0];
+    const dy = a[1];
+    const dz = a[2];
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   },
   /**
@@ -3000,9 +3000,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec3mulInPlace":function(a, b) {
     // Use variables in case a and b are the same
 
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
     a[0] *= b0;
     a[1] *= b1;
     a[2] *= b2;
@@ -3069,10 +3069,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
    */
   "vec3normalizeInPlace":function(vec) {
-    var x = vec[0];
-    var y = vec[1];
-    var z = vec[2];
-    var len = Math.sqrt(x * x + y * y + z * z);
+    const x = vec[0];
+    const y = vec[1];
+    const z = vec[2];
+    let len = Math.sqrt(x * x + y * y + z * z);
     if(len !== 0) {
       len = 1.0 / len;
       vec[0] *= len;
@@ -3090,11 +3090,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * vector.  Returns (0,0,0) if "vec" is (0,0,0).
    */
   "vec3perp":function(vec) {
-    var absx = Math.abs(vec[0]);
-    var absy = Math.abs(vec[1]);
-    var absz = Math.abs(vec[2]);
-    var mx = Math.max(absx, absy, absz);
-    var normal = [0, 0, 0];
+    const absx = Math.abs(vec[0]);
+    const absy = Math.abs(vec[1]);
+    const absz = Math.abs(vec[2]);
+    const mx = Math.max(absx, absy, absz);
+    const normal = [0, 0, 0];
     if(mx === absx) {
       normal[0] = vec[1];
       normal[1] = -vec[0];
@@ -3128,7 +3128,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * length is 0 or extremely close to 0.
    */
   "vec3proj":function(vec, refVec) {
-    var lensq = MathUtil.vec3dot(refVec, refVec);
+    const lensq = MathUtil.vec3dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return MathUtil.vec3scale(refVec,
       MathUtil.vec3dot(vec, refVec) / lensq);
@@ -3201,9 +3201,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec3subInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
     a[0] -= b0;
     a[1] -= b1;
     a[2] -= b2;
@@ -3250,14 +3250,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
     // Transform the vector and do a perspective divide
-    var vec = MathUtil.mat4projectVec3(matrix, vector);
+    const vec = MathUtil.mat4projectVec3(matrix, vector);
     // Now convert the projected vector to window coordinates
-    var halfWidth = viewport[2] * 0.5;
-    var halfHeight = viewport[3] * 0.5;
-    var vecY = yUp ? vec[1] : -vec[1];
-    var x = vec[0] * halfWidth + halfWidth + viewport[0];
-    var y = vecY * halfHeight + halfHeight + viewport[1];
-    var z = (vec[2] + 1.0) * 0.5;
+    const halfWidth = viewport[2] * 0.5;
+    const halfHeight = viewport[3] * 0.5;
+    const vecY = yUp ? vec[1] : -vec[1];
+    const x = vec[0] * halfWidth + halfWidth + viewport[0];
+    const y = vecY * halfHeight + halfHeight + viewport[1];
+    const z = (vec[2] + 1.0) * 0.5;
     return [x, y, z];
   },
   /**
@@ -3350,10 +3350,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec4addInPlace":function(a, b) {
     // Use variables in case a and b are the same
 
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
-    var b3 = b[3];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
+    const b3 = b[3];
     a[0] += b0;
     a[1] += b1;
     a[2] += b2;
@@ -3393,10 +3393,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} max Highest possible value. Should not be less than "min".
    * @returns {Array<number>} The resulting vector. */
   "vec4clampInPlace":function(a, min, max) {
-    var x = Math.min(max, Math.max(min, a[0]));
-    var y = Math.min(max, Math.max(min, a[1]));
-    var z = Math.min(max, Math.max(min, a[2]));
-    var w = Math.min(max, Math.max(min, a[3]));
+    const x = Math.min(max, Math.max(min, a[0]));
+    const y = Math.min(max, Math.max(min, a[1]));
+    const z = Math.min(max, Math.max(min, a[2]));
+    const w = Math.min(max, Math.max(min, a[3]));
     a[0] = x;
     a[1] = y;
     a[2] = z;
@@ -3433,10 +3433,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} a A 4-element vector.
    * @returns {number} Return value. */
   "vec4length":function(a) {
-    var dx = a[0];
-    var dy = a[1];
-    var dz = a[2];
-    var dw = a[3];
+    const dx = a[0];
+    const dy = a[1];
+    const dz = a[2];
+    const dw = a[3];
     return Math.sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
   },
   /**
@@ -3512,11 +3512,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
    */
   "vec4normalizeInPlace":function(vec) {
-    var x = vec[0];
-    var y = vec[1];
-    var z = vec[2];
-    var w = vec[3];
-    var len = Math.sqrt(x * x + y * y + z * z + w * w);
+    const x = vec[0];
+    const y = vec[1];
+    const z = vec[2];
+    const w = vec[3];
+    let len = Math.sqrt(x * x + y * y + z * z + w * w);
     if(len !== 0) {
       len = 1.0 / len;
       vec[0] *= len;
@@ -3544,7 +3544,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * length is 0 or extremely close to 0.
    */
   "vec4proj":function(vec, refVec) {
-    var lensq = MathUtil.vec4dot(refVec, refVec);
+    const lensq = MathUtil.vec4dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return MathUtil.vec4scale(refVec,
       MathUtil.vec4dot(vec, refVec) / lensq);
@@ -3603,10 +3603,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec4subInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
-    var b3 = b[3];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
+    const b3 = b[3];
     a[0] -= b0;
     a[1] -= b1;
     a[2] -= b2;
@@ -3643,11 +3643,11 @@ MathUtil.interpCubicBezier = function(a, b, c, d, t) {
   if(t >= 1)return 1;
   // Find Bezier curve's T for given X coordinate ("t" parameter passed to
   // this method) using Newton's method
-  var tx = t;
-  for(var i = 0; i < 10; i++) {
-    var fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
+  let tx = t;
+  for(let i = 0; i < 10; i++) {
+    const fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
     if(Math.abs(fx) < 1e-9)break;
-    var dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
+    const dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
     tx -= fx / dfx;
   }
   // Get Y coordinate

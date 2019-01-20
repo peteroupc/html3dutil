@@ -358,7 +358,7 @@ Transform.prototype.getMatrix = function() {
         MathUtil.quatToMat4(this.rotation));
       // 3. scaling
       MathUtil.mat4scaleInPlace(this.matrix, this.scale);
-      var m = this.matrix;
+      const m = this.matrix;
       this._isIdentity =
      m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 0 &&
      m[4] === 0 && m[5] === 1 && m[6] === 0 && m[7] === 0 &&
@@ -379,7 +379,7 @@ Transform.prototype.getMatrix = function() {
  * @returns {Transform} A copy of this transform.
  */
 Transform.prototype.copy = function() {
-  var ret = new Transform();
+  const ret = new Transform();
   ret.scale = this.scale.slice(0, this.scale.length);
   ret.position = this.position.slice(0, this.scale.length);
   ret.complexMatrix = this.complexMatrix;

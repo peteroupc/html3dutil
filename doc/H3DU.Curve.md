@@ -355,6 +355,15 @@ this method is approximate.
 
 Return value. Returns this object if this curve already uses an arc length parameterization. (Type: Curve)
 
+#### Examples
+
+The following example uses the arc-length
+parameterization to generate, uniformly at random, a point that lies anywhere
+on the curve.
+
+    var arclen = curve.toArcLengthParam();
+    var point = arclen.evaluate(Math.random()*arclen.getLength())
+
 <a name='H3DU.Curve_velocity'></a>
 ### H3DU.Curve#velocity(u)
 

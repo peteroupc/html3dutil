@@ -337,8 +337,8 @@ if (typeof window !== "undefined" && window !== null && !(typeof window.Promise 
 function objectKeysPolyfill() {
   if(typeof Object.keys === "undefined" || Object.keys === null) {
     Object.keys = function(o) {
-      var ret = [];
-      for(var i in o) {
+      const ret = [];
+      for(const i in o) {
         if(Object.prototype.hasOwnProperty.call(o, i)) {
           ret[ret.length] = i;
         }
@@ -395,14 +395,14 @@ var getPromiseResults = function(promises,
       return true;
     };
   }
-  var ret = {
+  const ret = {
     "successes":[],
     "failures":[],
     "results":[]
   };
-  var newPromises = [];
-  for(var i = 0; i < promises.length; i++) {
-    var index = i;
+  const newPromises = [];
+  for(let i = 0; i < promises.length; i++) {
+    const index = i;
     newPromises.push(promises[i].then(
       promiseResolveFunc(progressResolve, ret, index),
       promiseRejectFunc(progressReject, ret, index)
@@ -525,19 +525,19 @@ var newFrames = function(timer, timeInMs) {
     timer.lastTime = timeInMs;
     return 0;
   } else {
-    var diff = timeInMs - timer.lastTime;
+    const diff = timeInMs - timer.lastTime;
     timer.lastTime = timeInMs;
     return diff * 60.0 / 1000.0;
   }
 };
 
-var ColorValidator = function() {
+const ColorValidator = function() {
   throw new Error();
 };
 (function(constructor) {
   constructor.skipWhite = function(str, index, endIndex) {
     while (index < endIndex) {
-      var c = str.charCodeAt(index);
+      const c = str.charCodeAt(index);
       if (c === 32 || c === 13 || c === 12 || c === 9 || c === 10) {
         ++index;
       } else {
@@ -548,7 +548,7 @@ var ColorValidator = function() {
   };
 
   constructor.parseComma = function(str, index, endIndex) {
-    var indexStart = index;
+    const indexStart = index;
     index = constructor.skipWhite(str, index, endIndex);
     if (index < endIndex && str.charCodeAt(index) === 44) {
       return constructor.skipWhite(str, index + 1, endIndex);
@@ -558,7 +558,7 @@ var ColorValidator = function() {
   };
 
   constructor.parseEndparen = function(str, index, endIndex) {
-    var indexStart = index;
+    const indexStart = index;
     index = constructor.skipWhite(str, index, endIndex);
     if (index < endIndex && str.charCodeAt(index) === 41) {
       return index + 1;
@@ -568,7 +568,7 @@ var ColorValidator = function() {
   };
 
   constructor.hsl = function(str, index, endIndex, ret) {
-    var indexStart, indexTemp, tx2;
+    let indexStart, indexTemp, tx2;
     indexStart = index;
     indexTemp = index;
     if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
@@ -589,7 +589,7 @@ var ColorValidator = function() {
     } else {
       index = tx2;
     }
-    var rgb = constructor.hlsToRgb(ret[0], ret[2], ret[1]);
+    const rgb = constructor.hlsToRgb(ret[0], ret[2], ret[1]);
     ret[0] = rgb[0];
     ret[1] = rgb[1];
     ret[2] = rgb[2];
@@ -598,7 +598,7 @@ var ColorValidator = function() {
     return indexTemp;
   };
   constructor.pct = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = constructor.parseNumber(str, index, endIndex);
+    const tx2 = constructor.parseNumber(str, index, endIndex);
     if (tx2 !== index) {
       if (tx2 >= endIndex || str.charAt(tx2) !== 37)
         return index;
@@ -608,16 +608,16 @@ var ColorValidator = function() {
     return tx2;
   };
   constructor.parseByte = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = constructor.parseInteger(str, index, endIndex, true);
+    const tx2 = constructor.parseInteger(str, index, endIndex, true);
     if (tx2 !== index) {
       ret[retIndex] = constructor.stringToByte(str, index, tx2);
     }
     return tx2;
   };
   constructor.parseHue = function(str, index, endIndex, ret, retIndex) {
-    var start = index;
+    const start = index;
     index = constructor.skipWhite(str, index, endIndex);
-    var tx2 = constructor.parseNumber(str, index, endIndex);
+    const tx2 = constructor.parseNumber(str, index, endIndex);
     if (tx2 !== index) {
       ret[retIndex] = constructor.stringToHue(str, index, tx2);
       return tx2;
@@ -626,15 +626,15 @@ var ColorValidator = function() {
     }
   };
   constructor.sepByte = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = constructor.parseComma(str, index, endIndex);
+    const tx2 = constructor.parseComma(str, index, endIndex);
     return tx2 !== index ? constructor.parseByte(str, tx2, endIndex, ret, retIndex) : tx2;
   };
   constructor.sepPct = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = constructor.parseComma(str, index, endIndex);
+    const tx2 = constructor.parseComma(str, index, endIndex);
     return tx2 !== index ? constructor.pct(str, tx2, endIndex, ret, retIndex) : tx2;
   };
   constructor.sepAlpha = function(str, index, endIndex, ret, retIndex) {
-    var tx2 = constructor.parseComma(str, index, endIndex);
+    let tx2 = constructor.parseComma(str, index, endIndex);
     if (tx2 !== index) {
       index = tx2;
       tx2 = constructor.parseNumber(str, index, endIndex);
@@ -646,7 +646,7 @@ var ColorValidator = function() {
   };
 
   constructor.hsla = function(str, index, endIndex, ret) {
-    var indexStart, indexTemp, tx2;
+    let indexStart, indexTemp, tx2;
     indexStart = index;
     indexTemp = index;
     if ((tx2 = constructor.parseHue(str, index, endIndex, ret, 0)) === index) {
@@ -665,7 +665,7 @@ var ColorValidator = function() {
       return indexStart;
     }
     index = tx2;
-    var rgb = constructor.hlsToRgb(ret[0], ret[2], ret[1]);
+    const rgb = constructor.hlsToRgb(ret[0], ret[2], ret[1]);
     ret[0] = rgb[0];
     ret[1] = rgb[1];
     ret[2] = rgb[2];
@@ -680,11 +680,11 @@ var ColorValidator = function() {
   };
 
   constructor.rgba = function(str, index, endIndex, result) {
-    var indexStart, tx2;
+    let indexStart, tx2;
     indexStart = index;
     index = constructor.skipWhite(str, index, endIndex);
-    var st = index;
-    var continuing = true;
+    const st = index;
+    let continuing = true;
     if ((tx2 = constructor.pct(str, index, endIndex, result, 0)) === index) {
       continuing = false;
     } else {
@@ -737,11 +737,11 @@ var ColorValidator = function() {
     return index;
   };
   constructor.rgb = function(str, index, endIndex, result) {
-    var indexStart, tx2;
+    let indexStart, tx2;
     indexStart = index;
     index = constructor.skipWhite(str, index, endIndex);
-    var st = index;
-    var continuing = true;
+    const st = index;
+    let continuing = true;
     if ((tx2 = constructor.pct(str, index, endIndex, result, 0)) === index) {
       continuing = false;
     } else {
@@ -788,29 +788,29 @@ var ColorValidator = function() {
     }
   };
   constructor.stringToNumber = function(str, index, endIndex) {
-    var str2 = str.substring(index, index + (endIndex - index));
+    const str2 = str.substring(index, index + (endIndex - index));
     return parseFloat(str2);
   };
   constructor.stringToPercent = function(str, index, endIndex) {
-    var num = constructor.stringToNumber(str, index, endIndex);
+    const num = constructor.stringToNumber(str, index, endIndex);
     return Number.isNaN(num) ? -1 : num < 0 ? 0 : num > 100 ? 100 : num;
   };
   constructor.stringToAlpha = function(str, index, endIndex) {
-    var num = constructor.stringToNumber(str, index, endIndex);
+    const num = constructor.stringToNumber(str, index, endIndex);
     return num < 0 ? 0 : num > 1.0 ? 255 : num * 255.0;
   };
   constructor.stringToHue = function(str, index, endIndex) {
-    var num = constructor.stringToNumber(str, index, endIndex);
+    const num = constructor.stringToNumber(str, index, endIndex);
     return Number.isNaN(num) || num === Number.POSITIVE_INFINITY || num === Number.NEGATIVE_INFINITY ? 0 : (num % 360 + 360) % 360;
   };
   constructor.stringToByte = function(str, index, endIndex) {
-    var num = constructor.stringToNumber(str, index, endIndex);
+    const num = constructor.stringToNumber(str, index, endIndex);
     return num < 0 ? 0 : num > 255 ? 255 : num;
   };
 
   constructor.parseInteger = function(str, index, endIndex, posneg) {
-    var digits = false;
-    var indexStart = index;
+    let digits = false;
+    const indexStart = index;
     if (posneg && index < endIndex && (str.charCodeAt(index) === 43 || str.charCodeAt(index) === 45)) {
       ++index;
     }
@@ -822,9 +822,9 @@ var ColorValidator = function() {
   };
 
   constructor.parseNumber = function(str, index, endIndex) {
-    var indexStart = index;
-    var tmp = index;
-    var tmp2 = 0;
+    const indexStart = index;
+    let tmp = index;
+    let tmp2 = 0;
     if ((tmp = constructor.parseInteger(str, index, endIndex, true)) !== indexStart) {
       index = tmp;
       if (index < endIndex && str.charCodeAt(index) === 46) {
@@ -866,7 +866,7 @@ var ColorValidator = function() {
     if (sat === 0) {
       return [lum, lum, lum];
     }
-    var b = 0;
+    let b = 0;
     if (lum <= 127.5) {
       b = lum * (255.0 + sat) / 255.0;
     } else {
@@ -874,12 +874,12 @@ var ColorValidator = function() {
       b /= 255.0;
       b = lum + sat - b;
     }
-    var a = lum * 2 - b;
-    var r, g, bl;
+    const a = lum * 2 - b;
+    let r, g, bl;
     if (hueval < 0 || hueval >= 360) {
       hueval = (hueval % 360 + 360) % 360;
     }
-    var hue = hueval + 120;
+    let hue = hueval + 120;
     if (hue >= 360) {
       hue -= 360;
     }
@@ -904,10 +904,10 @@ var ColorValidator = function() {
     if (typeof str === "undefined" || str === null || str.length === 0) {
       return false;
     }
-    var slen = str.length;
-    var hexes = [0, 0, 0, 0, 0, 0, 0, 0];
-    var index = 0;
-    var hexIndex = 0;
+    let slen = str.length;
+    const hexes = [0, 0, 0, 0, 0, 0, 0, 0];
+    let index = 0;
+    let hexIndex = 0;
     if (str.charAt(0) === "#") {
       --slen;
       ++index;
@@ -917,8 +917,8 @@ var ColorValidator = function() {
     if (slen !== 3 && slen !== 4 && slen !== 6 && slen !== 8) {
       return false;
     }
-    for (var i = index; i < str.length; ++i) {
-      var hex = constructor.dehexchar(str.charCodeAt(i));
+    for (let i = index; i < str.length; ++i) {
+      const hex = constructor.dehexchar(str.charCodeAt(i));
       if (hex < 0) {
         return false;
       }
@@ -943,7 +943,7 @@ var ColorValidator = function() {
     return true;
   };
   function trimSpaces(str) {
-    var s = 0,
+    let s = 0,
       e = str.length;
     while(s < str.length) {
       if(str.charAt(s) === 0x20 || str.charAt(s) === 0x0a ||
@@ -970,7 +970,7 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
     if (typeof x === "undefined" || x === null || x.length === 0) {
       return null;
     }
-    var ret = [0, 0, 0, 0];
+    const ret = [0, 0, 0, 0];
     if (x.charAt(0) === "#") {
       if (constructor.rgbHex(x, ret, true)) {
         return ret;
@@ -988,9 +988,9 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
     if (x.length > 5 && x.substring(0, 5) === "hsla(") {
       return constructor.hsla(x, 5, x.length, ret) === x.length ? ret : null;
     }
-    var colors = constructor.colorToRgbaSetUpNamedColors();
+    const colors = constructor.colorToRgbaSetUpNamedColors();
     if (typeof colors[x] !== "undefined" && colors[x] !== null) {
-      var colorValue = colors[x];
+      const colorValue = colors[x];
       constructor.rgbHex(colorValue, ret, false);
       return ret;
     }
@@ -1003,11 +1003,11 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
 
   constructor.colorToRgbaSetUpNamedColors = function() {
     if (typeof constructor.namedColorMap === "undefined" || constructor.namedColorMap === null) {
-      var ncm = {};
+      const ncm = {};
       for (var i = 0; i < constructor.nc.length; i += 2) {
         ncm[constructor.nc[i]] = constructor.nc[i + 1];
       }
-      var altnames = ["grey", "gray", "darkgrey", "darkgray",
+      const altnames = ["grey", "gray", "darkgrey", "darkgray",
         "darkslategrey", "darkslategray", "dimgrey", "dimgray",
         "lightgrey", "lightgray",
         "lightslategrey", "lightslategray",
@@ -1021,7 +1021,7 @@ str.charAt(e - 1) === 0x09 || str.charAt(e - 1) === 0x0c || str.charAt(e - 1) ==
   };
 }(ColorValidator));
 
-var clampRgba = function(x) {
+const clampRgba = function(x) {
   x[0] = x[0] < 0 ? 0 : Math.min(x[0], 1);
   x[1] = x[1] < 0 ? 0 : Math.min(x[1], 1);
   x[2] = x[2] < 0 ? 0 : Math.min(x[2], 1);
@@ -1094,8 +1094,8 @@ var clampRgba = function(x) {
 var toGLColor$1 = function(r, g, b, a) {
   if(typeof r === "undefined" || r === null)return [0, 0, 0, 0];
   if(typeof r === "string") {
-    var rgba = ColorValidator.colorToRgba(r) || [0, 0, 0, 0];
-    var mul = 1.0 / 255;
+    const rgba = ColorValidator.colorToRgba(r) || [0, 0, 0, 0];
+    const mul = 1.0 / 255;
     rgba[0] *= mul;
     rgba[1] *= mul;
     rgba[2] *= mul;
@@ -1133,145 +1133,145 @@ var toGLColor$1 = function(r, g, b, a) {
 var MathUtil = {
 /** @ignore */
   "_frustumPoints":function(frustum) {
-    var p0 = frustum[0];
-    var p1 = frustum[1];
-    var p2 = frustum[2];
-    var p3 = frustum[3];
-    var p4 = frustum[4];
-    var p5 = frustum[5];
+    const p0 = frustum[0];
+    const p1 = frustum[1];
+    const p2 = frustum[2];
+    const p3 = frustum[3];
+    const p4 = frustum[4];
+    const p5 = frustum[5];
     // left-top-near, left-bottom-near, right-top-near, ..., right-bottom-far
-    var ret = [];
-    var t1 = p2[1] * p4[2];
-    var t2 = p2[2] * p4[1];
-    var t3 = t1 - t2;
-    var t4 = p2[2] * p4[0];
-    var t5 = p2[0] * p4[2];
-    var t6 = t4 - t5;
-    var t7 = p2[0] * p4[1];
-    var t8 = p2[1] * p4[0];
-    var t9 = t7 - t8;
-    var t10 = p0[2] * p2[0];
-    var t11 = p0[0] * p2[2];
-    var t12 = p0[0] * p2[1];
-    var t13 = p0[1] * p2[0];
-    var t14 = p4[2] * p0[0];
-    var t15 = p4[0] * p0[2];
-    var t16 = p4[0] * p0[1];
-    var t17 = p4[1] * p0[0];
-    var t18 = 1.0 / (p0[0] * t3 + p0[1] * t6 + p0[2] * t9);
-    var t19 = p4[1] * p0[2];
-    var t20 = p4[2] * p0[1];
-    var t21 = p0[1] * p2[2];
-    var t22 = p0[2] * p2[1];
-    var t23 = -p0[3];
-    var t24 = -p2[3];
-    var t25 = -p4[3];
+    const ret = [];
+    const t1 = p2[1] * p4[2];
+    const t2 = p2[2] * p4[1];
+    const t3 = t1 - t2;
+    const t4 = p2[2] * p4[0];
+    const t5 = p2[0] * p4[2];
+    const t6 = t4 - t5;
+    const t7 = p2[0] * p4[1];
+    const t8 = p2[1] * p4[0];
+    const t9 = t7 - t8;
+    const t10 = p0[2] * p2[0];
+    const t11 = p0[0] * p2[2];
+    const t12 = p0[0] * p2[1];
+    const t13 = p0[1] * p2[0];
+    const t14 = p4[2] * p0[0];
+    const t15 = p4[0] * p0[2];
+    const t16 = p4[0] * p0[1];
+    const t17 = p4[1] * p0[0];
+    const t18 = 1.0 / (p0[0] * t3 + p0[1] * t6 + p0[2] * t9);
+    const t19 = p4[1] * p0[2];
+    const t20 = p4[2] * p0[1];
+    const t21 = p0[1] * p2[2];
+    const t22 = p0[2] * p2[1];
+    const t23 = -p0[3];
+    const t24 = -p2[3];
+    const t25 = -p4[3];
     ret[0] = (t3 * t23 + (t19 - t20) * t24 + (t21 - t22) * t25) * t18;
     ret[1] = (t6 * t23 + (t14 - t15) * t24 + (t10 - t11) * t25) * t18;
     ret[2] = (t9 * t23 + (t16 - t17) * t24 + (t12 - t13) * t25) * t18;
-    var t26 = p3[1] * p4[2];
-    var t27 = p3[2] * p4[1];
-    var t28 = t26 - t27;
-    var t29 = p3[2] * p4[0];
-    var t30 = p3[0] * p4[2];
-    var t31 = t29 - t30;
-    var t32 = p3[0] * p4[1];
-    var t33 = p3[1] * p4[0];
-    var t34 = t32 - t33;
-    var t35 = p0[2] * p3[0];
-    var t36 = p0[0] * p3[2];
-    var t37 = p0[0] * p3[1];
-    var t38 = p0[1] * p3[0];
-    var t39 = 1.0 / (p0[0] * t28 + p0[1] * t31 + p0[2] * t34);
-    var t40 = p0[1] * p3[2];
-    var t41 = p0[2] * p3[1];
-    var t42 = -p3[3];
+    const t26 = p3[1] * p4[2];
+    const t27 = p3[2] * p4[1];
+    const t28 = t26 - t27;
+    const t29 = p3[2] * p4[0];
+    const t30 = p3[0] * p4[2];
+    const t31 = t29 - t30;
+    const t32 = p3[0] * p4[1];
+    const t33 = p3[1] * p4[0];
+    const t34 = t32 - t33;
+    const t35 = p0[2] * p3[0];
+    const t36 = p0[0] * p3[2];
+    const t37 = p0[0] * p3[1];
+    const t38 = p0[1] * p3[0];
+    const t39 = 1.0 / (p0[0] * t28 + p0[1] * t31 + p0[2] * t34);
+    const t40 = p0[1] * p3[2];
+    const t41 = p0[2] * p3[1];
+    const t42 = -p3[3];
     ret[3] = (t28 * t23 + (t19 - t20) * t42 + (t40 - t41) * t25) * t39;
     ret[4] = (t31 * t23 + (t14 - t15) * t42 + (t35 - t36) * t25) * t39;
     ret[5] = (t34 * t23 + (t16 - t17) * t42 + (t37 - t38) * t25) * t39;
-    var t43 = t1 - t2;
-    var t44 = t4 - t5;
-    var t45 = t7 - t8;
-    var t46 = p1[2] * p2[0];
-    var t47 = p1[0] * p2[2];
-    var t48 = p1[0] * p2[1];
-    var t49 = p1[1] * p2[0];
-    var t50 = p4[2] * p1[0];
-    var t51 = p4[0] * p1[2];
-    var t52 = p4[0] * p1[1];
-    var t53 = p4[1] * p1[0];
-    var t54 = 1.0 / (p1[0] * t43 + p1[1] * t44 + p1[2] * t45);
-    var t55 = p4[1] * p1[2];
-    var t56 = p4[2] * p1[1];
-    var t57 = p1[1] * p2[2];
-    var t58 = p1[2] * p2[1];
-    var t59 = -p1[3];
+    const t43 = t1 - t2;
+    const t44 = t4 - t5;
+    const t45 = t7 - t8;
+    const t46 = p1[2] * p2[0];
+    const t47 = p1[0] * p2[2];
+    const t48 = p1[0] * p2[1];
+    const t49 = p1[1] * p2[0];
+    const t50 = p4[2] * p1[0];
+    const t51 = p4[0] * p1[2];
+    const t52 = p4[0] * p1[1];
+    const t53 = p4[1] * p1[0];
+    const t54 = 1.0 / (p1[0] * t43 + p1[1] * t44 + p1[2] * t45);
+    const t55 = p4[1] * p1[2];
+    const t56 = p4[2] * p1[1];
+    const t57 = p1[1] * p2[2];
+    const t58 = p1[2] * p2[1];
+    const t59 = -p1[3];
     ret[6] = (t43 * t59 + (t55 - t56) * t24 + (t57 - t58) * t25) * t54;
     ret[7] = (t44 * t59 + (t50 - t51) * t24 + (t46 - t47) * t25) * t54;
     ret[8] = (t45 * t59 + (t52 - t53) * t24 + (t48 - t49) * t25) * t54;
-    var t60 = t26 - t27;
-    var t61 = t29 - t30;
-    var t62 = t32 - t33;
-    var t63 = p1[2] * p3[0];
-    var t64 = p1[0] * p3[2];
-    var t65 = p1[0] * p3[1];
-    var t66 = p1[1] * p3[0];
-    var t67 = 1.0 / (p1[0] * t60 + p1[1] * t61 + p1[2] * t62);
-    var t68 = p1[1] * p3[2];
-    var t69 = p1[2] * p3[1];
+    const t60 = t26 - t27;
+    const t61 = t29 - t30;
+    const t62 = t32 - t33;
+    const t63 = p1[2] * p3[0];
+    const t64 = p1[0] * p3[2];
+    const t65 = p1[0] * p3[1];
+    const t66 = p1[1] * p3[0];
+    const t67 = 1.0 / (p1[0] * t60 + p1[1] * t61 + p1[2] * t62);
+    const t68 = p1[1] * p3[2];
+    const t69 = p1[2] * p3[1];
     ret[9] = (t60 * t59 + (t55 - t56) * t42 + (t68 - t69) * t25) * t67;
     ret[10] = (t61 * t59 + (t50 - t51) * t42 + (t63 - t64) * t25) * t67;
     ret[11] = (t62 * t59 + (t52 - t53) * t42 + (t65 - t66) * t25) * t67;
-    var t70 = p2[1] * p5[2];
-    var t71 = p2[2] * p5[1];
-    var t72 = t70 - t71;
-    var t73 = p2[2] * p5[0];
-    var t74 = p2[0] * p5[2];
-    var t75 = t73 - t74;
-    var t76 = p2[0] * p5[1];
-    var t77 = p2[1] * p5[0];
-    var t78 = t76 - t77;
-    var t79 = p5[2] * p0[0];
-    var t80 = p5[0] * p0[2];
-    var t81 = p5[0] * p0[1];
-    var t82 = p5[1] * p0[0];
-    var t83 = 1.0 / (p0[0] * t72 + p0[1] * t75 + p0[2] * t78);
-    var t84 = p5[1] * p0[2];
-    var t85 = p5[2] * p0[1];
-    var t86 = -p5[3];
+    const t70 = p2[1] * p5[2];
+    const t71 = p2[2] * p5[1];
+    const t72 = t70 - t71;
+    const t73 = p2[2] * p5[0];
+    const t74 = p2[0] * p5[2];
+    const t75 = t73 - t74;
+    const t76 = p2[0] * p5[1];
+    const t77 = p2[1] * p5[0];
+    const t78 = t76 - t77;
+    const t79 = p5[2] * p0[0];
+    const t80 = p5[0] * p0[2];
+    const t81 = p5[0] * p0[1];
+    const t82 = p5[1] * p0[0];
+    const t83 = 1.0 / (p0[0] * t72 + p0[1] * t75 + p0[2] * t78);
+    const t84 = p5[1] * p0[2];
+    const t85 = p5[2] * p0[1];
+    const t86 = -p5[3];
     ret[12] = (t72 * t23 + (t84 - t85) * t24 + (t21 - t22) * t86) * t83;
     ret[13] = (t75 * t23 + (t79 - t80) * t24 + (t10 - t11) * t86) * t83;
     ret[14] = (t78 * t23 + (t81 - t82) * t24 + (t12 - t13) * t86) * t83;
-    var t87 = p3[1] * p5[2];
-    var t88 = p3[2] * p5[1];
-    var t89 = t87 - t88;
-    var t90 = p3[2] * p5[0];
-    var t91 = p3[0] * p5[2];
-    var t92 = t90 - t91;
-    var t93 = p3[0] * p5[1];
-    var t94 = p3[1] * p5[0];
-    var t95 = t93 - t94;
-    var t96 = 1.0 / (p0[0] * t89 + p0[1] * t92 + p0[2] * t95);
+    const t87 = p3[1] * p5[2];
+    const t88 = p3[2] * p5[1];
+    const t89 = t87 - t88;
+    const t90 = p3[2] * p5[0];
+    const t91 = p3[0] * p5[2];
+    const t92 = t90 - t91;
+    const t93 = p3[0] * p5[1];
+    const t94 = p3[1] * p5[0];
+    const t95 = t93 - t94;
+    const t96 = 1.0 / (p0[0] * t89 + p0[1] * t92 + p0[2] * t95);
     ret[15] = (t89 * t23 + (t84 - t85) * t42 + (t40 - t41) * t86) * t96;
     ret[16] = (t92 * t23 + (t79 - t80) * t42 + (t35 - t36) * t86) * t96;
     ret[17] = (t95 * t23 + (t81 - t82) * t42 + (t37 - t38) * t86) * t96;
-    var t97 = t70 - t71;
-    var t98 = t73 - t74;
-    var t99 = t76 - t77;
-    var t100 = p5[2] * p1[0];
-    var t101 = p5[0] * p1[2];
-    var t102 = p5[0] * p1[1];
-    var t103 = p5[1] * p1[0];
-    var t104 = 1.0 / (p1[0] * t97 + p1[1] * t98 + p1[2] * t99);
-    var t105 = p5[1] * p1[2];
-    var t106 = p5[2] * p1[1];
+    const t97 = t70 - t71;
+    const t98 = t73 - t74;
+    const t99 = t76 - t77;
+    const t100 = p5[2] * p1[0];
+    const t101 = p5[0] * p1[2];
+    const t102 = p5[0] * p1[1];
+    const t103 = p5[1] * p1[0];
+    const t104 = 1.0 / (p1[0] * t97 + p1[1] * t98 + p1[2] * t99);
+    const t105 = p5[1] * p1[2];
+    const t106 = p5[2] * p1[1];
     ret[18] = (t97 * t59 + (t105 - t106) * t24 + (t57 - t58) * t86) * t104;
     ret[19] = (t98 * t59 + (t100 - t101) * t24 + (t46 - t47) * t86) * t104;
     ret[20] = (t99 * t59 + (t102 - t103) * t24 + (t48 - t49) * t86) * t104;
-    var t107 = t87 - t88;
-    var t108 = t90 - t91;
-    var t109 = t93 - t94;
-    var t110 = 1.0 / (p1[0] * t107 + p1[1] * t108 + p1[2] * t109);
+    const t107 = t87 - t88;
+    const t108 = t90 - t91;
+    const t109 = t93 - t94;
+    const t110 = 1.0 / (p1[0] * t107 + p1[1] * t108 + p1[2] * t109);
     ret[21] = (t107 * t59 + (t105 - t106) * t42 + (t68 - t69) * t86) * t110;
     ret[22] = (t108 * t59 + (t100 - t101) * t42 + (t63 - t64) * t86) * t110;
     ret[23] = (t109 * t59 + (t102 - t103) * t42 + (t65 - t66) * t86) * t110;
@@ -1389,11 +1389,11 @@ var MathUtil = {
       return false;
     }
     for(var i = 0; i < 6; i++) {
-      var plane = frustum[i];
-      var p3 = plane[3];
-      var p0b0 = plane[0] * box[0];
-      var p2b2 = plane[2] * box[2];
-      var p1b1 = plane[1] * box[1];
+      const plane = frustum[i];
+      const p3 = plane[3];
+      const p0b0 = plane[0] * box[0];
+      const p2b2 = plane[2] * box[2];
+      const p1b1 = plane[1] * box[1];
       if( p0b0 + p1b1 + p2b2 + p3 <= 0.0 &&
       plane[0] * box[3] + plane[1] * box[4] + plane[2] * box[5] + p3 <= 0.0 &&
       p0b0 + plane[1] * box[4] + p2b2 + p3 <= 0.0 &&
@@ -1407,15 +1407,15 @@ var MathUtil = {
     }
     // To increase robustness in frustum culling; see
     // <http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm>
-    var pts = MathUtil._frustumPoints(frustum);
+    const pts = MathUtil._frustumPoints(frustum);
     for(i = 0; i < 3; i++) {
-      var minval = box[i];
+      const minval = box[i];
       if(pts[i] < minval && pts[3 + i] < minval && pts[6 + i] < minval &&
       pts[9 + i] < minval && pts[12 + i] < minval && pts[15 + i] < minval &&
     pts[18 + i] < minval && pts[21 + i] < minval) {
         return false;
       }
-      var maxval = box[i + 3];
+      const maxval = box[i + 3];
       if(pts[i] > maxval && pts[3 + i] > maxval && pts[6 + i] > maxval &&
       pts[9 + i] > maxval && pts[12 + i] > maxval && pts[15 + i] > maxval &&
     pts[18 + i] > maxval && pts[21 + i] > maxval) {
@@ -1441,8 +1441,8 @@ var MathUtil = {
    * otherwise false;
    */
   "frustumHasPoint":function(frustum, x, y, z) {
-    for(var i = 0; i < 6; i++) {
-      var d = frustum[i][0] * x + frustum[i][1] * y +
+    for(let i = 0; i < 6; i++) {
+      const d = frustum[i][0] * x + frustum[i][1] * y +
      frustum[i][2] * z + frustum[i][3];
       if(d <= 0)return false;
     }
@@ -1469,9 +1469,9 @@ var MathUtil = {
    */
   "frustumHasSphere":function(frustum, x, y, z, radius) {
     if(radius < 0)throw new Error("radius is negative");
-    for(var i = 0; i < 6; i++) {
-      var plane = frustum[i];
-      var dot = plane[3] + plane[0] * x +
+    for(let i = 0; i < 6; i++) {
+      const plane = frustum[i];
+      const dot = plane[3] + plane[0] * x +
      plane[1] * y + plane[2] * z;
       if(dot < -radius)return false;
     }
@@ -1501,11 +1501,11 @@ var MathUtil = {
    * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
    */
   "mat3invert":function(m) {
-    var ret = [];
-    var t4 = m[4] * m[8] - m[5] * m[7];
-    var t5 = m[5] * m[6] - m[3] * m[8];
-    var t6 = m[3] * m[7] - m[4] * m[6];
-    var t7 = 1.0 / (
+    const ret = [];
+    const t4 = m[4] * m[8] - m[5] * m[7];
+    const t5 = m[5] * m[6] - m[3] * m[8];
+    const t6 = m[3] * m[7] - m[4] * m[6];
+    const t7 = 1.0 / (
       m[0] * t4 + m[1] * t5 + m[2] * t6);
     if(t7 === 0)return MathUtil.mat3identity();
     ret[0] = t4 * t7;
@@ -1535,7 +1535,7 @@ var MathUtil = {
    * @returns {Array<number>} The resulting 3x3 matrix.
    */
   "mat3multiply":function(a, b) {
-    var ret = [];
+    const ret = [];
     ret[0] = b[0] * a[0] + b[1] * a[3] + b[2] * a[6];
     ret[1] = b[0] * a[1] + b[1] * a[4] + b[2] * a[7];
     ret[2] = b[0] * a[2] + b[1] * a[5] + b[2] * a[8];
@@ -1567,7 +1567,7 @@ var MathUtil = {
    * @returns {Array<number>} The transformed vector.
    */
   "mat3transform":function(mat, v, vy, vz) {
-    var x, y, z;
+    let x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -1598,7 +1598,7 @@ var MathUtil = {
    * @returns {Array<number>} The parameter "mat".
    */
   "mat3transposeInPlace":function(mat) {
-    var tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
+    let tmp = mat[1]; mat[1] = mat[3]; mat[3] = tmp;
     tmp = mat[2]; mat[2] = mat[6]; mat[6] = tmp;
     tmp = mat[5]; mat[5] = mat[7]; mat[7] = tmp;
     return mat;
@@ -1658,10 +1658,10 @@ var MathUtil = {
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4frustum":function(l, r, b, t, near, far) {
-    var dn = 2 * near;
-    var onedx = 1 / (r - l);
-    var onedy = 1 / (t - b);
-    var onedz = 1 / (far - near);
+    const dn = 2 * near;
+    const onedx = 1 / (r - l);
+    const onedy = 1 / (t - b);
+    const onedz = 1 / (far - near);
     return [
       dn * onedx, 0, 0, 0,
       0, dn * onedy, 0, 0,
@@ -1703,9 +1703,9 @@ var MathUtil = {
         return [1, 0, 0, 0, 1, 0, 0, 0, 1];
       }
     }
-    var m = [m4[0], m4[1], m4[2], m4[4], m4[5], m4[6],
+    const m = [m4[0], m4[1], m4[2], m4[4], m4[5], m4[6],
       m4[8], m4[9], m4[10]];
-    var det = m[0] * m[4] * m[8] +
+    let det = m[0] * m[4] * m[8] +
 m[3] * m[7] * m[2] +
 m[6] * m[1] * m[5] -
 m[6] * m[4] * m[2] -
@@ -1733,62 +1733,62 @@ m[0] * m[7] * m[5];
    * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
    */
   "mat4invert":function(m) {
-    var tvar0 = m[0] * m[10];
-    var tvar1 = m[0] * m[11];
-    var tvar2 = m[0] * m[5];
-    var tvar3 = m[0] * m[6];
-    var tvar4 = m[0] * m[7];
-    var tvar5 = m[0] * m[9];
-    var tvar6 = m[10] * m[12];
-    var tvar7 = m[10] * m[13];
-    var tvar8 = m[10] * m[15];
-    var tvar9 = m[11] * m[12];
-    var tvar10 = m[11] * m[13];
-    var tvar11 = m[11] * m[14];
-    var tvar14 = m[1] * m[4];
-    var tvar15 = m[1] * m[6];
-    var tvar16 = m[1] * m[7];
-    var tvar17 = m[1] * m[8];
-    var tvar19 = m[2] * m[4];
-    var tvar20 = m[2] * m[5];
-    var tvar21 = m[2] * m[7];
-    var tvar22 = m[2] * m[8];
-    var tvar23 = m[2] * m[9];
-    var tvar25 = m[3] * m[4];
-    var tvar26 = m[3] * m[5];
-    var tvar27 = m[3] * m[6];
-    var tvar28 = m[3] * m[8];
-    var tvar29 = m[3] * m[9];
-    var tvar32 = m[4] * m[9];
-    var tvar35 = m[5] * m[8];
-    var tvar37 = m[6] * m[8];
-    var tvar38 = m[6] * m[9];
-    var tvar40 = m[7] * m[8];
-    var tvar41 = m[7] * m[9];
-    var tvar42 = m[8] * m[13];
-    var tvar43 = m[8] * m[14];
-    var tvar44 = m[8] * m[15];
-    var tvar45 = m[9] * m[12];
-    var tvar46 = m[9] * m[14];
-    var tvar47 = m[9] * m[15];
-    var tvar48 = tvar14 - tvar2;
-    var tvar49 = tvar15 - tvar20;
-    var tvar50 = tvar16 - tvar26;
-    var tvar51 = tvar19 - tvar3;
-    var tvar52 = tvar2 - tvar14;
-    var tvar53 = tvar20 - tvar15;
-    var tvar54 = tvar21 - tvar27;
-    var tvar55 = tvar25 - tvar4;
-    var tvar56 = tvar26 - tvar16;
-    var tvar57 = tvar27 - tvar21;
-    var tvar58 = tvar3 - tvar19;
-    var tvar59 = tvar4 - tvar25;
-    var det = tvar45 * tvar57 + tvar6 * tvar50 + tvar9 * tvar53 + tvar42 * tvar54 + tvar7 * tvar55 +
+    const tvar0 = m[0] * m[10];
+    const tvar1 = m[0] * m[11];
+    const tvar2 = m[0] * m[5];
+    const tvar3 = m[0] * m[6];
+    const tvar4 = m[0] * m[7];
+    const tvar5 = m[0] * m[9];
+    const tvar6 = m[10] * m[12];
+    const tvar7 = m[10] * m[13];
+    const tvar8 = m[10] * m[15];
+    const tvar9 = m[11] * m[12];
+    const tvar10 = m[11] * m[13];
+    const tvar11 = m[11] * m[14];
+    const tvar14 = m[1] * m[4];
+    const tvar15 = m[1] * m[6];
+    const tvar16 = m[1] * m[7];
+    const tvar17 = m[1] * m[8];
+    const tvar19 = m[2] * m[4];
+    const tvar20 = m[2] * m[5];
+    const tvar21 = m[2] * m[7];
+    const tvar22 = m[2] * m[8];
+    const tvar23 = m[2] * m[9];
+    const tvar25 = m[3] * m[4];
+    const tvar26 = m[3] * m[5];
+    const tvar27 = m[3] * m[6];
+    const tvar28 = m[3] * m[8];
+    const tvar29 = m[3] * m[9];
+    const tvar32 = m[4] * m[9];
+    const tvar35 = m[5] * m[8];
+    const tvar37 = m[6] * m[8];
+    const tvar38 = m[6] * m[9];
+    const tvar40 = m[7] * m[8];
+    const tvar41 = m[7] * m[9];
+    const tvar42 = m[8] * m[13];
+    const tvar43 = m[8] * m[14];
+    const tvar44 = m[8] * m[15];
+    const tvar45 = m[9] * m[12];
+    const tvar46 = m[9] * m[14];
+    const tvar47 = m[9] * m[15];
+    const tvar48 = tvar14 - tvar2;
+    const tvar49 = tvar15 - tvar20;
+    const tvar50 = tvar16 - tvar26;
+    const tvar51 = tvar19 - tvar3;
+    const tvar52 = tvar2 - tvar14;
+    const tvar53 = tvar20 - tvar15;
+    const tvar54 = tvar21 - tvar27;
+    const tvar55 = tvar25 - tvar4;
+    const tvar56 = tvar26 - tvar16;
+    const tvar57 = tvar27 - tvar21;
+    const tvar58 = tvar3 - tvar19;
+    const tvar59 = tvar4 - tvar25;
+    let det = tvar45 * tvar57 + tvar6 * tvar50 + tvar9 * tvar53 + tvar42 * tvar54 + tvar7 * tvar55 +
 tvar10 * tvar58 + tvar43 * tvar56 + tvar46 * tvar59 + tvar11 * tvar48 + tvar44 * tvar49 +
 tvar47 * tvar51 + tvar8 * tvar52;
     if(det === 0)return MathUtil.mat4identity();
     det = 1.0 / det;
-    var r = [];
+    const r = [];
     r[0] = m[6] * tvar10 - m[7] * tvar7 + tvar41 * m[14] - m[5] * tvar11 - tvar38 * m[15] + m[5] * tvar8;
     r[1] = m[3] * tvar7 - m[2] * tvar10 - tvar29 * m[14] + m[1] * tvar11 + tvar23 * m[15] - m[1] * tvar8;
     r[2] = m[13] * tvar54 + m[14] * tvar56 + m[15] * tvar49;
@@ -1805,7 +1805,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     r[13] = m[1] * tvar6 - tvar23 * m[12] + m[13] * (tvar22 - tvar0) + m[14] * (tvar5 - tvar17);
     r[14] = m[12] * tvar53 + m[13] * tvar58 + m[14] * tvar48;
     r[15] = m[8] * tvar49 + m[9] * tvar51 + m[10] * tvar52;
-    for(var i = 0; i < 16; i++) {
+    for(let i = 0; i < 16; i++) {
       r[i] *= det;
     }
     return r;
@@ -1899,8 +1899,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "mat4lookat":function(viewerPos, lookingAt, up) {
     if(typeof up === "undefined" || up === null)up = [0, 1, 0];
     if(typeof lookingAt === "undefined" || lookingAt === null)lookingAt = [0, 0, 0];
-    var f = MathUtil.vec3sub(lookingAt, viewerPos);
-    var len = MathUtil.vec3length(f);
+    const f = MathUtil.vec3sub(lookingAt, viewerPos);
+    const len = MathUtil.vec3length(f);
     if(len < 1e-6) {
       return MathUtil.mat4identity();
     }
@@ -1910,10 +1910,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
     up = MathUtil.vec3normalize(up);
     // make "s" a vector perpendicular to "f" and "up" vector;
     // "s" will point rightward from the camera's viewpoint.
-    var s = MathUtil.vec3cross(f, up);
+    const s = MathUtil.vec3cross(f, up);
     MathUtil.vec3normalizeInPlace(s);
     // orthogonalize the "up" vector
-    var u = MathUtil.vec3cross(s, f);
+    const u = MathUtil.vec3cross(s, f);
     MathUtil.vec3normalizeInPlace(u);
     // negate the "f" vector so that it points forward from
     // the camera's viewpoint
@@ -1939,9 +1939,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4multiply":function(a, b) {
-    var dst = [];
-    for(var i = 0; i < 16; i += 4) {
-      for(var j = 0; j < 4; j++) {
+    const dst = [];
+    for(let i = 0; i < 16; i += 4) {
+      for(let j = 0; j < 4; j++) {
         dst[i + j] =
     b[i] * a[j] +
     b[i + 1] * a[j + 4] +
@@ -1965,13 +1965,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4oblique":function(alpha, phi) {
-    var alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
-    var phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
-    var ca = Math.cos(alphaAngle);
-    var sa = alphaAngle >= 0 && alphaAngle < 6.283185307179586 ? alphaAngle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(alphaAngle);
-    var cp = Math.cos(phiAngle);
-    var sp = phiAngle >= 0 && phiAngle < 6.283185307179586 ? phiAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cp * cp) : -Math.sqrt(1.0 - cp * cp) : Math.sin(phiAngle);
-    var cota = ca / sa;
+    const alphaAngle = (alpha >= 0 && alpha < 360 ? alpha : alpha % 360 + (alpha < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
+    const phiAngle = (phi >= 0 && phi < 360 ? phi : phi % 360 + (phi < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
+    const ca = Math.cos(alphaAngle);
+    const sa = alphaAngle >= 0 && alphaAngle < 6.283185307179586 ? alphaAngle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(alphaAngle);
+    const cp = Math.cos(phiAngle);
+    const sp = phiAngle >= 0 && phiAngle < 6.283185307179586 ? phiAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cp * cp) : -Math.sqrt(1.0 - cp * cp) : Math.sin(phiAngle);
+    const cota = ca / sa;
     return [
       1, 0, 0, 0,
       0, 1, 0, 0,
@@ -2012,9 +2012,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4ortho":function(l, r, b, t, n, f) {
-    var width = 1 / (r - l);
-    var height = 1 / (t - b);
-    var depth = 1 / (f - n);
+    const width = 1 / (r - l);
+    const height = 1 / (t - b);
+    const depth = 1 / (f - n);
     return [
       2 * width, 0, 0, 0,
       0, 2 * height, 0, 0,
@@ -2102,11 +2102,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
-    var newDim;
-    var boxAspect = Math.abs((r - l) / (t - b));
+    let newDim;
+    const boxAspect = Math.abs((r - l) / (t - b));
     aspect /= boxAspect;
-    var w = Math.abs(r - l);
-    var h = Math.abs(t - b);
+    const w = Math.abs(r - l);
+    const h = Math.abs(t - b);
     if (aspect < 1.0) {
       newDim = h / aspect;
       if(t > b) {
@@ -2169,9 +2169,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
     // NOTE: Converts fovY to radians then divides it by 2
-    var fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
-    var f = 1 / Math.tan(fov);
-    var nmf = near - far;
+    const fov = (fovY >= 0 && fovY < 360 ? fovY : fovY % 360 + (fovY < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
+    const f = 1 / Math.tan(fov);
+    let nmf = near - far;
     nmf = 1 / nmf;
     return [f / aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0,
       nmf * (near + far), -1, 0, 0, nmf * near * far * 2, 0];
@@ -2218,9 +2218,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
     // NOTE: Converts fovX to radians then divides it by 2
-    var fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
+    const fov = (fovX >= 0 && fovX < 360 ? fovX : fovX % 360 + (fovX < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
     // NOTE: Converts to degrees then multiplies by 2
-    var fovY = MathUtil.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
+    const fovY = MathUtil.Num360DividedByPi * Math.atan2(Math.tan(fov), aspectRatio);
     return MathUtil.mat4perspective(fovY, aspectRatio, near, far);
   },
   /**
@@ -2255,7 +2255,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the transformed vector's X, Y, and Z coordinates.
    */
   "mat4projectVec3":function(mat, v, vy, vz) {
-    var x, y, z;
+    let x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -2265,10 +2265,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
       y = v[1];
       z = v[2];
     }
-    var x1 = x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
-    var y1 = x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
-    var z1 = x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
-    var w = 1.0 / (x * mat[3] + y * mat[7] + z * mat[11] + mat[15]);
+    const x1 = x * mat[0] + y * mat[4] + z * mat[8] + mat[12];
+    const y1 = x * mat[1] + y * mat[5] + z * mat[9] + mat[13];
+    const z1 = x * mat[2] + y * mat[6] + z * mat[10] + mat[14];
+    const w = 1.0 / (x * mat[3] + y * mat[7] + z * mat[11] + mat[15]);
     return [x1 * w, y1 * w, z1 * w];
   },
   /**
@@ -2295,7 +2295,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4rotate":function(mat, angle, v, vy, vz) {
-    var v0, v1, v2, ang;
+    let v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -2313,8 +2313,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
       ang = angle;
     }
     ang = (ang >= 0 && ang < 360 ? ang : ang % 360 + (ang < 0 ? 360 : 0)) * MathUtil.PiDividedBy180;
-    var cost = Math.cos(ang);
-    var sint = ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost);
+    const cost = Math.cos(ang);
+    const sint = ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost);
     if( v0 === 1 && v1 === 0 && v2 === 0 ) {
       return [mat[0], mat[1], mat[2], mat[3],
         cost * mat[4] + mat[8] * sint, cost * mat[5] + mat[9] * sint, cost * mat[6] + mat[10] * sint, cost * mat[7] + mat[11] * sint,
@@ -2332,35 +2332,35 @@ tvar47 * tvar51 + tvar8 * tvar52;
     } else if(v0 === 0 && v1 === 0 && v2 === 0) {
       return MathUtil.mat4copy(mat);
     } else {
-      var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+      const iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
-      var x2 = v0 * v0;
-      var y2 = v1 * v1;
-      var z2 = v2 * v2;
-      var mcos = 1.0 - cost;
-      var xy = v0 * v1;
-      var xz = v0 * v2;
-      var yz = v1 * v2;
-      var xs = v0 * sint;
-      var ys = v1 * sint;
-      var zs = v2 * sint;
+      const x2 = v0 * v0;
+      const y2 = v1 * v1;
+      const z2 = v2 * v2;
+      const mcos = 1.0 - cost;
+      const xy = v0 * v1;
+      const xz = v0 * v2;
+      const yz = v1 * v2;
+      const xs = v0 * sint;
+      const ys = v1 * sint;
+      const zs = v2 * sint;
       v1 = mcos * x2;
-      var v10 = mcos * yz;
-      var v12 = mcos * z2;
-      var v3 = mcos * xy;
-      var v5 = mcos * xz;
-      var v7 = mcos * y2;
-      var v15 = cost + v1;
-      var v16 = v3 + zs;
-      var v17 = v5 - ys;
-      var v18 = cost + v7;
-      var v19 = v3 - zs;
-      var v20 = v10 + xs;
-      var v21 = cost + v12;
-      var v22 = v5 + ys;
-      var v23 = v10 - xs;
+      const v10 = mcos * yz;
+      const v12 = mcos * z2;
+      const v3 = mcos * xy;
+      const v5 = mcos * xz;
+      const v7 = mcos * y2;
+      const v15 = cost + v1;
+      const v16 = v3 + zs;
+      const v17 = v5 - ys;
+      const v18 = cost + v7;
+      const v19 = v3 - zs;
+      const v20 = v10 + xs;
+      const v21 = cost + v12;
+      const v22 = v5 + ys;
+      const v23 = v10 - xs;
       return [
         mat[0] * v15 + mat[4] * v16 + mat[8] * v17, mat[1] * v15 + mat[5] * v16 + mat[9] * v17,
         mat[10] * v17 + mat[2] * v15 + mat[6] * v16, mat[11] * v17 + mat[3] * v15 + mat[7] * v16,
@@ -2393,7 +2393,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
   "mat4rotated":function(angle, v, vy, vz) {
-    var v0, v1, v2, ang;
+    let v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -2449,8 +2449,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
         v2 * v2 * 2.0 - 1.0,
         0.0, 0.0, 0.0, 0.0, 1.0];
     }
-    var cost = Math.cos(ang);
-    var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
+    const cost = Math.cos(ang);
+    const sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
     if( v0 === 1 && v1 === 0 && v2 === 0 ) {
       return [1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1];
     } else if( v0 === 0 && v1 === 1 && v2 === 0 ) {
@@ -2464,16 +2464,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
       v0 *= iscale;
       v1 *= iscale;
       v2 *= iscale;
-      var x2 = v0 * v0;
-      var y2 = v1 * v1;
-      var z2 = v2 * v2;
-      var xy = v0 * v1;
-      var xz = v0 * v2;
-      var yz = v1 * v2;
-      var xs = v0 * sint;
-      var ys = v1 * sint;
-      var zs = v2 * sint;
-      var mcos = 1.0 - cost;
+      const x2 = v0 * v0;
+      const y2 = v1 * v1;
+      const z2 = v2 * v2;
+      const xy = v0 * v1;
+      const xz = v0 * v2;
+      const yz = v1 * v2;
+      const xs = v0 * sint;
+      const ys = v1 * sint;
+      const zs = v2 * sint;
+      const mcos = 1.0 - cost;
       v0 = mcos * xy;
       v1 = mcos * xz;
       v2 = mcos * yz;
@@ -2494,7 +2494,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4scale":function(mat, v3, v3y, v3z) {
-    var scaleX, scaleY, scaleZ;
+    let scaleX, scaleY, scaleZ;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       scaleX = v3;
       scaleY = v3y;
@@ -2525,7 +2525,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The same parameter as "mat".
    */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
-    var x, y, z;
+    let x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -2587,7 +2587,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * will be normalized (see {@link MathUtil.planeNormalizeInPlace}).
    */
   "mat4toFrustumPlanes":function(matrix) {
-    var frustum = [[], [], [], [], [], []];
+    const frustum = [[], [], [], [], [], []];
     // Left clipping plane
     frustum[0] = MathUtil.planeNormalizeInPlace([
       matrix[3] + matrix[0],
@@ -2667,7 +2667,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed vector.
    */
   "mat4transform":function(mat, v, vy, vz, vw) {
-    var x, y, z, w;
+    let x, y, z, w;
     if(typeof vy !== "undefined" && typeof vz !== "undefined" &&
       typeof vw !== "undefined") {
       x = v;
@@ -2706,7 +2706,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The transformed 3-element vector.
    */
   "mat4transformVec3":function(mat, v, vy, vz) {
-    var x, y, z;
+    let x, y, z;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       x = v;
       y = vy;
@@ -2732,7 +2732,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translate":function(mat, v3, v3y, v3z) {
-    var x, y, z;
+    let x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -2763,7 +2763,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting 4x4 matrix.
    */
   "mat4translated":function(v3, v3y, v3z) {
-    var x, y, z;
+    let x, y, z;
     if(typeof v3y !== "undefined" && typeof v3z !== "undefined") {
       x = v3;
       y = v3y;
@@ -2792,7 +2792,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The parameter "mat".
    */
   "mat4transposeInPlace":function(mat) {
-    var tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
+    let tmp = mat[1]; mat[1] = mat[4]; mat[4] = tmp;
     tmp = mat[2]; mat[2] = mat[8]; mat[8] = tmp;
     tmp = mat[3]; mat[3] = mat[12]; mat[12] = tmp;
     tmp = mat[6]; mat[6] = mat[9]; mat[9] = tmp;
@@ -2807,7 +2807,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} A four-element array describing the plane.
    */
   "planeFromNormalAndPoint":function(normal, point) {
-    var d = -(normal[0] * point[0] + normal[1] * point[1] + normal[2] * point[2]);
+    const d = -(normal[0] * point[0] + normal[1] * point[1] + normal[2] * point[2]);
     return [normal[0], normal[1], normal[2], d];
   },
   /**
@@ -2842,11 +2842,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The parameter "plane".
    */
   "planeNormalizeInPlace":function(plane) {
-    var x = plane[0];
-    var y = plane[1];
-    var z = plane[2];
+    const x = plane[0];
+    const y = plane[1];
+    const z = plane[2];
 
-    var len = Math.sqrt(x * x + y * y + z * z);
+    let len = Math.sqrt(x * x + y * y + z * z);
     if(len !== 0) {
       len = 1.0 / len;
       plane[0] *= len;
@@ -2885,7 +2885,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * and its fourth element (W) is the cosine of half of "angle".
    */
   "quatFromAxisAngle":function(angle, v, vy, vz) {
-    var v0, v1, v2, ang;
+    let v0, v1, v2, ang;
     if(typeof vy !== "undefined" && typeof vz !== "undefined") {
       v0 = v;
       v1 = vy;
@@ -2903,10 +2903,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
       v2 = v[2];
       ang = (angle >= 0 && angle < 360 ? angle : angle % 360 + (angle < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
     }
-    var cost = Math.cos(ang);
-    var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
-    var vec = MathUtil.vec3normalizeInPlace([v0, v1, v2]);
-    var ret = [vec[0], vec[1], vec[2], cost];
+    const cost = Math.cos(ang);
+    const sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
+    const vec = MathUtil.vec3normalizeInPlace([v0, v1, v2]);
+    const ret = [vec[0], vec[1], vec[2], cost];
     ret[0] *= sint;
     ret[1] *= sint;
     ret[2] *= sint;
@@ -2921,15 +2921,15 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The resulting quaternion.
    */
   "quatFromMat4":function(m) {
-    var ret = [];
-    var xy = m[1];
-    var xz = m[2];
-    var yx = m[4];
-    var yz = m[6];
-    var zx = m[8];
-    var zy = m[9];
-    var trace = m[0] + m[5] + m[10];
-    var s, t;
+    const ret = [];
+    const xy = m[1];
+    const xz = m[2];
+    const yx = m[4];
+    const yz = m[6];
+    const zx = m[8];
+    const zy = m[9];
+    const trace = m[0] + m[5] + m[10];
+    let s, t;
     if (trace >= 0.0) {
       s = Math.sqrt(trace + 1.0) * 0.5;
       t = 0.25 / s;
@@ -2988,7 +2988,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated quaternion.
    */
   "quatFromTaitBryan":function(pitchDegrees, yawDegrees, rollDegrees, mode) {
-    var rollRad, pitchRad, yawRad;
+    let rollRad, pitchRad, yawRad;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(pitchDegrees.constructor === Array) {
@@ -3000,13 +3000,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
       pitchRad = (pitchDegrees >= 0 && pitchDegrees < 360 ? pitchDegrees : pitchDegrees % 360 + (pitchDegrees < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
       yawRad = (yawDegrees >= 0 && yawDegrees < 360 ? yawDegrees : yawDegrees % 360 + (yawDegrees < 0 ? 360 : 0)) * MathUtil.PiDividedBy360;
     }
-    var py = Math.cos(pitchRad);
-    var px = pitchRad >= 0 && pitchRad < 6.283185307179586 ? pitchRad <= 3.141592653589793 ? Math.sqrt(1.0 - py * py) : -Math.sqrt(1.0 - py * py) : Math.sin(pitchRad);
-    var yy = Math.cos(yawRad);
-    var yx = yawRad >= 0 && yawRad < 6.283185307179586 ? yawRad <= 3.141592653589793 ? Math.sqrt(1.0 - yy * yy) : -Math.sqrt(1.0 - yy * yy) : Math.sin(yawRad);
-    var ry = Math.cos(rollRad);
-    var rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
-    var t8, t7;
+    const py = Math.cos(pitchRad);
+    const px = pitchRad >= 0 && pitchRad < 6.283185307179586 ? pitchRad <= 3.141592653589793 ? Math.sqrt(1.0 - py * py) : -Math.sqrt(1.0 - py * py) : Math.sin(pitchRad);
+    const yy = Math.cos(yawRad);
+    const yx = yawRad >= 0 && yawRad < 6.283185307179586 ? yawRad <= 3.141592653589793 ? Math.sqrt(1.0 - yy * yy) : -Math.sqrt(1.0 - yy * yy) : Math.sin(yawRad);
+    const ry = Math.cos(rollRad);
+    const rx = rollRad >= 0 && rollRad < 6.283185307179586 ? rollRad <= 3.141592653589793 ? Math.sqrt(1.0 - ry * ry) : -Math.sqrt(1.0 - ry * ry) : Math.sin(rollRad);
+    let t8, t7;
     if(mode === MathUtil.GlobalPitchYawRoll || mode === MathUtil.GlobalPitchRollYaw) {
       t7 = [rx * yx, ry * yx, rx * yy, ry * yy];
       if(mode === MathUtil.GlobalPitchYawRoll)t7[0] = -t7[0];
@@ -3034,10 +3034,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * will be a unit vector.
    */
   "quatFromVectors":function(vec1, vec2) {
-    var ret = MathUtil.vec3cross(vec1, vec2);
+    let ret = MathUtil.vec3cross(vec1, vec2);
     if(MathUtil.vec3dot(ret, ret) < 1e-9) {
       // The vectors are parallel or close to parallel; there are two possible cases
-      var dot = MathUtil.vec3dot(vec1, vec2);
+      const dot = MathUtil.vec3dot(vec1, vec2);
       if(dot > 0) {
         // The vectors point in the same direction or almost so
         return [0, 0, 0, 1];
@@ -3047,7 +3047,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
         ret[3] = 0;
       }
     } else {
-      var vecLengths = MathUtil.vec3length(vec1) * MathUtil.vec3length(vec2);
+      let vecLengths = MathUtil.vec3length(vec1) * MathUtil.vec3length(vec2);
       if(vecLengths === 0)vecLengths = 1; // degenerate case
       ret[3] = vecLengths + MathUtil.vec3dot(vec1, vec2);
     }
@@ -3066,7 +3066,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @see {@link MathUtil.quatConjugate}
    */
   "quatInvert":function(quat) {
-    var lsq = 1.0 / MathUtil.quatDot(quat, quat);
+    const lsq = 1.0 / MathUtil.quatDot(quat, quat);
     return MathUtil.vec4scaleInPlace(
       MathUtil.quatConjugate(quat), lsq);
   },
@@ -3121,16 +3121,16 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * which will be a unit vector.
    */
   "quatNlerp":function(q1, q2, factor) {
-    var t1 = 1.0 - factor;
-    var t2 = q1[0] * t1;
-    var t3 = q1[1] * t1;
-    var t4 = q1[2] * t1;
-    var t5 = q1[3] * t1;
-    var t6 = q2[0] * factor;
-    var t7 = q2[1] * factor;
-    var t8 = q2[2] * factor;
-    var t9 = q2[3] * factor;
-    var t10 = q1[0] * q2[0] + q1[1] * q2[1] + q1[2] * q2[2] + q1[3] * q2[3];
+    const t1 = 1.0 - factor;
+    const t2 = q1[0] * t1;
+    const t3 = q1[1] * t1;
+    const t4 = q1[2] * t1;
+    const t5 = q1[3] * t1;
+    const t6 = q2[0] * factor;
+    const t7 = q2[1] * factor;
+    const t8 = q2[2] * factor;
+    const t9 = q2[3] * factor;
+    const t10 = q1[0] * q2[0] + q1[1] * q2[1] + q1[2] * q2[2] + q1[3] * q2[3];
     if (t10 < 0.0) {
       return MathUtil.quatNormalizeInPlace([t2 - t6, t3 - t7, t4 - t8, t5 - t9]);
     } else {
@@ -3189,13 +3189,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * for additional background
    */
   "quatSlerp":function(q1, q2, factor) {
-    var cosval = MathUtil.quatDot(q1, q2);
-    var qd = q2;
+    let cosval = MathUtil.quatDot(q1, q2);
+    let qd = q2;
     if(cosval < 0) {
       qd = [-q2[0], -q2[1], -q2[2], -q2[3]];
       cosval = MathUtil.quatDot(q1, qd);
     }
-    var angle = 0;
+    let angle = 0;
     if(cosval > -1) {
       if(cosval < 1) {
         angle = Math.acos(cosval);
@@ -3207,10 +3207,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
     } else {
       angle = Math.PI;
     }
-    var s = Math.sin(angle);
-    var sinv = 1.0 / s;
-    var c1 = Math.sin((1.0 - factor) * angle) * sinv;
-    var c2 = Math.sin(factor * angle) * sinv;
+    const s = Math.sin(angle);
+    const sinv = 1.0 / s;
+    const c1 = Math.sin((1.0 - factor) * angle) * sinv;
+    const c2 = Math.sin(factor * angle) * sinv;
     return [
       q1[0] * c1 + qd[0] * c2,
       q1[1] * c1 + qd[1] * c2,
@@ -3229,8 +3229,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of rotation will be a unit vector.
    */
   "quatToAxisAngle":function(a) {
-    var w = a[3];
-    var d = 1.0 - w * w;
+    const w = a[3];
+    let d = 1.0 - w * w;
     if(d > 0) {
       d = 1 / Math.sqrt(d);
       return [a[0] * d, a[1] * d, a[2] * d,
@@ -3246,7 +3246,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} The generated 4x4 matrix.
    */
   "quatToMat4":function(quat) {
-    var tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
+    let tx, ty, tz, xx, xy, xz, yy, yz, zz, wx, wy, wz;
     tx = 2.0 * quat[0];
     ty = 2.0 * quat[1];
     tz = 2.0 * quat[2];
@@ -3286,9 +3286,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
    */
   "quatToTaitBryan":function(a, mode) {
-    var c0 = a[3];
-    var c1, c2, c3;
-    var e = 1;
+    const c0 = a[3];
+    let c1, c2, c3;
+    let e = 1;
     if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
     if(mode < 0 || mode >= 6)throw new Error("invalid mode");
     if(mode === MathUtil.GlobalRollPitchYaw) {
@@ -3307,15 +3307,15 @@ tvar47 * tvar51 + tvar8 * tvar52;
     } else {
       c1 = a[0]; c2 = a[1]; c3 = a[2];
     }
-    var sq1 = c1 * c1;
-    var sq2 = c2 * c2;
-    var sq3 = c3 * c3;
-    var e1 = Math.atan2(2 * (c0 * c1 - e * c2 * c3), 1 - (sq1 + sq2) * 2);
-    var sine = 2 * (c0 * c2 + e * c1 * c3);
+    const sq1 = c1 * c1;
+    const sq2 = c2 * c2;
+    const sq3 = c3 * c3;
+    let e1 = Math.atan2(2 * (c0 * c1 - e * c2 * c3), 1 - (sq1 + sq2) * 2);
+    let sine = 2 * (c0 * c2 + e * c1 * c3);
     if(sine > 1.0)sine = 1.0; // for stability
     if(sine < -1.0)sine = -1.0; // for stability
-    var e2 = Math.asin(sine);
-    var e3 = Math.atan2(2 * (c0 * c3 - e * c1 * c2), 1 - (sq2 + sq3) * 2);
+    let e2 = Math.asin(sine);
+    let e3 = Math.atan2(2 * (c0 * c3 - e * c1 * c2), 1 - (sq2 + sq3) * 2);
     e1 *= MathUtil.Num180DividedByPi;
     e2 *= MathUtil.Num180DividedByPi;
     e3 *= MathUtil.Num180DividedByPi;
@@ -3327,7 +3327,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       if(isNaN(e1))e1 = 0;
     }
     // Return the pitch/yaw/roll angles in the standard order
-    var angles = [];
+    const angles = [];
     if(mode === MathUtil.GlobalRollPitchYaw) {
       angles[0] = e2; angles[1] = e1; angles[2] = e3;
     } else if(mode === MathUtil.GlobalPitchYawRoll) {
@@ -3356,10 +3356,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be returned instead.
    */
   "quatTransform":function(q, v) {
-    var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
-    var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
-    var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
-    var t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
+    const t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
+    const t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
+    const t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
+    const t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
     if(v.length === 3) {
       return [t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4,
         t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4,
@@ -3420,8 +3420,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec2addInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
+    const b0 = b[0];
+    const b1 = b[1];
     a[0] += b0;
     a[1] += b1;
     return a;
@@ -3458,8 +3458,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} max Highest possible value. Should not be less than "min".
    * @returns {Array<number>} The resulting vector. */
   "vec2clampInPlace":function(a, min, max) {
-    var x = Math.min(max, Math.max(min, a[0]));
-    var y = Math.min(max, Math.max(min, a[1]));
+    const x = Math.min(max, Math.max(min, a[0]));
+    const y = Math.min(max, Math.max(min, a[1]));
     a[0] = x;
     a[1] = y;
     return a;
@@ -3511,8 +3511,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} a A 2-element vector.
    * @returns {number} Return value. */
   "vec2length":function(a) {
-    var dx = a[0];
-    var dy = a[1];
+    const dx = a[0];
+    const dy = a[1];
     return Math.sqrt(dx * dx + dy * dy);
   },
   /**
@@ -3553,8 +3553,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec2mulInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
+    const b0 = b[0];
+    const b1 = b[1];
     a[0] *= b0;
     a[1] *= b1;
     return a;
@@ -3619,9 +3619,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
    */
   "vec2normalizeInPlace":function(vec) {
-    var x = vec[0];
-    var y = vec[1];
-    var len = Math.sqrt(x * x + y * y);
+    const x = vec[0];
+    const y = vec[1];
+    let len = Math.sqrt(x * x + y * y);
     if(len !== 0) {
       len = 1.0 / len;
       vec[0] *= len;
@@ -3658,7 +3658,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * length is 0 or extremely close to 0.
    */
   "vec2proj":function(vec, refVec) {
-    var lensq = MathUtil.vec2dot(refVec, refVec);
+    const lensq = MathUtil.vec2dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0];
     return MathUtil.vec2scale(refVec,
       MathUtil.vec2dot(vec, refVec) / lensq);
@@ -3730,8 +3730,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec2subInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
+    const b0 = b[0];
+    const b1 = b[1];
     a[0] -= b0;
     a[1] -= b1;
     return a;
@@ -3789,9 +3789,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec3addInPlace":function(a, b) {
     // Use variables in case a and b are the same
 
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
     a[0] += b0;
     a[1] += b1;
     a[2] += b2;
@@ -3830,9 +3830,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} max Highest possible value. Should not be less than "min".
    * @returns {Array<number>} The resulting vector. */
   "vec3clampInPlace":function(a, min, max) {
-    var x = Math.min(max, Math.max(min, a[0]));
-    var y = Math.min(max, Math.max(min, a[1]));
-    var z = Math.min(max, Math.max(min, a[2]));
+    const x = Math.min(max, Math.max(min, a[0]));
+    const y = Math.min(max, Math.max(min, a[1]));
+    const z = Math.min(max, Math.max(min, a[2]));
     a[0] = x;
     a[1] = y;
     a[2] = z;
@@ -4002,17 +4002,17 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of the unprojected point, in that order.
    */
   "vec3fromWindowPoint":function(vector, matrix, viewport, yUp) {
-    var halfWidth = viewport[2] * 0.5;
-    var halfHeight = viewport[3] * 0.5;
-    var x = 0;
-    var y = 0;
-    var z = vector[2] * 2.0 - 1.0;
+    const halfWidth = viewport[2] * 0.5;
+    const halfHeight = viewport[3] * 0.5;
+    let x = 0;
+    let y = 0;
+    const z = vector[2] * 2.0 - 1.0;
     if(halfWidth !== 0 && halfHeight !== 0) {
       x = (vector[0] - viewport[0] - halfWidth) / halfWidth;
       y = (vector[1] - viewport[1] - halfHeight) / halfHeight;
     }
     y = yUp ? y : -y;
-    var invMatrix = MathUtil.mat4invert(matrix);
+    const invMatrix = MathUtil.mat4invert(matrix);
     return MathUtil.mat4projectVec3(invMatrix, [x, y, z]);
   },
   /**
@@ -4028,9 +4028,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} a A 3-element vector.
    * @returns {number} Return value. */
   "vec3length":function(a) {
-    var dx = a[0];
-    var dy = a[1];
-    var dz = a[2];
+    const dx = a[0];
+    const dy = a[1];
+    const dz = a[2];
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
   },
   /**
@@ -4115,9 +4115,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec3mulInPlace":function(a, b) {
     // Use variables in case a and b are the same
 
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
     a[0] *= b0;
     a[1] *= b1;
     a[2] *= b2;
@@ -4184,10 +4184,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
    */
   "vec3normalizeInPlace":function(vec) {
-    var x = vec[0];
-    var y = vec[1];
-    var z = vec[2];
-    var len = Math.sqrt(x * x + y * y + z * z);
+    const x = vec[0];
+    const y = vec[1];
+    const z = vec[2];
+    let len = Math.sqrt(x * x + y * y + z * z);
     if(len !== 0) {
       len = 1.0 / len;
       vec[0] *= len;
@@ -4205,11 +4205,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * vector.  Returns (0,0,0) if "vec" is (0,0,0).
    */
   "vec3perp":function(vec) {
-    var absx = Math.abs(vec[0]);
-    var absy = Math.abs(vec[1]);
-    var absz = Math.abs(vec[2]);
-    var mx = Math.max(absx, absy, absz);
-    var normal = [0, 0, 0];
+    const absx = Math.abs(vec[0]);
+    const absy = Math.abs(vec[1]);
+    const absz = Math.abs(vec[2]);
+    const mx = Math.max(absx, absy, absz);
+    const normal = [0, 0, 0];
     if(mx === absx) {
       normal[0] = vec[1];
       normal[1] = -vec[0];
@@ -4243,7 +4243,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * length is 0 or extremely close to 0.
    */
   "vec3proj":function(vec, refVec) {
-    var lensq = MathUtil.vec3dot(refVec, refVec);
+    const lensq = MathUtil.vec3dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return MathUtil.vec3scale(refVec,
       MathUtil.vec3dot(vec, refVec) / lensq);
@@ -4316,9 +4316,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec3subInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
     a[0] -= b0;
     a[1] -= b1;
     a[2] -= b2;
@@ -4365,14 +4365,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
     // Transform the vector and do a perspective divide
-    var vec = MathUtil.mat4projectVec3(matrix, vector);
+    const vec = MathUtil.mat4projectVec3(matrix, vector);
     // Now convert the projected vector to window coordinates
-    var halfWidth = viewport[2] * 0.5;
-    var halfHeight = viewport[3] * 0.5;
-    var vecY = yUp ? vec[1] : -vec[1];
-    var x = vec[0] * halfWidth + halfWidth + viewport[0];
-    var y = vecY * halfHeight + halfHeight + viewport[1];
-    var z = (vec[2] + 1.0) * 0.5;
+    const halfWidth = viewport[2] * 0.5;
+    const halfHeight = viewport[3] * 0.5;
+    const vecY = yUp ? vec[1] : -vec[1];
+    const x = vec[0] * halfWidth + halfWidth + viewport[0];
+    const y = vecY * halfHeight + halfHeight + viewport[1];
+    const z = (vec[2] + 1.0) * 0.5;
     return [x, y, z];
   },
   /**
@@ -4465,10 +4465,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
   "vec4addInPlace":function(a, b) {
     // Use variables in case a and b are the same
 
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
-    var b3 = b[3];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
+    const b3 = b[3];
     a[0] += b0;
     a[1] += b1;
     a[2] += b2;
@@ -4508,10 +4508,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} max Highest possible value. Should not be less than "min".
    * @returns {Array<number>} The resulting vector. */
   "vec4clampInPlace":function(a, min, max) {
-    var x = Math.min(max, Math.max(min, a[0]));
-    var y = Math.min(max, Math.max(min, a[1]));
-    var z = Math.min(max, Math.max(min, a[2]));
-    var w = Math.min(max, Math.max(min, a[3]));
+    const x = Math.min(max, Math.max(min, a[0]));
+    const y = Math.min(max, Math.max(min, a[1]));
+    const z = Math.min(max, Math.max(min, a[2]));
+    const w = Math.min(max, Math.max(min, a[3]));
     a[0] = x;
     a[1] = y;
     a[2] = z;
@@ -4548,10 +4548,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} a A 4-element vector.
    * @returns {number} Return value. */
   "vec4length":function(a) {
-    var dx = a[0];
-    var dy = a[1];
-    var dz = a[2];
-    var dw = a[3];
+    const dx = a[0];
+    const dy = a[1];
+    const dz = a[2];
+    const dw = a[3];
     return Math.sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
   },
   /**
@@ -4627,11 +4627,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0.
    */
   "vec4normalizeInPlace":function(vec) {
-    var x = vec[0];
-    var y = vec[1];
-    var z = vec[2];
-    var w = vec[3];
-    var len = Math.sqrt(x * x + y * y + z * z + w * w);
+    const x = vec[0];
+    const y = vec[1];
+    const z = vec[2];
+    const w = vec[3];
+    let len = Math.sqrt(x * x + y * y + z * z + w * w);
     if(len !== 0) {
       len = 1.0 / len;
       vec[0] *= len;
@@ -4659,7 +4659,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * length is 0 or extremely close to 0.
    */
   "vec4proj":function(vec, refVec) {
-    var lensq = MathUtil.vec4dot(refVec, refVec);
+    const lensq = MathUtil.vec4dot(refVec, refVec);
     if(lensq === 0.0)return [0, 0, 0];
     return MathUtil.vec4scale(refVec,
       MathUtil.vec4dot(vec, refVec) / lensq);
@@ -4718,10 +4718,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
    */
   "vec4subInPlace":function(a, b) {
     // Use variables in case a and b are the same
-    var b0 = b[0];
-    var b1 = b[1];
-    var b2 = b[2];
-    var b3 = b[3];
+    const b0 = b[0];
+    const b1 = b[1];
+    const b2 = b[2];
+    const b3 = b[3];
     a[0] -= b0;
     a[1] -= b1;
     a[2] -= b2;
@@ -4758,11 +4758,11 @@ MathUtil.interpCubicBezier = function(a, b, c, d, t) {
   if(t >= 1)return 1;
   // Find Bezier curve's T for given X coordinate ("t" parameter passed to
   // this method) using Newton's method
-  var tx = t;
-  for(var i = 0; i < 10; i++) {
-    var fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
+  let tx = t;
+  for(let i = 0; i < 10; i++) {
+    const fx = tx * (3 * a * (tx * (tx - 2) + 1) - 3 * c * tx * (tx - 1) + tx * tx) - t;
     if(Math.abs(fx) < 1e-9)break;
-    var dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
+    const dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
     tx -= fx / dfx;
   }
   // Get Y coordinate
@@ -4984,52 +4984,52 @@ MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;
 /** @ignore */
 var MathInternal = {
   "vecZeros":function(count) {
-    var vec = [];
-    for(var i = 0; i < count; i++) {
+    const vec = [];
+    for(let i = 0; i < count; i++) {
       vec[i] = 0;
     }
     return vec;
   },
   "vecSub":function(vec, subVec) {
-    var ret = [];
-    for(var i = 0; i < vec.length; i++) {
+    const ret = [];
+    for(let i = 0; i < vec.length; i++) {
       ret[i] = vec[i] - subVec[i];
     }
     return ret;
   },
   "vecSubInPlace":function(vec, subVec) {
-    for(var i = 0; i < vec.length; i++) {
+    for(let i = 0; i < vec.length; i++) {
       vec[i] -= subVec[i];
     }
     return vec;
   },
   "vecScale":function(vec, scalar) {
-    var ret = [];
-    for(var i = 0; i < vec.length; i++) {
+    const ret = [];
+    for(let i = 0; i < vec.length; i++) {
       ret[i] = vec[i] * scalar;
     }
     return ret;
   },
   "vecSubScaleInPlace":function(vec, subVec, scaleNum) {
-    for(var i = 0; i < vec.length; i++) {
+    for(let i = 0; i < vec.length; i++) {
       vec[i] = (vec[i] - subVec[i]) * scaleNum;
     }
     return vec;
   },
   "vecScaleInPlace":function(vec, scaleNum) {
-    for(var i = 0; i < vec.length; i++) {
+    for(let i = 0; i < vec.length; i++) {
       vec[i] *= scaleNum;
     }
     return vec;
   },
   "vecNormalizeInPlace":function(vec) {
-    var len = 0;
+    let len = 0;
     for(var i = 0; i < vec.length; i++) {
       len += vec[i] * vec[i];
     }
     len = Math.sqrt(len);
     if(len !== 0) {
-      var invlen = 1.0 / len;
+      const invlen = 1.0 / len;
       for(i = 0; i < vec.length; i++) {
         vec[i] *= invlen;
       }
@@ -5037,8 +5037,8 @@ var MathInternal = {
     return vec;
   },
   "vecLength":function(vec) {
-    var dsq = 0;
-    for(var i = 0; i < vec.length; i++) {
+    let dsq = 0;
+    for(let i = 0; i < vec.length; i++) {
       dsq += vec[i] * vec[i];
     }
     return Math.sqrt(dsq);
@@ -5190,8 +5190,8 @@ Curve.prototype.velocity = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.velocity !== "undefined" && this.curve.velocity !== null) {
     return this.curve.velocity(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.evaluate(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.evaluate(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -5214,8 +5214,8 @@ Curve.prototype.accel = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.accel !== "undefined" && this.curve.accel !== null) {
     return this.curve.accel(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.velocity(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.velocity(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -5238,8 +5238,8 @@ Curve.prototype.jerk = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.jerk !== "undefined" && this.curve.jerk !== null) {
     return this.curve.jerk(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.accel(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.accel(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -5263,8 +5263,8 @@ Curve.prototype.normal = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.normal !== "undefined" && this.curve.normal !== null) {
     return this.curve.normal(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.tangent(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.tangent(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -5291,11 +5291,11 @@ Curve.prototype.tangent = function(u) {
  * @returns {number} The distance from the start of the curve to its end.
  */
 Curve.prototype.getLength = function() {
-  var ep = this.endPoints();
+  const ep = this.endPoints();
   return this.arcLength(ep[1]);
 };
 
-var gaussKronrodArray = [
+const gaussKronrodArray = [
   0.99693392252959545, 0.00825771143316837, 0.00000000000000000,
   0.98156063424671924, 0.02303608403898155, 0.04717533638651112,
   0.95053779594312127, 0.03891523046929952, 0.00000000000000000,
@@ -5311,15 +5311,15 @@ var gaussKronrodArray = [
   0.00000000000000000, 0.12555689390547423, 0.00000000000000000
 ];
 function gaussKronrod(func, mn, mx, dir, depth) {
-  var bm = (mx - mn) * 0.5;
-  var bp = mn + bm;
-  var gauss = 0;
-  var kronrod = 0;
-  for(var i = 0; i < gaussKronrodArray.length; i += 3) {
-    var gaussWeight = gaussKronrodArray[i + 2];
-    var kronrodWeight = gaussKronrodArray[i + 1];
-    var abscissa = gaussKronrodArray[i];
-    var x = func(bm * abscissa + bp);
+  const bm = (mx - mn) * 0.5;
+  const bp = mn + bm;
+  let gauss = 0;
+  let kronrod = 0;
+  for(let i = 0; i < gaussKronrodArray.length; i += 3) {
+    const gaussWeight = gaussKronrodArray[i + 2];
+    const kronrodWeight = gaussKronrodArray[i + 1];
+    const abscissa = gaussKronrodArray[i];
+    let x = func(bm * abscissa + bp);
     gauss += gaussWeight * x;
     kronrod += kronrodWeight * x;
     if(abscissa > 0) {
@@ -5356,12 +5356,12 @@ Curve.prototype.arcLength = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.arcLength !== "undefined" && this.curve.arcLength !== null) {
     return this.curve.arcLength(this._getCoord(u));
   } else {
-    var ep = this.endPoints();
+    const ep = this.endPoints();
     if(u === ep[0])return 0;
-    var mn = Math.min(u, ep[0]);
-    var mx = Math.max(u, ep[0]);
-    var dir = u >= ep[0] ? 1 : -1;
-    var that = this;
+    const mn = Math.min(u, ep[0]);
+    const mx = Math.max(u, ep[0]);
+    const dir = u >= ep[0] ? 1 : -1;
+    const that = this;
     return gaussKronrod(function(x) {
       return MathInternal.vecLength(that.velocity(x));
     }, mn, mx, dir, 0);
@@ -5409,11 +5409,11 @@ function _pointToObject(p) {
 Curve.prototype.getPoints = function(count) {
   if(count === 0)return [];
   if(count < 0)throw new Error();
-  var ep = this.endPoints();
-  var ret = [this.evaluate(ep[0])];
-  for(var i = 1; i < count; i++) {
-    var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
-    var pt = this.evaluate(u);
+  const ep = this.endPoints();
+  const ret = [this.evaluate(ep[0])];
+  for(let i = 1; i < count; i++) {
+    const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
+    const pt = this.evaluate(u);
     ret.push(pt);
   }
   return ret;
@@ -5440,11 +5440,11 @@ Curve.prototype.getPoints = function(count) {
 Curve.prototype.getPointsAsObjects = function(count) {
   if(count === 0)return [];
   if(count < 0)throw new Error();
-  var ep = this.endPoints();
-  var ret = [_pointToObject(this.evaluate(ep[0]))];
-  for(var i = 1; i < count; i++) {
-    var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
-    var pt = this.evaluate(u);
+  const ep = this.endPoints();
+  const ret = [_pointToObject(this.evaluate(ep[0]))];
+  for(let i = 1; i < count; i++) {
+    const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
+    const pt = this.evaluate(u);
     ret.push(_pointToObject(pt));
   }
   return ret;
@@ -5467,11 +5467,11 @@ Curve._FitRange = function(curve, ep1, ep2) {
   this.newEp1 = ep1;
   this.newEp2 = ep2;
   this.invNewEpDelta = 1.0 / (ep2 - ep1);
-  var ep = curve.endPoints();
+  const ep = curve.endPoints();
   this.origEp1 = ep[0];
   this.origEp2 = ep[1];
   this.getCoordinate = function(u) {
-    var uNorm = (u - this.newEp1) * this.invNewEpDelta;
+    const uNorm = (u - this.newEp1) * this.invNewEpDelta;
     return this.origEp1 + (this.origEp2 - this.origEp1) * uNorm;
   };
   this.endPoints = function() {
@@ -5484,13 +5484,13 @@ Curve._ArcLengthParam = function(curve) {
   this.curve = curve;
   this.ep = this.curve.endPoints();
   this.segments = [];
-  var lastT = this.ep[0];
-  var lastS = 0;
-  var totalLength = this.curve.getLength();
-  var segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
-  for(var i = 1; i <= segments; i++) {
-    var t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
-    var s = this.curve.arcLength(t);
+  let lastT = this.ep[0];
+  let lastS = 0;
+  const totalLength = this.curve.getLength();
+  const segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
+  for(let i = 1; i <= segments; i++) {
+    const t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
+    const s = this.curve.arcLength(t);
     this.segments.push([lastS, s, lastT, t]);
     lastT = t;
     lastS = s;
@@ -5498,17 +5498,17 @@ Curve._ArcLengthParam = function(curve) {
   this.length = this.segments.length === 0 ? 0 :
     this.segments[this.segments.length - 1][1];
   this._vecLength = function(vec) {
-    var ret = 0;
-    for(var i = 0; i < vec.length; i++) {
+    let ret = 0;
+    for(let i = 0; i < vec.length; i++) {
       ret += vec[i] * vec[i];
     }
     return Math.sqrt(ret);
   };
   // solve arcLength(t)-s = 0 numerically
   this._solveArcLength = function(s, guess, minValue, maxExclusive) {
-    var ret = guess;
-    for(var i = 0; i < 10; i++) {
-      var val = this.curve.arcLength(ret) - s;
+    let ret = guess;
+    for(let i = 0; i < 10; i++) {
+      const val = this.curve.arcLength(ret) - s;
       if(Math.abs(val) < 1e-10 && ret >= minValue &&
        ret < maxExclusive) {
         // already accurate enough
@@ -5521,13 +5521,13 @@ Curve._ArcLengthParam = function(curve) {
       // plus any constant (s is a constant here because the
       // integral is with respect to time, not speed)
       // is another antiderivative of the same function.
-      var deriv = this._vecLength(this.curve.velocity(ret));
+      const deriv = this._vecLength(this.curve.velocity(ret));
       if(deriv === 0) {
         // won't converge anymore
         break;
       }
-      var solutionDiff = val / deriv;
-      var r = ret - solutionDiff;
+      const solutionDiff = val / deriv;
+      const r = ret - solutionDiff;
       if(solutionDiff === 0) {
         // won't converge anymore
         break;
@@ -5558,7 +5558,7 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
   // NOTE: Note that velocity and acceleration depend on parameterization; for
   // example, the length of the velocity vector may differ for the underlying curve object
   // than for this one, even though both vectors generally point in the same direction.
-  var ep, guess;
+  let ep, guess;
   if(Number.isNaN(s))throw new Error();
   if(s > this.length) {
     ep = this.curve.endPoints();
@@ -5577,21 +5577,21 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
     ep = this.curve.endPoints();
     return ep[0];
   }
-  var startPt = 0;
-  var endPt = this.segments.length;
-  var k = 0;
+  let startPt = 0;
+  let endPt = this.segments.length;
+  let k = 0;
   while(startPt < endPt) {
     k += 1;
     if(k > 20)throw new Error();
-    var middle = startPt + ((endPt - startPt) / 2 | 0);
-    var m = this.segments[middle];
+    const middle = startPt + ((endPt - startPt) / 2 | 0);
+    const m = this.segments[middle];
     if(s === m[0]) {
       return m[2];
     } else if(s === m[1]) {
       return m[3];
     } else if(s > m[0] && s < m[1]) {
-      var r = (s - m[0]) / (m[1] - m[0]);
-      var u = m[2] + (m[3] - m[2]) * r;
+      const r = (s - m[0]) / (m[1] - m[0]);
+      const u = m[2] + (m[3] - m[2]) * r;
       if(m[1] - m[0] >= 1e-10) {
         return this._solveArcLength(s, u, m[2], m[3]);
       }
@@ -5657,6 +5657,11 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * point on the curve. The arc length parameterization used in
  * this method is approximate.
  * @returns {Curve} Return value. Returns this object if this curve already uses an arc length parameterization.
+ * @example <caption>The following example uses the arc-length
+ * parameterization to generate, uniformly at random, a point that lies anywhere
+ * on the curve.</caption>
+ * var arclen = curve.toArcLengthParam();
+ * var point = arclen.evaluate(Math.random()*arclen.getLength())
  */
 Curve.prototype.toArcLengthParam = function() {
   if(typeof this.curveParam !== "undefined" && this.curveParam !== null && this.curveParam instanceof Curve._ArcLengthParam) {
@@ -5716,8 +5721,8 @@ Surface.prototype.tangent = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.tangent !== "undefined" && this.surface.tangent !== null)) {
     return this.surface.tangent(u, v);
   } else {
-    var du = Surface._EPSILON;
-    var vector = this.evaluate(u + du, v);
+    let du = Surface._EPSILON;
+    let vector = this.evaluate(u + du, v);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -5751,8 +5756,8 @@ Surface.prototype.bitangent = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.bitangent !== "undefined" && this.surface.bitangent !== null)) {
     return this.surface.bitangent(u, v);
   } else {
-    var du = Surface._EPSILON;
-    var vector = this.evaluate(u, v + du);
+    let du = Surface._EPSILON;
+    let vector = this.evaluate(u, v + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -5818,18 +5823,18 @@ Surface.prototype.gradient = function(u, v) {
   if(typeof this.surface !== "undefined" && this.surface !== null && (typeof this.surface.gradient !== "undefined" && this.surface.gradient !== null)) {
     return this.surface.gradient(u, v);
   } else {
-    var tan = this.tangent(u, v);
-    var bitan = this.bitangent(u, v);
+    let tan = this.tangent(u, v);
+    let bitan = this.bitangent(u, v);
     if(MathInternal.vecLength(bitan) === 0) {
       return tan;
     }
     if(MathInternal.vecLength(tan) !== 0) {
       if(tan.length !== 3 || bitan.length !== 3) {
-        var dims = tan.length;
-        var ret = MathInternal.vecZeros(dims);
+        const dims = tan.length;
+        const ret = MathInternal.vecZeros(dims);
         tan = [tan[0] || 0, tan[1] || 0, tan[2] || 0];
         bitan = [bitan[0] || 0, bitan[1] || 0, bitan[2] || 0];
-        var cr = MathUtil.vec3cross(tan, bitan);
+        const cr = MathUtil.vec3cross(tan, bitan);
         ret[0] = cr[0];
         ret[1] = cr[1];
         ret[2] = cr[2];
@@ -5935,8 +5940,8 @@ var BufferAccessor = function(buffer, countPerValue, offset, stride) {
  * @returns {number} The number of values defined in this accessor's buffer.
  */
 BufferAccessor.prototype.count = function() {
-  var olen = this.buffer.length - this.offset;
-  var odiv = Math.floor(olen / this.stride);
+  const olen = this.buffer.length - this.offset;
+  const odiv = Math.floor(olen / this.stride);
   return odiv + (olen % this.stride >= this.countPerValue ? 1 : 0);
 };
 /**
@@ -5949,7 +5954,7 @@ BufferAccessor.prototype.count = function() {
  * @returns {number} The first element of the given attribute value.
  */
 BufferAccessor.prototype.get = function( index) {
-  var o = this.offset + index * this.stride;
+  const o = this.offset + index * this.stride;
   return this.buffer[o];
 };
 /**
@@ -5963,7 +5968,7 @@ BufferAccessor.prototype.get = function( index) {
  * @returns {BufferAccessor} This object.
  */
 BufferAccessor.prototype.set = function(index, value) {
-  var o = this.offset + index * this.stride;
+  const o = this.offset + index * this.stride;
   this.buffer[o] = value;
   return this;
 };
@@ -5980,9 +5985,9 @@ BufferAccessor.prototype.set = function(index, value) {
  * @returns {Array<number>} The parameter "vec".
  */
 BufferAccessor.prototype.getVec = function(index, vec) {
-  var o = this.offset + index * this.stride;
-  var buffer = this.buffer;
-  for(var i = 0; i < this.countPerValue; i++) {
+  const o = this.offset + index * this.stride;
+  const buffer = this.buffer;
+  for(let i = 0; i < this.countPerValue; i++) {
     vec[i] = buffer[o + i];
   }
   return vec;
@@ -6002,10 +6007,10 @@ BufferAccessor.prototype.getVec = function(index, vec) {
  * @returns {BufferAccessor} This object.
  */
 BufferAccessor.prototype.setVec = function(index, vec) {
-  var o = this.offset + index * this.stride;
-  var buffer = this.buffer;
-  var alen = Math.min(vec.length, this.countPerValue);
-  for(var i = 0; i < alen; i++) {
+  const o = this.offset + index * this.stride;
+  const buffer = this.buffer;
+  const alen = Math.min(vec.length, this.countPerValue);
+  for(let i = 0; i < alen; i++) {
     buffer[o + i] = vec[i];
   }
   return this;
@@ -6015,10 +6020,10 @@ BufferAccessor.prototype.setVec = function(index, vec) {
  * @returns {BufferAccessor} A copy of the vertex attribute object.
  */
 BufferAccessor.prototype.copy = function() {
-  var c = this.count();
-  var newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
-  var value = [];
-  for(var i = 0; i < c; i++) {
+  const c = this.count();
+  const newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
+  const value = [];
+  for(let i = 0; i < c; i++) {
     this.getVec(i, value);
     newAttribute.setVec( i, value);
   }
@@ -6043,13 +6048,13 @@ BufferAccessor.makeBlank = function(count, countPerValue) {
  * @returns {Uint16Array|Uint32Array} An array of vertex indices.
  */
 BufferAccessor.makeIndices = function(numIndices) {
-  var array;
+  let array;
   if(numIndices < 65536) {
     array = new Uint16Array(new ArrayBuffer(numIndices * 2));
   } else {
     array = new Uint32Array(new ArrayBuffer(numIndices * 4));
   }
-  for(var i = 0; i < numIndices; i++) {
+  for(let i = 0; i < numIndices; i++) {
     array[i] = i;
   }
   return array;
@@ -6072,14 +6077,14 @@ BufferAccessor.makeIndices = function(numIndices) {
  * values as the sum of the lengths of "indices1" and "indices2".
  */
 BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
-  var countPerValue1 = typeof attr1 === "undefined" || attr1 === null ? 0 : attr1.countPerValue;
-  var countPerValue2 = typeof attr2 === "undefined" || attr2 === null ? 0 : attr2.countPerValue;
-  var i;
-  var elementsPerValue = Math.max(countPerValue1, countPerValue2);
+  const countPerValue1 = typeof attr1 === "undefined" || attr1 === null ? 0 : attr1.countPerValue;
+  const countPerValue2 = typeof attr2 === "undefined" || attr2 === null ? 0 : attr2.countPerValue;
+  let i;
+  const elementsPerValue = Math.max(countPerValue1, countPerValue2);
   // NOTE: Buffer returned by makeBlank will be all zeros
-  var newAttribute = BufferAccessor.makeBlank(
+  const newAttribute = BufferAccessor.makeBlank(
     indices1.length + indices2.length, elementsPerValue);
-  var value = MathInternal.vecZeros(elementsPerValue);
+  const value = MathInternal.vecZeros(elementsPerValue);
   // NOTE: If undefined or null, first part of buffer will remain all zeros
   if(typeof attr1 !== "undefined" && attr1 !== null) {
     for(i = 0; i < indices1.length; i++) {
@@ -6220,6 +6225,30 @@ Semantic.JOINTMATRIX = 108;
  * of vertex indices to null.
  * @constructor
  * @memberof H3DU
+ * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). This example requires the three.js library.</caption>
+ * function toBufferGeometry(mesh) {
+ * var p=mesh.getAttribute("POSITION")
+ * var n=mesh.getAttribute("NORMAL")
+ * var t=mesh.getAttribute("TEXCOORD_0")
+ * var c=mesh.getAttribute("COLOR")
+ * var ind=mesh.getIndices()
+ * var geom=new THREE.BufferGeometry()
+ * var attributes=[p,n,t,c]
+ * var attributeNames=["position","normal","uv","color"]
+ * for(var i=0;i<attributes.length;i++) {
+ * if(attributes[i]) {
+ * var a=attributes[i]
+ * //console.log(a)
+ * var attr=new THREE.InterleavedBufferAttribute(
+ * new THREE.InterleavedBuffer(a.buffer,a.stride),
+ * a.countPerValue,a.offset)
+ * geom.addAttribute(attributeNames[i],attr)
+ * }
+ * }
+ * if(ind)geom.index=new THREE.BufferAttribute(
+ * ind,1)
+ * return geom
+ * }
  */
 var MeshBuffer = function() {
   this.format = MeshBuffer.TRIANGLES;
@@ -6244,8 +6273,8 @@ MeshBuffer.prototype.setIndices = function(indices) {
   if(typeof indices === "undefined" || indices === null) {
     this.indices = null;
   } else if(indices instanceof Array) {
-    var index = 0;
-    for(var i = indices.length - 1; i >= 0; i--) {
+    let index = 0;
+    for(let i = indices.length - 1; i >= 0; i--) {
       index = Math.max(index, indices[i]);
       if(index >= 65536)break;
     }
@@ -6344,7 +6373,7 @@ MeshBuffer.prototype.setAttribute = function(
 MeshBuffer.prototype.setAttributeEx = function(
   name, index, buffer, countPerValue, offset, stride
 ) {
-  var bufferArray;
+  let bufferArray;
   if(buffer instanceof BufferAccessor) {
     if(buffer.buffer instanceof BufferAccessor)throw new Error();
     return this.setAttributeEx(name, index, buffer.buffer,
@@ -6355,19 +6384,19 @@ MeshBuffer.prototype.setAttributeEx = function(
   } else {
     bufferArray = buffer;
   }
-  var semanticIndex = 0;
-  var semantic = 0;
-  var strideValue = typeof stride === "undefined" || stride === null ? countPerValue : stride;
-  var startIndex = typeof offset === "undefined" || offset === null ? 0 : offset;
+  let semanticIndex = 0;
+  let semantic = 0;
+  const strideValue = typeof stride === "undefined" || stride === null ? countPerValue : stride;
+  const startIndex = typeof offset === "undefined" || offset === null ? 0 : offset;
   if(countPerValue <= 0 || strideValue <= 0 || startIndex < 0)throw new Error();
-  var sem = MeshBuffer._resolveSemantic(name, index);
+  const sem = MeshBuffer._resolveSemantic(name, index);
   if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
     return this;
   }
   semantic = sem[0];
   semanticIndex = sem[1];
-  var attr = this.getAttribute(semantic, semanticIndex);
+  const attr = this.getAttribute(semantic, semanticIndex);
   if(attr) {
     attr[2].buffer = buffer;
     attr[2].offset = startIndex;
@@ -6430,12 +6459,12 @@ MeshBuffer.prototype._getAttributes = function() {
  * }
  */
 MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
-  var sem = MeshBuffer._resolveSemantic(name, semanticIndex);
+  const sem = MeshBuffer._resolveSemantic(name, semanticIndex);
   if(typeof sem === "undefined" || sem === null) {
     console.warn("Unsupported attribute semantic: " + name);
     return null;
   }
-  for(var i = 0; i < this.attributes.length; i++) {
+  for(let i = 0; i < this.attributes.length; i++) {
     if(this.attributes[i][0] === sem[0] &&
     this.attributes[i][1] === sem[1]) {
       return this.attributes[i][2];
@@ -6455,8 +6484,8 @@ MeshBuffer.prototype.getAttribute = function(name, semanticIndex) {
  * @returns {Array<number>} The parameter "ret".
  */
 MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
-  var count = 3;
-  var prim = this.primitiveType();
+  let count = 3;
+  const prim = this.primitiveType();
   if(prim === MeshBuffer.LINES)count = 2;
   if(prim === MeshBuffer.POINTS)count = 1;
   if(typeof this.indices === "undefined" || this.indices === null) {
@@ -6484,7 +6513,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * @returns {MeshBuffer} A new mesh buffer.
  */
 MeshBuffer.fromPositions = function(vertices, indices) {
-  var vertarray = new Float32Array(vertices);
+  const vertarray = new Float32Array(vertices);
   return new MeshBuffer().setAttribute("POSITION", vertarray, 3, 0)
     .setIndices(indices);
 };
@@ -6502,7 +6531,7 @@ MeshBuffer.fromPositions = function(vertices, indices) {
  * @returns {MeshBuffer} A new mesh buffer.
  */
 MeshBuffer.fromPositionsNormals = function(vertices, indices) {
-  var vertarray = new Float32Array(vertices);
+  const vertarray = new Float32Array(vertices);
   return new MeshBuffer()
     .setAttribute("POSITION", vertarray, 3, 0, 6)
     .setAttribute("NORMAL", vertarray, 3, 3, 6).setIndices(indices);
@@ -6522,7 +6551,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * @returns {MeshBuffer} A new mesh buffer.
  */
 MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
-  var vertarray = new Float32Array(vertices);
+  const vertarray = new Float32Array(vertices);
   return new MeshBuffer()
     .setAttribute("POSITION", vertarray, 3, 0, 8)
     .setAttribute("NORMAL", vertarray, 3, 3, 8)
@@ -6542,7 +6571,7 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
  * @returns {MeshBuffer} A new mesh buffer.
  */
 MeshBuffer.fromPositionsUV = function(vertices, indices) {
-  var vertarray = new Float32Array(vertices);
+  const vertarray = new Float32Array(vertices);
   return new MeshBuffer()
     .setAttribute("POSITION", vertarray, 3, 0, 5)
     .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
@@ -6571,17 +6600,17 @@ MeshBuffer.prototype.primitiveCount = function() {
  * array containing that vertex's X, Y, and Z coordinates, in that order.
  */
 MeshBuffer.prototype.getPositions = function() {
-  var posattr = this.getAttribute(Semantic.POSITION, 0);
+  const posattr = this.getAttribute(Semantic.POSITION, 0);
   if(!posattr) {
     return [];
   }
-  var ret = [];
-  var indices = [];
-  var primcount = this.primitiveCount();
-  for(var j = 0; j < primcount; j++) {
+  const ret = [];
+  const indices = [];
+  const primcount = this.primitiveCount();
+  for(let j = 0; j < primcount; j++) {
     this.vertexIndices(j, indices);
-    var primitive = [];
-    for(var k = 0; k < indices.length; k++) {
+    const primitive = [];
+    for(let k = 0; k < indices.length; k++) {
       primitive.push(posattr.getVec(indices[k], [0, 0, 0]));
     }
     ret.push(primitive);
@@ -6598,14 +6627,14 @@ MeshBuffer.prototype.getPositions = function() {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.normalizeNormals = function() {
-  for(var i = 0; i < this.attributes.length; i++) {
-    var attr = this.attributes[i];
+  for(let i = 0; i < this.attributes.length; i++) {
+    const attr = this.attributes[i];
     if(attr[0] !== Semantic.NORMAL) {
       continue;
     }
-    var value = [];
-    var count = attr[2].count();
-    for(var j = 0; j < count; j++) {
+    const value = [];
+    const count = attr[2].count();
+    for(let j = 0; j < count; j++) {
       attr[2].getVec(j, value);
       MathInternal.vecNormalizeInPlace(value);
       attr[2].setVec(j, value);
@@ -6633,16 +6662,16 @@ MeshBuffer.prototype.normalizeNormals = function() {
  * );
  */
 MeshBuffer.prototype.reverseNormals = function() {
-  for(var i = 0; i < this.attributes.length; i++) {
-    var attr = this.attributes[i];
+  for(let i = 0; i < this.attributes.length; i++) {
+    const attr = this.attributes[i];
     if(attr[0] !== Semantic.NORMAL) {
       continue;
     }
-    var value = [];
-    var count = attr[2].count();
-    for(var j = 0; j < count; j++) {
+    const value = [];
+    const count = attr[2].count();
+    for(let j = 0; j < count; j++) {
       attr[2].getVec(j, value);
-      for(var k = 0; k < value.length; k++) {
+      for(let k = 0; k < value.length; k++) {
         value[k] = -value[k];
       }
       attr[2].setVec(j, value);
@@ -6665,16 +6694,16 @@ MeshBuffer.prototype.reverseNormals = function() {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setColor = function(color) {
-  var colorValue = toGLColor$1(color);
-  var haveColor = false;
-  for(var i = 0; i < this.attributes.length; i++) {
-    var attr = this.attributes[i];
-    var count = attr[2].count();
+  const colorValue = toGLColor$1(color);
+  let haveColor = false;
+  for(let i = 0; i < this.attributes.length; i++) {
+    const attr = this.attributes[i];
+    const count = attr[2].count();
     if(attr[0] !== Semantic.COLOR) {
       continue;
     }
     haveColor = true;
-    for(var j = 0; j < count; j++) {
+    for(let j = 0; j < count; j++) {
       attr[2].setVec(j, colorValue);
     }
   }
@@ -6705,8 +6734,8 @@ MeshBuffer.prototype.setColor = function(color) {
 MeshBuffer.prototype.reverseWinding = function() {
   if(this.primitiveType() === MeshBuffer.TRIANGLES) {
     this._ensureIndices();
-    for(var i = 0; i + 2 < this.indices.length; i += 3) {
-      var tmp = this.indices[i + 1];
+    for(let i = 0; i + 2 < this.indices.length; i += 3) {
+      const tmp = this.indices[i + 1];
       this.indices[i + 1] = this.indices[i + 2];
       this.indices[i + 2] = tmp;
     }
@@ -6716,24 +6745,24 @@ MeshBuffer.prototype.reverseWinding = function() {
 
 /** @ignore */
 MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) {
-  var normDir = inward ? -1 : 1;
-  var uniqueVertices = {};
-  var dupverts = [];
-  var dupvertcount = 0;
-  var i;
-  var normalsCount = normals.count();
-  var count = Math.min(positions.count(), normalsCount);
-  var v1 = [0, 0, 0];
-  var v2 = [0, 0, 0];
-  var v3 = [0, 0, 0];
-  var normal = [0, 0, 0];
+  const normDir = inward ? -1 : 1;
+  const uniqueVertices = {};
+  const dupverts = [];
+  let dupvertcount = 0;
+  let i;
+  const normalsCount = normals.count();
+  const count = Math.min(positions.count(), normalsCount);
+  let v1 = [0, 0, 0];
+  let v2 = [0, 0, 0];
+  let v3 = [0, 0, 0];
+  const normal = [0, 0, 0];
   for(i = 0; i < count; i++) {
     // Set normal to 0
     normals.setVec(i, v1);
     if(!flat) {
       // If non-flat shading is requested, find all vertices with
       // duplicate vertex positions
-      var uv = positions.getVec(i, []);
+      const uv = positions.getVec(i, []);
       if(uniqueVertices[uv])uniqueVertices[uv].push(i);
       else uniqueVertices[uv] = [i];
     }
@@ -6742,10 +6771,10 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
     v1 = positions.getVec(indices[i], v1);
     v2 = positions.getVec(indices[i + 1], v2);
     v3 = positions.getVec(indices[i + 2], v3);
-    var n1 = MathUtil.vec3sub(v1, v3);
-    var n2 = MathUtil.vec3sub(v2, v3);
+    const n1 = MathUtil.vec3sub(v1, v3);
+    const n2 = MathUtil.vec3sub(v2, v3);
     // cross multiply n1 and n2
-    var n1xn2 = MathUtil.vec3cross(n1, n2);
+    const n1xn2 = MathUtil.vec3cross(n1, n2);
     MathUtil.vec3normalizeInPlace(n1xn2);
     MathUtil.vec3scaleInPlace(n1xn2, normDir);
     // add normalized normal to each vertex of the face
@@ -6763,24 +6792,24 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
     // If non-flat shading is requested, make sure
     // that every vertex with the same position has the
     // same normal
-    for(var key in uniqueVertices) {
+    for(const key in uniqueVertices) {
       if(Object.prototype.hasOwnProperty.call(uniqueVertices, key)) {
-        var v = uniqueVertices[key];
+        const v = uniqueVertices[key];
         if(v && v.constructor === Array && v.length >= 2) {
-          var v0 = v[0];
+          const v0 = v[0];
           normals.getVec(v0, normal);
-          var avg = [normal[0], normal[1], normal[2]];
+          const avg = [normal[0], normal[1], normal[2]];
           dupverts[0] = normal[0];
           dupverts[1] = normal[1];
           dupverts[2] = normal[2];
           dupvertcount = 3;
           for(i = 1; i < v.length; i++) {
-            var dupfound = false;
+            let dupfound = false;
             positions.getVec(v[i], normal);
-            var nx = normal[0];
-            var ny = normal[1];
-            var nz = normal[2];
-            for(var j = 0; j < dupvertcount; j += 3) {
+            const nx = normal[0];
+            const ny = normal[1];
+            const nz = normal[2];
+            for(let j = 0; j < dupvertcount; j += 3) {
               if(nx === dupverts[j] && ny === dupverts[j + 1] && nz === dupverts[j + 2]) {
                 dupfound = true;
                 break;
@@ -6810,42 +6839,42 @@ MeshBuffer._recalcNormals = function(positions, normals, indices, flat, inward) 
 
 /** @ignore */
 MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tangents, bitangents, indices) {
-  var v1 = [0, 0, 0];
-  var v2 = [0, 0, 0];
-  var v3 = [0, 0, 0];
-  for(var i = 0; i < indices.length; i += 3) {
+  let v1 = [0, 0, 0];
+  let v2 = [0, 0, 0];
+  let v3 = [0, 0, 0];
+  for(let i = 0; i < indices.length; i += 3) {
     v1 = positions.getVec(indices[i], v1);
     v2 = positions.getVec(indices[i + 1], v2);
     v3 = positions.getVec(indices[i + 2], v3);
     // Find the tangent and bitangent
     var ret;
-    var t1 = v2[0] - v1[0];
-    var t2 = v2[1] - v1[1];
-    var t3 = v2[2] - v1[2];
-    var t4 = v3[0] - v1[0];
-    var t5 = v3[1] - v1[1];
-    var t6 = v3[2] - v1[2];
+    const t1 = v2[0] - v1[0];
+    const t2 = v2[1] - v1[1];
+    const t3 = v2[2] - v1[2];
+    const t4 = v3[0] - v1[0];
+    const t5 = v3[1] - v1[1];
+    const t6 = v3[2] - v1[2];
     v1 = texCoords.getVec(indices[i], v1);
     v2 = texCoords.getVec(indices[i + 1], v2);
     v3 = texCoords.getVec(indices[i + 2], v3);
-    var t7 = v2[0] - v1[0];
-    var t8 = v2[1] - v1[1];
-    var t9 = v3[0] - v1[0];
-    var t10 = v3[1] - v1[1];
-    var t11 = t7 * t10 - t8 * t9;
+    const t7 = v2[0] - v1[0];
+    const t8 = v2[1] - v1[1];
+    const t9 = v3[0] - v1[0];
+    const t10 = v3[1] - v1[1];
+    let t11 = t7 * t10 - t8 * t9;
     if(t11 === 0) {
     // Degenerate case
       ret = [0, 0, 0, 0, 0, 0];
     } else {
       t11 = 1.0 / t11;
-      var t12 = -t8;
-      var t13 = -t9;
-      var t14 = (t10 * t1 + t12 * t4) * t11;
-      var t15 = (t10 * t2 + t12 * t5) * t11;
-      var t16 = (t10 * t3 + t12 * t6) * t11;
-      var t17 = (t13 * t1 + t7 * t4) * t11;
-      var t18 = (t13 * t2 + t7 * t5) * t11;
-      var t19 = (t13 * t3 + t7 * t6) * t11;
+      const t12 = -t8;
+      const t13 = -t9;
+      const t14 = (t10 * t1 + t12 * t4) * t11;
+      const t15 = (t10 * t2 + t12 * t5) * t11;
+      const t16 = (t10 * t3 + t12 * t6) * t11;
+      const t17 = (t13 * t1 + t7 * t4) * t11;
+      const t18 = (t13 * t2 + t7 * t5) * t11;
+      const t19 = (t13 * t3 + t7 * t6) * t11;
       ret = [t14, t15, t16, t17, t18, t19];
     }
     // NOTE: It would be more mathematically correct to use the inverse
@@ -6863,20 +6892,20 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
     // (where AA and BB are the orthonormalized versions of the tangent
     // and bitangent) as the tangent space transform, in order to avoid
     // the need to also specify a transformed normal due to matrix inversion.
-    for(var j = 0; j < 3; j++) {
-      var m = ret;
+    for(let j = 0; j < 3; j++) {
+      const m = ret;
       v1 = normals.getVec(indices[i + j], v1);
-      var norm0 = v1[0];
-      var norm1 = v1[1];
-      var norm2 = v1[2];
-      var t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
-      var tangent = MathUtil.vec3normalizeInPlace([
+      const norm0 = v1[0];
+      const norm1 = v1[1];
+      const norm2 = v1[2];
+      const t20 = m[0] * norm0 + m[1] * norm1 + m[2] * norm2;
+      const tangent = MathUtil.vec3normalizeInPlace([
         m[0] - t20 * norm0,
         m[1] - t20 * norm1,
         m[2] - t20 * norm2]);
-      var t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
-      var t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
-      var bitangent = MathUtil.vec3normalizeInPlace([
+      const t22 = m[3] * norm0 + m[4] * norm1 + m[5] * norm2;
+      const t23 = m[3] * tangent[0] + m[4] * tangent[1] + m[5] * tangent[2];
+      const bitangent = MathUtil.vec3normalizeInPlace([
         m[3] - t22 * norm0 - t23 * tangent[0],
         m[4] - t22 * norm1 - t23 * tangent[1],
         m[5] - t22 * norm2 - t23 * tangent[2]]);
@@ -6895,9 +6924,9 @@ MeshBuffer.prototype._ensureIndices = function() {
 /** @ignore */
 MeshBuffer.prototype._makeRedundant = function() {
   this._ensureIndices();
-  var newAttributes = [];
-  for(var i = 0; i < this.attributes.length; i++) {
-    var a = this.attributes[i];
+  const newAttributes = [];
+  for(let i = 0; i < this.attributes.length; i++) {
+    const a = this.attributes[i];
     newAttributes.push([a[0], a[1],
       BufferAccessor.merge(a[2], this.indices, null, [])]);
   }
@@ -6906,15 +6935,15 @@ MeshBuffer.prototype._makeRedundant = function() {
 };
 /** @ignore */
 MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desiredCount) {
-  var attr = this.getAttribute(semantic, semanticIndex);
-  var vertexCount = this.attributes.length === 0 ? 0 : this.attributes[0][2].count();
-  var attrCount = typeof attr !== "undefined" && attr !== null ? attr.countPerValue : 0;
+  const attr = this.getAttribute(semantic, semanticIndex);
+  const vertexCount = this.attributes.length === 0 ? 0 : this.attributes[0][2].count();
+  const attrCount = typeof attr !== "undefined" && attr !== null ? attr.countPerValue : 0;
   if(attr && attrCount >= desiredCount)
     return attr;
-  var newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
+  const newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
   if(attrCount > 0) {
-    var vec = MathInternal.vecZeros(desiredCount);
-    for(var i = 0; i < vertexCount; i++) {
+    const vec = MathInternal.vecZeros(desiredCount);
+    for(let i = 0; i < vertexCount; i++) {
       attr.getVec(i, vec);
       newattr.setVec(i, vec);
     }
@@ -6924,7 +6953,7 @@ MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desire
 };
 /** @ignore */
 MeshBuffer.prototype._countPerValue = function(sem) {
-  var a = this.getAttribute(sem);
+  const a = this.getAttribute(sem);
   return typeof a !== "undefined" && a !== null ? a.countPerValue : 0;
 };
 
@@ -6952,14 +6981,14 @@ MeshBuffer.prototype._countPerValue = function(sem) {
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   flat = flat === null ? false : flat;
   inward = inward === null ? false : inward;
-  var primtype = this.primitiveType();
+  const primtype = this.primitiveType();
   if(primtype === MeshBuffer.TRIANGLES) {
     if(this._countPerValue(Semantic.POSITION) < 3) {
       return this;
     }
     this._makeRedundant();
-    var positions = this.getAttribute(Semantic.POSITION);
-    var normals = this._ensureAttribute(Semantic.NORMAL, 0, 3);
+    const positions = this.getAttribute(Semantic.POSITION);
+    const normals = this._ensureAttribute(Semantic.NORMAL, 0, 3);
     // NOTE: Indices ensured by makeRedundant
     MeshBuffer._recalcNormals(positions, normals, this.indices, flat, inward);
   }
@@ -6974,11 +7003,11 @@ MeshBuffer.prototype._recalcTangents = function() {
       return this;
     }
     this._makeRedundant();
-    var positions = this.getAttribute(Semantic.POSITION);
-    var normals = this.getAttribute(Semantic.NORMAL);
-    var texCoords = this.getAttribute(Semantic.TEXCOORD);
-    var tangents = this._ensureAttribute(Semantic.TANGENT, 0, 3);
-    var bitangents = this._ensureAttribute(Semantic.BITANGENT, 0, 3);
+    const positions = this.getAttribute(Semantic.POSITION);
+    const normals = this.getAttribute(Semantic.NORMAL);
+    const texCoords = this.getAttribute(Semantic.TEXCOORD);
+    const tangents = this._ensureAttribute(Semantic.TANGENT, 0, 3);
+    const bitangents = this._ensureAttribute(Semantic.BITANGENT, 0, 3);
     // NOTE: Indices ensured by makeRedundant
     MeshBuffer._recalcTangentsInternal(positions, normals, texCoords,
       tangents, bitangents, this.indices);
@@ -6999,14 +7028,14 @@ MeshBuffer.prototype._recalcTangents = function() {
  * var copiedMesh = new MeshBuffer().merge(meshToCopy);
  */
 MeshBuffer.prototype.merge = function(other) {
-  var newAttributes = [];
-  var attr;
+  const newAttributes = [];
+  let attr;
   if(!other)throw new Error();
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;
   } else if(this.indices && this.indices.length === 0) {
-    var empty = true;
+    let empty = true;
     for(var i = 0; i < this.attributes.length; i++) {
       attr = this.attributes[i][2];
       empty = empty && (typeof attr === "undefined" || attr === null || attr.count() === 0);
@@ -7015,7 +7044,7 @@ MeshBuffer.prototype.merge = function(other) {
       // If this object is empty, copy the attributes and
       // indices from the other object
       for(i = 0; i < other.attributes.length; i++) {
-        var o = other.attributes[i];
+        const o = other.attributes[i];
         newAttributes.push([o[0], o[1], o[2].copy()]);
       }
       this._bounds = null;
@@ -7041,8 +7070,8 @@ MeshBuffer.prototype.merge = function(other) {
     var existingAttribute = null;
     var newAttribute = null;
     attr = this.attributes[i];
-    var sem = attr[0];
-    var semIndex = attr[1];
+    const sem = attr[0];
+    const semIndex = attr[1];
     for(var j = 0; j < other.attributes.length; j++) {
       var oattr = other.attributes[j];
       if(oattr[0] === sem && oattr[1] === semIndex) {
@@ -7070,7 +7099,7 @@ MeshBuffer.prototype.merge = function(other) {
       newAttributes.push([oattr[0], oattr[1], newAttribute]);
     }
   }
-  var newIndices = BufferAccessor.makeIndices(this.indices.length + other.indices.length);
+  const newIndices = BufferAccessor.makeIndices(this.indices.length + other.indices.length);
   this._bounds = null;
   this.attributes = newAttributes;
   this.setIndices(newIndices);
@@ -7095,25 +7124,25 @@ MeshBuffer.prototype.merge = function(other) {
  * mesh.transform(MathUtil.mat4scaled(2, 2, 2));
  */
 MeshBuffer.prototype.transform = function(matrix) {
-  var positionAttribute = this.getAttribute(Semantic.POSITION);
+  const positionAttribute = this.getAttribute(Semantic.POSITION);
   if(!positionAttribute) {
     return this;
   }
-  var normalAttribute = this.getAttribute(Semantic.NORMAL);
-  var isNotLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
+  const normalAttribute = this.getAttribute(Semantic.NORMAL);
+  const isNotLinearIdentity = !(matrix[0] === 1 && matrix[1] === 0 &&
     matrix[2] === 0 && matrix[4] === 0 && matrix[5] === 1 &&
     matrix[6] === 0 && matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1);
-  var matrixForNormals = null;
+  let matrixForNormals = null;
   if(typeof normalAttribute !== "undefined" && normalAttribute !== null && isNotLinearIdentity) {
     matrixForNormals = MathUtil.mat4inverseTranspose3(matrix);
   }
-  var count = positionAttribute.count();
+  let count = positionAttribute.count();
   if(normalAttribute)count = Math.min(count, normalAttribute.count());
-  var position = [0, 0, 0];
-  var normal = [0, 0, 0];
-  for(var i = 0; i < count; i++) {
+  const position = [0, 0, 0];
+  const normal = [0, 0, 0];
+  for(let i = 0; i < count; i++) {
     positionAttribute.getVec(i, position);
-    var xform = MathUtil.mat4projectVec3(matrix,
+    let xform = MathUtil.mat4projectVec3(matrix,
       position[0], position[1], position[2]);
     positionAttribute.setVec(i, xform);
     if(normalAttribute && isNotLinearIdentity && (typeof matrixForNormals !== "undefined" && matrixForNormals !== null)) {
@@ -7134,9 +7163,9 @@ MeshBuffer.prototype.transform = function(matrix) {
 MeshBuffer._addLine = function(lineIndices, existingLines, f1, f2) {
   // Ensure ordering of the indices
   if(f1 < f2) {
-    var tmp = f1; f1 = f2; f2 = tmp;
+    const tmp = f1; f1 = f2; f2 = tmp;
   }
-  var e = existingLines[f1];
+  const e = existingLines[f1];
   if(e) {
     if(e.indexOf(f2) < 0) {
       e.push(f2);
@@ -7158,15 +7187,15 @@ MeshBuffer.prototype.wireFrame = function() {
     // Not a triangle mesh
     return this;
   }
-  var lineIndices = [];
-  var existingLines = {};
-  var primitive = [];
-  var primcount = this.primitiveCount();
-  for(var i = 0; i < primcount; i++) {
+  const lineIndices = [];
+  const existingLines = {};
+  const primitive = [];
+  const primcount = this.primitiveCount();
+  for(let i = 0; i < primcount; i++) {
     this.vertexIndices(i, primitive);
-    var f1 = primitive[0];
-    var f2 = primitive[1];
-    var f3 = primitive[2];
+    const f1 = primitive[0];
+    const f2 = primitive[1];
+    const f3 = primitive[2];
     MeshBuffer._addLine(lineIndices, existingLines, f1, f2);
     MeshBuffer._addLine(lineIndices, existingLines, f2, f3);
     MeshBuffer._addLine(lineIndices, existingLines, f3, f1);
@@ -7191,19 +7220,19 @@ MeshBuffer.prototype.wireFrame = function() {
  */
 MeshBuffer.prototype.getBounds = function() {
   if(!this._bounds) {
-    var empty = true;
-    var inf = Number.POSITIVE_INFINITY;
-    var ret = [inf, inf, inf, -inf, -inf, -inf];
-    var posattr = this.getAttribute(Semantic.POSITION, 0);
+    let empty = true;
+    const inf = Number.POSITIVE_INFINITY;
+    const ret = [inf, inf, inf, -inf, -inf, -inf];
+    const posattr = this.getAttribute(Semantic.POSITION, 0);
     if(!posattr)return ret;
-    var indices = [];
-    var vec = [0, 0, 0];
-    var primcount = this.primitiveCount();
-    for(var j = 0; j < primcount; j++) {
+    const indices = [];
+    const vec = [0, 0, 0];
+    const primcount = this.primitiveCount();
+    for(let j = 0; j < primcount; j++) {
       this.vertexIndices(j, indices);
-      var primitive = [];
-      for(var k = 0; k < indices.length; k++) {
-        var v = posattr.getVec(indices[k], vec);
+      const primitive = [];
+      for(let k = 0; k < indices.length; k++) {
+        const v = posattr.getVec(indices[k], vec);
         if(empty) {
           empty = false;
           ret[0] = ret[3] = v[0];
@@ -7242,9 +7271,9 @@ MeshBuffer.prototype.primitiveType = function() {
  */
 MeshBuffer.prototype.vertexCount = function() {
   if(typeof this.indices === "undefined" || this.indices === null) {
-    var mincount = 0;
-    for(var i = 0; i < this.attributes.length; i++) {
-      var a = this.attributes[i];
+    let mincount = 0;
+    for(let i = 0; i < this.attributes.length; i++) {
+      const a = this.attributes[i];
       if(i === 0 || a.count() < mincount)mincount = a.count();
     }
     return mincount;
@@ -7258,9 +7287,9 @@ MeshBuffer._resolveSemantic = function(name, index) {
   if(typeof name === "number") {
     return [name, index | 0];
   } else {
-    var wka = MeshBuffer._wellKnownAttributes[name];
+    let wka = MeshBuffer._wellKnownAttributes[name];
     if(typeof wka === "undefined" || wka === null) {
-      var io = name.indexOf("_");
+      const io = name.indexOf("_");
       if(io < 0) {
         return null;
       }
@@ -7268,7 +7297,7 @@ MeshBuffer._resolveSemantic = function(name, index) {
       if(typeof wka === "undefined" || wka === null) {
         return null;
       }
-      var number = name.substr(io + 1);
+      const number = name.substr(io + 1);
       if(number.length <= 5 && (/^\d$/).test(number)) {
         // Only allow 5-digit-or-less numbers; more than
         // that is unreasonable
@@ -7341,27 +7370,27 @@ var SurfaceBuilder = function() {
 
 /** @ignore */
 CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
-  var maxIndex = 0;
+  let maxIndex = 0;
   for(var i = indices.length - 1; i >= 0; i--) {
     maxIndex = Math.max(maxIndex, indices[i]);
     if(maxIndex >= 65536)break;
   }
-  var mb = new MeshBuffer();
-  var indexArray = maxIndex < 65536 ?
+  const mb = new MeshBuffer();
+  const indexArray = maxIndex < 65536 ?
     new Uint16Array(indices) :
     new Uint32Array(indices);
   mb.setPrimitiveType(mode);
   mb.setIndices(indexArray);
   for(i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+    const a = attributes[i];
     mb.setAttributeEx(a[0], a[1], a[3], a[2]);
   }
   return mb;
 };
 /** @ignore */
 CurveBuilder._blank = function(count) {
-  var ret = [];
-  for(var i = 0; i < count; i++) {
+  const ret = [];
+  for(let i = 0; i < count; i++) {
     ret.push(0);
   }
   return ret;
@@ -7369,13 +7398,13 @@ CurveBuilder._blank = function(count) {
 /** @ignore */
 CurveBuilder._resize = function(a, newsize) {
   if(a[2] !== newsize) {
-    var oldcount = a[3].length / a[2];
-    var minsize = Math.min(a[2], newsize);
-    var arr = CurveBuilder._blank(oldcount * newsize);
-    var oldindex = 0;
-    var newindex = 0;
-    for(var i = 0; i < oldcount; i++) {
-      for(var j = 0; j < minsize; j++) {
+    const oldcount = a[3].length / a[2];
+    const minsize = Math.min(a[2], newsize);
+    const arr = CurveBuilder._blank(oldcount * newsize);
+    let oldindex = 0;
+    let newindex = 0;
+    for(let i = 0; i < oldcount; i++) {
+      for(let j = 0; j < minsize; j++) {
         arr[newindex + j] = a[3][oldindex + j];
       }
       oldindex += a[2];
@@ -7387,7 +7416,7 @@ CurveBuilder._resize = function(a, newsize) {
 };
 /** @ignore */
 CurveBuilder._addValue = function(a, value) {
-  var mm = Math.min(value.length, a[2]);
+  const mm = Math.min(value.length, a[2]);
   for(var i = 0; i < mm; i++) {
     a[3].push(value[i]);
   }
@@ -7397,10 +7426,10 @@ CurveBuilder._addValue = function(a, value) {
 };
 /** @ignore */
 CurveBuilder._defaultEndPointsCurve = function(attributes) {
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
-      var a4 = a[4];
+      const a4 = a[4];
       if(typeof a4.endPoints !== "undefined" && a4.endPoints !== null) {
         return a[4].endPoints();
       }
@@ -7412,10 +7441,10 @@ CurveBuilder._defaultEndPointsCurve = function(attributes) {
 
 /** @ignore */
 CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
-      var a4 = a[4];
+      const a4 = a[4];
       return Math.max(200, Math.ceil(new Curve(a4).getLength() / 4));
     }
   }
@@ -7423,10 +7452,10 @@ CurveBuilder._defaultSubdivisionsCurve = function(attributes) {
 };
 /** @ignore */
 CurveBuilder._defaultEndPointsSurface = function(attributes) {
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === Semantic.POSITION && a[1] === 0) {
-      var a4 = a[4];
+      const a4 = a[4];
       if(typeof a4 !== "undefined" && a4 !== null && (typeof a4.endPoints !== "undefined" && a4.endPoints !== null)) {
         return a[4].endPoints();
       }
@@ -7450,16 +7479,16 @@ CurveBuilder._toSurface = function(surface) {
 CurveBuilder._setAttribute = function(
   attributes, vertexCount, curve, semantic, semanticIndex, size
 ) {
-  var sizeValue = typeof size === "undefined" || size === null ? 3 : size;
-  var semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ?
+  const sizeValue = typeof size === "undefined" || size === null ? 3 : size;
+  const semanticIndexValue = typeof semanticIndex === "undefined" || semanticIndex === null ?
     0 : semanticIndex;
-  var iscurve = typeof curve !== "undefined" && curve !== null;
+  const iscurve = typeof curve !== "undefined" && curve !== null;
   if(size <= 0)throw new Error("Invalid attribute size");
-  var sem = MeshBuffer._resolveSemantic(semantic,
+  const sem = MeshBuffer._resolveSemantic(semantic,
     semanticIndexValue);
   if(typeof sem === "undefined" || sem === null)throw new Error();
-  for(var i = 0; i < attributes.length; i++) {
-    var a = attributes[i];
+  for(let i = 0; i < attributes.length; i++) {
+    const a = attributes[i];
     if(a[0] === sem[0] && a[1] === sem[1]) {
       if(iscurve) {
         a[4] = curve;
@@ -7473,7 +7502,7 @@ CurveBuilder._setAttribute = function(
     }
   }
   if(iscurve) {
-    var newAttr = [sem[0], sem[1], sizeValue,
+    const newAttr = [sem[0], sem[1], sizeValue,
       CurveBuilder._blank(sizeValue * vertexCount), curve];
     attributes.push(newAttr);
   }
@@ -7502,7 +7531,7 @@ CurveBuilder._NormalSurface = function(surface) {
 CurveBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
-  for(var i = 0; i < this.attributes.length; i++) {
+  for(let i = 0; i < this.attributes.length; i++) {
     this.attributes[i][3] = [];
   }
   return this;
@@ -7603,7 +7632,7 @@ CurveBuilder.prototype.constantAttribute = function(
  * curve.constantColor("red");
  */
 CurveBuilder.prototype.constantColor = function(color, semanticIndex) {
-  var c = toGLColor(color);
+  const c = toGLColor(color);
   return this.constantAttribute([c[0], c[1], c[2]],
     Semantic.COLOR, semanticIndex);
 };
@@ -7638,7 +7667,7 @@ CurveBuilder.curveToBuffer = function(curve, mode, n, u1, u2) {
 SurfaceBuilder.prototype.clearVertices = function() {
   this.vertexCount = 0;
   this.indices = [];
-  for(var i = 0; i < this.attributes.length; i++) {
+  for(let i = 0; i < this.attributes.length; i++) {
     this.attributes[i][3] = [];
   }
   return this;
@@ -7692,7 +7721,7 @@ SurfaceBuilder.prototype.texCoord = function(surface, size) {
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormal = function(surface, size) {
-  var norm = typeof surface !== "undefined" && surface !== null ? new CurveBuilder._NormalSurface(surface) : null;
+  const norm = typeof surface !== "undefined" && surface !== null ? new CurveBuilder._NormalSurface(surface) : null;
   return this.attribute(surface, Semantic.POSITION, 0, size)
     .attribute(norm, Semantic.NORMAL, 0, size);
 };
@@ -7700,7 +7729,7 @@ SurfaceBuilder.prototype.positionNormal = function(surface, size) {
  * @constructor
  * @ignore */
 SurfaceBuilder._TexCoord = function(s) {
-  var ep = new Surface(s).endPoints();
+  const ep = new Surface(s).endPoints();
   this.u1 = ep[0];
   this.v1 = ep[2];
   this.uinv = ep[0] === ep[1] ? 0 : 1 / (ep[1] - ep[0]);
@@ -7724,7 +7753,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
-  var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
+  const tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
   return this.attribute(surface, Semantic.POSITION, 0, size)
     .attribute(tc, Semantic.TEXCOORD, 0, 2);
 };
@@ -7744,7 +7773,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
-  var tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
+  const tc = typeof surface !== "undefined" && surface !== null ? new SurfaceBuilder._TexCoord(surface) : null;
   return this.positionNormal(surface, size)
     .attribute(tc, Semantic.TEXCOORD, 0, 2);
 };
@@ -7830,7 +7859,7 @@ SurfaceBuilder.prototype.constantAttribute = function(constantValue, semantic, s
  * surface.constantColor("red");
  */
 SurfaceBuilder.prototype.constantColor = function(color, semanticIndex) {
-  var c = toGLColor(color);
+  const c = toGLColor(color);
   return this.constantAttribute([c[0], c[1], c[2]],
     Semantic.COLOR, semanticIndex);
 };
@@ -7892,13 +7921,13 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.LINES;
   if(typeof u1 === "undefined" || u1 === null ||
      (typeof u2 === "undefined" || u2 === null)) {
-    var ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
+    const ep = CurveBuilder._defaultEndPointsCurve(this.attributes);
     u1 = ep[0];
     u2 = ep[1];
   }
-  var i;
-  var uv = (u2 - u1) / n;
-  var firstIndex = this.vertexCount;
+  let i;
+  const uv = (u2 - u1) / n;
+  const firstIndex = this.vertexCount;
   if(mode === MeshBuffer.LINES || (typeof mode === "undefined" || mode === null)) {
     for(i = 0; i < n; i++) {
       this.indices.push(firstIndex + i, firstIndex + i + 1);
@@ -7914,10 +7943,10 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
   }
   this.mode = mode;
   for(i = 0; i <= n; i++) {
-    var u = u1 + i * uv;
-    for(var j = 0; j < this.attributes.length; j++) {
-      var a = this.attributes[j];
-      var value = typeof a[4] !== "undefined" && a[4] !== null ? a[4].evaluate(u) : [];
+    const u = u1 + i * uv;
+    for(let j = 0; j < this.attributes.length; j++) {
+      const a = this.attributes[j];
+      const value = typeof a[4] !== "undefined" && a[4] !== null ? a[4].evaluate(u) : [];
       CurveBuilder._addValue(a, value);
     }
   }
@@ -7952,7 +7981,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   if(vn <= 0)throw new Error();
   if(typeof mode === "undefined" || mode === null)mode = MeshBuffer.TRIANGLES;
   if(typeof u1 === "undefined" || u1 === null || (typeof u2 === "undefined" || u2 === null) || (typeof v1 === "undefined" || v1 === null) || (typeof v2 === "undefined" || v2 === null)) {
-    var ep = CurveBuilder._defaultEndPointsSurface(this.attributes);
+    const ep = CurveBuilder._defaultEndPointsSurface(this.attributes);
     u1 = ep[0];
     u2 = ep[1];
     v1 = ep[2];
@@ -7961,19 +7990,19 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   if(mode !== MeshBuffer.TRIANGLES && mode !== MeshBuffer.LINES && mode !== MeshBuffer.POINTS) {
     return this;
   }
-  var u, v, i, j;
-  var du = (u2 - u1) / un;
-  var dv = (v2 - v1) / vn;
-  var numVertices = (vn + 1) * (un + 1);
-  var firstVertex = this.vertexCount;
+  let u, v, i, j;
+  const du = (u2 - u1) / un;
+  const dv = (v2 - v1) / vn;
+  const numVertices = (vn + 1) * (un + 1);
+  const firstVertex = this.vertexCount;
   this.vertexCount += numVertices;
   for(i = 0; i <= vn; i++) {
     for(j = 0; j <= un; j++) {
       u = j * du + u1;
       v = i * dv + v1;
-      for(var k = 0; k < this.attributes.length; k++) {
-        var a = this.attributes[k];
-        var value = typeof a[4] !== "undefined" && a[4] !== null ?
+      for(let k = 0; k < this.attributes.length; k++) {
+        const a = this.attributes[k];
+        const value = typeof a[4] !== "undefined" && a[4] !== null ?
           a[4].evaluate(u, v) : [];
         CurveBuilder._addValue(a, value);
       }
@@ -7982,18 +8011,18 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   this.mode = mode;
   if(mode === MeshBuffer.TRIANGLES) {
     var unp1 = un + 1;
-    for(var y = 0; y < vn; y++) {
-      for(var x = 0; x < un; x++) {
-        var index0 = y * unp1 + x + firstVertex;
+    for(let y = 0; y < vn; y++) {
+      for(let x = 0; x < un; x++) {
+        const index0 = y * unp1 + x + firstVertex;
         var index1 = index0 + unp1;
         var index2 = index0 + 1;
-        var index3 = index1 + 1;
+        const index3 = index1 + 1;
         this.indices.push(index0, index1, index2);
         this.indices.push(index2, index1, index3);
       }
     }
   } else if(mode === MeshBuffer.POINTS) {
-    var lastVertex = this.vertexCount;
+    const lastVertex = this.vertexCount;
     for(i = firstVertex; i < lastVertex; i++) {
       this.indices.push(i);
     }
@@ -8026,54 +8055,54 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
 */
 
 function linear(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  for(var i = 0; i < elementsPerValue; i++) {
-    var pp0 = p0[i];
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  for(let i = 0; i < elementsPerValue; i++) {
+    const pp0 = p0[i];
     ret[i] = pp0 + (p1[i] - pp0) * t;
   }
   return ret;
 }
 function bezierCubic(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  var p3 = points[3];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  const p3 = points[3];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = (((3 - t) * t - 3) * t + 1) * p0[i] + ((3 * t - 6) * t + 3) * t * p1[i] + (-3 * t + 3) * t * t * p2[i] + t * t * t * p3[i];
   }
   return ret;
 }
 
 function bezierCubicDerivative(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  var p3 = points[3];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  const p3 = points[3];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = ((-3 * t + 6) * t - 3) * p0[i] + ((9 * t - 12) * t + 3) * p1[i] + (-9 * t + 6) * t * p2[i] + 3 * t * t * p3[i];
   }
   return ret;
 }
 function bezierQuadratic(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = ((t - 2) * t + 1) * p0[i] + (-2 * t + 2) * t * p1[i] + t * t * p2[i];
   }
   return ret;
 }
 function bezierQuadraticDerivative(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = (2 * t - 2) * p0[i] + (-4 * t + 2) * p1[i] + 2 * t * p2[i];
   }
   return ret;
@@ -8243,12 +8272,12 @@ function BSplineCurve(controlPoints, knots, bits) {
   if(!knots)throw new Error();
   this.bits = bits || 0;
   this.controlPoints = controlPoints;
-  var order = knots.length - this.controlPoints.length;
+  const order = knots.length - this.controlPoints.length;
   if(order < 1 || order > this.controlPoints.length)
     throw new Error();
   BSplineCurve._checkKnots(knots, order - 1);
-  var cplen = this.controlPoints[0].length;
-  var cplenNeeded = 1;
+  const cplen = this.controlPoints[0].length;
+  let cplenNeeded = 1;
   if((this.bits & BSplineCurve.DIVIDE_BIT) !== 0) {
     cplenNeeded = 2;
   }
@@ -8310,12 +8339,12 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
   if(kn[i] > u)return 0;
   if(kn[i] === kn[i + d] && kn[i + d + 1] === kn[i + 1])return 0;
   if(kn[i + d + 1] < u)return 0;
-  var v1 = kn[i] === kn[i + d] ? 0 : BSplineCurve._nfunc(i, d - 1, u, kn);
-  var v2 = kn[i + d + 1] === kn[i + 1] ? 0 : BSplineCurve._nfunc(i + 1, d - 1, u, kn);
+  const v1 = kn[i] === kn[i + d] ? 0 : BSplineCurve._nfunc(i, d - 1, u, kn);
+  const v2 = kn[i + d + 1] === kn[i + 1] ? 0 : BSplineCurve._nfunc(i + 1, d - 1, u, kn);
   if(v1 + v2 === 0) {
     return 0;
   }
-  var ret = 0;
+  let ret = 0;
   if(v1 !== 0) {
     var den2 = kn[i + d] - kn[i];
     ret += (u - kn[i]) * v1 * (den2 === 0 ? 1 : 1.0 / den2);
@@ -8328,8 +8357,8 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
 };
 /** @ignore */
 BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
-  var multStart = 1;
-  var multEnd = 1;
+  let multStart = 1;
+  let multEnd = 1;
   for(var i = 0; i < numPoints; i++) {
     buffer[i] = 0;
   }
@@ -8366,7 +8395,7 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
     buffer[numPoints - 1] = 1;
 
   } else {
-    var k = -1;
+    let k = -1;
     for(i = 0; i <= kn.length; i++) {
       if(kn[i] <= t && t < kn[i + 1]) {
         k = i;
@@ -8374,15 +8403,15 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
       }
     }
     if(k < 0)return;
-    var numAfter = kn[k + 1] - t;
-    var knotStart = kn[k];
-    var numBefore = t - knotStart;
+    const numAfter = kn[k + 1] - t;
+    const knotStart = kn[k];
+    const numBefore = t - knotStart;
     buffer[k] = 1;
-    for(var d = 1; d <= degree; d++) {
-      var den = kn[k + 1] - kn[k - d + 1];
+    for(let d = 1; d <= degree; d++) {
+      const den = kn[k + 1] - kn[k - d + 1];
       buffer[k - d] = buffer[k - d + 1] * numAfter / den;
       for(i = k - d + 1; i < k; i++) {
-        var kni = kn[i];
+        const kni = kn[i];
         buffer[i] *= (t - kni) / (kn[i + d] - kni);
         buffer[i] += buffer[i + 1] * (kn[i + d + 1] - t) / (kn[i + d + 1] - kn[i + 1]);
       }
@@ -8408,9 +8437,9 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
  * }
  */
 BSplineCurve.prototype.evaluate = function(u) {
-  var ret = [];
+  let ret = [];
   if(this.fastBezier) {
-    var cp = this.controlPoints;
+    const cp = this.controlPoints;
     switch(cp.length) {
     case 1:
       ret = cp[0].slice(0, cp[0].length);
@@ -8428,9 +8457,9 @@ BSplineCurve.prototype.evaluate = function(u) {
       break;
     }
   } else {
-    var numPoints = this.controlPoints.length;
-    var degree = this.knots.length - numPoints - 1;
-    var elementsPerPoint = this.controlPoints[0].length;
+    const numPoints = this.controlPoints.length;
+    const degree = this.knots.length - numPoints - 1;
+    const elementsPerPoint = this.controlPoints[0].length;
     ret = null;
     if(u <= this.knots[degree]) {
       if(this.knots[degree] === this.knots[0]) {
@@ -8447,12 +8476,12 @@ BSplineCurve.prototype.evaluate = function(u) {
     }
 
     if(typeof ret === "undefined" || ret === null) {
-      var mult = 0;
-      var index = -1;
-      var i;
+      let mult = 0;
+      let index = -1;
+      let i;
       for(i = 0; i < this.knots.length; i++) {
-        var curKnot = this.knots[i];
-        var isThisKnot = u === curKnot;
+        const curKnot = this.knots[i];
+        const isThisKnot = u === curKnot;
         if(isThisKnot)mult++;
         if(curKnot < this.knots[i + 1]) {
           if(isThisKnot) {
@@ -8469,21 +8498,21 @@ BSplineCurve.prototype.evaluate = function(u) {
       if(mult === degree) {
         ret = this.controlPoints[index - degree].slice(0, elementsPerPoint);
       } else {
-        var h = degree - mult;
-        var buffer = [];
+        const h = degree - mult;
+        const buffer = [];
         for(i = index - degree; i <= index - mult; i++) {
           buffer.push(this.controlPoints[i]);
         }
-        for(var r = 1; r <= h; r++) {
-          var lastPt = buffer[r - 1];
+        for(let r = 1; r <= h; r++) {
+          let lastPt = buffer[r - 1];
           for(i = r; i < buffer.length; i++) {
-            var kindex = index - degree + i;
-            var ki = this.knots[kindex];
-            var a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
-            var thisPt = buffer[i];
-            var newPt = [];
+            const kindex = index - degree + i;
+            const ki = this.knots[kindex];
+            const a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
+            const thisPt = buffer[i];
+            const newPt = [];
             // console.log("p"+[kindex,r]+"="+(1-a)+"*p"+[kindex-1,r-1]+"+"+(a)+"*p"+[kindex,r-1])
-            for(var j = 0; j < elementsPerPoint; j++) {
+            for(let j = 0; j < elementsPerPoint; j++) {
               newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
             }
             buffer[i] = newPt;
@@ -8501,10 +8530,10 @@ BSplineCurve.prototype.evaluate = function(u) {
 };
 /** @ignore */
 BSplineCurve._splitKnots = function(knots, degree, u) {
-  var lastFront = -1;
-  var firstBack = -1;
-  var front = [];
-  var back = [];
+  let lastFront = -1;
+  let firstBack = -1;
+  const front = [];
+  const back = [];
   for(var i = 0; i < knots.length; i++) {
     if(knots[i] > u) {
       firstBack = i;
@@ -8537,20 +8566,20 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
  * will be null if <code>u</code> is at or after the end of the curve.
  */
 BSplineCurve.prototype.split = function(u) {
-  var numPoints = this.controlPoints.length;
-  var degree = this.knots.length - numPoints - 1;
-  var elementsPerPoint = this.controlPoints[0].length;
-  var i;
+  const numPoints = this.controlPoints.length;
+  const degree = this.knots.length - numPoints - 1;
+  const elementsPerPoint = this.controlPoints[0].length;
+  let i;
   if(u <= this.knots[degree]) {
     return [null, this];
   } else if(u >= this.knots[this.knots.length - 1 - degree]) {
     return [this, null];
   }
-  var mult = 0;
-  var index = -1;
+  let mult = 0;
+  let index = -1;
   for(i = 0; i < this.knots.length; i++) {
-    var curKnot = this.knots[i];
-    var isThisKnot = u === curKnot;
+    const curKnot = this.knots[i];
+    const isThisKnot = u === curKnot;
     if(isThisKnot)mult++;
     if(curKnot < this.knots[i + 1]) {
       if(isThisKnot) {
@@ -8564,15 +8593,15 @@ BSplineCurve.prototype.split = function(u) {
   }
   if(index < 0)throw new Error();
   if(mult > degree)throw new Error();
-  var newKnots = BSplineCurve._splitKnots(this.knots, degree, u);
-  var front = [];
-  var backPoints = [];
+  const newKnots = BSplineCurve._splitKnots(this.knots, degree, u);
+  let front = [];
+  let backPoints = [];
   if(mult === degree) {
     front = this.controlPoints.slice(0, index - degree + 1);
     backPoints = this.controlPoints.slice(index - degree, this.controlPoints.length);
   } else {
-    var h = degree - mult;
-    var buffer = [];
+    const h = degree - mult;
+    const buffer = [];
     for(i = index - degree; i <= index - mult; i++) {
       buffer.push(this.controlPoints[i]);
     }
@@ -8581,16 +8610,16 @@ BSplineCurve.prototype.split = function(u) {
     for(i = 0; i <= index - degree; i++) {
       front.push(this.controlPoints[i]);
     }
-    var back = [];
-    for(var r = 1; r <= h; r++) {
-      var lastPt = buffer[r - 1];
+    const back = [];
+    for(let r = 1; r <= h; r++) {
+      let lastPt = buffer[r - 1];
       for(i = r; i < buffer.length; i++) {
-        var kindex = index - degree + i;
-        var ki = this.knots[kindex];
-        var a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
-        var thisPt = buffer[i];
-        var newPt = [];
-        for(var j = 0; j < elementsPerPoint; j++) {
+        const kindex = index - degree + i;
+        const ki = this.knots[kindex];
+        const a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
+        const thisPt = buffer[i];
+        const newPt = [];
+        for(let j = 0; j < elementsPerPoint; j++) {
           newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
         }
         buffer[i] = newPt;
@@ -8611,8 +8640,8 @@ BSplineCurve.prototype.split = function(u) {
       backPoints.push(this.controlPoints[i]);
     }
   }
-  var curve1 = new BSplineCurve(front, newKnots[0], this.bits);
-  var curve2 = new BSplineCurve(backPoints, newKnots[1], this.bits);
+  const curve1 = new BSplineCurve(front, newKnots[0], this.bits);
+  const curve2 = new BSplineCurve(backPoints, newKnots[1], this.bits);
   return [curve1, curve2];
 };
 
@@ -8622,8 +8651,8 @@ BSplineCurve.prototype.split = function(u) {
  * the starting and ending U coordinates, respectively, of the curve.
  */
 BSplineCurve.prototype.endPoints = function() {
-  var numPoints = this.controlPoints.length;
-  var degree = this.knots.length - numPoints - 1;
+  const numPoints = this.controlPoints.length;
+  const degree = this.knots.length - numPoints - 1;
   return [this.knots[degree], this.knots[this.knots.length - 1 - degree]];
 };
 
@@ -8653,9 +8682,9 @@ BSplineCurve.prototype.getKnots = function() {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineCurve.prototype.velocity = function(u) {
-  var ret = [];
+  let ret = [];
   if(this.fastBezier) {
-    var cp = this.controlPoints;
+    const cp = this.controlPoints;
     switch(cp.length) {
     case 1:
       ret = MathInternal.vecZeros(cp[0].length);
@@ -8673,23 +8702,23 @@ BSplineCurve.prototype.velocity = function(u) {
       break;
     }
   } else {
-    var numPoints = this.controlPoints.length;
-    var degree = this.knots.length - numPoints - 1;
-    var elementsPerPoint = this.controlPoints[0].length;
+    const numPoints = this.controlPoints.length;
+    const degree = this.knots.length - numPoints - 1;
+    const elementsPerPoint = this.controlPoints[0].length;
     BSplineCurve._getFactors(this.knots, u, degree - 1, numPoints,
       this.buffer);
-    var i, j;
-    var coeffs = [];
+    let i, j;
+    const coeffs = [];
     for(i = 0; i < numPoints; i++) {
       coeffs[i] = 0;
     }
     for(j = 0; j < numPoints - 1; j++) {
-      var pix = degree * this.buffer[j + 1] / (this.knots[j + degree + 1] - this.knots[j + 1]);
+      const pix = degree * this.buffer[j + 1] / (this.knots[j + degree + 1] - this.knots[j + 1]);
       coeffs[j + 1] += pix;
       coeffs[j] -= pix;
     }
     for(i = 0; i < elementsPerPoint; i++) {
-      var value = 0;
+      let value = 0;
       for(j = 0; j < numPoints; j++) {
         value += coeffs[j] * this.controlPoints[j][i];
       }
@@ -8704,9 +8733,9 @@ BSplineCurve.prototype.velocity = function(u) {
 
 /** @ignore */
 BSplineCurve._fromHomogen = function(cp) {
-  var cplen = cp.length;
-  var div = 1.0 / cp[cplen - 1];
-  for(var i = 0; i < cplen - 1; i++) {
+  const cplen = cp.length;
+  const div = 1.0 / cp[cplen - 1];
+  for(let i = 0; i < cplen - 1; i++) {
     cp[i] *= div;
   }
   cp = cp.slice(0, cplen - 1);
@@ -8751,14 +8780,14 @@ BSplineCurve._fromHomogen = function(cp) {
  * };
  */
 function BSplineSurface(controlPoints, knotsU, knotsV, bits) {
-  var cpoints = controlPoints;
+  const cpoints = controlPoints;
   this.bits = bits || 0;
-  var vcplen = cpoints.length;
+  const vcplen = cpoints.length;
   if(vcplen <= 0)throw new Error();
-  var ucplen = cpoints[0].length;
+  const ucplen = cpoints[0].length;
   if(ucplen <= 0)throw new Error();
-  var cplen = cpoints[0][0].length;
-  var cplenNeeded = 1;
+  const cplen = cpoints[0][0].length;
+  let cplenNeeded = 1;
   if((this.bits & BSplineCurve.DIVIDE_BIT) !== 0) {
     cplenNeeded = 2;
   }
@@ -8899,13 +8928,13 @@ BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
 BSplineCurve.uniformKnots = function(controlPoints, degree) {
   if(typeof controlPoints === "object")
     controlPoints = controlPoints.length;
-  var deg = typeof degree === "undefined" || degree === null ? 3 : degree;
+  const deg = typeof degree === "undefined" || degree === null ? 3 : degree;
   if(controlPoints < deg + 1)
     throw new Error("too few control points for degree " + deg + " curve");
-  var order = deg + 1;
-  var ret = [];
-  var scale = 1.0 / (controlPoints + order - 1);
-  for(var i = 0; i < controlPoints + order; i++) {
+  const order = deg + 1;
+  const ret = [];
+  const scale = 1.0 / (controlPoints + order - 1);
+  for(let i = 0; i < controlPoints + order; i++) {
     ret.push(i * scale);
   }
   return ret;
@@ -8927,12 +8956,12 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
 BSplineCurve.clampedKnots = function(controlPoints, degree) {
   if(typeof controlPoints === "object")
     controlPoints = controlPoints.length;
-  var deg = typeof degree === "undefined" || degree === null ? 3 : degree;
+  const deg = typeof degree === "undefined" || degree === null ? 3 : degree;
   if(controlPoints < deg + 1)
     throw new Error("too few control points for degree " + deg + " curve");
-  var order = deg + 1;
-  var extras = controlPoints - order;
-  var ret = [];
+  const order = deg + 1;
+  const extras = controlPoints - order;
+  const ret = [];
   for(var i = 0; i < order; i++) {
     ret.push(0);
   }
@@ -8959,15 +8988,15 @@ BSplineCurve.clampedKnots = function(controlPoints, degree) {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineSurface.prototype.evaluate = function(u, v) {
-  var elementsPerPoint = this.controlPoints[0][0].length;
-  var bu = this.bufferU;
-  var bv = this.bufferV;
-  var tt, uu, i, value;
+  const elementsPerPoint = this.controlPoints[0][0].length;
+  const bu = this.bufferU;
+  const bv = this.bufferV;
+  let tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
     this.bufferV);
-  var output = [];
+  let output = [];
   for(i = 0; i < elementsPerPoint; i++) {
     value = 0;
     for(tt = 0; tt < this.ucplen; tt++) {
@@ -9009,20 +9038,20 @@ BSplineSurface.prototype.getKnots = function() {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineSurface.prototype.tangent = function(u, v) {
-  var elementsPerPoint = this.controlPoints[0][0].length;
-  var bv = this.bufferV;
-  var tt, uu, i, value;
+  const elementsPerPoint = this.controlPoints[0][0].length;
+  const bv = this.bufferV;
+  let tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU - 1, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
     this.bufferV);
-  var ret = [];
-  var coeffs = [];
+  let ret = [];
+  const coeffs = [];
   for(i = 0; i < this.ucplen; i++) {
     coeffs[i] = 0;
   }
-  for(var j = 0; j < this.ucplen - 1; j++) {
-    var pix = this.degreeU * this.bufferU[j + 1] / (this.knotsU[j + this.degreeU + 1] - this.knotsU[j + 1]);
+  for(let j = 0; j < this.ucplen - 1; j++) {
+    const pix = this.degreeU * this.bufferU[j + 1] / (this.knotsU[j + this.degreeU + 1] - this.knotsU[j + 1]);
     coeffs[j + 1] += pix;
     coeffs[j] -= pix;
   }
@@ -9050,20 +9079,20 @@ BSplineSurface.prototype.tangent = function(u, v) {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineSurface.prototype.bitangent = function(u, v) {
-  var elementsPerPoint = this.controlPoints[0][0].length;
-  var bu = this.bufferU;
-  var tt, uu, i, value;
+  const elementsPerPoint = this.controlPoints[0][0].length;
+  const bu = this.bufferU;
+  let tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV - 1, this.vcplen,
     this.bufferV);
-  var ret = [];
-  var coeffs = [];
+  let ret = [];
+  const coeffs = [];
   for(i = 0; i < this.vcplen; i++) {
     coeffs[i] = 0;
   }
-  for(var j = 0; j < this.vcplen - 1; j++) {
-    var pix = this.degreeV * this.bufferV[j + 1] / (this.knotsV[j + this.degreeV + 1] - this.knotsV[j + 1]);
+  for(let j = 0; j < this.vcplen - 1; j++) {
+    const pix = this.degreeV * this.bufferV[j + 1] / (this.knotsV[j + this.degreeV + 1] - this.knotsV[j + 1]);
     coeffs[j + 1] += pix;
     coeffs[j] -= pix;
   }
@@ -9146,11 +9175,11 @@ BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
  * return new PiecewiseCurve(curves)
  * }
  */
-var PiecewiseCurve = function(curves) {
+const PiecewiseCurve = function(curves) {
   this.curves = [];
   this.curvesEp = [];
   this.runningCurveStart = [];
-  for(var i = 0; i < curves.length; i++) {
+  for(let i = 0; i < curves.length; i++) {
     this.curves[i] = curves[i] instanceof Curve ?
       curves[i] : new Curve(curves[i]);
     this.curvesEp[i] = this.curves[i].endPoints();
@@ -9182,7 +9211,7 @@ PiecewiseCurve.prototype._getRunningCurveStart = function(uc) {
     return 0;
   }
   if(isNaN(this.runningCurveStart[uc])) {
-    for(var i = 1; i <= uc; i++) {
+    for(let i = 1; i <= uc; i++) {
       if(isNaN(this.runningCurveStart[i])) {
         this.runningCurveStart[i] = this.runningCurveStart[i - 1] +
         this.curves[i - 1].arcLength(this.curvesEp[i - 1][1]);
@@ -9193,7 +9222,7 @@ PiecewiseCurve.prototype._getRunningCurveStart = function(uc) {
 };
 /** @ignore */
 PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
-  var uc, ut;
+  let uc, ut;
   if(u < 0) {
     uc = 0;
     ut = 0;
@@ -9204,7 +9233,7 @@ PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
     uc = Math.floor(u);
     ut = u - uc;
   }
-  var ep = this.curvesEp[uc];
+  const ep = this.curvesEp[uc];
   return [uc, ep[0] + (ep[1] - ep[0]) * ut];
 };
 /**
@@ -9217,7 +9246,7 @@ PiecewiseCurve.prototype.arcLength = function(u) {
   if(u <= 0) {
     return 0;
   }
-  var cp = this._getCurveAndPoint(u);
+  const cp = this._getCurveAndPoint(u);
   return this._getRunningCurveStart(cp[0]) +
     this.curves[cp[0]].arcLength(cp[1]);
 };
@@ -9228,7 +9257,7 @@ PiecewiseCurve.prototype.arcLength = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 PiecewiseCurve.prototype.evaluate = function(u) {
-  var cp = this._getCurveAndPoint(u);
+  const cp = this._getCurveAndPoint(u);
   return this.curves[cp[0]].evaluate(cp[1]);
 };
 /**
@@ -9238,7 +9267,7 @@ PiecewiseCurve.prototype.evaluate = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 PiecewiseCurve.prototype.velocity = function(u) {
-  var cp = this._getCurveAndPoint(u);
+  const cp = this._getCurveAndPoint(u);
   return this.curves[cp[0]].velocity(cp[1]);
 };
 
@@ -9271,20 +9300,20 @@ PiecewiseCurve.prototype.velocity = function(u) {
  * same path as the TCB spline.
  */
 PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, closed, rigidEnds) {
-  var elements = spline[0].length;
+  const elements = spline[0].length;
   if(spline.length < 2)throw new Error();
-  var tensionValue = typeof tension === "undefined" || tension === null ? 0 : tension;
-  var continValue = typeof continuity === "undefined" || continuity === null ? 0 : continuity;
-  var biasValue = typeof bias === "undefined" || bias === null ? 0 : bias;
-  var closedValue = typeof closed === "undefined" || closed === null ? false : closed;
-  var rigidEndsValue = typeof rigidEnds === "undefined" || rigidEnds === null ? false : rigidEnds;
-  var third = 1 / 3;
-  var ret = [];
-  var lastVecIndex = spline.length - 1;
-  var numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
-  for(var j = 0; j < numSplines; j++) {
-    var retcurve = [[], [], [], []];
-    var pt0 = j > lastVecIndex ? spline[0] : spline[j];
+  const tensionValue = typeof tension === "undefined" || tension === null ? 0 : tension;
+  const continValue = typeof continuity === "undefined" || continuity === null ? 0 : continuity;
+  const biasValue = typeof bias === "undefined" || bias === null ? 0 : bias;
+  const closedValue = typeof closed === "undefined" || closed === null ? false : closed;
+  const rigidEndsValue = typeof rigidEnds === "undefined" || rigidEnds === null ? false : rigidEnds;
+  const third = 1 / 3;
+  const ret = [];
+  const lastVecIndex = spline.length - 1;
+  const numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
+  for(let j = 0; j < numSplines; j++) {
+    const retcurve = [[], [], [], []];
+    const pt0 = j > lastVecIndex ? spline[0] : spline[j];
     var pt1, ptPrev, ptNext;
     if(closedValue) {
       if(j === 0) {
@@ -9309,25 +9338,25 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
       ptPrev = j === 0 ? null : spline[j - 1];
       ptNext = j >= lastVecIndex ? null : spline[j + 2];
     }
-    var mc = 1 - continValue;
-    var pc = 1 + continValue;
-    var mb = 1 - biasValue;
-    var pb = 1 + biasValue;
-    var mt = 1 - tensionValue;
-    for(var i = 0; i < elements; i++) {
-      var p1 = pt0[i];
-      var p4 = pt1[i];
-      var diffCurr = pt1[i] - pt0[i];
-      var diffPrev = typeof ptPrev === "undefined" || ptPrev === null ? 0 : pt0[i] - ptPrev[i];
-      var diffNext = typeof ptNext === "undefined" || ptNext === null ? 0 : ptNext[i] - pt1[i];
-      var tgStart = 0.5 * mt * pc * pb * diffPrev + 0.5 * mt * mc * mb * diffCurr;
-      var tgEnd = 0.5 * mt * mc * pb * diffCurr + 0.5 * mt * pc * mb * diffNext;
+    const mc = 1 - continValue;
+    const pc = 1 + continValue;
+    const mb = 1 - biasValue;
+    const pb = 1 + biasValue;
+    const mt = 1 - tensionValue;
+    for(let i = 0; i < elements; i++) {
+      const p1 = pt0[i];
+      const p4 = pt1[i];
+      const diffCurr = pt1[i] - pt0[i];
+      const diffPrev = typeof ptPrev === "undefined" || ptPrev === null ? 0 : pt0[i] - ptPrev[i];
+      const diffNext = typeof ptNext === "undefined" || ptNext === null ? 0 : ptNext[i] - pt1[i];
+      let tgStart = 0.5 * mt * pc * pb * diffPrev + 0.5 * mt * mc * mb * diffCurr;
+      let tgEnd = 0.5 * mt * mc * pb * diffCurr + 0.5 * mt * pc * mb * diffNext;
       if(!rigidEndsValue) {
         if(typeof ptPrev === "undefined" || ptPrev === null)tgStart = 0;
         if(typeof ptNext === "undefined" || ptNext === null)tgEnd = 0;
       }
-      var p2 = p1 + tgStart * third;
-      var p3 = p4 - tgEnd * third;
+      const p2 = p1 + tgStart * third;
+      const p3 = p4 - tgEnd * third;
       retcurve[0][i] = p1;
       retcurve[1][i] = p2;
       retcurve[2][i] = p3;
@@ -9355,21 +9384,21 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
  * same path as the Hermite spline.
  */
 PiecewiseCurve.fromHermiteSpline = function(spline) {
-  var elements = spline[0].length;
+  const elements = spline[0].length;
   if(spline.length < 4 || spline.length % 2 !== 0)throw new Error();
-  var third = 1 / 3;
-  var ret = [];
-  for(var j = 0; j < spline.length - 2; j += 2) {
-    var retcurve = [[], [], [], []];
-    var pt0 = spline[j];
-    var tg0 = spline[j + 1];
-    var pt1 = spline[j + 2];
-    var tg1 = spline[j + 3];
-    for(var i = 0; i < elements; i++) {
-      var p1 = pt0[i];
-      var p4 = pt1[i];
-      var p2 = p1 + tg0[i] * third;
-      var p3 = p4 - tg1[i] * third;
+  const third = 1 / 3;
+  const ret = [];
+  for(let j = 0; j < spline.length - 2; j += 2) {
+    const retcurve = [[], [], [], []];
+    const pt0 = spline[j];
+    const tg0 = spline[j + 1];
+    const pt1 = spline[j + 2];
+    const tg1 = spline[j + 3];
+    for(let i = 0; i < elements; i++) {
+      const p1 = pt0[i];
+      const p4 = pt1[i];
+      const p2 = p1 + tg0[i] * third;
+      const p3 = p4 - tg1[i] * third;
       retcurve[0][i] = p1;
       retcurve[1][i] = p2;
       retcurve[2][i] = p3;
@@ -9398,19 +9427,19 @@ PiecewiseCurve.fromHermiteSpline = function(spline) {
  * @returns {PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline.
  */
 PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
-  var elements = spline[0].length;
+  const elements = spline[0].length;
   if(spline.length < 2)throw new Error();
-  var paramValue = typeof param === "undefined" || param === null ? 0.5 : param;
-  var closedValue = typeof closed === "undefined" || closed === null ? false : closed;
-  var ret = [];
-  var lastVecIndex = spline.length - 1;
-  var numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
-  for(var j = 0; j < numSplines; j++) {
-    var retcurve = [[], [], [], []];
-    var pt0 = j === 0 ? spline[0] : spline[j - 1];
-    var pt1 = spline[j];
-    var pt2 = spline[j + 1];
-    var pt3 = j + 2 > lastVecIndex ? spline[lastVecIndex] : spline[j + 2];
+  const paramValue = typeof param === "undefined" || param === null ? 0.5 : param;
+  const closedValue = typeof closed === "undefined" || closed === null ? false : closed;
+  const ret = [];
+  const lastVecIndex = spline.length - 1;
+  const numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
+  for(let j = 0; j < numSplines; j++) {
+    const retcurve = [[], [], [], []];
+    let pt0 = j === 0 ? spline[0] : spline[j - 1];
+    const pt1 = spline[j];
+    let pt2 = spline[j + 1];
+    let pt3 = j + 2 > lastVecIndex ? spline[lastVecIndex] : spline[j + 2];
     if(!closedValue && j + 2 > lastVecIndex) {
       var newpt = [];
       for(var i = 0; i < elements; i++) {
@@ -9436,11 +9465,11 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
         pt3 = spline[1];
       }
     }
-    var p1len = 0;
-    var p2len = 0;
-    var p3len = 0;
+    let p1len = 0;
+    let p2len = 0;
+    let p3len = 0;
     for(i = 0; i < elements; i++) {
-      var dx = pt0[i] - pt1[i];
+      let dx = pt0[i] - pt1[i];
       p1len += dx * dx;
       dx = pt1[i] - pt2[i];
       p2len += dx * dx;
@@ -9451,21 +9480,21 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
     p2len = Math.sqrt(p2len);
     p3len = Math.sqrt(p3len);
     for(i = 0; i < elements; i++) {
-      var p1 = pt0[i];
-      var p2 = pt1[i];
-      var p3 = pt2[i];
-      var p4 = pt3[i];
-      var t1 = 1;
-      var t2 = 1;
-      var t3 = 1;
+      const p1 = pt0[i];
+      const p2 = pt1[i];
+      const p3 = pt2[i];
+      const p4 = pt3[i];
+      let t1 = 1;
+      let t2 = 1;
+      let t3 = 1;
       if(paramValue !== 0) {
         t1 = Math.pow(p1len, paramValue);
         t2 = Math.pow(p2len, paramValue);
         t3 = Math.pow(p3len, paramValue);
       }
-      var den = 3 * t1 * (t1 + t2);
-      var np2 = p2;
-      var np3 = p3;
+      let den = 3 * t1 * (t1 + t2);
+      let np2 = p2;
+      let np3 = p3;
       den = 3 * t1 * (t1 + t2);
       if(den !== 0) {
         np2 = (t1 * t1 * p3 - t2 * t2 * p1 + p2 * (2 * t1 * t1 + 3 * t1 * t2 + t2 * t2)) / den;
@@ -9496,36 +9525,36 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
 PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   if(typeof start === "undefined" || start === null)start = 0;
   if(typeof sweep === "undefined" || sweep === null)sweep = 0;
-  var abssweep = sweep;
-  var sweepdir = sweep < 0 ? -1 : 1;
-  var sweepSegments = abssweep > Math.PI * 0.5 &&
+  let abssweep = sweep;
+  const sweepdir = sweep < 0 ? -1 : 1;
+  const sweepSegments = abssweep > Math.PI * 0.5 &&
     abssweep <= Math.PI * 2 ? abssweep * 0.25 : Math.PI * 0.5;
-  var arcstart = start;
-  var curves = [];
-  var sa0, sa1;
+  let arcstart = start;
+  const curves = [];
+  let sa0, sa1;
   while(abssweep > 0) {
-    var arcangle = Math.min(sweepSegments, abssweep);
-    var arcend = arcstart + arcangle * sweepdir;
-    var ca0 = Math.cos(arcstart);
+    const arcangle = Math.min(sweepSegments, abssweep);
+    const arcend = arcstart + arcangle * sweepdir;
+    const ca0 = Math.cos(arcstart);
     sa0 = arcstart >= 0 && arcstart < 6.283185307179586 ? arcstart <= 3.141592653589793 ? Math.sqrt(1.0 - ca0 * ca0) : -Math.sqrt(1.0 - ca0 * ca0) : Math.sin(arcstart);
-    var ca1 = Math.cos(arcend);
+    const ca1 = Math.cos(arcend);
     sa1 = arcend >= 0 && arcend < 6.283185307179586 ? arcend <= 3.141592653589793 ? Math.sqrt(1.0 - ca1 * ca1) : -Math.sqrt(1.0 - ca1 * ca1) : Math.sin(arcend);
     abssweep -= arcangle;
     arcstart += arcangle * sweepdir;
-    var p0 = [ca0, sa0, 1];
-    var p2 = [ca1, sa1, 1];
-    var halfAngle = (Math.PI - arcangle) * 0.5;
-    var weight = Math.sin(halfAngle);
-    var dx = p2[0] - p0[0];
-    var dy = p2[1] - p0[1];
-    var m0 = p0[0] + dx * 0.5;
-    var m1 = p0[1] + dy * 0.5;
-    var dcx = m0;
-    var dcy = m1;
-    var mdist = Math.sqrt(dcx * dcx + dcy * dcy);
-    var clen = 1.0 / mdist;
-    var p1dist = 1.0 / weight;
-    var p1 = [
+    const p0 = [ca0, sa0, 1];
+    const p2 = [ca1, sa1, 1];
+    const halfAngle = (Math.PI - arcangle) * 0.5;
+    const weight = Math.sin(halfAngle);
+    const dx = p2[0] - p0[0];
+    const dy = p2[1] - p0[1];
+    const m0 = p0[0] + dx * 0.5;
+    const m1 = p0[1] + dy * 0.5;
+    const dcx = m0;
+    const dcy = m1;
+    const mdist = Math.sqrt(dcx * dcx + dcy * dcy);
+    const clen = 1.0 / mdist;
+    const p1dist = 1.0 / weight;
+    const p1 = [
       dcx * clen * p1dist,
       dcy * clen * p1dist,
       weight
@@ -9554,7 +9583,7 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
 /** @ignore
  * @private
  * @constructor */
-var LinkedListNode = function(item) {
+const LinkedListNode = function(item) {
   this.data = item;
   this.prev = null;
   this.next = null;
@@ -9562,12 +9591,12 @@ var LinkedListNode = function(item) {
 
 /** @ignore
  * @constructor */
-var LinkedList = function() {
+const LinkedList = function() {
   this.root = null;
   this._last = null;
   this.size = function() {
-    var k = this.root;
-    var ret = 0;
+    let k = this.root;
+    let ret = 0;
     while(k) {
       ret++;
       k = k.next;
@@ -9624,10 +9653,10 @@ var LinkedList = function() {
     return this;
   };
   this.insertAfter = function(item, node) {
-    var newNode = new LinkedListNode(item);
+    const newNode = new LinkedListNode(item);
     if(node === this._last)
       this._last = newNode;
-    var oldNext = node.next;
+    const oldNext = node.next;
     node.next = newNode;
     newNode.prev = node;
     newNode.next = oldNext;
@@ -9640,7 +9669,7 @@ var LinkedList = function() {
     if(!this.root) {
       this.root = this._last = new LinkedListNode(item);
     } else {
-      var node = new LinkedListNode(item);
+      const node = new LinkedListNode(item);
       this._last.next = node;
       node.prev = this._last;
       this._last = node;
@@ -9648,14 +9677,14 @@ var LinkedList = function() {
     return this;
   };
   this.reverse = function() {
-    var s = this.root;
-    var e = this._last;
+    let s = this.root;
+    const e = this._last;
     if(!s)return;
-    var oldlast = e;
-    var oldroot = s;
+    const oldlast = e;
+    const oldroot = s;
     while(s) {
-      var n = s.next;
-      var p = s.prev;
+      const n = s.next;
+      const p = s.prev;
       s.prev = n;
       s.next = p;
       s = n;
@@ -9668,7 +9697,7 @@ var LinkedList = function() {
     if(!this.root) {
       this.root = this._last = new LinkedListNode(item);
     } else {
-      var node = new LinkedListNode(item);
+      const node = new LinkedListNode(item);
       this.root.prev = node;
       node.next = this.root;
       this.root = node;
@@ -9721,11 +9750,11 @@ LineCurve.prototype.velocity = function() {
 };
 /** @ignore */
 LineCurve.prototype.arcLength = function(u) {
-  var x = this.x1 + (this.x2 - this.x1) * u;
-  var y = this.y1 + (this.y2 - this.y1) * u;
-  var dx = x - this.x1;
-  var dy = y - this.y1;
-  var ret = Math.sqrt(dx * dx + dy * dy);
+  const x = this.x1 + (this.x2 - this.x1) * u;
+  const y = this.y1 + (this.y2 - this.y1) * u;
+  const dx = x - this.x1;
+  const dy = y - this.y1;
+  let ret = Math.sqrt(dx * dx + dy * dy);
   if(u < 0)ret = -ret;
   return ret;
 };
@@ -9738,8 +9767,8 @@ function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
   this.y2 = y2;
   this.rx = rx;
   this.ry = ry;
-  var cr = Math.cos(rot);
-  var sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
+  const cr = Math.cos(rot);
+  const sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
   this.cr = cr;
   this.sr = sr;
   this.cx = cx;
@@ -9753,20 +9782,20 @@ ArcCurve.prototype.constructor = ArcCurve;
 ArcCurve.prototype.evaluate = function(t) {
   if(t === 0)return [this.x1, this.y1, 0];
   if(t === 1)return [this.x2, this.y2, 0];
-  var angle = this.theta + this.delta * t;
-  var ca = Math.cos(angle);
-  var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+  const angle = this.theta + this.delta * t;
+  const ca = Math.cos(angle);
+  const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
   return [
     this.cr * ca * this.rx - this.sr * sa * this.rx + this.cx,
     this.sr * ca * this.rx + this.cr * sa * this.ry + this.cy, 0];
 };
 /** @ignore */
 ArcCurve.prototype.velocity = function(t) {
-  var angle = this.theta + this.delta * t;
-  var ca = Math.cos(angle);
-  var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-  var caDeriv = -sa * this.delta;
-  var saDeriv = ca * this.delta;
+  const angle = this.theta + this.delta * t;
+  const ca = Math.cos(angle);
+  const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+  const caDeriv = -sa * this.delta;
+  const saDeriv = ca * this.delta;
   return [
     this.cr * caDeriv * this.rx - this.sr * saDeriv * this.rx,
     this.sr * caDeriv * this.rx + this.cr * saDeriv * this.ry, 0];
@@ -9809,7 +9838,7 @@ var GraphicsPath = function() {
   this.endPos = [0, 0];
 };
   /** @ignore */
-var Triangulate = {};
+const Triangulate = {};
 /** @ignore */
 GraphicsPath.CLOSE = 0;
 /** @ignore */
@@ -9851,7 +9880,7 @@ GraphicsPath._endPoint = function(a) {
 };
 /** @ignore */
 GraphicsPath._point = function(seg, t) {
-  var a, b, x, y;
+  let a, b, x, y;
   if(seg[0] === GraphicsPath.CLOSE) {
     return [0, 0];
   } else if(seg[0] === GraphicsPath.LINE) {
@@ -9860,9 +9889,9 @@ GraphicsPath._point = function(seg, t) {
       seg[2] + (seg[4] - seg[2]) * t
     ];
   } else if(seg[0] === GraphicsPath.QUAD) {
-    var mt = 1 - t;
-    var mtsq = mt * mt;
-    var mt2 = mt + mt;
+    const mt = 1 - t;
+    const mtsq = mt * mt;
+    const mt2 = mt + mt;
     a = seg[1] * mtsq;
     b = seg[3] * mt2;
     x = a + t * (b + t * seg[5]);
@@ -9873,7 +9902,7 @@ GraphicsPath._point = function(seg, t) {
   } else if(seg[0] === GraphicsPath.CUBIC) {
     a = (seg[3] - seg[1]) * 3;
     b = (seg[5] - seg[3]) * 3 - a;
-    var c = seg[7] - a - b - seg[1];
+    let c = seg[7] - a - b - seg[1];
     x = seg[1] + t * (a + t * (b + t * c));
     a = (seg[4] - seg[2]) * 3;
     b = (seg[6] - seg[4]) * 3 - a;
@@ -9883,18 +9912,18 @@ GraphicsPath._point = function(seg, t) {
   } else if(seg[0] === GraphicsPath.ARC) {
     if(t === 0)return [seg[1], seg[2]];
     if(t === 1)return [seg[8], seg[9]];
-    var rx = seg[3];
-    var ry = seg[4];
-    var cx = seg[10];
-    var cy = seg[11];
-    var theta = seg[12];
-    var delta = seg[13] - seg[12];
-    var rot = seg[5];
-    var angle = theta + delta * t;
-    var cr = Math.cos(rot);
-    var sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
-    var ca = Math.cos(angle);
-    var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+    const rx = seg[3];
+    const ry = seg[4];
+    const cx = seg[10];
+    const cy = seg[11];
+    const theta = seg[12];
+    const delta = seg[13] - seg[12];
+    const rot = seg[5];
+    const angle = theta + delta * t;
+    const cr = Math.cos(rot);
+    const sr = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cr * cr) : -Math.sqrt(1.0 - cr * cr) : Math.sin(rot);
+    const ca = Math.cos(angle);
+    const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
     return [
       cr * ca * rx - sr * sa * ry + cx,
       sr * ca * rx + cr * sa * ry + cy];
@@ -9913,13 +9942,13 @@ GraphicsPath._segToCurve = function(seg) {
     return BSplineCurve.fromBezierCurve([
       [seg[1], seg[2], 0], [seg[3], seg[4], 0], [seg[5], seg[6], 0], [seg[7], seg[8], 0]]);
   } else if(seg[0] === GraphicsPath.ARC) {
-    var rx = seg[3];
-    var ry = seg[4];
-    var cx = seg[10];
-    var cy = seg[11];
-    var theta = seg[12];
-    var delta = seg[13] - seg[12];
-    var rot = seg[5];
+    const rx = seg[3];
+    const ry = seg[4];
+    const cx = seg[10];
+    const cy = seg[11];
+    const theta = seg[12];
+    const delta = seg[13] - seg[12];
+    const rot = seg[5];
     return new ArcCurve(seg[1], seg[2], seg[8], seg[9], rx, ry, rot, cx, cy, theta, delta);
   } else {
     throw new Error();
@@ -9928,38 +9957,38 @@ GraphicsPath._segToCurve = function(seg) {
 
 /** @ignore */
 GraphicsPath._subdivide2 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, list, flatness, mode, depth) {
-  var x1 = a1 + (a3 - a1) * tcut;
-  var x2 = a3 + (a5 - a3) * tcut;
-  var xc1 = x1 + (x2 - x1) * tcut;
-  var x3 = a5 + (a7 - a5) * tcut;
-  var xc2 = x2 + (x3 - x2) * tcut;
-  var xd = xc1 + (xc2 - xc1) * tcut;
-  var y1 = a2 + (a4 - a2) * tcut;
-  var y2 = a4 + (a6 - a4) * tcut;
-  var yc1 = y1 + (y2 - y1) * tcut;
-  var y3 = a6 + (a8 - a6) * tcut;
-  var yc2 = y2 + (y3 - y2) * tcut;
-  var yd = yc1 + (yc2 - yc1) * tcut;
-  var tmid = t1 + (t2 - t1) * tcut;
+  const x1 = a1 + (a3 - a1) * tcut;
+  const x2 = a3 + (a5 - a3) * tcut;
+  const xc1 = x1 + (x2 - x1) * tcut;
+  const x3 = a5 + (a7 - a5) * tcut;
+  const xc2 = x2 + (x3 - x2) * tcut;
+  const xd = xc1 + (xc2 - xc1) * tcut;
+  const y1 = a2 + (a4 - a2) * tcut;
+  const y2 = a4 + (a6 - a4) * tcut;
+  const yc1 = y1 + (y2 - y1) * tcut;
+  const y3 = a6 + (a8 - a6) * tcut;
+  const yc2 = y2 + (y3 - y2) * tcut;
+  const yd = yc1 + (yc2 - yc1) * tcut;
+  const tmid = t1 + (t2 - t1) * tcut;
   GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
   GraphicsPath._flattenCubic(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, list, flatness, mode, depth + 1);
 };
 /** @ignore */
 GraphicsPath._subdivide3 = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, tcut, tcut2, list, flatness, mode, depth) {
-  var x1 = a1 + (a3 - a1) * tcut;
-  var x2 = a3 + (a5 - a3) * tcut;
-  var xc1 = x1 + (x2 - x1) * tcut;
-  var x3 = a5 + (a7 - a5) * tcut;
-  var xc2 = x2 + (x3 - x2) * tcut;
-  var xd = xc1 + (xc2 - xc1) * tcut;
-  var y1 = a2 + (a4 - a2) * tcut;
-  var y2 = a4 + (a6 - a4) * tcut;
-  var yc1 = y1 + (y2 - y1) * tcut;
-  var y3 = a6 + (a8 - a6) * tcut;
-  var yc2 = y2 + (y3 - y2) * tcut;
-  var yd = yc1 + (yc2 - yc1) * tcut;
-  var tmid = t1 + (t2 - t1) * tcut;
-  var tcutx = (tcut2 - tmid) / (t2 - tmid);
+  const x1 = a1 + (a3 - a1) * tcut;
+  const x2 = a3 + (a5 - a3) * tcut;
+  const xc1 = x1 + (x2 - x1) * tcut;
+  const x3 = a5 + (a7 - a5) * tcut;
+  const xc2 = x2 + (x3 - x2) * tcut;
+  const xd = xc1 + (xc2 - xc1) * tcut;
+  const y1 = a2 + (a4 - a2) * tcut;
+  const y2 = a4 + (a6 - a4) * tcut;
+  const yc1 = y1 + (y2 - y1) * tcut;
+  const y3 = a6 + (a8 - a6) * tcut;
+  const yc2 = y2 + (y3 - y2) * tcut;
+  const yd = yc1 + (yc2 - yc1) * tcut;
+  const tmid = t1 + (t2 - t1) * tcut;
+  const tcutx = (tcut2 - tmid) / (t2 - tmid);
   GraphicsPath._flattenCubic(a1, a2, x1, y1, xc1, yc1, xd, yd, t1, tmid, list, flatness, mode, depth + 1);
   GraphicsPath._subdivide2(xd, yd, xc2, yc2, x3, y3, a7, a8, tmid, t2, tcutx, list, flatness, mode, depth + 1);
 };
@@ -9971,9 +10000,9 @@ GraphicsPath._flattenCubic = function(a1, a2, a3, a4, a5, a6, a7, a8, t1, t2, li
     if(mode === 0) {
       list.push([a1, a2, a7, a8]);
     } else {
-      var dx = a7 - a1;
-      var dy = a8 - a2;
-      var length = Math.sqrt(dx * dx + dy * dy);
+      const dx = a7 - a1;
+      const dy = a8 - a2;
+      const length = Math.sqrt(dx * dx + dy * dy);
       list.push(t1, t2, length);
     }
   } else {
@@ -9987,48 +10016,48 @@ GraphicsPath._flattenQuad = function(a1, a2, a3, a4, a5, a6, t1, t2, list, flatn
     if(mode === 0) {
       list.push([a1, a2, a5, a6]);
     } else {
-      var dx = a5 - a1;
-      var dy = a6 - a2;
-      var length = Math.sqrt(dx * dx + dy * dy);
+      const dx = a5 - a1;
+      const dy = a6 - a2;
+      const length = Math.sqrt(dx * dx + dy * dy);
       list.push(t1, t2, length);
     }
   } else {
-    var x1 = (a1 + a3) * 0.5;
-    var x2 = (a3 + a5) * 0.5;
-    var xc = (x1 + x2) * 0.5;
-    var y1 = (a2 + a4) * 0.5;
-    var y2 = (a4 + a6) * 0.5;
-    var yc = (y1 + y2) * 0.5;
-    var tmid = (t1 + t2) * 0.5;
+    const x1 = (a1 + a3) * 0.5;
+    const x2 = (a3 + a5) * 0.5;
+    const xc = (x1 + x2) * 0.5;
+    const y1 = (a2 + a4) * 0.5;
+    const y2 = (a4 + a6) * 0.5;
+    const yc = (y1 + y2) * 0.5;
+    const tmid = (t1 + t2) * 0.5;
     GraphicsPath._flattenQuad(a1, a2, x1, y1, xc, yc, t1, tmid, list, flatness, mode, depth + 1);
     GraphicsPath._flattenQuad(xc, yc, x2, y2, a5, a6, tmid, t2, list, flatness, mode, depth + 1);
   }
 };
 /** @ignore */
 GraphicsPath._flattenArc = function(a, t1, t2, list, flatness, mode, depth) {
-  var rot = a[5];
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
+  const rot = a[5];
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const ellipseInfo = [a[3], a[4], a[10], a[11], crot, srot];
   GraphicsPath._flattenArcInternal(ellipseInfo, a[1], a[2], a[8], a[9], a[12], a[13], t1, t2, list, flatness, mode, depth);
 };
 /** @ignore */
 GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1, theta2, t1, t2, list, flatness, mode, depth) {
   if(typeof depth === "undefined" || depth === null)depth = 0;
-  var thetaMid = (theta1 + theta2) * 0.5;
-  var tmid = (t1 + t2) * 0.5;
-  var ca = Math.cos(thetaMid);
-  var sa = thetaMid >= 0 && thetaMid < 6.283185307179586 ? thetaMid <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(thetaMid);
-  var xmid = ellipseInfo[4] * ca * ellipseInfo[0] - ellipseInfo[5] * sa * ellipseInfo[1] + ellipseInfo[2];
-  var ymid = ellipseInfo[5] * ca * ellipseInfo[0] + ellipseInfo[4] * sa * ellipseInfo[1] + ellipseInfo[3];
+  const thetaMid = (theta1 + theta2) * 0.5;
+  const tmid = (t1 + t2) * 0.5;
+  const ca = Math.cos(thetaMid);
+  const sa = thetaMid >= 0 && thetaMid < 6.283185307179586 ? thetaMid <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(thetaMid);
+  const xmid = ellipseInfo[4] * ca * ellipseInfo[0] - ellipseInfo[5] * sa * ellipseInfo[1] + ellipseInfo[2];
+  const ymid = ellipseInfo[5] * ca * ellipseInfo[0] + ellipseInfo[4] * sa * ellipseInfo[1] + ellipseInfo[3];
   if(depth >= 20 || Math.abs(x1 - xmid - xmid + x2) + Math.abs(y1 - ymid - ymid + y2) <= flatness) {
     if(mode === 0) {
       list.push([x1, y1, xmid, ymid]);
       list.push([xmid, ymid, x2, y2]);
     } else {
-      var dx = xmid - x1;
-      var dy = ymid - y1;
-      var length = Math.sqrt(dx * dx + dy * dy);
+      let dx = xmid - x1;
+      let dy = ymid - y1;
+      let length = Math.sqrt(dx * dx + dy * dy);
       list.push(t1, tmid, length);
       dx = x2 - xmid;
       dy = y2 - ymid;
@@ -10042,16 +10071,16 @@ GraphicsPath._flattenArcInternal = function(ellipseInfo, x1, y1, x2, y2, theta1,
 };
 /** @ignore */
 GraphicsPath.prototype._start = function() {
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._startPoint(s);
   }
   return [0, 0];
 };
 /** @ignore */
 GraphicsPath.prototype._end = function() {
-  for(var i = this.segments.length - 1; i >= 0; i--) {
-    var s = this.segments[i];
+  for(let i = this.segments.length - 1; i >= 0; i--) {
+    const s = this.segments[i];
     if(s[0] !== GraphicsPath.CLOSE)return GraphicsPath._endPoint(s);
   }
   return [0, 0];
@@ -10064,15 +10093,15 @@ GraphicsPath.prototype._end = function() {
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.merge = function(path) {
-  var oldpos = null;
+  let oldpos = null;
   if(!path)return this;
-  var segsLength = path.segments.length;
-  for(var i = 0; i < segsLength; i++) {
-    var a = path.segments[i];
+  const segsLength = path.segments.length;
+  for(let i = 0; i < segsLength; i++) {
+    const a = path.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       this.closePath();
     } else {
-      var start = GraphicsPath._startPoint(a);
+      const start = GraphicsPath._startPoint(a);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         this.moveTo(start[0], start[1]);
       }
@@ -10087,8 +10116,8 @@ GraphicsPath.prototype.merge = function(path) {
         this.bezierCurveTo(a[3], a[4], a[5], a[6], a[7], a[8]);
       }
       if(a[0] === GraphicsPath.ARC) {
-        var delta = a[13] - a[12];
-        var largeArc = Math.abs(delta) > Math.PI;
+        const delta = a[13] - a[12];
+        const largeArc = Math.abs(delta) > Math.PI;
         this.arcSvgTo(a[3], a[4], a[5] * GraphicsPath._toDegrees,
           largeArc, delta > 0, a[8], a[9]);
       }
@@ -10104,15 +10133,15 @@ GraphicsPath.prototype.merge = function(path) {
  * format.
  */
 GraphicsPath.prototype.toString = function() {
-  var oldpos = null;
-  var ret = "";
+  let oldpos = null;
+  let ret = "";
 
-  for(var i = 0; i < this.segments.length; i++) {
-    var a = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const a = this.segments[i];
     if(a[0] === GraphicsPath.CLOSE) {
       ret += "Z";
     } else {
-      var start = GraphicsPath._startPoint(a);
+      const start = GraphicsPath._startPoint(a);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         ret += "M" + start[0] + "," + start[1];
       }
@@ -10127,8 +10156,8 @@ GraphicsPath.prototype.toString = function() {
         ret += "C" + a[3] + "," + a[4] + "," + a[5] + "," + a[6] + "," + a[7] + "," + a[8];
       }
       if(a[0] === GraphicsPath.ARC) {
-        var delta = a[13] - a[12];
-        var largeArc = Math.abs(delta) > Math.PI;
+        const delta = a[13] - a[12];
+        const largeArc = Math.abs(delta) > Math.PI;
         ret += "A" + a[3] + "," + a[4] + "," + a[5] * 180 / Math.PI + "," +
       (largeArc ? "1" : "0") + (delta > 0 ? "1" : "0") + a[8] + "," + a[9];
       }
@@ -10162,10 +10191,10 @@ GraphicsPath.prototype.pathLength = function(flatness) {
  * Y coordinates of the end point, respectively.
  */
 GraphicsPath.prototype.getLines = function(flatness) {
-  var ret = [];
+  const ret = [];
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
         s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
@@ -10191,19 +10220,19 @@ GraphicsPath.prototype.getLines = function(flatness) {
  * segments and close commands.
  */
 GraphicsPath.prototype.toLinePath = function(flatness) {
-  var ret = [];
-  var path = new GraphicsPath();
-  var last = null;
+  const ret = [];
+  const path = new GraphicsPath();
+  let last = null;
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
     var j;
-    var endpt = GraphicsPath._endPoint(s);
-    var startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
+    const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
       path.moveTo(startpt[0], startpt[1]);
     }
@@ -10242,17 +10271,17 @@ GraphicsPath.prototype.toLinePath = function(flatness) {
  * segments, B&eacute;zier curves, and close commands.
  */
 GraphicsPath.prototype.toCurvePath = function() {
-  var path = new GraphicsPath();
-  var last = null;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  const path = new GraphicsPath();
+  let last = null;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     if(s[0] === GraphicsPath.CLOSE) {
       path.closePath();
       continue;
     }
     var j;
-    var endpt = GraphicsPath._endPoint(s);
-    var startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
+    const startpt = GraphicsPath._startPoint(s);
     if(!last || last[0] !== startpt[0] || last[1] !== startpt[1]) {
       path.moveTo(startpt[0], startpt[1]);
     }
@@ -10264,7 +10293,7 @@ GraphicsPath.prototype.toCurvePath = function() {
       path.bezierCurveTo(s[3], s[4],
         s[5], s[6], s[7], s[8]);
     } else if(s[0] === GraphicsPath.ARC) {
-      var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
+      const curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
       for(j = 0; j < curves.length; j++) {
         path.bezierCurveTo(curves[j][2], curves[j][3], curves[j][4],
           curves[j][5], curves[j][6], curves[j][7]);
@@ -10279,7 +10308,7 @@ GraphicsPath.prototype.toCurvePath = function() {
 /** @ignore */
 GraphicsPath._accBounds = function(ret, s, t) {
   if(t >= 0 && t <= 1) {
-    var pt = GraphicsPath._point(s, t);
+    const pt = GraphicsPath._point(s, t);
     ret[0] = Math.min(pt[0], ret[0]);
     ret[1] = Math.min(pt[1], ret[1]);
     ret[2] = Math.max(pt[0], ret[2]);
@@ -10295,10 +10324,10 @@ GraphicsPath._accBoundsPoint = function(ret, x, y) {
 };
 /** @ignore */
 GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
-  var ca = Math.cos(angle);
-  var sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
-  var px = cphi * ca * rx - sphi * sa * ry + cx;
-  var py = sphi * ca * rx + cphi * sa * ry + cy;
+  const ca = Math.cos(angle);
+  const sa = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(angle);
+  const px = cphi * ca * rx - sphi * sa * ry + cx;
+  const py = sphi * ca * rx + cphi * sa * ry + cy;
   ret[0] = Math.min(px, ret[0]);
   ret[1] = Math.min(py, ret[1]);
   ret[2] = Math.max(px, ret[2]);
@@ -10306,8 +10335,8 @@ GraphicsPath._accBoundsArc = function(ret, rx, ry, cphi, sphi, cx, cy, angle) {
 };
 /** @ignore */
 GraphicsPath._normAngleRadians = function(angle) {
-  var twopi = Math.PI * 2;
-  var normAngle = angle;
+  const twopi = Math.PI * 2;
+  let normAngle = angle;
   if(normAngle >= 0) {
     normAngle = normAngle < twopi ? normAngle : normAngle % twopi;
   } else {
@@ -10318,12 +10347,12 @@ GraphicsPath._normAngleRadians = function(angle) {
 };
 /** @ignore */
 GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
-  var twopi = Math.PI * 2;
-  var diff = endAngle - startAngle;
+  const twopi = Math.PI * 2;
+  const diff = endAngle - startAngle;
   if(Math.abs(diff) >= twopi)return true;
-  var normAngle = GraphicsPath._normAngleRadians(angle);
-  var normStart = GraphicsPath._normAngleRadians(startAngle);
-  var normEnd = GraphicsPath._normAngleRadians(endAngle);
+  const normAngle = GraphicsPath._normAngleRadians(angle);
+  const normStart = GraphicsPath._normAngleRadians(startAngle);
+  const normEnd = GraphicsPath._normAngleRadians(endAngle);
   if(startAngle === endAngle) {
     return normAngle === normStart;
   } else if(startAngle < endAngle) {
@@ -10348,15 +10377,15 @@ GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
  * returns the array (Infinity, Infinity, -Infinity, -Infinity).
  */
 GraphicsPath.prototype.getBounds = function() {
-  var inf = Number.POSITIVE_INFINITY;
-  var ret = [inf, inf, -inf, inf];
-  var first = true;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
+  const inf = Number.POSITIVE_INFINITY;
+  const ret = [inf, inf, -inf, inf];
+  let first = true;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
     var ax, ay;
     if(s[0] === GraphicsPath.CLOSE)continue;
-    var endpt = GraphicsPath._endPoint(s);
-    var x1 = s[1],
+    const endpt = GraphicsPath._endPoint(s);
+    let x1 = s[1],
       y1 = s[2],
       x2 = endpt[0],
       y2 = endpt[1];
@@ -10386,8 +10415,8 @@ GraphicsPath.prototype.getBounds = function() {
     } else if(s[0] === GraphicsPath.CUBIC) {
       x2 = s[7];
       y2 = s[8];
-      var denomX = x1 - 3 * s[3] + 3 * s[5] - x2;
-      var denomY = y1 - 3 * s[4] + 3 * s[6] - y2;
+      const denomX = x1 - 3 * s[3] + 3 * s[5] - x2;
+      const denomY = y1 - 3 * s[4] + 3 * s[6] - y2;
       if(denomX !== 0 || denomY !== 0) {
         ax = x1 - 2 * s[3] + s[5];
         ay = y1 - 2 * s[4] + s[6];
@@ -10405,13 +10434,13 @@ GraphicsPath.prototype.getBounds = function() {
         }
       }
     } else if(s[0] === GraphicsPath.ARC) {
-      var rx = s[3];
-      var ry = s[4];
-      var cx = s[10];
-      var cy = s[11];
-      var theta = s[12];
-      var delta = s[13];
-      var rot = s[5]; // Rotation in radians
+      const rx = s[3];
+      const ry = s[4];
+      const cx = s[10];
+      const cy = s[11];
+      const theta = s[12];
+      const delta = s[13];
+      const rot = s[5]; // Rotation in radians
       var cosp, sinp;
       if(Math.abs(delta - theta) >= Math.PI * 2) {
         // This arc goes around the entire ellipse, giving
@@ -10438,7 +10467,7 @@ GraphicsPath.prototype.getBounds = function() {
       } else if(delta !== theta) { // NOTE: Endpoints were already included in case delta==theta
         cosp = Math.cos(rot);
         sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
-        var angles = [];
+        const angles = [];
         var angle;
         if(cosp !== 0 && sinp !== 0) {
           angle = Math.atan2(-ry * sinp / cosp, rx);
@@ -10448,7 +10477,7 @@ GraphicsPath.prototype.getBounds = function() {
         } else {
           angles.push(0, Math.PI, Math.PI * 0.5, Math.PI * 1.5);
         }
-        for(var k = 0; k < angles.length; k++) {
+        for(let k = 0; k < angles.length; k++) {
           if(GraphicsPath._angleInRange(angles[k], theta, delta)) {
             GraphicsPath._accBoundsArc(ret, rx, ry, cosp, sinp, cx, cy, angles[k]);
           }
@@ -10465,16 +10494,16 @@ GraphicsPath.prototype.getBounds = function() {
  * object with its path segments reversed.
  */
 GraphicsPath.prototype.reverse = function() {
-  var lastptx = 0;
-  var lastpty = 0;
-  var lastClosed = false;
-  var pathStartX = 0;
-  var pathStartY = 0;
-  var ret = new GraphicsPath();
-  for(var i = this.segments.length - 1; i >= 0; i--) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+  let lastptx = 0;
+  let lastpty = 0;
+  let lastClosed = false;
+  let pathStartX = 0;
+  let pathStartY = 0;
+  const ret = new GraphicsPath();
+  for(let i = this.segments.length - 1; i >= 0; i--) {
+    const s = this.segments[i];
+    let startpt = GraphicsPath._startPoint(s);
+    let endpt = GraphicsPath._endPoint(s);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(i === this.segments.length - 1) {
         ret.moveTo(endpt[0], endpt[1]);
@@ -10493,8 +10522,8 @@ GraphicsPath.prototype.reverse = function() {
         ret.closePath();
       }
       lastClosed = true;
-      var havePathStart = false;
-      for(var j = i - 1; j >= 0; j--) {
+      let havePathStart = false;
+      for(let j = i - 1; j >= 0; j--) {
         if(this.segments[j][0] === GraphicsPath.CLOSE) {
           break;
         }
@@ -10523,9 +10552,9 @@ GraphicsPath.prototype.reverse = function() {
     } else if(s[0] === GraphicsPath.CUBIC) {
       ret.bezierCurveTo(s[5], s[6], s[3], s[4], s[1], s[2]);
     } else if(s[0] === GraphicsPath.ARC) {
-      var delta = s[13] - s[12];
-      var reversedSweep = delta < 0;
-      var largeArc = Math.abs(delta) > Math.PI;
+      const delta = s[13] - s[12];
+      const reversedSweep = delta < 0;
+      const largeArc = Math.abs(delta) > Math.PI;
       ret.arcSvgTo(s[3], s[4], s[5] * GraphicsPath._toDegrees,
         largeArc, reversedSweep, s[1], s[2]);
     } else if(s[0] === GraphicsPath.LINE) {
@@ -10549,18 +10578,18 @@ GraphicsPath._pushXY = function(curPath, x, y, nodegen) {
 
 /** @ignore */
 GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
-  var tmp = [];
-  var subpaths = [];
-  var j;
+  const tmp = [];
+  const subpaths = [];
+  let j;
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
-  var lastptx = 0;
-  var lastpty = 0;
-  var first = true;
-  var curPath = null;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+  let lastptx = 0;
+  let lastpty = 0;
+  let first = true;
+  let curPath = null;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
+    const startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
     tmp.splice(0, tmp.length);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
@@ -10628,18 +10657,18 @@ GraphicsPath.prototype.interpolate = function(other, t) {
   if(!other || other.segments.length !== this.segments.length) {
     return null;
   }
-  var tmpThis = [];
-  var tmpOther = [];
-  var tmp = [];
-  var j;
-  var ret = new GraphicsPath();
-  var oldpos;
-  for(var i = 0; i < this.segments.length; i++) {
-    var segThis = this.segments[i];
-    var segOther = other.segments[i];
-    var domove = false;
+  const tmpThis = [];
+  const tmpOther = [];
+  const tmp = [];
+  let j;
+  const ret = new GraphicsPath();
+  let oldpos;
+  for(let i = 0; i < this.segments.length; i++) {
+    let segThis = this.segments[i];
+    let segOther = other.segments[i];
+    let domove = false;
     if(segThis[0] !== GraphicsPath.CLOSE) {
-      var start = GraphicsPath._startPoint(segThis);
+      const start = GraphicsPath._startPoint(segThis);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         domove = true;
       }
@@ -10696,20 +10725,20 @@ GraphicsPath.prototype.interpolate = function(other, t) {
         ret.bezierCurveTo(tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8]);
       break;
     case GraphicsPath.ARC:{
-      var deltaThis = segThis[13] - segThis[12];
-      var largeArcThis = Math.abs(deltaThis) > Math.PI;
-      var deltaOther = segOther[13] - segOther[12];
-      var largeArcOther = Math.abs(deltaOther) > Math.PI;
+      const deltaThis = segThis[13] - segThis[12];
+      const largeArcThis = Math.abs(deltaThis) > Math.PI;
+      const deltaOther = segOther[13] - segOther[12];
+      const largeArcOther = Math.abs(deltaOther) > Math.PI;
 
-      var largeArc = t < 0.5 ? largeArcThis : largeArcOther;
-      var sweep = t < 0.5 ? deltaThis > 0 : deltaOther > 0;
-      var sx = segThis[1] + (segOther[1] - segThis[1]) * t;
-      var sy = segThis[2] + (segOther[2] - segThis[2]) * t;
-      var rx = segThis[3] + (segOther[3] - segThis[3]) * t;
-      var ry = segThis[4] + (segOther[4] - segThis[4]) * t;
-      var rot = segThis[5] + (segOther[5] - segThis[5]) * t;
-      var ex = segThis[8] + (segOther[8] - segThis[8]) * t;
-      var ey = segThis[9] + (segOther[9] - segThis[9]) * t;
+      const largeArc = t < 0.5 ? largeArcThis : largeArcOther;
+      const sweep = t < 0.5 ? deltaThis > 0 : deltaOther > 0;
+      const sx = segThis[1] + (segOther[1] - segThis[1]) * t;
+      const sy = segThis[2] + (segOther[2] - segThis[2]) * t;
+      const rx = segThis[3] + (segOther[3] - segThis[3]) * t;
+      const ry = segThis[4] + (segOther[4] - segThis[4]) * t;
+      const rot = segThis[5] + (segOther[5] - segThis[5]) * t;
+      const ex = segThis[8] + (segOther[8] - segThis[8]) * t;
+      const ey = segThis[9] + (segOther[9] - segThis[9]) * t;
       if(domove)ret.moveTo(sx, sy);
       ret.arcSvgTo(rx, ry, rot * GraphicsPath._toDegrees,
         largeArc, sweep, ex, ey);
@@ -10753,18 +10782,18 @@ GraphicsPath._addSegment = function(a, c) {
 GraphicsPath.prototype.getCurves = function() {
   // TODO: Consider returning a list of curves and require
   // callers to use PiecewiseCurve to get the prior behavior
-  var subpaths = [];
-  var curves = [];
-  var lastptx = 0;
-  var lastpty = 0;
-  var startptx = 0;
-  var startpty = 0;
-  var first = true;
-  var curPath = null;
+  const subpaths = [];
+  const curves = [];
+  let lastptx = 0;
+  let lastpty = 0;
+  let startptx = 0;
+  let startpty = 0;
+  let first = true;
+  let curPath = null;
   for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+    const s = this.segments[i];
+    const startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
         curPath = [];
@@ -10793,16 +10822,16 @@ GraphicsPath.prototype.getCurves = function() {
  * @returns {*} Return value.
  */
 GraphicsPath.prototype.getSubpaths = function() {
-  var subpaths = [];
-  var lastptx = 0;
-  var lastpty = 0;
+  const subpaths = [];
+  let lastptx = 0;
+  let lastpty = 0;
 
-  var first = true;
-  var curPath = null;
-  for(var i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var startpt = GraphicsPath._startPoint(s);
-    var endpt = GraphicsPath._endPoint(s);
+  let first = true;
+  let curPath = null;
+  for(let i = 0; i < this.segments.length; i++) {
+    const s = this.segments[i];
+    const startpt = GraphicsPath._startPoint(s);
+    const endpt = GraphicsPath._endPoint(s);
     if(s[0] !== GraphicsPath.CLOSE) {
       if(first || lastptx !== startpt[0] || lastpty !== startpt[1]) {
         curPath = new GraphicsPath().moveTo(startpt[0], startpt[1]);
@@ -10831,12 +10860,12 @@ GraphicsPath.prototype.getSubpaths = function() {
  * line segments approximating the path.
  */
 GraphicsPath.prototype.getLinePoints = function(flatness) {
-  var lines = this.getLines(flatness);
-  var points = [];
-  var lastx = 0;
-  var lasty = 0;
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const lines = this.getLines(flatness);
+  const points = [];
+  let lastx = 0;
+  let lasty = 0;
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push([line[0], line[1]]);
     }
@@ -10863,12 +10892,12 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
  * .setFromPoints(points);
  */
 GraphicsPath.prototype.getLinePointsAsObjects = function(flatness) {
-  var lines = this.getLines(flatness);
-  var points = [];
-  var lastx = 0;
-  var lasty = 0;
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const lines = this.getLines(flatness);
+  const points = [];
+  let lastx = 0;
+  let lasty = 0;
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     if(i === 0 || lastx !== line[0] || lasty !== line[1]) {
       points.push({
         "x":line[0],
@@ -10904,11 +10933,11 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
   if(numPoints === 2) {
     return [this._start(), this._end()];
   }
-  var curves = this.getCurves();
-  var points = [];
-  for(var i = 0; i < numPoints; i++) {
-    var t = i / (numPoints - 1);
-    var ev = curves.evaluate(t);
+  const curves = this.getCurves();
+  const points = [];
+  for(let i = 0; i < numPoints; i++) {
+    const t = i / (numPoints - 1);
+    const ev = curves.evaluate(t);
     points.push([ev[0], ev[1]]);
   }
   return points;
@@ -10933,15 +10962,15 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
 GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
   if(numPoints < 1 || this.segments.length === 0)return [];
   if(numPoints === 1) {
-    var pt = this._start();
+    const pt = this._start();
     return [{
       "x":pt[0],
       "y":pt[1]
     }];
   }
   if(numPoints === 2) {
-    var pt1 = this._start();
-    var pt2 = this._end();
+    const pt1 = this._start();
+    const pt2 = this._end();
     return [{
       "x":pt1[0],
       "y":pt1[1]
@@ -10951,11 +10980,11 @@ GraphicsPath.prototype.getPointsAsObjects = function(numPoints) {
       "y":pt2[1]
     }];
   }
-  var curves = this.getCurves();
-  var points = [];
-  for(var i = 0; i < numPoints; i++) {
-    var t = i / (numPoints - 1);
-    var ev = curves.evaluate(t);
+  const curves = this.getCurves();
+  const points = [];
+  for(let i = 0; i < numPoints; i++) {
+    const t = i / (numPoints - 1);
+    const ev = curves.evaluate(t);
     points.push({
       "x":ev[0],
       "y":ev[1]
@@ -11029,16 +11058,16 @@ GraphicsPath.prototype.getCurrentPoint = function() {
 
 /** @ignore */
 GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
-  var t1 = x1 - x0;
-  var t2 = y1 - y0;
-  var t3 = [x2 - x0, y2 - y0];
-  var denom = t1 * t1 + t2 * t2;
+  const t1 = x1 - x0;
+  const t2 = y1 - y0;
+  const t3 = [x2 - x0, y2 - y0];
+  const denom = t1 * t1 + t2 * t2;
   if(denom === 0) {
     return true; // first two points are the same
   }
-  var t4 = (t1 * t3[0] + t2 * t3[1]) / denom;
-  var t5 = [x0 + t4 * t1, y0 + t4 * t2];
-  var t6 = [x2 - t5[0], y2 - t5[1]];
+  const t4 = (t1 * t3[0] + t2 * t3[1]) / denom;
+  const t5 = [x0 + t4 * t1, y0 + t4 * t2];
+  const t6 = [x2 - t5[0], y2 - t5[1]];
   return t6[0] * t6[0] + t6[1] * t6[1] === 0;
 };
 /**
@@ -11066,26 +11095,26 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
   if(radius < 0) {
     throw new Error("IndexSizeError");
   }
-  var x0 = this.endPos[0];
-  var y0 = this.endPos[1];
+  const x0 = this.endPos[0];
+  const y0 = this.endPos[1];
   if(radius === 0 || x0 === x1 && y0 === y1 || x1 === x2 && y1 === y2 ||
    GraphicsPath._areCollinear(x0, y0, x1, y1, x2, y2)) {
     return this.lineTo(x1, y1);
   }
-  var t1 = [x0 - x1, y0 - y1];
-  var t2 = 1.0 / Math.sqrt(t1[0] * t1[0] + t1[1] * t1[1]);
-  var t3 = [t1[0] * t2, t1[1] * t2]; // tangent vector from p1 to p0
-  var t4 = [x2 - x1, y2 - y1];
-  var t5 = 1.0 / Math.sqrt(t4[0] * t4[0] + t4[1] * t4[1]);
-  var t6 = [t4[0] * t5, t4[1] * t5]; // tangent vector from p2 to p1
-  var cross = t3[0] * t6[1] - t3[1] * t6[0];
-  var t7 = (1.0 + (t3[0] * t6[0] + t3[1] * t6[1])) * radius / Math.abs(cross);
-  var t8 = [t3[0] * t7, t3[1] * t7];
-  var t10 = [t6[0] * t7, t6[1] * t7];
-  var startTangent = [x1 + t8[0], y1 + t8[1]];
-  var endTangent = [x1 + t10[0], y1 + t10[1]];
+  const t1 = [x0 - x1, y0 - y1];
+  const t2 = 1.0 / Math.sqrt(t1[0] * t1[0] + t1[1] * t1[1]);
+  const t3 = [t1[0] * t2, t1[1] * t2]; // tangent vector from p1 to p0
+  const t4 = [x2 - x1, y2 - y1];
+  const t5 = 1.0 / Math.sqrt(t4[0] * t4[0] + t4[1] * t4[1]);
+  const t6 = [t4[0] * t5, t4[1] * t5]; // tangent vector from p2 to p1
+  const cross = t3[0] * t6[1] - t3[1] * t6[0];
+  const t7 = (1.0 + (t3[0] * t6[0] + t3[1] * t6[1])) * radius / Math.abs(cross);
+  const t8 = [t3[0] * t7, t3[1] * t7];
+  const t10 = [t6[0] * t7, t6[1] * t7];
+  const startTangent = [x1 + t8[0], y1 + t8[1]];
+  const endTangent = [x1 + t10[0], y1 + t10[1]];
   this.lineTo(startTangent[0], startTangent[1]);
-  var sweep = cross < 0;
+  const sweep = cross < 0;
   return this.arcSvgTo(radius, radius, 0, false, sweep, endTangent[0], endTangent[1]);
 };
 /**
@@ -11112,17 +11141,17 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
   if(radius < 0) {
     throw new Error("IndexSizeError");
   }
-  var normStart = GraphicsPath._normAngleRadians(startAngle);
-  var normEnd = GraphicsPath._normAngleRadians(endAngle);
-  var twopi = Math.PI * 2;
-  var cosStart = Math.cos(normStart);
-  var sinStart = normStart <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
-  var cosEnd = Math.cos(normEnd);
-  var sinEnd = normEnd <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
-  var startX = x + radius * cosStart;
-  var startY = y + radius * sinStart;
-  var endX = x + radius * cosEnd;
-  var endY = y + radius * sinEnd;
+  const normStart = GraphicsPath._normAngleRadians(startAngle);
+  const normEnd = GraphicsPath._normAngleRadians(endAngle);
+  const twopi = Math.PI * 2;
+  const cosStart = Math.cos(normStart);
+  const sinStart = normStart <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
+  const cosEnd = Math.cos(normEnd);
+  const sinEnd = normEnd <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
+  const startX = x + radius * cosStart;
+  const startY = y + radius * sinStart;
+  const endX = x + radius * cosEnd;
+  const endY = y + radius * sinEnd;
   if(drawLine) {
     this.lineTo(startX, startY);
   }
@@ -11136,9 +11165,9 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
       ._arcInternal(x, y, radius, startAngle + Math.PI, startAngle + Math.PI * 2, ccw, false)
       ._arcInternal(x, y, radius, normStart, normEnd, ccw, false);
   } else {
-    var delta = endAngle - startAngle;
+    let delta = endAngle - startAngle;
     if(delta >= twopi || delta < 0) {
-      var d = delta % twopi;
+      const d = delta % twopi;
       if(d === 0 && delta !== 0) {
         return this
           ._arcInternal(x, y, radius, startAngle, startAngle + Math.PI, ccw, false)
@@ -11147,8 +11176,8 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
       }
       delta = d;
     }
-    var largeArc = !!(Math.abs(delta) > Math.PI ^ !!ccw ^ startAngle > endAngle);
-    var sweep = !!(delta > 0 ^ !!ccw ^ startAngle > endAngle);
+    const largeArc = !!(Math.abs(delta) > Math.PI ^ !!ccw ^ startAngle > endAngle);
+    const sweep = !!(delta > 0 ^ !!ccw ^ startAngle > endAngle);
     return this.lineTo(startX, startY)
       .arcSvgTo(radius, radius, 0, largeArc, sweep, endX, endY);
   }
@@ -11195,62 +11224,62 @@ GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
 
 /** @ignore */
 GraphicsPath._vecangle = function(a, b, c, d) {
-  var dot = a * c + b * d;
-  var denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
+  let dot = a * c + b * d;
+  const denom = Math.sqrt(a * a + b * b) * Math.sqrt(c * c + d * d);
   dot /= denom;
-  var sgn = a * d - b * c;
+  const sgn = a * d - b * c;
   // avoid NaN when dot is just slightly out of range
   // for acos
   if(dot < -1)dot = -1;
   else if(dot > 1)dot = 1;
-  var ret = Math.acos(dot);
+  let ret = Math.acos(dot);
   if(sgn < 0)ret = -ret;
   return ret;
 };
 /** @ignore */
 GraphicsPath._arcSvgToCenterParam = function(a) {
-  var x1 = a[1];
-  var y1 = a[2];
-  var x2 = a[8];
-  var y2 = a[9];
-  var rx = a[3];
-  var ry = a[4];
-  var rot = a[5]; // rotation in radians
-  var xmid = (x1 - x2) * 0.5;
-  var ymid = (y1 - y2) * 0.5;
-  var xpmid = (x1 + x2) * 0.5;
-  var ypmid = (y1 + y2) * 0.5;
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var x1p = crot * xmid + srot * ymid;
-  var y1p = crot * ymid - srot * xmid;
-  var rxsq = rx * rx;
-  var rysq = ry * ry;
-  var x1psq = x1p * x1p;
-  var y1psq = y1p * y1p;
-  var rxXy = rxsq * y1psq + rysq * x1psq;
-  var cxsqrt = Math.sqrt(Math.max(0, (rxsq * rysq - rxXy) / rxXy));
-  var cxp = rx * y1p * cxsqrt / ry;
-  var cyp = ry * x1p * cxsqrt / rx;
+  const x1 = a[1];
+  const y1 = a[2];
+  const x2 = a[8];
+  const y2 = a[9];
+  const rx = a[3];
+  const ry = a[4];
+  const rot = a[5]; // rotation in radians
+  const xmid = (x1 - x2) * 0.5;
+  const ymid = (y1 - y2) * 0.5;
+  const xpmid = (x1 + x2) * 0.5;
+  const ypmid = (y1 + y2) * 0.5;
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const x1p = crot * xmid + srot * ymid;
+  const y1p = crot * ymid - srot * xmid;
+  const rxsq = rx * rx;
+  const rysq = ry * ry;
+  const x1psq = x1p * x1p;
+  const y1psq = y1p * y1p;
+  const rxXy = rxsq * y1psq + rysq * x1psq;
+  const cxsqrt = Math.sqrt(Math.max(0, (rxsq * rysq - rxXy) / rxXy));
+  let cxp = rx * y1p * cxsqrt / ry;
+  let cyp = ry * x1p * cxsqrt / rx;
   if(a[6] === a[7]) {
     cxp = -cxp;
   } else {
     cyp = -cyp;
   }
-  var cx = crot * cxp - srot * cyp + xpmid;
-  var cy = srot * cxp + crot * cyp + ypmid;
-  var vecx = (x1p - cxp) / rx;
-  var vecy = (y1p - cyp) / ry;
-  var nvecx = (-x1p - cxp) / rx;
-  var nvecy = (-y1p - cyp) / ry;
-  var cosTheta1 = vecx / Math.sqrt(vecx * vecx + vecy * vecy);
+  const cx = crot * cxp - srot * cyp + xpmid;
+  const cy = srot * cxp + crot * cyp + ypmid;
+  const vecx = (x1p - cxp) / rx;
+  const vecy = (y1p - cyp) / ry;
+  const nvecx = (-x1p - cxp) / rx;
+  const nvecy = (-y1p - cyp) / ry;
+  let cosTheta1 = vecx / Math.sqrt(vecx * vecx + vecy * vecy);
   // avoid NaN when cosTheta1 is just slightly out of range
   // for acos
   if(cosTheta1 < -1)cosTheta1 = -1;
   else if(cosTheta1 > 1)cosTheta1 = 1;
-  var theta1 = Math.acos(cosTheta1);
+  let theta1 = Math.acos(cosTheta1);
   if(vecy < 0)theta1 = -theta1;
-  var delta = GraphicsPath._vecangle(vecx, vecy, nvecx, nvecy);
+  let delta = GraphicsPath._vecangle(vecx, vecy, nvecx, nvecy);
   delta = delta < 0 ? Math.PI * 2 + delta : delta;
   if(!a[7] && delta > 0) {
     delta -= Math.PI * 2;
@@ -11264,35 +11293,35 @@ GraphicsPath._toRadians = Math.PI / 180;
 GraphicsPath._toDegrees = 180.0 / Math.PI;
 /** @ignore */
 GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) {
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var arcsize = Math.abs(angle2 - angle1);
-  var arcs = 16;
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const arcsize = Math.abs(angle2 - angle1);
+  let arcs = 16;
   if(arcsize < Math.PI / 8)arcs = 2;
   else if(arcsize < Math.PI / 4)arcs = 4;
   else if(arcsize < Math.PI / 2)arcs = 6;
   else if(arcsize < Math.PI)arcs = 10;
-  var third = 1 / 3;
-  var step = (angle2 - angle1) / arcs;
-  var ret = [];
-  var t5 = Math.tan(step * 0.5);
-  var t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
+  const third = 1 / 3;
+  let step = (angle2 - angle1) / arcs;
+  const ret = [];
+  const t5 = Math.tan(step * 0.5);
+  const t7 = Math.sin(step) * third * (Math.sqrt(3.0 * t5 * t5 + 4.0) - 1.0);
   step = Math.PI * 2.0 / arcs;
-  var cosStep = Math.cos(step);
-  var sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
-  var t2 = Math.cos(angle1);
-  var t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
-  for(var i = 0; i < arcs; i++) {
-    var ts = cosStep * t1 + sinStep * t2;
-    var tc = cosStep * t2 - sinStep * t1;
-    var t3 = ts;
-    var t4 = tc;
-    var t8 = [cx + rx * crot * t2 - ry * srot * t1, cy + rx * srot * t2 + ry * crot * t1];
-    var t9 = [cx + rx * crot * t4 - ry * srot * t3, cy + rx * srot * t4 + ry * crot * t3];
-    var t10 = [-rx * crot * t1 - ry * srot * t2, -rx * srot * t1 + ry * crot * t2];
-    var t11 = [-rx * crot * t3 - ry * srot * t4, -rx * srot * t3 + ry * crot * t4];
-    var t12 = [t8[0] + t10[0] * t7, t8[1] + t10[1] * t7];
-    var t13 = [t9[0] - t11[0] * t7, t9[1] - t11[1] * t7];
+  const cosStep = Math.cos(step);
+  const sinStep = step >= 0 && step < 6.283185307179586 ? step <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(step);
+  let t2 = Math.cos(angle1);
+  let t1 = angle1 >= 0 && angle1 < 6.283185307179586 ? angle1 <= 3.141592653589793 ? Math.sqrt(1.0 - t2 * t2) : -Math.sqrt(1.0 - t2 * t2) : Math.sin(angle1);
+  for(let i = 0; i < arcs; i++) {
+    const ts = cosStep * t1 + sinStep * t2;
+    const tc = cosStep * t2 - sinStep * t1;
+    const t3 = ts;
+    const t4 = tc;
+    const t8 = [cx + rx * crot * t2 - ry * srot * t1, cy + rx * srot * t2 + ry * crot * t1];
+    const t9 = [cx + rx * crot * t4 - ry * srot * t3, cy + rx * srot * t4 + ry * crot * t3];
+    const t10 = [-rx * crot * t1 - ry * srot * t2, -rx * srot * t1 + ry * crot * t2];
+    const t11 = [-rx * crot * t3 - ry * srot * t4, -rx * srot * t3 + ry * crot * t4];
+    const t12 = [t8[0] + t10[0] * t7, t8[1] + t10[1] * t7];
+    const t13 = [t9[0] - t11[0] * t7, t9[1] - t11[1] * t7];
     ret.push([t8[0], t8[1], t12[0], t12[1], t13[0], t13[1], t9[0], t9[1]]);
     t2 = tc;
     t1 = ts;
@@ -11324,8 +11353,8 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
   if(rx === 0 || ry === 0) {
     return this.lineTo(x2, y2);
   }
-  var x1 = this.endPos[0];
-  var y1 = this.endPos[1];
+  const x1 = this.endPos[0];
+  const y1 = this.endPos[1];
   if(x1 === x2 && y1 === y2) {
     return this;
   }
@@ -11334,21 +11363,21 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
   rot *= GraphicsPath._toRadians;
   rx = Math.abs(rx);
   ry = Math.abs(ry);
-  var xmid = (x1 - x2) * 0.5;
-  var ymid = (y1 - y2) * 0.5;
-  var crot = Math.cos(rot);
-  var srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
-  var x1p = crot * xmid + srot * ymid;
-  var y1p = crot * ymid - srot * xmid;
-  var lam = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
+  const xmid = (x1 - x2) * 0.5;
+  const ymid = (y1 - y2) * 0.5;
+  const crot = Math.cos(rot);
+  const srot = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - crot * crot) : -Math.sqrt(1.0 - crot * crot) : Math.sin(rot);
+  const x1p = crot * xmid + srot * ymid;
+  const y1p = crot * ymid - srot * xmid;
+  let lam = x1p * x1p / (rx * rx) + y1p * y1p / (ry * ry);
   if(lam > 1) {
     lam = Math.sqrt(lam);
     rx *= lam;
     ry *= lam;
   }
-  var arc = [GraphicsPath.ARC,
+  const arc = [GraphicsPath.ARC,
     x1, y1, rx, ry, rot, !!largeArc, !!sweep, x2, y2];
-  var cp = GraphicsPath._arcSvgToCenterParam(arc);
+  const cp = GraphicsPath._arcSvgToCenterParam(arc);
   arc[6] = null; // unused
   arc[7] = null; // unused
   arc[10] = cp[0];
@@ -11364,7 +11393,7 @@ GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2)
 /** @ignore */
 GraphicsPath._nextAfterWs = function(str, index) {
   while(index[0] < str.length) {
-    var c = str.charCodeAt(index[0]);
+    const c = str.charCodeAt(index[0]);
     index[0]++;
     if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a)
       continue;
@@ -11374,10 +11403,10 @@ GraphicsPath._nextAfterWs = function(str, index) {
 };
 /** @ignore */
 GraphicsPath._nextAfterSepReq = function(str, index) {
-  var comma = false;
-  var havesep = false;
+  let comma = false;
+  let havesep = false;
   while(index[0] < str.length) {
-    var c = str.charCodeAt(index[0]);
+    const c = str.charCodeAt(index[0]);
     index[0]++;
     if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a) {
       havesep = true;
@@ -11394,9 +11423,9 @@ GraphicsPath._nextAfterSepReq = function(str, index) {
 };
 /** @ignore */
 GraphicsPath._nextAfterSep = function(str, index) {
-  var comma = false;
+  let comma = false;
   while(index[0] < str.length) {
-    var c = str.charCodeAt(index[0]);
+    const c = str.charCodeAt(index[0]);
     index[0]++;
     if(c === 0x20 || c === 0x0d || c === 0x09 || c === 0x0a)
       continue;
@@ -11410,22 +11439,22 @@ GraphicsPath._nextAfterSep = function(str, index) {
 };
 /** @ignore */
 GraphicsPath._peekNextNumber = function(str, index) {
-  var oldindex = index[0];
-  var ret = GraphicsPath._nextNumber(str, index, true) !== null;
+  const oldindex = index[0];
+  const ret = GraphicsPath._nextNumber(str, index, true) !== null;
   index[0] = oldindex;
   return ret;
 };
 /** @ignore */
 GraphicsPath._nextNumber = function(str, index, afterSep) {
-  var oldindex = index[0];
-  var c = afterSep ?
+  const oldindex = index[0];
+  let c = afterSep ?
     GraphicsPath._nextAfterSep(str, index) :
     GraphicsPath._nextAfterWs(str, index);
-  var startIndex = index[0] - 1;
-  var dot = false;
-  var digit = false;
-  var exponent = false;
-  var ret;
+  const startIndex = index[0] - 1;
+  let dot = false;
+  let digit = false;
+  let exponent = false;
+  let ret;
   if(c === 0x2e)dot = true;
   else if(c >= 0x30 && c <= 0x39)digit = true;
   else if(c !== 0x2d && c !== 0x2b) { // plus or minus
@@ -11531,21 +11560,21 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
  * @returns {GraphicsPath} The transformed version of this path.
  */
 GraphicsPath.prototype.transform = function(trans) {
-  var ret = new GraphicsPath();
-  var a = trans[0];
-  var b = trans[1];
-  var c = trans[2];
-  var d = trans[3];
-  var e = trans[4];
-  var f = trans[5];
-  var x, y, i, j;
-  var tmp = [0];
-  var oldpos = null;
+  const ret = new GraphicsPath();
+  const a = trans[0];
+  const b = trans[1];
+  const c = trans[2];
+  const d = trans[3];
+  const e = trans[4];
+  const f = trans[5];
+  let x, y, i, j;
+  const tmp = [0];
+  let oldpos = null;
   for(i = 0; i < this.segments.length; i++) {
-    var s = this.segments[i];
-    var domove = false;
+    const s = this.segments[i];
+    let domove = false;
     if(s[0] !== GraphicsPath.CLOSE) {
-      var start = GraphicsPath._startPoint(s);
+      const start = GraphicsPath._startPoint(s);
       if(!oldpos || oldpos[0] !== start[0] || oldpos[1] !== start[1]) {
         domove = true;
       }
@@ -11591,14 +11620,14 @@ GraphicsPath.prototype.transform = function(trans) {
           largeArc, delta > 0, a * s[8] + e, d * s[9] + f);
         break;
       }
-      var curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
+      const curves = GraphicsPath._arcToBezierCurves(s[10], s[11], s[3], s[4], s[5], s[12], s[13]);
       curves[0][0] = s[1];
       curves[0][1] = s[2];
       curves[curves.length - 1][6] = s[8];
       curves[curves.length - 1][7] = s[9];
       for(j = 0; j < curves.length; j++) {
-        var cs = curves[j];
-        for(var k = 0; k < 8; k += 2) {
+        const cs = curves[j];
+        for(let k = 0; k < 8; k += 2) {
           x = a * cs[k] + c * cs[k + 1] + e;
           y = b * cs[k] + d * cs[k + 1] + f;
           cs[k] = x;
@@ -11661,11 +11690,11 @@ GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
  * Throws an error if "pointCoords" has an odd length.
  */
 GraphicsPath.prototype.polyline = function(pointCoords, closed) {
-  var closedValue = typeof closed !== "undefined" && closed !== null ? closed : false;
+  const closedValue = typeof closed !== "undefined" && closed !== null ? closed : false;
   if(pointCoords.length === 0)return this;
   if(pointCoords.length % 2 !== 0)throw new Error();
   this.moveTo(pointCoords[0], pointCoords[1]);
-  for(var i = 2; i < pointCoords.length; i += 2) {
+  for(let i = 2; i < pointCoords.length; i += 2) {
     this.lineTo(pointCoords[i], pointCoords[i + 1]);
   }
   if(closedValue)this.closePath();
@@ -11690,11 +11719,11 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
  */
 GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  var px, py;
+  let px, py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
-  var harccx = arccx * 0.5;
-  var harccy = arccy * 0.5;
+  const harccx = arccx * 0.5;
+  const harccy = arccy * 0.5;
   px = x + harccx;
   py = y;
   this.moveTo(px, py);
@@ -11738,11 +11767,11 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  */
 GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   if(w < 0 || h < 0)return this;
-  var px, py;
+  let px, py;
   arccx = Math.min(w, Math.max(0, arccx));
   arccy = Math.min(h, Math.max(0, arccy));
-  var harccx = arccx * 0.5;
-  var harccy = arccy * 0.5;
+  const harccx = arccx * 0.5;
+  const harccy = arccy * 0.5;
   px = x + harccx;
   py = y;
   this.moveTo(px, py);
@@ -11780,9 +11809,9 @@ GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
  */
 GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
   if(w < 0 || h < 0)return this;
-  var hw = w * 0.5;
-  var hh = h * 0.5;
-  var px = cx + hw;
+  const hw = w * 0.5;
+  const hh = h * 0.5;
+  const px = cx + hw;
   return this.moveTo(px, cy)
     .arcSvgTo(hw, hh, 0, false, true, px - w, cy)
     .arcSvgTo(hw, hh, 0, false, true, px, cy)
@@ -11826,18 +11855,18 @@ GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  */
 GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
   if(w < 0 || h < 0)return this;
-  var pidiv180 = Math.PI / 180;
-  var e = start + sweep;
-  var hw = w * 0.5;
-  var hh = h * 0.5;
-  var eRad = (e >= 0 && e < 360 ? e : e % 360 + (e < 0 ? 360 : 0)) * pidiv180;
-  var startRad = (start >= 0 && start < 360 ? start : start % 360 + (start < 0 ? 360 : 0)) * pidiv180;
-  var cosEnd = Math.cos(eRad);
-  var sinEnd = eRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
-  var cosStart = Math.cos(startRad);
-  var sinStart = startRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
+  const pidiv180 = Math.PI / 180;
+  const e = start + sweep;
+  const hw = w * 0.5;
+  const hh = h * 0.5;
+  const eRad = (e >= 0 && e < 360 ? e : e % 360 + (e < 0 ? 360 : 0)) * pidiv180;
+  const startRad = (start >= 0 && start < 360 ? start : start % 360 + (start < 0 ? 360 : 0)) * pidiv180;
+  const cosEnd = Math.cos(eRad);
+  const sinEnd = eRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosEnd * cosEnd) : -Math.sqrt(1.0 - cosEnd * cosEnd);
+  const cosStart = Math.cos(startRad);
+  const sinStart = startRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosStart * cosStart) : -Math.sqrt(1.0 - cosStart * cosStart);
   this.moveTo(x + cosStart * hw, y + sinStart * hh);
-  var angleInit, angleStep, cw;
+  let angleInit, angleStep, cw;
   if(sweep > 0) {
     angleInit = start + 180;
     angleStep = 180;
@@ -11847,10 +11876,10 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
     angleStep = -180;
     cw = false;
   }
-  for(var a = angleInit; cw ? a < e : a > e; a += angleStep) {
-    var angleRad = (a >= 0 && a < 360 ? a : a % 360 + (a < 0 ? 360 : 0)) * pidiv180;
-    var cosAng = Math.cos(angleRad);
-    var sinAng = angleRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosAng * cosAng) : -Math.sqrt(1.0 - cosAng * cosAng);
+  for(let a = angleInit; cw ? a < e : a > e; a += angleStep) {
+    const angleRad = (a >= 0 && a < 360 ? a : a % 360 + (a < 0 ? 360 : 0)) * pidiv180;
+    const cosAng = Math.cos(angleRad);
+    const sinAng = angleRad <= 3.141592653589793 ? Math.sqrt(1.0 - cosAng * cosAng) : -Math.sqrt(1.0 - cosAng * cosAng);
     this.arcSvgTo(hw, hh, 0, false, cw, x + cosAng * hw, y + sinAng * hh);
   }
   this.arcSvgTo(hw, hh, 0, false, cw, x + cosEnd * hw, y + sinEnd * hh);
@@ -11901,18 +11930,18 @@ GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type)
  * from (x0, y0) and (x1, y1) is 0 or extremely close to 0.
  */
 GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, tailWidth) {
-  var dx = x1 - x0;
-  var dy = y1 - y0;
-  var arrowLen = Math.sqrt(dx * dx + dy * dy);
+  const dx = x1 - x0;
+  const dy = y1 - y0;
+  const arrowLen = Math.sqrt(dx * dx + dy * dy);
   if(arrowLen === 0)return this;
-  var halfTailWidth = tailWidth * 0.5;
-  var halfHeadWidth = headWidth * 0.5;
-  var invArrowLen = 1.0 / arrowLen;
-  var cosRot = dx * invArrowLen;
-  var sinRot = dy * invArrowLen;
+  const halfTailWidth = tailWidth * 0.5;
+  const halfHeadWidth = headWidth * 0.5;
+  const invArrowLen = 1.0 / arrowLen;
+  const cosRot = dx * invArrowLen;
+  const sinRot = dy * invArrowLen;
   headLength = Math.min(headLength, arrowLen);
-  var shaftLength = arrowLen - headLength;
-  var x, y;
+  const shaftLength = arrowLen - headLength;
+  let x, y;
   this.moveTo(x0, y0);
   x = halfTailWidth * sinRot + x0;
   y = -halfTailWidth * cosRot + y0;
@@ -11950,25 +11979,25 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
  */
 GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   if(sides <= 2)return this;
-  var phase = phaseInDegrees === null ? phaseInDegrees : 0;
+  let phase = phaseInDegrees === null ? phaseInDegrees : 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
-  var angleStep = MathUtil.PiTimes2 / sides;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var c = Math.cos(phase);
-  var s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(var i = 0; i < sides; i++) {
-    var x = cx + c * radius;
-    var y = cy + s * radius;
+  const angleStep = MathUtil.PiTimes2 / sides;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let c = Math.cos(phase);
+  let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
+  for(let i = 0; i < sides; i++) {
+    const x = cx + c * radius;
+    const y = cy + s * radius;
     if(i === 0) {
       this.moveTo(x, y);
     } else {
       this.lineTo(x, y);
     }
-    var ts = cosStep * s + sinStep * c;
-    var tc = cosStep * c - sinStep * s;
+    const ts = cosStep * s + sinStep * c;
+    const tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
@@ -11989,27 +12018,27 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
  */
 GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
   if(points <= 0)return this;
-  var phase = phaseInDegrees || 0;
+  let phase = phaseInDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
-  var sides = points * 2;
-  var angleStep = MathUtil.PiTimes2 / sides;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var c = Math.cos(phase);
-  var s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
-  for(var i = 0; i < sides; i++) {
-    var radius = (i & 1) === 0 ? radiusOut : radiusIn;
-    var x = cx + c * radius;
-    var y = cy + s * radius;
+  const sides = points * 2;
+  const angleStep = MathUtil.PiTimes2 / sides;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let c = Math.cos(phase);
+  let s = phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c);
+  for(let i = 0; i < sides; i++) {
+    const radius = (i & 1) === 0 ? radiusOut : radiusIn;
+    const x = cx + c * radius;
+    const y = cy + s * radius;
     if(i === 0) {
       this.moveTo(x, y);
     } else {
       this.lineTo(x, y);
     }
-    var ts = cosStep * s + sinStep * c;
-    var tc = cosStep * c - sinStep * s;
+    const ts = cosStep * s + sinStep * c;
+    const tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
@@ -12061,14 +12090,14 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
  * var path=GraphicsPath.fromString("M50,20C230,245,233,44,22,44")
  */
 GraphicsPath.fromString = function(str) {
-  var index = [0];
-  var started = false;
-  var ret = new GraphicsPath();
-  var failed = false;
-  var endx, endy;
-  var sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
+  const index = [0];
+  let started = false;
+  const ret = new GraphicsPath();
+  let failed = false;
+  let endx, endy;
+  let sep, curx, cury, x, y, curpt, x2, y2, xcp, ycp;
   while(!failed && index[0] < str.length) {
-    var c = GraphicsPath._nextAfterWs(str, index);
+    const c = GraphicsPath._nextAfterWs(str, index);
     if(!started && c !== 0x4d && c !== 0x6d) {
       // not a move-to command when path
       // started
@@ -12156,15 +12185,15 @@ GraphicsPath.fromString = function(str) {
           if(!sep)failed = true; break;
         }
 
-        var arr = [];
-        for(var k = 0; k < 5; k++) {
+        const arr = [];
+        for(let k = 0; k < 5; k++) {
           arr[k] = GraphicsPath._nextNumber(str, index, true);
           if(typeof arr[k] === "undefined" || arr[k] === null) {
             failed = true; break;
           }
         }
         if(failed)break;
-        y = arr[0]; x2 = arr[1]; y2 = arr[2]; var x3 = arr[3]; var y3 = arr[4];
+        y = arr[0]; x2 = arr[1]; y2 = arr[2]; const x3 = arr[3]; const y3 = arr[4];
         ret.bezierCurveTo(curx + x, cury + y, curx + x2, cury + y2,
           curx + x3, cury + y3);
         sep = true;
@@ -12210,12 +12239,12 @@ GraphicsPath.fromString = function(str) {
         if(typeof y === "undefined" || y === null) {
           failed = true; break;
         }
-        var rot = GraphicsPath._nextNumber(str, index, true);
+        const rot = GraphicsPath._nextNumber(str, index, true);
         if(typeof rot === "undefined" || rot === null) {
           failed = true; break;
         }
-        var largeArc = GraphicsPath._nextAfterSepReq(str, index);
-        var sweep = GraphicsPath._nextAfterSep(str, index);
+        const largeArc = GraphicsPath._nextAfterSepReq(str, index);
+        const sweep = GraphicsPath._nextAfterSep(str, index);
         if(largeArc === -1 || sweep === -1) {
           failed = true; break;
         }
@@ -12313,16 +12342,16 @@ Triangulate._CONVEX = 1;
 Triangulate._EAR = 2;
 Triangulate._REFLEX = 3;
 
-var EPSILON = 1.1102230246251565e-16;
-var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
+const EPSILON = 1.1102230246251565e-16;
+const ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 
 // orient2D was
 // Adapted by Peter O. from the HE_Mesh library
 // written by Frederik Vanhoutte.
 
 function orient2D(pa, pb, pc) {
-  var detleft, detright, det;
-  var detsum, errbound;
+  let detleft, detright, det;
+  let detsum, errbound;
 
   detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
   detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
@@ -12359,17 +12388,17 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
   if(p[0] === i1[0] && p[1] === i1[1])return false;
   if(p[0] === i2[0] && p[1] === i2[1])return false;
   if(p[0] === i3[0] && p[1] === i3[1])return false;
-  var t3 = i2[0] - i3[0];
-  var t4 = i2[1] - i3[1];
-  var t5 = i2[0] - i1[0];
-  var t6 = i2[1] - i1[1];
-  var t7 = t5 * t3 + t6 * t4;
-  var t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
+  const t3 = i2[0] - i3[0];
+  const t4 = i2[1] - i3[1];
+  const t5 = i2[0] - i1[0];
+  const t6 = i2[1] - i1[1];
+  const t7 = t5 * t3 + t6 * t4;
+  const t8 = t5 * t5 + t6 * t6 - t7 * t7 / (
     t3 * t3 + t4 * t4);
   if (Math.sqrt(Math.abs(t8)) > 1e-9) {
-    var p1 = orient2D(i2, i3, p);
-    var p2 = orient2D(i2, i3, i1);
-    var b = p1 === 0 || p2 === 0 || p1 === p2;
+    let p1 = orient2D(i2, i3, p);
+    let p2 = orient2D(i2, i3, i1);
+    let b = p1 === 0 || p2 === 0 || p1 === p2;
     p1 = orient2D(i1, i3, p);
     p2 = orient2D(i1, i3, i2);
     b = b && (p1 === 0 || p2 === 0 || p1 === p2);
@@ -12385,7 +12414,7 @@ Triangulate._pointInTri = function(i1, i2, i3, p) {
  * @constructor */
 Triangulate._Contour = function(vertices) {
   this.vertexList = new LinkedList();
-  var vertLength = vertices.length;
+  let vertLength = vertices.length;
   // For convenience, eliminate the last
   // vertex if it matches the first vertex
   if(vertLength >= 4 &&
@@ -12393,18 +12422,18 @@ Triangulate._Contour = function(vertices) {
     vertices[1] === vertices[vertLength - 1]) {
     vertLength -= 2;
   }
-  var lastX = -1;
-  var lastY = -1;
-  var maxXNode = null;
-  var maxX = -1;
-  var inf = Number.POSITIVE_INFINITY;
-  var bounds = [inf, inf, -inf, -inf];
-  var firstVertex = true;
+  let lastX = -1;
+  let lastY = -1;
+  let maxXNode = null;
+  let maxX = -1;
+  const inf = Number.POSITIVE_INFINITY;
+  const bounds = [inf, inf, -inf, -inf];
+  let firstVertex = true;
   this.vertexCount = 0;
-  var i;
+  let i;
   for(i = 0; i < vertLength; i += 2) {
-    var x = vertices[i];
-    var y = vertices[i + 1];
+    const x = vertices[i];
+    const y = vertices[i + 1];
     if(i > 0 && x === lastX && y === lastY) {
       // skip consecutive duplicate points
       continue;
@@ -12431,17 +12460,17 @@ Triangulate._Contour = function(vertices) {
   this.maxXNode = maxXNode;
   this.bounds = bounds;
   // Find the prevailing winding of the polygon
-  var ori = 0;
-  var convex = true;
-  var convexOri = -2;
-  var vert = this.vertexList.first();
-  var lastVert = this.vertexList.last().data;
-  var firstVert = vert.data;
+  let ori = 0;
+  let convex = true;
+  let convexOri = -2;
+  let vert = this.vertexList.first();
+  const lastVert = this.vertexList.last().data;
+  const firstVert = vert.data;
   while(vert) {
-    var vn = vert.next ? vert.next.data : firstVert;
-    var vp = vert.prev ? vert.prev.data : lastVert;
+    const vn = vert.next ? vert.next.data : firstVert;
+    const vp = vert.prev ? vert.prev.data : lastVert;
     if(convex) {
-      var cori = orient2D(vp, vert.data, vn);
+      const cori = orient2D(vp, vert.data, vn);
       if(convexOri !== -2 && cori !== convexOri)convex = false;
       convexOri = cori;
     }
@@ -12452,23 +12481,23 @@ Triangulate._Contour = function(vertices) {
   this.winding = ori === 0 ? 0 : ori < 0 ? -1 : 1;
 };
 Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
-  var vert = this.vertexList.first();
+  let vert = this.vertexList.first();
   if(typeof vert === "undefined" || vert === null)return null;
-  var bounds = this.bounds;
+  const bounds = this.bounds;
   if(x < bounds[0] || y < bounds[1] || x > bounds[2] || y > bounds[2])return null;
-  var lastVert = this.vertexList.last();
-  var firstVert = vert;
-  var closeVertices = [];
+  const lastVert = this.vertexList.last();
+  const firstVert = vert;
+  let closeVertices = [];
   while(vert) {
-    var vn = vert.next ? vert.next : firstVert;
-    var x1 = vert.data[0];
-    var x2 = vn.data[0];
-    var y1 = vert.data[1];
-    var y2 = vn.data[1];
-    var xmin = Math.min(x1, x2);
-    var xmax = Math.max(x1, x2);
-    var ymin = Math.min(y1, y2);
-    var ymax = Math.max(y1, y2);
+    const vn = vert.next ? vert.next : firstVert;
+    const x1 = vert.data[0];
+    const x2 = vn.data[0];
+    const y1 = vert.data[1];
+    const y2 = vn.data[1];
+    const xmin = Math.min(x1, x2);
+    const xmax = Math.max(x1, x2);
+    const ymin = Math.min(y1, y2);
+    const ymax = Math.max(y1, y2);
     if(x1 === x && y1 === y) {
       return vert;
     } else if(x2 === x && y2 === y) {
@@ -12480,9 +12509,9 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
         closeVertices.push([
           xmin, xmin === vert.data[0] ? vert : vn, true]);
       } else {
-        var dx = x2 - x1;
-        var t = (y - y1) / (y2 - y1);
-        var xi = x + dx * t;
+        const dx = x2 - x1;
+        const t = (y - y1) / (y2 - y1);
+        const xi = x + dx * t;
         if(xi >= x) {
           if(xi === x1) {
             closeVertices.push([xi, vert, true]);
@@ -12512,26 +12541,26 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     return closeVertices[0][1];
   }
   vert = closeVertices[0][1];
-  var nextVert = vert.next ? vert.next : firstVert;
-  var triangle1 = [x, y];
-  var triangle2 = [closeVertices[0][0], y];
-  var iterVert = firstVert;
-  var innerReflexes = [];
+  const nextVert = vert.next ? vert.next : firstVert;
+  const triangle1 = [x, y];
+  const triangle2 = [closeVertices[0][0], y];
+  let iterVert = firstVert;
+  let innerReflexes = [];
   while(iterVert) {
     if(iterVert !== nextVert) {
-      var iterPrev = iterVert.prev ? iterVert.prev : lastVert;
-      var iterNext = iterVert.next ? iterVert.next : firstVert;
-      var orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
+      const iterPrev = iterVert.prev ? iterVert.prev : lastVert;
+      const iterNext = iterVert.next ? iterVert.next : firstVert;
+      const orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
       if(orient !== 0 && orient !== this.vertexList.winding) {
         // This is a reflex vertex
-        var pointIn = Triangulate._pointInTri(
+        const pointIn = Triangulate._pointInTri(
           triangle1, triangle2, nextVert.data, iterVert.data);
         if(pointIn) {
           // The reflex vertex is in the triangle
-          var t1 = iterVert.data[0] - triangle1[0];
-          var t2 = iterVert.data[1] - triangle1[1];
-          var distance = Math.sqrt(t1 * t1 + t2 * t2);
-          var angle = t1 / distance;
+          const t1 = iterVert.data[0] - triangle1[0];
+          const t2 = iterVert.data[1] - triangle1[1];
+          const distance = Math.sqrt(t1 * t1 + t2 * t2);
+          let angle = t1 / distance;
           if(angle < -1)angle = -1;
           if(angle > 1)angle = 1;
           innerReflexes.push([Math.acos(angle), distance, iterVert]);
@@ -12610,7 +12639,7 @@ function decomposePolygon(pointlist, accumulator) {
 }
 
 function decomposeTriangles(points, tris, isConvex) {
-  var polys = [];
+  const polys = [];
   if(isConvex) {
     // Already found to be convex, so
     // this is trivial
@@ -12619,9 +12648,9 @@ function decomposeTriangles(points, tris, isConvex) {
     decomposePolygon(points, polys);
   }
   if(points.length > 0 && polys.length === 0)throw new Error();
-  for(var i = 0; i < polys.length; i++) {
-    var poly = polys[i];
-    for(var j = 0; j < poly.length - 2; j++) {
+  for(let i = 0; i < polys.length; i++) {
+    const poly = polys[i];
+    for(let j = 0; j < poly.length - 2; j++) {
       tris.push([
         poly[0][0], poly[0][1],
         poly[j + 1][0], poly[j + 1][1],
@@ -12652,14 +12681,14 @@ function decomposeTriangles(points, tris, isConvex) {
 GraphicsPath.prototype.getTriangles = function(flatness) {
   if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
   // NOTE: _getSubpaths doesn't add degenerate line segments
-  var subpaths = this._getSubpaths(flatness, true);
-  var contours1 = [];
-  var contours2 = [];
-  var firstOrient = 0;
-  var tris = [];
-  var i, j;
+  const subpaths = this._getSubpaths(flatness, true);
+  const contours1 = [];
+  const contours2 = [];
+  let firstOrient = 0;
+  const tris = [];
+  let i, j;
   for(i = 0; i < subpaths.length; i++) {
-    var contour = new Triangulate._Contour(subpaths[i]);
+    const contour = new Triangulate._Contour(subpaths[i]);
     // NOTE: Ignores contours with winding 0
     // (empty, zero area, sometimes self-intersecting)
     if(contour.winding > 0) {
@@ -12672,7 +12701,7 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
   }
   if(contours2.length === 0 || contours1.length === 0) {
     // All the contours have the same winding order
-    var c = contours2.length === 0 ? contours1 : contours2;
+    const c = contours2.length === 0 ? contours1 : contours2;
     for(i = 0; i < c.length; i++) {
       Triangulate._triangulate(c[i], tris);
     }
@@ -12681,16 +12710,16 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
     // throw new Error()
     // }
   } else {
-    var c1 = firstOrient > 0 ? contours1 : contours2;
-    var c2 = firstOrient > 0 ? contours2 : contours1;
+    const c1 = firstOrient > 0 ? contours1 : contours2;
+    const c2 = firstOrient > 0 ? contours2 : contours1;
     for(i = 0; i < c2.length; i++) {
       if(!c2[i])continue;
       for(j = 0; j < c1.length; j++) {
         if(!c1[j])continue;
-        var maxPoint = c2[i].maxXNode;
+        const maxPoint = c2[i].maxXNode;
         // Find out if the contour is inside another contour,
         // and if so, connect its vertices to that contour
-        var vp = c1[j].findVisiblePoint(
+        const vp = c1[j].findVisiblePoint(
           maxPoint.data[0], maxPoint.data[1]);
         if(vp) {
           c1[j].vertexCount += Triangulate._connectContours(
@@ -12721,10 +12750,10 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
  */
 GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
-  var tris = this.getTriangles(flatness);
-  var vertices = [];
-  for(var i = 0; i < tris.length; i++) {
-    var tri = tris[i];
+  const tris = this.getTriangles(flatness);
+  const vertices = [];
+  for(let i = 0; i < tris.length; i++) {
+    const tri = tris[i];
     // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
     vertices.push(
       tri[0], tri[1], z, 0, 0, 1, tri[0], tri[1],
@@ -12744,10 +12773,10 @@ GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
  */
 GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
-  var lines = this.getLines(flatness);
-  var vertices = [];
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const lines = this.getLines(flatness);
+  const vertices = [];
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
   }
@@ -12766,15 +12795,15 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
  */
 GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
   if((typeof zStart === "undefined" || zStart === null) || zEnd === null)throw new Error();
-  var lines = this.getLines(flatness);
-  var z1 = Math.min(zStart, zEnd);
-  var z2 = Math.max(zStart, zEnd);
-  var vertices = [];
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
-    var dx = line[2] - line[0];
-    var dy = line[3] - line[1];
-    var dot = dx * dx + dy * dy;
+  const lines = this.getLines(flatness);
+  const z1 = Math.min(zStart, zEnd);
+  const z2 = Math.max(zStart, zEnd);
+  const vertices = [];
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const dx = line[2] - line[0];
+    const dy = line[3] - line[1];
+    const dot = dx * dx + dy * dy;
     if(dot === 0)continue;
     vertices.push(line[0], line[1], z1,
       line[2], line[3], z1,
@@ -12789,9 +12818,9 @@ GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
 
 /** @ignore */
 Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
-  var vpnode = dstNode;
-  var c2node = maxPoint;
-  var count = 0;
+  let vpnode = dstNode;
+  let c2node = maxPoint;
+  let count = 0;
   while(c2node) {
     vpnode = dst.insertAfter(c2node.data, vpnode);
     c2node = c2node.next;
@@ -12813,7 +12842,7 @@ Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
 };
 /** @ignore */
 Triangulate._triangulate = function(contour, tris) {
-  var t1, tri;
+  let t1, tri;
   if(!contour || contour.vertexCount < 3 || contour.winding === 0) {
     // too few vertices, or the winding
     // suggests a zero area or even a certain
@@ -12830,9 +12859,9 @@ Triangulate._triangulate = function(contour, tris) {
     tris.push(tri);
     return;
   }
-  var first = contour.vertexList.first();
-  var vertices = [];
-  var vert = first;
+  const first = contour.vertexList.first();
+  const vertices = [];
+  let vert = first;
   while(vert) {
     vertices.push([vert.data[0], vert.data[1]]);
     vert = vert.next;
@@ -12846,7 +12875,7 @@ Triangulate._triangulate = function(contour, tris) {
 
 /** @ignore
  * @constructor */
-var PriorityQueue = function(comparer) {
+const PriorityQueue = function(comparer) {
   // Based on Doug Lea's public domain Heap class in Java
   this.comparer = comparer;
   this.nodes = [];
@@ -12863,9 +12892,9 @@ var PriorityQueue = function(comparer) {
     }
   };
   this.push = function(item) {
-    var x = this._size;
+    let x = this._size;
     while(x > 0) {
-      var p = (x - 1) / 2 | 0;
+      const p = (x - 1) / 2 | 0;
       // NOTE: comparer > 0, not comparer < 0, as
       // in Doug Lea's implementation
       if(this.comparer(item, this.nodes[p]) > 0) {
@@ -12880,17 +12909,17 @@ var PriorityQueue = function(comparer) {
   // NOTE: Pops out the greatest element, not
   // the least, as in Doug Lea's implementation
   this.pop = function() {
-    var data = null;
+    let data = null;
     if(this._size > 0) {
-      var k = 0;
+      let k = 0;
       data = this.nodes[k];
       this._size--;
-      var x = this.nodes[this._size];
+      const x = this.nodes[this._size];
       for (;;) {
-        var left = 1 + 2 * k;
-        var right = 2 * (k + 1);
+        const left = 1 + 2 * k;
+        const right = 2 * (k + 1);
         if(left < this._size) {
-          var child = right >= this._size ||
+          const child = right >= this._size ||
         this.comparer(this.nodes[left], this.nodes[right]) > 0 ? left : right;
           if(this.comparer(x, this.nodes[child]) < 0) {
             this.nodes[k] = this.nodes[child];
@@ -12917,7 +12946,7 @@ var RedBlackTreeNode = function(data) {
     return dir ? this.right : this.left;
   };
   this.copy = function() {
-    var c = new RedBlackTreeNode(this.data);
+    const c = new RedBlackTreeNode(this.data);
     c.left = this.left;
     c.right = this.right;
     c.red = this.red;
@@ -12937,13 +12966,13 @@ var RedBlackTreeNode = function(data) {
   };
   this.prev = function() {
     if(typeof this.left !== "undefined" && this.left !== null) {
-      var r = this.left;
+      let r = this.left;
       while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
       return r;
     } else {
-      var p = this.p;
-      var that = this;
-      var tmp = that;
+      let p = this.p;
+      const that = this;
+      let tmp = that;
       while(typeof p !== "undefined" && p !== null && tmp === p.left) {
         tmp = p;
         p = p.p;
@@ -12953,13 +12982,13 @@ var RedBlackTreeNode = function(data) {
   };
   this.next = function() {
     if(typeof this.right !== "undefined" && this.right !== null) {
-      var r = this.right;
+      let r = this.right;
       while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
       return r;
     } else {
-      var p = this.p;
-      var that = this;
-      var tmp = that;
+      let p = this.p;
+      const that = this;
+      let tmp = that;
       while(typeof p !== "undefined" && p !== null && tmp === p.right) {
         tmp = p;
         p = p.p;
@@ -12989,23 +13018,23 @@ RedBlackTree._defaultCompare = function(a, b) {
 };
 /** @ignore */
 RedBlackTree.prototype.first = function() {
-  var r = this.root;
+  let r = this.root;
   if(typeof r === "undefined" || r === null)return null;
   while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
   return r;
 };
 /** @ignore */
 RedBlackTree.prototype.last = function() {
-  var r = this.root;
+  let r = this.root;
   if(typeof r === "undefined" || r === null)return null;
   while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
   return r;
 };
 /** @ignore */
 RedBlackTree.prototype.find = function(data) {
-  var it = this.root;
+  let it = this.root;
   while(typeof it !== "undefined" && it !== null) {
-    var cmp = this.comparer(it.data, data);
+    const cmp = this.comparer(it.data, data);
     if(cmp === 0)break;
     it = cmp < 0 ? it.right : it.left;
   }
@@ -13017,7 +13046,7 @@ RedBlackTree._red = function(node) {
 };
 /** @ignore */
 RedBlackTree._single = function(root, dir) {
-  var save = root.link(!dir);
+  const save = root.link(!dir);
   root.setLink(!dir, save.link(dir));
   save.setLink(dir, root);
   root.red = true;
@@ -13032,10 +13061,10 @@ RedBlackTree._double = function(root, dir) {
 /** @ignore */
 RedBlackTree.prototype.erase = function(data) {
   if(typeof this.root !== "undefined" && this.root !== null) {
-    var head = new RedBlackTreeNode(null); /* False tree root */
-    var q, p, g; /* Helpers */
-    var f = null; /* Found item */
-    var dir = true;
+    const head = new RedBlackTreeNode(null); /* False tree root */
+    let q, p, g; /* Helpers */
+    let f = null; /* Found item */
+    let dir = true;
 
     /* Set up our helpers */
     q = head;
@@ -13047,13 +13076,13 @@ RedBlackTree.prototype.erase = function(data) {
       to fix red violations as we go
     */
     while( q.link(dir) !== null ) {
-      var last = dir;
+      const last = dir;
 
       /* Move the helpers down */
       g = p;
       p = q;
       q = q.link(dir);
-      var cmp = this.comparer( q.data, data );
+      const cmp = this.comparer( q.data, data );
       dir = cmp < 0;
       /*
         Save the node with matching data and keep
@@ -13066,7 +13095,7 @@ RedBlackTree.prototype.erase = function(data) {
         if( RedBlackTree._red( q.link(!dir) ) )
           p.setLink(last, p = RedBlackTree._single( q, dir ));
         else if( !RedBlackTree._red( q.link(!dir) ) ) {
-          var s = p.link(!last);
+          const s = p.link(!last);
           if( typeof s !== "undefined" && s !== null ) {
             if( !RedBlackTree._red( s.link(!last) ) && !RedBlackTree._red( s.link(last) ) ) {
               /* Color flip */
@@ -13074,7 +13103,7 @@ RedBlackTree.prototype.erase = function(data) {
               s.red = true;
               q.red = true;
             } else {
-              var dir2 = g.right === p;
+              const dir2 = g.right === p;
 
               if( RedBlackTree._red( s.link(last) ) )
                 g.setLink(dir2, RedBlackTree._double( p, last ));
@@ -13110,7 +13139,7 @@ RedBlackTree.prototype.erase = function(data) {
 /** @ignore */
 RedBlackTree.prototype.insert = function(data) {
   if(!data)throw new Error();
-  var retval = null;
+  let retval = null;
   if (typeof this.root === "undefined" || this.root === null) {
     /*
       We have an empty tree; attach the
@@ -13119,10 +13148,10 @@ RedBlackTree.prototype.insert = function(data) {
     this.root = new RedBlackTreeNode(data);
     retval = this.root;
   } else {
-    var head = new RedBlackTreeNode(null); /* False tree root */
-    var g, t; /* Grandparent & parent */
-    var p, q; /* Iterator & parent */
-    var dir = false,
+    const head = new RedBlackTreeNode(null); /* False tree root */
+    let g, t; /* Grandparent & parent */
+    let p, q; /* Iterator & parent */
+    let dir = false,
       last = false;
 
     /* Set up our helpers */
@@ -13145,7 +13174,7 @@ RedBlackTree.prototype.insert = function(data) {
 
       if ( RedBlackTree._red( q ) && RedBlackTree._red( p ) ) {
         /* Hard red violation: rotations necessary */
-        var dir2 = t.right === g;
+        const dir2 = t.right === g;
         if ( q === p.link(last) )
           t.setLink(dir2, RedBlackTree._single( g, !last ));
         else
@@ -13155,7 +13184,7 @@ RedBlackTree.prototype.insert = function(data) {
         Stop working if we inserted a node. This
         check also disallows duplicates in the tree
       */
-      var cmp = this.comparer( q.data, data );
+      const cmp = this.comparer( q.data, data );
       if ( cmp === 0 ) {
         retval = q;
         break;
@@ -13196,7 +13225,7 @@ var Polygon = function(path, flatness) {
   if(typeof path !== "undefined" && path !== null) {
     // Ignore degenerate line segments
     this.subpaths = path._getSubpaths(flatness, true);
-    for(var i = 0; i < this.subpaths.length; i++) {
+    for(let i = 0; i < this.subpaths.length; i++) {
       this.contours[i] = new Polygon._Contour(this.subpaths[i]);
     }
   }
@@ -13214,11 +13243,11 @@ var Polygon = function(path, flatness) {
     this.contours.push(c);
   };
   this.toPath = function() {
-    var p = new GraphicsPath();
-    for(var i = 0; i < this.contours.length; i++) {
-      var c = this.contours[i];
-      var cv = c.vertices;
-      for(var j = 0; j < cv.length; j += 2) {
+    const p = new GraphicsPath();
+    for(let i = 0; i < this.contours.length; i++) {
+      const c = this.contours[i];
+      const cv = c.vertices;
+      for(let j = 0; j < cv.length; j += 2) {
         if(j === 0) {
           p.moveTo(cv[j], cv[j + 1]);
         } else {
@@ -13351,13 +13380,13 @@ Polygon.PointChain.prototype.linkPointChain = function(chain) {
 };
 /** @ignore */
 Connector.prototype.add = function(s) {
-  var j = this.openPolygons.first();
+  let j = this.openPolygons.first();
   while(j) {
     if(j.data.linkSegment(s)) {
       if(j.data.closed())
         this.closedPolygons.spliceOneToEnd(this.openPolygons, j);
       else {
-        var k = j.next;
+        let k = j.next;
         while(k) {
           if(j.data.linkPointChain(k.data)) {
             this.openPolygons.erase(k);
@@ -13371,17 +13400,17 @@ Connector.prototype.add = function(s) {
     j = j.next;
   }
   // The segment cannot be connected with any open polygon
-  var chain = new Polygon.PointChain();
+  const chain = new Polygon.PointChain();
   chain.init(s);
   this.openPolygons.push(chain);
 };
 /** @ignore */
 Connector.prototype.toPolygon = function() {
-  var polygon = new Polygon(null, null);
-  var j = this.closedPolygons.first();
+  const polygon = new Polygon(null, null);
+  let j = this.closedPolygons.first();
   while(j) {
-    var contour = new Polygon._Contour([]);
-    var k = j.data.first();
+    const contour = new Polygon._Contour([]);
+    let k = j.data.first();
     while(k) {
       contour.vertices.push(k.data[0], k.data[1]);
       k = k.next;
@@ -13429,10 +13458,10 @@ Clipper.SweepEvent = function(pp, b, apl, o, t) {
 };
 /** @ignore */
 Clipper.signedArea = function(a, b, c) {
-  var xa = a[0] - c[0];
-  var ya = a[1] - c[1];
-  var xb = b[0] - c[0];
-  var yb = b[1] - c[1];
+  const xa = a[0] - c[0];
+  const ya = a[1] - c[1];
+  const xb = b[0] - c[0];
+  const yb = b[1] - c[1];
   return 0.5 * (xa * yb - xb * ya);
 };
 /** @ignore */
@@ -13512,15 +13541,15 @@ Clipper.prototype.compute = function(op) {
       return this.subject.ncontours() === 0 ? this.clipping : this.subject;
     return new Polygon(null, null);
   }
-  var i, j;
-  var result = new Polygon(null, null);
+  let i, j;
+  let result = new Polygon(null, null);
   // Test 2 for trivial result case
-  var subjBounds = this.subject.getBounds();
-  var clipBounds = this.clipping.getBounds();
-  var minsubj = [subjBounds[0], subjBounds[1]];
-  var maxsubj = [subjBounds[2], subjBounds[3]];
-  var minclip = [clipBounds[0], clipBounds[1]];
-  var maxclip = [clipBounds[2], clipBounds[3]];
+  const subjBounds = this.subject.getBounds();
+  const clipBounds = this.clipping.getBounds();
+  const minsubj = [subjBounds[0], subjBounds[1]];
+  const maxsubj = [subjBounds[2], subjBounds[3]];
+  const minclip = [clipBounds[0], clipBounds[1]];
+  const maxclip = [clipBounds[2], clipBounds[3]];
   if(minsubj[0] > maxclip[0] || minclip[0] > maxsubj[0] ||
      minsubj[1] > maxclip[1] || minclip[1] > maxsubj[1]) {
     // the bounding boxes do not overlap
@@ -13541,11 +13570,11 @@ Clipper.prototype.compute = function(op) {
   for(i = 0; i < this.clipping.ncontours(); i++)
     for(j = 0; j < this.clipping.contour(i).nvertices(); j++)
       this.processSegment(this.clipping.contour(i).segment(j), CLIPPING);
-  var S = new RedBlackTree(Clipper.segmentCompNum);
-  var it, sli, prev, next;
-  var connector = new Connector(); // to connect the edge solutions
-  var e;
-  var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
+  const S = new RedBlackTree(Clipper.segmentCompNum);
+  let it, sli, prev, next;
+  const connector = new Connector(); // to connect the edge solutions
+  let e;
+  const minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
   while(this.eq.size() > 0) {
     e = this.eq.pop();
     // console.log("Process event:  "+e.toString())
@@ -13681,8 +13710,8 @@ Clipper.prototype.compute = function(op) {
 Clipper.prototype.processSegment = function(s, pl) {
   if(Clipper._ptEq(s[0], s[1])) // if the two edge endPoints are equal the segment is discarded
     return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
-  var e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null, NORMAL));
-  var e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1, NORMAL));
+  const e1 = this.storeSweepEvent(new Clipper.SweepEvent(s[0], true, pl, null, NORMAL));
+  const e2 = this.storeSweepEvent(new Clipper.SweepEvent(s[1], true, pl, e1, NORMAL));
   e1.other = e2;
   if(e1.p[0] < e2.p[0]) {
     e2.left = false;
@@ -13698,7 +13727,7 @@ Clipper.prototype.processSegment = function(s, pl) {
 };
 /** @ignore */
 Clipper.findIntersection = function(a, b, e, f) {
-  var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
+  const ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
     b[0][0], b[0][1], b[1][0], b[1][1]);
   if(ret.length > 0) {
     e[0] = ret[0][0];
@@ -13712,27 +13741,27 @@ Clipper.findIntersection = function(a, b, e, f) {
 };
 /** @ignore */
 Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
-  var dpdeltad0;
-  var t2 = a2x - a1x;
-  var t3 = a2y - a1y;
-  var t4 = b2x - b1x;
-  var t5 = b2y - b1y;
-  var t6 = t2 * t2 + t3 * t3;
-  var t7 = t4 * t4 + t5 * t5;
-  var ret = [];
-  var smin, smax;
+  let dpdeltad0;
+  const t2 = a2x - a1x;
+  const t3 = a2y - a1y;
+  const t4 = b2x - b1x;
+  const t5 = b2y - b1y;
+  const t6 = t2 * t2 + t3 * t3;
+  const t7 = t4 * t4 + t5 * t5;
+  const ret = [];
+  let smin, smax;
   if (t6 === 0.0) {
     if (t7 === 0.0) {
       if (a1x === b1x && a1y === b1y) {
         ret.push([a1x, a1y]);
       }
     } else {
-      var t9 = ((a1x - b1x) * t4 + (a1y - b1y) * t5) / t7;
+      const t9 = ((a1x - b1x) * t4 + (a1y - b1y) * t5) / t7;
       if (t9 >= 0.0 && t9 <= 1.0) {
-        var t10 = [b1x + t4 * t9, b1y + t5 * t9];
-        var t11 = a1x - t10[0];
-        var t12 = a1y - t10[1];
-        var t13 = Math.sqrt(t11 * t11 + t12 * t12);
+        const t10 = [b1x + t4 * t9, b1y + t5 * t9];
+        const t11 = a1x - t10[0];
+        const t12 = a1y - t10[1];
+        const t13 = Math.sqrt(t11 * t11 + t12 * t12);
         if (t13 <= 1e-09) {
           ret.push([a1x, a1y]);
         }
@@ -13740,27 +13769,27 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
     }
     return ret;
   } else if (t7 === 0.0) {
-    var t15 = ((b1x - a1x) * t2 + (b1y - a1y) * t3) / t6;
+    const t15 = ((b1x - a1x) * t2 + (b1y - a1y) * t3) / t6;
     if (t15 >= 0.0 && t15 <= 1.0) {
-      var t16 = [a1x + t2 * t15, a1y + t3 * t15];
-      var t17 = b1x - t16[0];
-      var t18 = b1y - t16[1];
-      var t19 = Math.sqrt(t17 * t17 + t18 * t18);
+      const t16 = [a1x + t2 * t15, a1y + t3 * t15];
+      const t17 = b1x - t16[0];
+      const t18 = b1y - t16[1];
+      const t19 = Math.sqrt(t17 * t17 + t18 * t18);
       if (t19 <= 1e-09) {
         ret.push([b1x, b1y]);
       }
     }
     return ret;
   }
-  var t21 = t2 * t5 - t4 * t3;
-  var t22 = b1x - a1x;
-  var t23 = b1y - a1y;
-  var t24 = t22 * t5 - t4 * t23;
+  const t21 = t2 * t5 - t4 * t3;
+  const t22 = b1x - a1x;
+  const t23 = b1y - a1y;
+  const t24 = t22 * t5 - t4 * t23;
   dpdeltad0 = t22 * t3 - t2 * t23;
   if (t21 === 0.0) {
     if (t24 === 0.0 && dpdeltad0 === 0) {
-      var s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
-      var s2 = (t2 * (b2x - a1x) + t3 * (b2y - a1y)) / (t2 * t2 + t3 * t3);
+      const s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
+      const s2 = (t2 * (b2x - a1x) + t3 * (b2y - a1y)) / (t2 * t2 + t3 * t3);
       if(s1 <= 0 && s2 >= 1 || s1 >= 1 && s2 <= 0) {
         // first line contains second line
         return [[a1x, a1y], [a2x, a2y]];
@@ -13794,10 +13823,10 @@ Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, 
       }
     }
   } else {
-    var t29 = t24 / t21;
-    var t30 = dpdeltad0 / t21;
+    const t29 = t24 / t21;
+    const t30 = dpdeltad0 / t21;
     if (t29 >= 0.0 && t29 <= 1.0 && t30 >= 0.0 && t30 <= 1.0) {
-      var t31 = [a1x + t2 * t29, a1y + t3 * t29];
+      const t31 = [a1x + t2 * t29, a1y + t3 * t29];
       ret.push(t31);
     }
   }
@@ -13809,9 +13838,9 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
   // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
   // return false;
 
-  var ip1 = [];
-  var ip2 = []; // intersection points
-  var nintersections;
+  const ip1 = [];
+  const ip2 = []; // intersection points
+  let nintersections;
   // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
   if(!(nintersections = Clipper.findIntersection(e1.segment(), e2.segment(), ip1, ip2)))
     return;
@@ -13834,7 +13863,7 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
   }
 
   // The line segments overlap
-  var sortedEvents = [];
+  const sortedEvents = [];
   if(Clipper._ptEq(e1.p, e2.p)) {
     sortedEvents.push(null);
   } else if(Clipper.sweepEventComp(e1, e2)) {
@@ -13884,9 +13913,9 @@ Clipper.prototype.possibleIntersection = function(e1, e2) {
 /** @ignore */
 Clipper.prototype._divideSegment = function(e, p) {
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
-  var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
+  const r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
   // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
-  var l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
+  const l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
   if(Clipper.sweepEventComp(l, e.other)) { // avoid a rounding error. The left event would be processed after the right event
     // console.log("Oops")
     e.other.left = true;
@@ -13922,9 +13951,9 @@ Clipper.prototype._divideSegment = function(e, p) {
  */
 GraphicsPath.prototype.union = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(UNION);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(UNION);
   return retval.toPath();
 };
 /**
@@ -13941,9 +13970,9 @@ GraphicsPath.prototype.union = function(path, flatness) {
  */
 GraphicsPath.prototype.difference = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(DIFFERENCE);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(DIFFERENCE);
   return retval.toPath();
 };
 /**
@@ -13960,9 +13989,9 @@ GraphicsPath.prototype.difference = function(path, flatness) {
  */
 GraphicsPath.prototype.intersection = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(INTERSECTION);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(INTERSECTION);
   return retval.toPath();
 };
 /**
@@ -13979,9 +14008,9 @@ GraphicsPath.prototype.intersection = function(path, flatness) {
  */
 GraphicsPath.prototype.xor = function(path, flatness) {
   if(typeof path === "undefined" || path === null)return this;
-  var polygon1 = new Polygon(this, flatness);
-  var polygon2 = new Polygon(path, flatness);
-  var retval = new Clipper(polygon1, polygon2).compute(XOR);
+  const polygon1 = new Polygon(this, flatness);
+  const polygon2 = new Polygon(path, flatness);
+  const retval = new Clipper(polygon1, polygon2).compute(XOR);
   return retval.toPath();
 };
 
@@ -14343,7 +14372,7 @@ Transform.prototype.getMatrix = function() {
         MathUtil.quatToMat4(this.rotation));
       // 3. scaling
       MathUtil.mat4scaleInPlace(this.matrix, this.scale);
-      var m = this.matrix;
+      const m = this.matrix;
       this._isIdentity =
      m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 0 &&
      m[4] === 0 && m[5] === 1 && m[6] === 0 && m[7] === 0 &&
@@ -14364,7 +14393,7 @@ Transform.prototype.getMatrix = function() {
  * @returns {Transform} A copy of this transform.
  */
 Transform.prototype.copy = function() {
-  var ret = new Transform();
+  const ret = new Transform();
   ret.scale = this.scale.slice(0, this.scale.length);
   ret.position = this.position.slice(0, this.scale.length);
   ret.complexMatrix = this.complexMatrix;
@@ -14453,7 +14482,7 @@ Shape.prototype.getVisible = function() {
  * @returns {Shape} A copy of this object.
  */
 Shape.prototype.copy = function() {
-  var ret = new Shape(this.meshBuffer);
+  const ret = new Shape(this.meshBuffer);
   ret.visible = this.visible;
   ret.parent = null;
   ret.transform = this.getTransform().copy();
@@ -14482,29 +14511,29 @@ Shape.prototype.getTransform = function() {
  */
 Shape.prototype.getBounds = function() {
   if(!this.meshBuffer) {
-    var inf = Number.POSITIVE_INFINITY;
+    const inf = Number.POSITIVE_INFINITY;
     return [inf, inf, inf, -inf, -inf, -inf];
   }
-  var bounds = this.meshBuffer.getBounds();
+  const bounds = this.meshBuffer.getBounds();
   if(MathUtil.boxIsEmpty(bounds))return bounds;
-  var matrix = this.getMatrix();
+  const matrix = this.getMatrix();
   if(MathUtil.mat4isIdentity(matrix)) {
     return bounds.slice(0, 6);
   } else if(matrix[1] === 0 && matrix[2] === 0 && matrix[3] === 0 &&
     matrix[4] === 0 && matrix[6] === 0 && matrix[7] === 0 && matrix[8] === 0 &&
     matrix[9] === 0 && matrix[11] === 0 && matrix[15] === 1) {
     // just a scale and/or translate
-    var ret = [];
-    var t2 = matrix[0];
-    var t3 = matrix[12];
+    const ret = [];
+    const t2 = matrix[0];
+    const t3 = matrix[12];
     ret[0] = t2 * bounds[0] + t3;
-    var t4 = matrix[5];
-    var t5 = matrix[13];
+    const t4 = matrix[5];
+    const t5 = matrix[13];
     ret[1] = t4 * bounds[1] + t5;
-    var t6 = matrix[10];
-    var t7 = matrix[14];
+    const t6 = matrix[10];
+    const t7 = matrix[14];
     ret[2] = t6 * bounds[2] + t7;
-    var ret2 = [t2 * bounds[3] + t3, t4 * bounds[4] + t5, t6 * bounds[5] + t7];
+    const ret2 = [t2 * bounds[3] + t3, t4 * bounds[4] + t5, t6 * bounds[5] + t7];
     return [
       Math.min(ret[0], ret2[0]),
       Math.min(ret[1], ret2[1]),
@@ -14515,7 +14544,7 @@ Shape.prototype.getBounds = function() {
     ];
   } else {
     // rotation, shear, and/or non-affine transformation
-    var boxVertices = [
+    const boxVertices = [
       MathUtil.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]),
       MathUtil.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[5]),
       MathUtil.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[2]),
@@ -14525,9 +14554,9 @@ Shape.prototype.getBounds = function() {
       MathUtil.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[2]),
       MathUtil.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5])
     ];
-    var bv = boxVertices[0];
-    var retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
-    for(var i = 1; i < 8; i++) {
+    let bv = boxVertices[0];
+    const retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
+    for(let i = 1; i < 8; i++) {
       bv = boxVertices[i];
       retval[0] = Math.min(retval[0], bv[0]);
       retval[1] = Math.min(retval[1], bv[1]);
@@ -14597,13 +14626,13 @@ Shape.prototype.setQuaternion = function(quat) {
  * @returns {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix = function() {
-  var xform = this.getTransform();
-  var thisIdentity = xform.isIdentity();
-  var mat;
+  const xform = this.getTransform();
+  const thisIdentity = xform.isIdentity();
+  let mat;
   if(typeof this.parent === "undefined" || this.parent === null) {
     mat = xform.getMatrix();
   } else {
-    var pmat = this.parent.getMatrix();
+    const pmat = this.parent.getMatrix();
     if(thisIdentity) {
       mat = pmat;
     } else if(MathUtil.mat4isIdentity(pmat)) {
@@ -14688,10 +14717,10 @@ ShapeGroup.prototype.setShape = function(index, shape) {
  * @returns {ShapeGroup} A copy of this shape group.
  */
 ShapeGroup.prototype.copy = function() {
-  var ret = new ShapeGroup();
+  const ret = new ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
-  for(var i = 0; i < this.shapes.length; i++) {
+  for(let i = 0; i < this.shapes.length; i++) {
     ret.addShape(this.shapes[i].copy());
   }
   return ret;
@@ -14740,11 +14769,11 @@ ShapeGroup.prototype.getTransform = function() {
  * @returns {Transform} A 4x4 matrix.
  */
 ShapeGroup.prototype.getMatrix = function() {
-  var xform = this.getTransform();
-  var thisIdentity = xform.isIdentity();
-  var mat;
+  const xform = this.getTransform();
+  const thisIdentity = xform.isIdentity();
+  let mat;
   if(typeof this.parent !== "undefined" && this.parent !== null) {
-    var pmat = this.parent.getMatrix();
+    const pmat = this.parent.getMatrix();
     if(thisIdentity) {
       mat = MathUtil.mat4multiply(pmat, xform.getMatrix());
     } else if(MathUtil.mat4isIdentity(pmat)) {
@@ -14778,7 +14807,7 @@ ShapeGroup.prototype.setTransform = function(transform) {
  * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {
-  for(var i = 0; i < this.shapes.length; i++) {
+  for(let i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
       i--;
@@ -14799,11 +14828,11 @@ ShapeGroup.prototype.removeShape = function(shape) {
  * -Inf, -Inf].
  */
 ShapeGroup.prototype.getBounds = function() {
-  var inf = Number.POSITIVE_INFINITY;
-  var ret = [inf, inf, inf, -inf, -inf, -inf];
-  var first = true;
-  for(var i = 0; i < this.shapes.length; i++) {
-    var b = this.shapes[i].getBounds();
+  const inf = Number.POSITIVE_INFINITY;
+  const ret = [inf, inf, inf, -inf, -inf, -inf];
+  let first = true;
+  for(let i = 0; i < this.shapes.length; i++) {
+    const b = this.shapes[i].getBounds();
     // NOTE: The returned bounding
     if(!MathUtil.boxIsEmpty(b)) {
       if(first) {
@@ -14832,8 +14861,8 @@ ShapeGroup.prototype.getBounds = function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.vertexCount = function() {
-  var c = 0;
-  for(var i = 0; i < this.shapes.length; i++) {
+  let c = 0;
+  for(let i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
   }
   return c;
@@ -14844,8 +14873,8 @@ ShapeGroup.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.primitiveCount = function() {
-  var c = 0;
-  for(var i = 0; i < this.shapes.length; i++) {
+  let c = 0;
+  for(let i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
   }
   return c;
@@ -14918,7 +14947,7 @@ var Meshes = {};
  * @constructor
  * @ignore
  */
-var TriangleFan = function(indices) {
+const TriangleFan = function(indices) {
   this.indices = indices;
   this.start = -1;
   this.last = -1;
@@ -14937,13 +14966,13 @@ var TriangleFan = function(indices) {
 };
 
 function meshBufferFromVertexGrid(vertices, width, height) {
-  var indices = [];
-  for(var y = 0; y < height - 1; y++) {
-    for(var x = 0; x < width - 1; x++) {
-      var index0 = y * width + x;
-      var index1 = index0 + width;
-      var index2 = index0 + 1;
-      var index3 = index1 + 1;
+  const indices = [];
+  for(let y = 0; y < height - 1; y++) {
+    for(let x = 0; x < width - 1; x++) {
+      const index0 = y * width + x;
+      const index1 = index0 + width;
+      const index2 = index0 + 1;
+      const index3 = index1 + 1;
       indices.push(index0, index1, index2);
       indices.push(index2, index1, index3);
     }
@@ -14952,13 +14981,13 @@ function meshBufferFromVertexGrid(vertices, width, height) {
 }
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
-  var indices = [];
-  for(var y = 0; y < height - 1; y++) {
-    for(var x = 0; x < width; x++) {
-      var index0 = y * width + x;
-      var index1 = index0 + width;
-      var index2 = x === width - 1 ? y * width : index0 + 1;
-      var index3 = x === width - 1 ? (y + 1) * width : index1 + 1;
+  const indices = [];
+  for(let y = 0; y < height - 1; y++) {
+    for(let x = 0; x < width; x++) {
+      const index0 = y * width + x;
+      const index1 = index0 + width;
+      const index2 = x === width - 1 ? y * width : index0 + 1;
+      const index3 = x === width - 1 ? (y + 1) * width : index1 + 1;
       indices.push(index0, index1, index2);
       indices.push(index2, index1, index3);
     }
@@ -14991,7 +15020,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
   xSize *= 0.5;
   ySize *= 0.5;
   zSize *= 0.5;
-  var vertices = [
+  const vertices = [
     -xSize, -ySize, zSize, -1.0, 0.0, 0.0, 1.0, 0.0,
     -xSize, ySize, zSize, -1.0, 0.0, 0.0, 1.0, 1.0,
     -xSize, ySize, -zSize, -1.0, 0.0, 0.0, 0.0, 1.0,
@@ -15017,13 +15046,13 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
     -xSize, ySize, zSize, 0.0, 0.0, 1.0, 0.0, 1.0,
     -xSize, -ySize, zSize, 0.0, 0.0, 1.0, 0.0, 0.0];
   if(inward) {
-    for(var i = 0; i < vertices.length; i += 8) {
+    for(let i = 0; i < vertices.length; i += 8) {
       vertices[i + 3] = -vertices[i + 3];
       vertices[i + 4] = -vertices[i + 4];
       vertices[i + 5] = -vertices[i + 5];
     }
   }
-  var indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
+  const indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
   return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 };
@@ -15087,50 +15116,50 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   // or height is zero
     return new MeshBuffer();
   }
-  var normDir = inside ? -1 : 1;
-  var sc = [];
-  var tc = [];
-  var angleStep = MathUtil.PiTimes2 / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var sangle = 1.0; // sin(90.0deg)
-  var cangle = 0; // cos(90.0deg)
+  const normDir = inside ? -1 : 1;
+  const sc = [];
+  const tc = [];
+  const angleStep = MathUtil.PiTimes2 / slices;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let sangle = 1.0; // sin(90.0deg)
+  let cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     cangle = tcos;
     sangle = tsin;
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
   if(height > 0) {
-    var sinSlopeNorm, cosSlopeNorm;
+    let sinSlopeNorm, cosSlopeNorm;
     if(baseRad === topRad) {
       sinSlopeNorm = 0;
       cosSlopeNorm = normDir;
     } else {
-      var dy = baseRad - topRad;
-      var dx = height;
-      var len = Math.sqrt(dx * dx + dy * dy);
+      let dy = baseRad - topRad;
+      let dx = height;
+      const len = Math.sqrt(dx * dx + dy * dy);
       // Convert to a unit vector
       if(len !== 0) {
-        var ilen = 1.0 / len;
+        const ilen = 1.0 / len;
         dy *= ilen;
         dx *= ilen;
       }
       cosSlopeNorm = dx * normDir;
       sinSlopeNorm = dy * normDir;
     }
-    var recipstacks = 1.0 / stacks;
-    var vertices = [];
+    const recipstacks = 1.0 / stacks;
+    const vertices = [];
     for(i = 0; i <= stacks; i++) {
-      var zStart = i === stacks ? 1.0 : i * recipstacks;
-      var zStartHeight = height * zStart;
-      var radiusStart = baseRad + (topRad - baseRad) * zStart;
-      for(var j = 0; j <= slices; j++) {
+      const zStart = i === stacks ? 1.0 : i * recipstacks;
+      const zStartHeight = height * zStart;
+      const radiusStart = baseRad + (topRad - baseRad) * zStart;
+      for(let j = 0; j <= slices; j++) {
         var x, y;
         x = sc[j * 2];
         y = sc[j * 2 + 1];
@@ -15139,7 +15168,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
           1 - tc[j], zStart);
       }
     }
-    var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
+    const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
     return flat ? mesh.recalcNormals(flat, inside) : mesh;
   } else {
     return MeshBuffer.fromPositionsNormalsUV([], []);
@@ -15180,37 +15209,37 @@ Meshes.createLathe = function(points, slices, flat, inside) {
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(slices <= 2)throw new Error("too few slices");
   if(points.length % 1 !== 0)throw new Error("points array length is not an even number");
-  var i;
+  let i;
   for(i = 0; i < points.length; i += 2) {
     if(points[i << 1] < 0)throw new Error("point's x is less than 0");
   }
-  var sc = [];
-  var tc = [];
-  var angleStep = MathUtil.PiTimes2 / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var sangle = 1.0; // sin(90.0deg)
-  var cangle = 0; // cos(90.0deg)
+  const sc = [];
+  const tc = [];
+  const angleStep = MathUtil.PiTimes2 / slices;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let sangle = 1.0; // sin(90.0deg)
+  let cangle = 0; // cos(90.0deg)
   for(i = 0; i < slices; i++) {
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     cangle = tcos;
     sangle = tsin;
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
-  var stacks = points.length / 2 - 1;
-  var recipstacks = 1.0 / stacks;
-  var vertices = [];
+  const stacks = points.length / 2 - 1;
+  const recipstacks = 1.0 / stacks;
+  const vertices = [];
   for(i = 0; i <= stacks; i++) {
-    var zStart = i === stacks ? 1.0 : i * recipstacks;
-    var index = i << 1;
-    var zStartHeight = points[index + 1];
-    var radiusStart = points[index];
-    for(var j = 0; j <= slices; j++) {
+    const zStart = i === stacks ? 1.0 : i * recipstacks;
+    const index = i << 1;
+    const zStartHeight = points[index + 1];
+    const radiusStart = points[index];
+    for(let j = 0; j <= slices; j++) {
       var x, y;
       x = sc[j * 2];
       y = sc[j * 2 + 1];
@@ -15219,7 +15248,7 @@ Meshes.createLathe = function(points, slices, flat, inside) {
         1 - tc[j], zStart);
     }
   }
-  var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
+  const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
   return mesh.recalcNormals(flat, inside);
 };
 
@@ -15260,9 +15289,9 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * }
  */
 Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
-  var cylinder = Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
-  var base = Meshes.createDisk(0.0, baseRad, slices, 2, !inside).reverseWinding();
-  var top = Meshes.createDisk(0.0, topRad, slices, 2, inside);
+  const cylinder = Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
+  const base = Meshes.createDisk(0.0, baseRad, slices, 2, !inside).reverseWinding();
+  const top = Meshes.createDisk(0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
   top.transform(MathUtil.mat4translated(0, 0, height));
   // merge the base and the top
@@ -15335,37 +15364,37 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   if(inner < 0)inner = 0;
   if(outer < 0)outer = 0;
   if(outer === 0 || sweep === 0)return new MeshBuffer();
-  var fullCircle = sweep === 360 && start === 0;
-  var sweepDir = sweep < 0 ? -1 : 1;
+  const fullCircle = sweep === 360 && start === 0;
+  const sweepDir = sweep < 0 ? -1 : 1;
   if(sweep < 0)sweep = -sweep;
   sweep %= 360;
   if(sweep === 0)sweep = 360;
-  var sc = [];
-  var tc = [];
-  var i;
-  var twopi = MathUtil.PiTimes2;
-  var arcLength = sweep === 360 ? twopi : sweep * MathUtil.PiDividedBy180;
+  const sc = [];
+  const tc = [];
+  let i;
+  const twopi = MathUtil.PiTimes2;
+  let arcLength = sweep === 360 ? twopi : sweep * MathUtil.PiDividedBy180;
   start *= MathUtil.PiDividedBy180;
   if(sweepDir < 0) {
     arcLength = -arcLength;
   }
-  var angleStep = arcLength / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
-  var cangle = Math.cos(start);
-  var sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
-  var cstart = cangle;
-  var sstart = sangle;
+  const angleStep = arcLength / slices;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  let cangle = Math.cos(start);
+  let sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
+  const cstart = cangle;
+  const sstart = sangle;
   for(i = 0; i <= slices; i++) {
     if(i === slices && arcLength === twopi) {
       sc.push(sstart, cstart);
     } else {
       sc.push(sangle, cangle);
     }
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     cangle = tcos;
     sangle = tsin;
   }
@@ -15377,13 +15406,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     tc[0] = 0;
     tc[tc.length - 1] = 1;
   }
-  var normalZ = inward ? -1 : 1;
-  var slp1 = sweep === 360 ? slices : slices + 1;
-  var x, y, k;
+  const normalZ = inward ? -1 : 1;
+  const slp1 = sweep === 360 ? slices : slices + 1;
+  let x, y, k;
   if(inner === 0 && loops === 1 && sweep === 360) {
     var vertices = [];
-    var indices = [];
-    var fan = new TriangleFan(indices);
+    const indices = [];
+    const fan = new TriangleFan(indices);
     var radius = outer * (i / loops);
     var rso = radius / outer;
     for(k = 0; k < slices; k++) {
@@ -15397,7 +15426,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     fan.addIndex(0);
     return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
-    var height = outer - inner;
+    const height = outer - inner;
 
     vertices = [];
     for(i = 0; i <= loops; i++) {
@@ -15444,14 +15473,14 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   if(lengthwise < 3)throw new Error("lengthwise is less than 3");
   if(inner < 0 || outer < 0)throw new Error("inner or outer is less than 0");
   if(outer === 0 || inner === 0)return new MeshBuffer();
-  var tubeRadius = inner;
-  var circleRad = outer;
-  var sci = [];
-  var scj = [];
-  var cangle, sangle, u;
-  var angleStep = MathUtil.PiTimes2 / crosswise;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  const tubeRadius = inner;
+  const circleRad = outer;
+  const sci = [];
+  const scj = [];
+  let cangle, sangle, u;
+  let angleStep = MathUtil.PiTimes2 / crosswise;
+  let cosStep = Math.cos(angleStep);
+  let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
   for(var i = 0; i < crosswise; i++) {
@@ -15478,25 +15507,25 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   }
   scj.push(scj[0]);
   scj.push(scj[1]);
-  var vertices = [];
-  for(var j = 0; j <= lengthwise; j++) {
-    var v0 = j / lengthwise;
-    var sinr0 = scj[j * 2];
-    var cosr0 = scj[j * 2 + 1];
+  const vertices = [];
+  for(let j = 0; j <= lengthwise; j++) {
+    const v0 = j / lengthwise;
+    const sinr0 = scj[j * 2];
+    const cosr0 = scj[j * 2 + 1];
     for(i = 0; i <= crosswise; i++) {
       u = i / crosswise;
-      var sint = sci[i * 2];
-      var cost = sci[i * 2 + 1];
-      var x = cost * (circleRad + cosr0 * tubeRadius);
-      var y = sint * (circleRad + cosr0 * tubeRadius);
-      var z = sinr0 * tubeRadius;
-      var nx = cosr0 * cost;
-      var ny = cosr0 * sint;
-      var nz = sinr0;
+      const sint = sci[i * 2];
+      const cost = sci[i * 2 + 1];
+      const x = cost * (circleRad + cosr0 * tubeRadius);
+      const y = sint * (circleRad + cosr0 * tubeRadius);
+      const z = sinr0 * tubeRadius;
+      const nx = cosr0 * cost;
+      const ny = cosr0 * sint;
+      const nz = sinr0;
       vertices.push(x, y, z, nx, ny, nz, u, v0);
     }
   }
-  var mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
+  const mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
   return flat ? mesh.recalcNormals(flat, inward) : mesh;
 };
 
@@ -15531,16 +15560,16 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   if(heightDiv <= 0 || widthDiv <= 0)
     throw new Error("widthDiv or heightDiv is 0 or less");
   if(width === 0 || height === 0)return new MeshBuffer();
-  var xStart = -width * 0.5;
-  var yStart = -height * 0.5;
-  var normalZ = inward ? -1 : 1;
-  var vertices = [];
-  for(var i = 0; i <= heightDiv; i++) {
-    var iStart = i / heightDiv;
-    var y = yStart + height * iStart;
-    for(var j = 0; j <= widthDiv; j++) {
-      var jx = j / widthDiv;
-      var x = xStart + width * jx;
+  const xStart = -width * 0.5;
+  const yStart = -height * 0.5;
+  const normalZ = inward ? -1 : 1;
+  const vertices = [];
+  for(let i = 0; i <= heightDiv; i++) {
+    const iStart = i / heightDiv;
+    const y = yStart + height * iStart;
+    for(let j = 0; j <= widthDiv; j++) {
+      const jx = j / widthDiv;
+      const x = xStart + width * jx;
       vertices.push(x, y, 0, 0, 0, normalZ, jx, iStart);
     }
   }
@@ -15645,24 +15674,24 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   // radius is zero
     return new MeshBuffer();
   }
-  var cangle;
-  var sangle;
-  var halfLength = length * 0.5;
-  var halfStacks = stacks / 2;
-  var normDir = inside ? -1 : 1;
-  var sc = [];
-  var scStack = [];
-  var verticalTexCoords = [];
-  var tc = [];
-  var s;
+  let cangle;
+  let sangle;
+  const halfLength = length * 0.5;
+  const halfStacks = stacks / 2;
+  const normDir = inside ? -1 : 1;
+  const sc = [];
+  const scStack = [];
+  const verticalTexCoords = [];
+  const tc = [];
+  let s;
   // Generate longitude and horizontal texture coordinates
-  var angleStep = MathUtil.PiTimes2 / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  let angleStep = MathUtil.PiTimes2 / slices;
+  let cosStep = Math.cos(angleStep);
+  let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 1.0; // sin(90.0deg)
   cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
     var tsin = cosStep * sangle + sinStep * cangle;
@@ -15672,9 +15701,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
-  var sphereRatio = radius * 2;
+  let sphereRatio = radius * 2;
   sphereRatio /= sphereRatio + length;
-  var zEnd = [];
+  const zEnd = [];
   zEnd.push(-1);
   scStack.push(0);
   verticalTexCoords.push(0);
@@ -15685,10 +15714,10 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   sangle = sinStep;
   cangle = cosStep;
   for(i = 0; i < stacks; i++) {
-    var origt = (i + 1) * 1.0 / stacks;
+    const origt = (i + 1) * 1.0 / stacks;
     scStack.push(sangle);
     zEnd.push(-cangle);
-    var tex = origt;
+    const tex = origt;
     verticalTexCoords.push(tex);
     tsin = cosStep * sangle + sinStep * cangle;
     tcos = cosStep * cangle - sinStep * sangle;
@@ -15696,15 +15725,15 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     cangle = tcos;
   }
   // Generate the vertex data
-  var vertices = [];
-  var tx, x, y;
-  var gridHeight = 0;
+  const vertices = [];
+  let tx, x, y;
+  let gridHeight = 0;
   for(i = 0; i <= stacks; i++) {
-    var zeCen = zEnd[i];
-    var txe = verticalTexCoords[i];
-    var zStartHeight = radius * zeCen;
-    var offset = i < halfStacks ? -halfLength : halfLength;
-    var radiusEnd = radius * scStack[i];
+    const zeCen = zEnd[i];
+    let txe = verticalTexCoords[i];
+    const zStartHeight = radius * zeCen;
+    const offset = i < halfStacks ? -halfLength : halfLength;
+    const radiusEnd = radius * scStack[i];
     gridHeight++;
     for(var j = 0; j <= slices; j++) {
       tx = tc[j];
@@ -15716,10 +15745,10 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
         1 - tx, txe);
     }
     if(i + 1 === halfStacks && length > 0) {
-      var sr2 = sphereRatio * 0.5;
-      var hl = halfLength * 2;
-      var he = 1.0 - sphereRatio;
-      for(var m = 0; m <= middleStacks; m++) {
+      const sr2 = sphereRatio * 0.5;
+      const hl = halfLength * 2;
+      const he = 1.0 - sphereRatio;
+      for(let m = 0; m <= middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
         txe = sr2 + (m === 0 ? 0 : he * m / middleStacks);
         gridHeight++;
@@ -15735,7 +15764,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       }
     }
   }
-  var mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
+  const mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
   return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
 };
 
@@ -15763,30 +15792,30 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   if(firstRadius === secondRadius) {
     return Meshes.createDisk(firstRadius, firstRadius, points, 1, inward);
   }
-  var vertices = [];
-  var indices = [];
-  var triangleFan = new TriangleFan(indices);
-  var lastIndex = 0;
-  var recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
-  var normalZ = inward ? -1 : 1;
+  const vertices = [];
+  const indices = [];
+  const triangleFan = new TriangleFan(indices);
+  let lastIndex = 0;
+  const recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
+  const normalZ = inward ? -1 : 1;
   // Position X, Y, Z, normal NX, NY, NZ, texture U, V
   vertices.push(0, 0, 0, 0, 0, normalZ, 0.5, 0.5);
   triangleFan.addIndex(lastIndex++);
-  var angleStep = MathUtil.PiTimes2 / (points * 2);
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var sangle = 0.0; // sin(0.0deg)
-  var cangle = 1.0; // cos(0.0deg)
-  for(var i = 0; i < points * 2; i++) {
-    var radius = (i & 1) === 0 ? firstRadius : secondRadius;
-    var x = -sangle * radius;
-    var y = cangle * radius;
-    var tcx = (1 + x * recipRadius) * 0.5;
-    var tcy = (1 + y * recipRadius) * 0.5;
+  const angleStep = MathUtil.PiTimes2 / (points * 2);
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let sangle = 0.0; // sin(0.0deg)
+  let cangle = 1.0; // cos(0.0deg)
+  for(let i = 0; i < points * 2; i++) {
+    const radius = (i & 1) === 0 ? firstRadius : secondRadius;
+    const x = -sangle * radius;
+    const y = cangle * radius;
+    const tcx = (1 + x * recipRadius) * 0.5;
+    const tcy = (1 + y * recipRadius) * 0.5;
     vertices.push(x, y, 0, 0, 0, normalZ, tcx, tcy);
     triangleFan.addIndex(lastIndex);
-    var ts = cosStep * sangle + sinStep * cangle;
-    var tc = cosStep * cangle - sinStep * sangle;
+    const ts = cosStep * sangle + sinStep * cangle;
+    const tc = cosStep * cangle - sinStep * sangle;
     sangle = ts;
     cangle = tc;
   }

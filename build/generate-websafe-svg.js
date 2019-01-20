@@ -24,8 +24,8 @@ function SwatchSvg() {
     this.slack += HEIGHT / 2;
   };
   this.addSwatch = function(color, name) {
-    var cname = name !== null ? name : color;
-    var svgx = this.x * this.width;
+    const cname = name !== null ? name : color;
+    const svgx = this.x * this.width;
     if (typeof name === "undefined" || name === null) {
       var svgy = this.y * HEIGHT + this.slack;
       this.totalheight = Math.max(this.totalheight, svgy + HEIGHT + this.slack + 4);
@@ -36,7 +36,7 @@ function SwatchSvg() {
     " style='font-size:" + (HEIGHT - 4) * 8 / 10 + "px;color:currentColor'>" +
     "<tspan>" + cname + "</tspan></text>\n";
     } else {
-      var ht = HEIGHT * 1.5;
+      const ht = HEIGHT * 1.5;
       svgy = this.y * ht + this.slack;
       this.totalheight = Math.max(this.totalheight, svgy + ht + this.slack + 4);
       this.output += "<rect x='" + (svgx + 2) + "' y='" + (svgy + 2) + "' width='" + (HEIGHT - 4) + "'" +
@@ -56,15 +56,15 @@ function SwatchSvg() {
     }
   };
   this.toString = function() {
-    var svgx = this.columns * this.width;
-    var svgy = this.totalheight;
-    var head = "<svg width='" + svgx + "' height='" + svgy + "' xmlns='http://www.w3.org/2000/svg'>\n";
+    const svgx = this.columns * this.width;
+    const svgy = this.totalheight;
+    const head = "<svg width='" + svgx + "' height='" + svgy + "' xmlns='http://www.w3.org/2000/svg'>\n";
     return head + this.output + "</svg>";
   };
 }
 
 function generateSvg() {
-  var webcolors = [
+  const webcolors = [
     "#FFFFFF #CCCCCC #999999 #666666 #333333 #000000".split(" "),
     "#FF0000 #FF3333 #FF6666 #FF9999 #FFCCCC #CC0000 #CC3333 #CC6666 #CC9999 #990000 #993333 #996666 #660000 #663333 #330000".split(" "),
     "#FF3300 #FF6633 #CC3300 #FF9966 #CC6633 #993300 #FF6600 #CC9966 #FF9933 #CC6600 #663300 #FFCC99 #996633 #FF9900 #CC9933 #FFCC66 #996600 #CC9900 #FFCC33 #FFCC00".split(" "),
@@ -75,8 +75,8 @@ function generateSvg() {
     "#FF00FF #FF33FF #FF66FF #FF99FF #FFCCFF #CC00CC #CC33CC #CC66CC #CC99CC #990099 #993399 #996699 #660066 #663366 #330033 #FF00CC #FF33CC #CC0099 #FF66CC #CC3399 #990066 #FF0099 #FF3399 #FF99CC #CC0066 #CC6699 #993366 #660033 #FF0066 #FF6699 #CC3366 #990033 #FF3366 #CC0033 #FF0033".split(" ")
   ];
 
-  var svg = new SwatchSvg();
-  for (var i = 0; i < webcolors.length; i++) {
+  const svg = new SwatchSvg();
+  for (let i = 0; i < webcolors.length; i++) {
     webcolors[i].forEach((c) => svg.addSwatch(c));
     if (i + 1 < webcolors.length)svg.separateRow();
   }
@@ -84,7 +84,7 @@ function generateSvg() {
 }
 
 function generateColorNameSvg() {
-  var colornames = "aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff," +
+  const colornames = "aliceblue,f0f8ff,antiquewhite,faebd7,aqua,00ffff,aquamarine,7fffd4,azure,f0ffff,beige,f5f5dc,bisque,ffe4c4,black,000000,blanchedalmond,ffebcd,blue,0000ff," +
 "blueviolet,8a2be2,brown,a52a2a,burlywood,deb887,cadetblue,5f9ea0,chartreuse,7fff00,chocolate,d2691e,coral,ff7f50,cornflowerblue,6495ed,cornsilk,fff8dc," +
 "crimson,dc143c,cyan,00ffff,darkblue,00008b,darkcyan,008b8b,darkgoldenrod,b8860b,darkgray,a9a9a9,darkgreen,006400,darkkhaki,bdb76b,darkmagenta,8b008b," +
 "darkolivegreen,556b2f,darkorange,ff8c00,darkorchid,9932cc,darkred,8b0000,darksalmon,e9967a,darkseagreen,8fbc8f,darkslateblue,483d8b,darkslategray,2f4f4f," +
@@ -101,11 +101,11 @@ function generateColorNameSvg() {
 "slateblue,6a5acd,slategray,708090,snow,fffafa,springgreen,00ff7f,steelblue,4682b4,tan,d2b48c,teal,008080,thistle,d8bfd8,tomato,ff6347,turquoise,40e0d0,violet," +
 "ee82ee,wheat,f5deb3,white,ffffff,whitesmoke,f5f5f5,yellow,ffff00,yellowgreen,9acd32";
 
-  var cn = colornames.split(/,/);
-  var svg = new SwatchSvg();
+  const cn = colornames.split(/,/);
+  const svg = new SwatchSvg();
   svg.width = 150;
   svg.columns = 5;
-  var i = 0; while(i < cn.length) {
+  let i = 0; while(i < cn.length) {
     svg.addSwatch("#" + cn[i + 1], cn[i]);
     i += 2;
   }

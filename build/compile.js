@@ -8,12 +8,12 @@
  http://peteroupc.github.io/
 */
 
-var fs = require("fs");
-var os = require("os");
-var process = require("process");
-var cp = require("child_process");
-var util = require("util");
-var gwsvg = require("./generate-websafe-svg");
+const fs = require("fs");
+const os = require("os");
+const process = require("process");
+const cp = require("child_process");
+const util = require("util");
+const gwsvg = require("./generate-websafe-svg");
 
 // Escapes a filename to appear in a command line argument
 // for Posix and Posix-like shells
@@ -52,7 +52,7 @@ function fq(f) {
 // Quotes a filename to appear in a command line argument, except
 // that slashes are changed to backslashes on Windows
 function ffq(f) {
-  var ret = fq(f);
+  let ret = fq(f);
   if(process.platform === "win32")
     ret = ret.replace(/[\/\\]/g, "\\");
   return ret;
@@ -67,15 +67,15 @@ function normalizeLines(x) {
   return x + "\n";
 }
 
-var fsReadFile = util.promisify(fs.readFile);
-var fsWriteFile = util.promisify(fs.writeFile);
-var fsMkdtemp = util.promisify(fs.mkdtemp);
-var fsMkdir = util.promisify(fs.mkdir);
-var fsUnlink = util.promisify(fs.unlink);
-var fsRmdir = util.promisify(fs.rmdir);
-var cpExec = util.promisify(cp.exec);
-var fsReaddir = util.promisify(fs.readdir);
-var fsRealpath = util.promisify(fs.realpath);
+const fsReadFile = util.promisify(fs.readFile);
+const fsWriteFile = util.promisify(fs.writeFile);
+const fsMkdtemp = util.promisify(fs.mkdtemp);
+const fsMkdir = util.promisify(fs.mkdir);
+const fsUnlink = util.promisify(fs.unlink);
+const fsRmdir = util.promisify(fs.rmdir);
+const cpExec = util.promisify(cp.exec);
+const fsReaddir = util.promisify(fs.readdir);
+const fsRealpath = util.promisify(fs.realpath);
 
 async function execAsync(cmd, outOptions) {
   try {
@@ -106,7 +106,7 @@ async function readFileAsync(filename) {
 }
 
 async function writeFileIfNeededAsync(filename, str) {
-  var oldstr = null;
+  let oldstr = null;
   try {
     oldstr = await fsReadFile(filename, "utf8");
   } catch(ex) {
@@ -120,10 +120,10 @@ async function writeFileIfNeededAsync(filename, str) {
 }
 
 async function editFileIfNeededAsync(filename, fstr) {
-  var oldstr = null;
+  let oldstr = null;
   try {
     oldstr = await fsReadFile(filename, "utf8");
-    var str = fstr(oldstr);
+    const str = fstr(oldstr);
 
     if(oldstr !== str) {
       await fsWriteFile(filename, str, "utf8");
@@ -136,7 +136,7 @@ async function editFileIfNeededAsync(filename, fstr) {
 }
 
 async function tmppathAsync(f, cb) {
-  var t = await fsMkdtemp(os.tmpdir() + "/temp");
+  const t = await fsMkdtemp(os.tmpdir() + "/temp");
   await writeFileIfNeededAsync(t + "/" + f, "")
     .then(async () => {
       try{
@@ -149,7 +149,7 @@ async function tmppathAsync(f, cb) {
 }
 
 async function chdirAsync(x, cb) {
-  var wd = process.cwd();
+  const wd = process.cwd();
   try {
     process.chdir(x);
     await cb();
@@ -177,7 +177,7 @@ async function realpathAsync(p) {
 
 async function readdirAsync(dir, regex) {
   try {
-    var files = await fsReaddir(dir);
+    let files = await fsReaddir(dir);
     files = regex === null ? files :
       files.filter((f) => regex.test(f));
     return files.map((f) => dir + "/" + f);
@@ -188,11 +188,11 @@ async function readdirAsync(dir, regex) {
 
 async function normalizeAndCompile(compilerJar, inputArray, output,
   advanced, useSourceMap, toModule) {
-  var inputs = inputArray.map((x) => "--js " + ffq(x)).join(" ");
-  var sourceMap = output + ".map";
-  var formatting = false ? "--formatting PRETTY_PRINT" : "";
-  var opt = advanced ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS";
-  var cmd = "java -jar " + ffq(compilerJar) + " " + formatting + " " +
+  const inputs = inputArray.map((x) => "--js " + ffq(x)).join(" ");
+  const sourceMap = output + ".map";
+  const formatting = false ? "--formatting PRETTY_PRINT" : "";
+  const opt = advanced ? "ADVANCED_OPTIMIZATIONS" : "SIMPLE_OPTIMIZATIONS";
+  const cmd = "java -jar " + ffq(compilerJar) + " " + formatting + " " +
      " --warning_level=VERBOSE --jscomp_off=globalThis --jscomp_off=deprecated " +
      " --generate_exports " +
      " --externs extern.js" +
@@ -224,12 +224,12 @@ async function normalizeAndCompile(compilerJar, inputArray, output,
   }
 }
 async function asyncMain() {
-  var compilerJar = await realpathAsync("compiler.jar");
+  const compilerJar = await realpathAsync("compiler.jar");
   await chdirAsync("..", async () => {
-    var files = ["promise.js", "h3du.js"];
+    let files = ["promise.js", "h3du.js"];
     files = files.concat(await readdirAsync(".", /^h3du-.*?\.js$/));
     await tmppathAsync("h3du_all.js", async (p) => {
-      var filesForDoc = ["./h3du_module.js"].concat(
+      let filesForDoc = ["./h3du_module.js"].concat(
         await readdirAsync("extras", /^.*?\.js$/));
       filesForDoc = filesForDoc.map((f) => ffq(f)).join(" ");
       await Promise.all([mkdirAsync("doc"), mkdirAsync("dochtml")])
@@ -247,9 +247,9 @@ async function asyncMain() {
             .then((x) => console.log(x))
         ]));
     });
-    var svgs = [["doc/websafe.svg", "dochtml/websafe.svg", gwsvg.generateSvg()],
+    const svgs = [["doc/websafe.svg", "dochtml/websafe.svg", gwsvg.generateSvg()],
       ["doc/colornames.svg", "dochtml/colornames.svg", gwsvg.generateColorNameSvg()]];
-    for(var i = 0; i < svgs.length; i++) {
+    for(let i = 0; i < svgs.length; i++) {
       var s = svgs[i];
       await writeFileIfNeededAsync(s[0], s[2])
         .then(() => execAsync("svgo -i " + ffq(s[0]) + " -o " + ffq(s[0])))

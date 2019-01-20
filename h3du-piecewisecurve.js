@@ -43,11 +43,11 @@ import {Curve} from "./h3du-curve";
  * return new PiecewiseCurve(curves)
  * }
  */
-var PiecewiseCurve = function(curves) {
+const PiecewiseCurve = function(curves) {
   this.curves = [];
   this.curvesEp = [];
   this.runningCurveStart = [];
-  for(var i = 0; i < curves.length; i++) {
+  for(let i = 0; i < curves.length; i++) {
     this.curves[i] = curves[i] instanceof Curve ?
       curves[i] : new Curve(curves[i]);
     this.curvesEp[i] = this.curves[i].endPoints();
@@ -79,7 +79,7 @@ PiecewiseCurve.prototype._getRunningCurveStart = function(uc) {
     return 0;
   }
   if(isNaN(this.runningCurveStart[uc])) {
-    for(var i = 1; i <= uc; i++) {
+    for(let i = 1; i <= uc; i++) {
       if(isNaN(this.runningCurveStart[i])) {
         this.runningCurveStart[i] = this.runningCurveStart[i - 1] +
         this.curves[i - 1].arcLength(this.curvesEp[i - 1][1]);
@@ -90,7 +90,7 @@ PiecewiseCurve.prototype._getRunningCurveStart = function(uc) {
 };
 /** @ignore */
 PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
-  var uc, ut;
+  let uc, ut;
   if(u < 0) {
     uc = 0;
     ut = 0;
@@ -101,7 +101,7 @@ PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
     uc = Math.floor(u);
     ut = u - uc;
   }
-  var ep = this.curvesEp[uc];
+  const ep = this.curvesEp[uc];
   return [uc, ep[0] + (ep[1] - ep[0]) * ut];
 };
 /**
@@ -114,7 +114,7 @@ PiecewiseCurve.prototype.arcLength = function(u) {
   if(u <= 0) {
     return 0;
   }
-  var cp = this._getCurveAndPoint(u);
+  const cp = this._getCurveAndPoint(u);
   return this._getRunningCurveStart(cp[0]) +
     this.curves[cp[0]].arcLength(cp[1]);
 };
@@ -125,7 +125,7 @@ PiecewiseCurve.prototype.arcLength = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 PiecewiseCurve.prototype.evaluate = function(u) {
-  var cp = this._getCurveAndPoint(u);
+  const cp = this._getCurveAndPoint(u);
   return this.curves[cp[0]].evaluate(cp[1]);
 };
 /**
@@ -135,7 +135,7 @@ PiecewiseCurve.prototype.evaluate = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 PiecewiseCurve.prototype.velocity = function(u) {
-  var cp = this._getCurveAndPoint(u);
+  const cp = this._getCurveAndPoint(u);
   return this.curves[cp[0]].velocity(cp[1]);
 };
 
@@ -168,20 +168,20 @@ PiecewiseCurve.prototype.velocity = function(u) {
  * same path as the TCB spline.
  */
 PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, closed, rigidEnds) {
-  var elements = spline[0].length;
+  const elements = spline[0].length;
   if(spline.length < 2)throw new Error();
-  var tensionValue = typeof tension === "undefined" || tension === null ? 0 : tension;
-  var continValue = typeof continuity === "undefined" || continuity === null ? 0 : continuity;
-  var biasValue = typeof bias === "undefined" || bias === null ? 0 : bias;
-  var closedValue = typeof closed === "undefined" || closed === null ? false : closed;
-  var rigidEndsValue = typeof rigidEnds === "undefined" || rigidEnds === null ? false : rigidEnds;
-  var third = 1 / 3;
-  var ret = [];
-  var lastVecIndex = spline.length - 1;
-  var numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
-  for(var j = 0; j < numSplines; j++) {
-    var retcurve = [[], [], [], []];
-    var pt0 = j > lastVecIndex ? spline[0] : spline[j];
+  const tensionValue = typeof tension === "undefined" || tension === null ? 0 : tension;
+  const continValue = typeof continuity === "undefined" || continuity === null ? 0 : continuity;
+  const biasValue = typeof bias === "undefined" || bias === null ? 0 : bias;
+  const closedValue = typeof closed === "undefined" || closed === null ? false : closed;
+  const rigidEndsValue = typeof rigidEnds === "undefined" || rigidEnds === null ? false : rigidEnds;
+  const third = 1 / 3;
+  const ret = [];
+  const lastVecIndex = spline.length - 1;
+  const numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
+  for(let j = 0; j < numSplines; j++) {
+    const retcurve = [[], [], [], []];
+    const pt0 = j > lastVecIndex ? spline[0] : spline[j];
     var pt1, ptPrev, ptNext;
     if(closedValue) {
       if(j === 0) {
@@ -206,25 +206,25 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
       ptPrev = j === 0 ? null : spline[j - 1];
       ptNext = j >= lastVecIndex ? null : spline[j + 2];
     }
-    var mc = 1 - continValue;
-    var pc = 1 + continValue;
-    var mb = 1 - biasValue;
-    var pb = 1 + biasValue;
-    var mt = 1 - tensionValue;
-    for(var i = 0; i < elements; i++) {
-      var p1 = pt0[i];
-      var p4 = pt1[i];
-      var diffCurr = pt1[i] - pt0[i];
-      var diffPrev = typeof ptPrev === "undefined" || ptPrev === null ? 0 : pt0[i] - ptPrev[i];
-      var diffNext = typeof ptNext === "undefined" || ptNext === null ? 0 : ptNext[i] - pt1[i];
-      var tgStart = 0.5 * mt * pc * pb * diffPrev + 0.5 * mt * mc * mb * diffCurr;
-      var tgEnd = 0.5 * mt * mc * pb * diffCurr + 0.5 * mt * pc * mb * diffNext;
+    const mc = 1 - continValue;
+    const pc = 1 + continValue;
+    const mb = 1 - biasValue;
+    const pb = 1 + biasValue;
+    const mt = 1 - tensionValue;
+    for(let i = 0; i < elements; i++) {
+      const p1 = pt0[i];
+      const p4 = pt1[i];
+      const diffCurr = pt1[i] - pt0[i];
+      const diffPrev = typeof ptPrev === "undefined" || ptPrev === null ? 0 : pt0[i] - ptPrev[i];
+      const diffNext = typeof ptNext === "undefined" || ptNext === null ? 0 : ptNext[i] - pt1[i];
+      let tgStart = 0.5 * mt * pc * pb * diffPrev + 0.5 * mt * mc * mb * diffCurr;
+      let tgEnd = 0.5 * mt * mc * pb * diffCurr + 0.5 * mt * pc * mb * diffNext;
       if(!rigidEndsValue) {
         if(typeof ptPrev === "undefined" || ptPrev === null)tgStart = 0;
         if(typeof ptNext === "undefined" || ptNext === null)tgEnd = 0;
       }
-      var p2 = p1 + tgStart * third;
-      var p3 = p4 - tgEnd * third;
+      const p2 = p1 + tgStart * third;
+      const p3 = p4 - tgEnd * third;
       retcurve[0][i] = p1;
       retcurve[1][i] = p2;
       retcurve[2][i] = p3;
@@ -252,21 +252,21 @@ PiecewiseCurve.fromTCBSpline = function(spline, tension, continuity, bias, close
  * same path as the Hermite spline.
  */
 PiecewiseCurve.fromHermiteSpline = function(spline) {
-  var elements = spline[0].length;
+  const elements = spline[0].length;
   if(spline.length < 4 || spline.length % 2 !== 0)throw new Error();
-  var third = 1 / 3;
-  var ret = [];
-  for(var j = 0; j < spline.length - 2; j += 2) {
-    var retcurve = [[], [], [], []];
-    var pt0 = spline[j];
-    var tg0 = spline[j + 1];
-    var pt1 = spline[j + 2];
-    var tg1 = spline[j + 3];
-    for(var i = 0; i < elements; i++) {
-      var p1 = pt0[i];
-      var p4 = pt1[i];
-      var p2 = p1 + tg0[i] * third;
-      var p3 = p4 - tg1[i] * third;
+  const third = 1 / 3;
+  const ret = [];
+  for(let j = 0; j < spline.length - 2; j += 2) {
+    const retcurve = [[], [], [], []];
+    const pt0 = spline[j];
+    const tg0 = spline[j + 1];
+    const pt1 = spline[j + 2];
+    const tg1 = spline[j + 3];
+    for(let i = 0; i < elements; i++) {
+      const p1 = pt0[i];
+      const p4 = pt1[i];
+      const p2 = p1 + tg0[i] * third;
+      const p3 = p4 - tg1[i] * third;
       retcurve[0][i] = p1;
       retcurve[1][i] = p2;
       retcurve[2][i] = p3;
@@ -295,19 +295,19 @@ PiecewiseCurve.fromHermiteSpline = function(spline) {
  * @returns {PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline.
  */
 PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
-  var elements = spline[0].length;
+  const elements = spline[0].length;
   if(spline.length < 2)throw new Error();
-  var paramValue = typeof param === "undefined" || param === null ? 0.5 : param;
-  var closedValue = typeof closed === "undefined" || closed === null ? false : closed;
-  var ret = [];
-  var lastVecIndex = spline.length - 1;
-  var numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
-  for(var j = 0; j < numSplines; j++) {
-    var retcurve = [[], [], [], []];
-    var pt0 = j === 0 ? spline[0] : spline[j - 1];
-    var pt1 = spline[j];
-    var pt2 = spline[j + 1];
-    var pt3 = j + 2 > lastVecIndex ? spline[lastVecIndex] : spline[j + 2];
+  const paramValue = typeof param === "undefined" || param === null ? 0.5 : param;
+  const closedValue = typeof closed === "undefined" || closed === null ? false : closed;
+  const ret = [];
+  const lastVecIndex = spline.length - 1;
+  const numSplines = closedValue ? lastVecIndex + 1 : lastVecIndex;
+  for(let j = 0; j < numSplines; j++) {
+    const retcurve = [[], [], [], []];
+    let pt0 = j === 0 ? spline[0] : spline[j - 1];
+    const pt1 = spline[j];
+    let pt2 = spline[j + 1];
+    let pt3 = j + 2 > lastVecIndex ? spline[lastVecIndex] : spline[j + 2];
     if(!closedValue && j + 2 > lastVecIndex) {
       var newpt = [];
       for(var i = 0; i < elements; i++) {
@@ -333,11 +333,11 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
         pt3 = spline[1];
       }
     }
-    var p1len = 0;
-    var p2len = 0;
-    var p3len = 0;
+    let p1len = 0;
+    let p2len = 0;
+    let p3len = 0;
     for(i = 0; i < elements; i++) {
-      var dx = pt0[i] - pt1[i];
+      let dx = pt0[i] - pt1[i];
       p1len += dx * dx;
       dx = pt1[i] - pt2[i];
       p2len += dx * dx;
@@ -348,21 +348,21 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
     p2len = Math.sqrt(p2len);
     p3len = Math.sqrt(p3len);
     for(i = 0; i < elements; i++) {
-      var p1 = pt0[i];
-      var p2 = pt1[i];
-      var p3 = pt2[i];
-      var p4 = pt3[i];
-      var t1 = 1;
-      var t2 = 1;
-      var t3 = 1;
+      const p1 = pt0[i];
+      const p2 = pt1[i];
+      const p3 = pt2[i];
+      const p4 = pt3[i];
+      let t1 = 1;
+      let t2 = 1;
+      let t3 = 1;
       if(paramValue !== 0) {
         t1 = Math.pow(p1len, paramValue);
         t2 = Math.pow(p2len, paramValue);
         t3 = Math.pow(p3len, paramValue);
       }
-      var den = 3 * t1 * (t1 + t2);
-      var np2 = p2;
-      var np3 = p3;
+      let den = 3 * t1 * (t1 + t2);
+      let np2 = p2;
+      let np3 = p3;
       den = 3 * t1 * (t1 + t2);
       if(den !== 0) {
         np2 = (t1 * t1 * p3 - t2 * t2 * p1 + p2 * (2 * t1 * t1 + 3 * t1 * t2 + t2 * t2)) / den;
@@ -393,36 +393,36 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
 PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   if(typeof start === "undefined" || start === null)start = 0;
   if(typeof sweep === "undefined" || sweep === null)sweep = 0;
-  var abssweep = sweep;
-  var sweepdir = sweep < 0 ? -1 : 1;
-  var sweepSegments = abssweep > Math.PI * 0.5 &&
+  let abssweep = sweep;
+  const sweepdir = sweep < 0 ? -1 : 1;
+  const sweepSegments = abssweep > Math.PI * 0.5 &&
     abssweep <= Math.PI * 2 ? abssweep * 0.25 : Math.PI * 0.5;
-  var arcstart = start;
-  var curves = [];
-  var sa0, sa1;
+  let arcstart = start;
+  const curves = [];
+  let sa0, sa1;
   while(abssweep > 0) {
-    var arcangle = Math.min(sweepSegments, abssweep);
-    var arcend = arcstart + arcangle * sweepdir;
-    var ca0 = Math.cos(arcstart);
+    const arcangle = Math.min(sweepSegments, abssweep);
+    const arcend = arcstart + arcangle * sweepdir;
+    const ca0 = Math.cos(arcstart);
     sa0 = arcstart >= 0 && arcstart < 6.283185307179586 ? arcstart <= 3.141592653589793 ? Math.sqrt(1.0 - ca0 * ca0) : -Math.sqrt(1.0 - ca0 * ca0) : Math.sin(arcstart);
-    var ca1 = Math.cos(arcend);
+    const ca1 = Math.cos(arcend);
     sa1 = arcend >= 0 && arcend < 6.283185307179586 ? arcend <= 3.141592653589793 ? Math.sqrt(1.0 - ca1 * ca1) : -Math.sqrt(1.0 - ca1 * ca1) : Math.sin(arcend);
     abssweep -= arcangle;
     arcstart += arcangle * sweepdir;
-    var p0 = [ca0, sa0, 1];
-    var p2 = [ca1, sa1, 1];
-    var halfAngle = (Math.PI - arcangle) * 0.5;
-    var weight = Math.sin(halfAngle);
-    var dx = p2[0] - p0[0];
-    var dy = p2[1] - p0[1];
-    var m0 = p0[0] + dx * 0.5;
-    var m1 = p0[1] + dy * 0.5;
-    var dcx = m0;
-    var dcy = m1;
-    var mdist = Math.sqrt(dcx * dcx + dcy * dcy);
-    var clen = 1.0 / mdist;
-    var p1dist = 1.0 / weight;
-    var p1 = [
+    const p0 = [ca0, sa0, 1];
+    const p2 = [ca1, sa1, 1];
+    const halfAngle = (Math.PI - arcangle) * 0.5;
+    const weight = Math.sin(halfAngle);
+    const dx = p2[0] - p0[0];
+    const dy = p2[1] - p0[1];
+    const m0 = p0[0] + dx * 0.5;
+    const m1 = p0[1] + dy * 0.5;
+    const dcx = m0;
+    const dcy = m1;
+    const mdist = Math.sqrt(dcx * dcx + dcy * dcy);
+    const clen = 1.0 / mdist;
+    const p1dist = 1.0 / weight;
+    const p1 = [
       dcx * clen * p1dist,
       dcy * clen * p1dist,
       weight

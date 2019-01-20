@@ -68,8 +68,8 @@ export var BufferAccessor = function(buffer, countPerValue, offset, stride) {
  * @returns {number} The number of values defined in this accessor's buffer.
  */
 BufferAccessor.prototype.count = function() {
-  var olen = this.buffer.length - this.offset;
-  var odiv = Math.floor(olen / this.stride);
+  const olen = this.buffer.length - this.offset;
+  const odiv = Math.floor(olen / this.stride);
   return odiv + (olen % this.stride >= this.countPerValue ? 1 : 0);
 };
 /**
@@ -82,7 +82,7 @@ BufferAccessor.prototype.count = function() {
  * @returns {number} The first element of the given attribute value.
  */
 BufferAccessor.prototype.get = function( index) {
-  var o = this.offset + index * this.stride;
+  const o = this.offset + index * this.stride;
   return this.buffer[o];
 };
 /**
@@ -96,7 +96,7 @@ BufferAccessor.prototype.get = function( index) {
  * @returns {BufferAccessor} This object.
  */
 BufferAccessor.prototype.set = function(index, value) {
-  var o = this.offset + index * this.stride;
+  const o = this.offset + index * this.stride;
   this.buffer[o] = value;
   return this;
 };
@@ -113,9 +113,9 @@ BufferAccessor.prototype.set = function(index, value) {
  * @returns {Array<number>} The parameter "vec".
  */
 BufferAccessor.prototype.getVec = function(index, vec) {
-  var o = this.offset + index * this.stride;
-  var buffer = this.buffer;
-  for(var i = 0; i < this.countPerValue; i++) {
+  const o = this.offset + index * this.stride;
+  const buffer = this.buffer;
+  for(let i = 0; i < this.countPerValue; i++) {
     vec[i] = buffer[o + i];
   }
   return vec;
@@ -135,10 +135,10 @@ BufferAccessor.prototype.getVec = function(index, vec) {
  * @returns {BufferAccessor} This object.
  */
 BufferAccessor.prototype.setVec = function(index, vec) {
-  var o = this.offset + index * this.stride;
-  var buffer = this.buffer;
-  var alen = Math.min(vec.length, this.countPerValue);
-  for(var i = 0; i < alen; i++) {
+  const o = this.offset + index * this.stride;
+  const buffer = this.buffer;
+  const alen = Math.min(vec.length, this.countPerValue);
+  for(let i = 0; i < alen; i++) {
     buffer[o + i] = vec[i];
   }
   return this;
@@ -148,10 +148,10 @@ BufferAccessor.prototype.setVec = function(index, vec) {
  * @returns {BufferAccessor} A copy of the vertex attribute object.
  */
 BufferAccessor.prototype.copy = function() {
-  var c = this.count();
-  var newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
-  var value = [];
-  for(var i = 0; i < c; i++) {
+  const c = this.count();
+  const newAttribute = BufferAccessor.makeBlank(c, this.countPerValue);
+  const value = [];
+  for(let i = 0; i < c; i++) {
     this.getVec(i, value);
     newAttribute.setVec( i, value);
   }
@@ -176,13 +176,13 @@ BufferAccessor.makeBlank = function(count, countPerValue) {
  * @returns {Uint16Array|Uint32Array} An array of vertex indices.
  */
 BufferAccessor.makeIndices = function(numIndices) {
-  var array;
+  let array;
   if(numIndices < 65536) {
     array = new Uint16Array(new ArrayBuffer(numIndices * 2));
   } else {
     array = new Uint32Array(new ArrayBuffer(numIndices * 4));
   }
-  for(var i = 0; i < numIndices; i++) {
+  for(let i = 0; i < numIndices; i++) {
     array[i] = i;
   }
   return array;
@@ -205,14 +205,14 @@ BufferAccessor.makeIndices = function(numIndices) {
  * values as the sum of the lengths of "indices1" and "indices2".
  */
 BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
-  var countPerValue1 = typeof attr1 === "undefined" || attr1 === null ? 0 : attr1.countPerValue;
-  var countPerValue2 = typeof attr2 === "undefined" || attr2 === null ? 0 : attr2.countPerValue;
-  var i;
-  var elementsPerValue = Math.max(countPerValue1, countPerValue2);
+  const countPerValue1 = typeof attr1 === "undefined" || attr1 === null ? 0 : attr1.countPerValue;
+  const countPerValue2 = typeof attr2 === "undefined" || attr2 === null ? 0 : attr2.countPerValue;
+  let i;
+  const elementsPerValue = Math.max(countPerValue1, countPerValue2);
   // NOTE: Buffer returned by makeBlank will be all zeros
-  var newAttribute = BufferAccessor.makeBlank(
+  const newAttribute = BufferAccessor.makeBlank(
     indices1.length + indices2.length, elementsPerValue);
-  var value = MathInternal.vecZeros(elementsPerValue);
+  const value = MathInternal.vecZeros(elementsPerValue);
   // NOTE: If undefined or null, first part of buffer will remain all zeros
   if(typeof attr1 !== "undefined" && attr1 !== null) {
     for(i = 0; i < indices1.length; i++) {

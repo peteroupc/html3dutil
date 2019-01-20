@@ -74,10 +74,10 @@ ShapeGroup.prototype.setShape = function(index, shape) {
  * @returns {ShapeGroup} A copy of this shape group.
  */
 ShapeGroup.prototype.copy = function() {
-  var ret = new ShapeGroup();
+  const ret = new ShapeGroup();
   ret.visible = this.visible;
   ret.transform = this.transform.copy();
-  for(var i = 0; i < this.shapes.length; i++) {
+  for(let i = 0; i < this.shapes.length; i++) {
     ret.addShape(this.shapes[i].copy());
   }
   return ret;
@@ -126,11 +126,11 @@ ShapeGroup.prototype.getTransform = function() {
  * @returns {Transform} A 4x4 matrix.
  */
 ShapeGroup.prototype.getMatrix = function() {
-  var xform = this.getTransform();
-  var thisIdentity = xform.isIdentity();
-  var mat;
+  const xform = this.getTransform();
+  const thisIdentity = xform.isIdentity();
+  let mat;
   if(typeof this.parent !== "undefined" && this.parent !== null) {
-    var pmat = this.parent.getMatrix();
+    const pmat = this.parent.getMatrix();
     if(thisIdentity) {
       mat = MathUtil.mat4multiply(pmat, xform.getMatrix());
     } else if(MathUtil.mat4isIdentity(pmat)) {
@@ -164,7 +164,7 @@ ShapeGroup.prototype.setTransform = function(transform) {
  * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {
-  for(var i = 0; i < this.shapes.length; i++) {
+  for(let i = 0; i < this.shapes.length; i++) {
     if(this.shapes[i] === shape) {
       this.shapes.splice(i, 1);
       i--;
@@ -185,11 +185,11 @@ ShapeGroup.prototype.removeShape = function(shape) {
  * -Inf, -Inf].
  */
 ShapeGroup.prototype.getBounds = function() {
-  var inf = Number.POSITIVE_INFINITY;
-  var ret = [inf, inf, inf, -inf, -inf, -inf];
-  var first = true;
-  for(var i = 0; i < this.shapes.length; i++) {
-    var b = this.shapes[i].getBounds();
+  const inf = Number.POSITIVE_INFINITY;
+  const ret = [inf, inf, inf, -inf, -inf, -inf];
+  let first = true;
+  for(let i = 0; i < this.shapes.length; i++) {
+    const b = this.shapes[i].getBounds();
     // NOTE: The returned bounding
     if(!MathUtil.boxIsEmpty(b)) {
       if(first) {
@@ -218,8 +218,8 @@ ShapeGroup.prototype.getBounds = function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.vertexCount = function() {
-  var c = 0;
-  for(var i = 0; i < this.shapes.length; i++) {
+  let c = 0;
+  for(let i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].vertexCount();
   }
   return c;
@@ -230,8 +230,8 @@ ShapeGroup.prototype.vertexCount = function() {
  * @returns {number} Return value.
  */
 ShapeGroup.prototype.primitiveCount = function() {
-  var c = 0;
-  for(var i = 0; i < this.shapes.length; i++) {
+  let c = 0;
+  for(let i = 0; i < this.shapes.length; i++) {
     c += this.shapes[i].primitiveCount();
   }
   return c;

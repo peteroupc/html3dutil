@@ -25,7 +25,7 @@ export var Meshes = {};
  * @constructor
  * @ignore
  */
-var TriangleFan = function(indices) {
+const TriangleFan = function(indices) {
   this.indices = indices;
   this.start = -1;
   this.last = -1;
@@ -44,13 +44,13 @@ var TriangleFan = function(indices) {
 };
 
 function meshBufferFromVertexGrid(vertices, width, height) {
-  var indices = [];
-  for(var y = 0; y < height - 1; y++) {
-    for(var x = 0; x < width - 1; x++) {
-      var index0 = y * width + x;
-      var index1 = index0 + width;
-      var index2 = index0 + 1;
-      var index3 = index1 + 1;
+  const indices = [];
+  for(let y = 0; y < height - 1; y++) {
+    for(let x = 0; x < width - 1; x++) {
+      const index0 = y * width + x;
+      const index1 = index0 + width;
+      const index2 = index0 + 1;
+      const index3 = index1 + 1;
       indices.push(index0, index1, index2);
       indices.push(index2, index1, index3);
     }
@@ -59,13 +59,13 @@ function meshBufferFromVertexGrid(vertices, width, height) {
 }
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
-  var indices = [];
-  for(var y = 0; y < height - 1; y++) {
-    for(var x = 0; x < width; x++) {
-      var index0 = y * width + x;
-      var index1 = index0 + width;
-      var index2 = x === width - 1 ? y * width : index0 + 1;
-      var index3 = x === width - 1 ? (y + 1) * width : index1 + 1;
+  const indices = [];
+  for(let y = 0; y < height - 1; y++) {
+    for(let x = 0; x < width; x++) {
+      const index0 = y * width + x;
+      const index1 = index0 + width;
+      const index2 = x === width - 1 ? y * width : index0 + 1;
+      const index3 = x === width - 1 ? (y + 1) * width : index1 + 1;
       indices.push(index0, index1, index2);
       indices.push(index2, index1, index3);
     }
@@ -98,7 +98,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
   xSize *= 0.5;
   ySize *= 0.5;
   zSize *= 0.5;
-  var vertices = [
+  const vertices = [
     -xSize, -ySize, zSize, -1.0, 0.0, 0.0, 1.0, 0.0,
     -xSize, ySize, zSize, -1.0, 0.0, 0.0, 1.0, 1.0,
     -xSize, ySize, -zSize, -1.0, 0.0, 0.0, 0.0, 1.0,
@@ -124,13 +124,13 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
     -xSize, ySize, zSize, 0.0, 0.0, 1.0, 0.0, 1.0,
     -xSize, -ySize, zSize, 0.0, 0.0, 1.0, 0.0, 0.0];
   if(inward) {
-    for(var i = 0; i < vertices.length; i += 8) {
+    for(let i = 0; i < vertices.length; i += 8) {
       vertices[i + 3] = -vertices[i + 3];
       vertices[i + 4] = -vertices[i + 4];
       vertices[i + 5] = -vertices[i + 5];
     }
   }
-  var indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
+  const indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
   return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
 };
@@ -194,50 +194,50 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   // or height is zero
     return new MeshBuffer();
   }
-  var normDir = inside ? -1 : 1;
-  var sc = [];
-  var tc = [];
-  var angleStep = MathUtil.PiTimes2 / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var sangle = 1.0; // sin(90.0deg)
-  var cangle = 0; // cos(90.0deg)
+  const normDir = inside ? -1 : 1;
+  const sc = [];
+  const tc = [];
+  const angleStep = MathUtil.PiTimes2 / slices;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let sangle = 1.0; // sin(90.0deg)
+  let cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     cangle = tcos;
     sangle = tsin;
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
   if(height > 0) {
-    var sinSlopeNorm, cosSlopeNorm;
+    let sinSlopeNorm, cosSlopeNorm;
     if(baseRad === topRad) {
       sinSlopeNorm = 0;
       cosSlopeNorm = normDir;
     } else {
-      var dy = baseRad - topRad;
-      var dx = height;
-      var len = Math.sqrt(dx * dx + dy * dy);
+      let dy = baseRad - topRad;
+      let dx = height;
+      const len = Math.sqrt(dx * dx + dy * dy);
       // Convert to a unit vector
       if(len !== 0) {
-        var ilen = 1.0 / len;
+        const ilen = 1.0 / len;
         dy *= ilen;
         dx *= ilen;
       }
       cosSlopeNorm = dx * normDir;
       sinSlopeNorm = dy * normDir;
     }
-    var recipstacks = 1.0 / stacks;
-    var vertices = [];
+    const recipstacks = 1.0 / stacks;
+    const vertices = [];
     for(i = 0; i <= stacks; i++) {
-      var zStart = i === stacks ? 1.0 : i * recipstacks;
-      var zStartHeight = height * zStart;
-      var radiusStart = baseRad + (topRad - baseRad) * zStart;
-      for(var j = 0; j <= slices; j++) {
+      const zStart = i === stacks ? 1.0 : i * recipstacks;
+      const zStartHeight = height * zStart;
+      const radiusStart = baseRad + (topRad - baseRad) * zStart;
+      for(let j = 0; j <= slices; j++) {
         var x, y;
         x = sc[j * 2];
         y = sc[j * 2 + 1];
@@ -246,7 +246,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
           1 - tc[j], zStart);
       }
     }
-    var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
+    const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
     return flat ? mesh.recalcNormals(flat, inside) : mesh;
   } else {
     return MeshBuffer.fromPositionsNormalsUV([], []);
@@ -287,37 +287,37 @@ Meshes.createLathe = function(points, slices, flat, inside) {
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(slices <= 2)throw new Error("too few slices");
   if(points.length % 1 !== 0)throw new Error("points array length is not an even number");
-  var i;
+  let i;
   for(i = 0; i < points.length; i += 2) {
     if(points[i << 1] < 0)throw new Error("point's x is less than 0");
   }
-  var sc = [];
-  var tc = [];
-  var angleStep = MathUtil.PiTimes2 / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var sangle = 1.0; // sin(90.0deg)
-  var cangle = 0; // cos(90.0deg)
+  const sc = [];
+  const tc = [];
+  const angleStep = MathUtil.PiTimes2 / slices;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let sangle = 1.0; // sin(90.0deg)
+  let cangle = 0; // cos(90.0deg)
   for(i = 0; i < slices; i++) {
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     cangle = tcos;
     sangle = tsin;
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
-  var stacks = points.length / 2 - 1;
-  var recipstacks = 1.0 / stacks;
-  var vertices = [];
+  const stacks = points.length / 2 - 1;
+  const recipstacks = 1.0 / stacks;
+  const vertices = [];
   for(i = 0; i <= stacks; i++) {
-    var zStart = i === stacks ? 1.0 : i * recipstacks;
-    var index = i << 1;
-    var zStartHeight = points[index + 1];
-    var radiusStart = points[index];
-    for(var j = 0; j <= slices; j++) {
+    const zStart = i === stacks ? 1.0 : i * recipstacks;
+    const index = i << 1;
+    const zStartHeight = points[index + 1];
+    const radiusStart = points[index];
+    for(let j = 0; j <= slices; j++) {
       var x, y;
       x = sc[j * 2];
       y = sc[j * 2 + 1];
@@ -326,7 +326,7 @@ Meshes.createLathe = function(points, slices, flat, inside) {
         1 - tc[j], zStart);
     }
   }
-  var mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
+  const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
   return mesh.recalcNormals(flat, inside);
 };
 
@@ -367,9 +367,9 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * }
  */
 Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
-  var cylinder = Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
-  var base = Meshes.createDisk(0.0, baseRad, slices, 2, !inside).reverseWinding();
-  var top = Meshes.createDisk(0.0, topRad, slices, 2, inside);
+  const cylinder = Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
+  const base = Meshes.createDisk(0.0, baseRad, slices, 2, !inside).reverseWinding();
+  const top = Meshes.createDisk(0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
   top.transform(MathUtil.mat4translated(0, 0, height));
   // merge the base and the top
@@ -442,37 +442,37 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   if(inner < 0)inner = 0;
   if(outer < 0)outer = 0;
   if(outer === 0 || sweep === 0)return new MeshBuffer();
-  var fullCircle = sweep === 360 && start === 0;
-  var sweepDir = sweep < 0 ? -1 : 1;
+  const fullCircle = sweep === 360 && start === 0;
+  const sweepDir = sweep < 0 ? -1 : 1;
   if(sweep < 0)sweep = -sweep;
   sweep %= 360;
   if(sweep === 0)sweep = 360;
-  var sc = [];
-  var tc = [];
-  var i;
-  var twopi = MathUtil.PiTimes2;
-  var arcLength = sweep === 360 ? twopi : sweep * MathUtil.PiDividedBy180;
+  const sc = [];
+  const tc = [];
+  let i;
+  const twopi = MathUtil.PiTimes2;
+  let arcLength = sweep === 360 ? twopi : sweep * MathUtil.PiDividedBy180;
   start *= MathUtil.PiDividedBy180;
   if(sweepDir < 0) {
     arcLength = -arcLength;
   }
-  var angleStep = arcLength / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
-  var cangle = Math.cos(start);
-  var sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
-  var cstart = cangle;
-  var sstart = sangle;
+  const angleStep = arcLength / slices;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  let cangle = Math.cos(start);
+  let sangle = start >= 0 && start < 6.283185307179586 ? start <= 3.141592653589793 ? Math.sqrt(1.0 - cangle * cangle) : -Math.sqrt(1.0 - cangle * cangle) : Math.sin(start);
+  const cstart = cangle;
+  const sstart = sangle;
   for(i = 0; i <= slices; i++) {
     if(i === slices && arcLength === twopi) {
       sc.push(sstart, cstart);
     } else {
       sc.push(sangle, cangle);
     }
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     tc.push(t);
-    var tsin = cosStep * sangle + sinStep * cangle;
-    var tcos = cosStep * cangle - sinStep * sangle;
+    const tsin = cosStep * sangle + sinStep * cangle;
+    const tcos = cosStep * cangle - sinStep * sangle;
     cangle = tcos;
     sangle = tsin;
   }
@@ -484,13 +484,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     tc[0] = 0;
     tc[tc.length - 1] = 1;
   }
-  var normalZ = inward ? -1 : 1;
-  var slp1 = sweep === 360 ? slices : slices + 1;
-  var x, y, k;
+  const normalZ = inward ? -1 : 1;
+  const slp1 = sweep === 360 ? slices : slices + 1;
+  let x, y, k;
   if(inner === 0 && loops === 1 && sweep === 360) {
     var vertices = [];
-    var indices = [];
-    var fan = new TriangleFan(indices);
+    const indices = [];
+    const fan = new TriangleFan(indices);
     var radius = outer * (i / loops);
     var rso = radius / outer;
     for(k = 0; k < slices; k++) {
@@ -504,7 +504,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     fan.addIndex(0);
     return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
-    var height = outer - inner;
+    const height = outer - inner;
 
     vertices = [];
     for(i = 0; i <= loops; i++) {
@@ -551,14 +551,14 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   if(lengthwise < 3)throw new Error("lengthwise is less than 3");
   if(inner < 0 || outer < 0)throw new Error("inner or outer is less than 0");
   if(outer === 0 || inner === 0)return new MeshBuffer();
-  var tubeRadius = inner;
-  var circleRad = outer;
-  var sci = [];
-  var scj = [];
-  var cangle, sangle, u;
-  var angleStep = MathUtil.PiTimes2 / crosswise;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  const tubeRadius = inner;
+  const circleRad = outer;
+  const sci = [];
+  const scj = [];
+  let cangle, sangle, u;
+  let angleStep = MathUtil.PiTimes2 / crosswise;
+  let cosStep = Math.cos(angleStep);
+  let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 0.0; // sin(0.0deg)
   cangle = 1.0; // cos(0.0deg)
   for(var i = 0; i < crosswise; i++) {
@@ -585,25 +585,25 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   }
   scj.push(scj[0]);
   scj.push(scj[1]);
-  var vertices = [];
-  for(var j = 0; j <= lengthwise; j++) {
-    var v0 = j / lengthwise;
-    var sinr0 = scj[j * 2];
-    var cosr0 = scj[j * 2 + 1];
+  const vertices = [];
+  for(let j = 0; j <= lengthwise; j++) {
+    const v0 = j / lengthwise;
+    const sinr0 = scj[j * 2];
+    const cosr0 = scj[j * 2 + 1];
     for(i = 0; i <= crosswise; i++) {
       u = i / crosswise;
-      var sint = sci[i * 2];
-      var cost = sci[i * 2 + 1];
-      var x = cost * (circleRad + cosr0 * tubeRadius);
-      var y = sint * (circleRad + cosr0 * tubeRadius);
-      var z = sinr0 * tubeRadius;
-      var nx = cosr0 * cost;
-      var ny = cosr0 * sint;
-      var nz = sinr0;
+      const sint = sci[i * 2];
+      const cost = sci[i * 2 + 1];
+      const x = cost * (circleRad + cosr0 * tubeRadius);
+      const y = sint * (circleRad + cosr0 * tubeRadius);
+      const z = sinr0 * tubeRadius;
+      const nx = cosr0 * cost;
+      const ny = cosr0 * sint;
+      const nz = sinr0;
       vertices.push(x, y, z, nx, ny, nz, u, v0);
     }
   }
-  var mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
+  const mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
   return flat ? mesh.recalcNormals(flat, inward) : mesh;
 };
 
@@ -638,16 +638,16 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   if(heightDiv <= 0 || widthDiv <= 0)
     throw new Error("widthDiv or heightDiv is 0 or less");
   if(width === 0 || height === 0)return new MeshBuffer();
-  var xStart = -width * 0.5;
-  var yStart = -height * 0.5;
-  var normalZ = inward ? -1 : 1;
-  var vertices = [];
-  for(var i = 0; i <= heightDiv; i++) {
-    var iStart = i / heightDiv;
-    var y = yStart + height * iStart;
-    for(var j = 0; j <= widthDiv; j++) {
-      var jx = j / widthDiv;
-      var x = xStart + width * jx;
+  const xStart = -width * 0.5;
+  const yStart = -height * 0.5;
+  const normalZ = inward ? -1 : 1;
+  const vertices = [];
+  for(let i = 0; i <= heightDiv; i++) {
+    const iStart = i / heightDiv;
+    const y = yStart + height * iStart;
+    for(let j = 0; j <= widthDiv; j++) {
+      const jx = j / widthDiv;
+      const x = xStart + width * jx;
       vertices.push(x, y, 0, 0, 0, normalZ, jx, iStart);
     }
   }
@@ -752,24 +752,24 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   // radius is zero
     return new MeshBuffer();
   }
-  var cangle;
-  var sangle;
-  var halfLength = length * 0.5;
-  var halfStacks = stacks / 2;
-  var normDir = inside ? -1 : 1;
-  var sc = [];
-  var scStack = [];
-  var verticalTexCoords = [];
-  var tc = [];
-  var s;
+  let cangle;
+  let sangle;
+  const halfLength = length * 0.5;
+  const halfStacks = stacks / 2;
+  const normDir = inside ? -1 : 1;
+  const sc = [];
+  const scStack = [];
+  const verticalTexCoords = [];
+  const tc = [];
+  let s;
   // Generate longitude and horizontal texture coordinates
-  var angleStep = MathUtil.PiTimes2 / slices;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  let angleStep = MathUtil.PiTimes2 / slices;
+  let cosStep = Math.cos(angleStep);
+  let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sangle = 1.0; // sin(90.0deg)
   cangle = 0; // cos(90.0deg)
   for(var i = 0; i < slices; i++) {
-    var t = i * 1.0 / slices;
+    const t = i * 1.0 / slices;
     sc.push(sangle, cangle);
     tc.push(t);
     var tsin = cosStep * sangle + sinStep * cangle;
@@ -779,9 +779,9 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   }
   sc.push(sc[0], sc[1]);
   tc.push(1);
-  var sphereRatio = radius * 2;
+  let sphereRatio = radius * 2;
   sphereRatio /= sphereRatio + length;
-  var zEnd = [];
+  const zEnd = [];
   zEnd.push(-1);
   scStack.push(0);
   verticalTexCoords.push(0);
@@ -792,10 +792,10 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   sangle = sinStep;
   cangle = cosStep;
   for(i = 0; i < stacks; i++) {
-    var origt = (i + 1) * 1.0 / stacks;
+    const origt = (i + 1) * 1.0 / stacks;
     scStack.push(sangle);
     zEnd.push(-cangle);
-    var tex = origt;
+    const tex = origt;
     verticalTexCoords.push(tex);
     tsin = cosStep * sangle + sinStep * cangle;
     tcos = cosStep * cangle - sinStep * sangle;
@@ -803,15 +803,15 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     cangle = tcos;
   }
   // Generate the vertex data
-  var vertices = [];
-  var tx, x, y;
-  var gridHeight = 0;
+  const vertices = [];
+  let tx, x, y;
+  let gridHeight = 0;
   for(i = 0; i <= stacks; i++) {
-    var zeCen = zEnd[i];
-    var txe = verticalTexCoords[i];
-    var zStartHeight = radius * zeCen;
-    var offset = i < halfStacks ? -halfLength : halfLength;
-    var radiusEnd = radius * scStack[i];
+    const zeCen = zEnd[i];
+    let txe = verticalTexCoords[i];
+    const zStartHeight = radius * zeCen;
+    const offset = i < halfStacks ? -halfLength : halfLength;
+    const radiusEnd = radius * scStack[i];
     gridHeight++;
     for(var j = 0; j <= slices; j++) {
       tx = tc[j];
@@ -823,10 +823,10 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
         1 - tx, txe);
     }
     if(i + 1 === halfStacks && length > 0) {
-      var sr2 = sphereRatio * 0.5;
-      var hl = halfLength * 2;
-      var he = 1.0 - sphereRatio;
-      for(var m = 0; m <= middleStacks; m++) {
+      const sr2 = sphereRatio * 0.5;
+      const hl = halfLength * 2;
+      const he = 1.0 - sphereRatio;
+      for(let m = 0; m <= middleStacks; m++) {
         s = -halfLength + (m === 0 ? 0 : hl * m / middleStacks);
         txe = sr2 + (m === 0 ? 0 : he * m / middleStacks);
         gridHeight++;
@@ -842,7 +842,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       }
     }
   }
-  var mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
+  const mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
   return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
 };
 
@@ -870,30 +870,30 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   if(firstRadius === secondRadius) {
     return Meshes.createDisk(firstRadius, firstRadius, points, 1, inward);
   }
-  var vertices = [];
-  var indices = [];
-  var triangleFan = new TriangleFan(indices);
-  var lastIndex = 0;
-  var recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
-  var normalZ = inward ? -1 : 1;
+  const vertices = [];
+  const indices = [];
+  const triangleFan = new TriangleFan(indices);
+  let lastIndex = 0;
+  const recipRadius = 1.0 / Math.max(firstRadius, secondRadius);
+  const normalZ = inward ? -1 : 1;
   // Position X, Y, Z, normal NX, NY, NZ, texture U, V
   vertices.push(0, 0, 0, 0, 0, normalZ, 0.5, 0.5);
   triangleFan.addIndex(lastIndex++);
-  var angleStep = MathUtil.PiTimes2 / (points * 2);
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var sangle = 0.0; // sin(0.0deg)
-  var cangle = 1.0; // cos(0.0deg)
-  for(var i = 0; i < points * 2; i++) {
-    var radius = (i & 1) === 0 ? firstRadius : secondRadius;
-    var x = -sangle * radius;
-    var y = cangle * radius;
-    var tcx = (1 + x * recipRadius) * 0.5;
-    var tcy = (1 + y * recipRadius) * 0.5;
+  const angleStep = MathUtil.PiTimes2 / (points * 2);
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let sangle = 0.0; // sin(0.0deg)
+  let cangle = 1.0; // cos(0.0deg)
+  for(let i = 0; i < points * 2; i++) {
+    const radius = (i & 1) === 0 ? firstRadius : secondRadius;
+    const x = -sangle * radius;
+    const y = cangle * radius;
+    const tcx = (1 + x * recipRadius) * 0.5;
+    const tcy = (1 + y * recipRadius) * 0.5;
     vertices.push(x, y, 0, 0, 0, normalZ, tcx, tcy);
     triangleFan.addIndex(lastIndex);
-    var ts = cosStep * sangle + sinStep * cangle;
-    var tc = cosStep * cangle - sinStep * sangle;
+    const ts = cosStep * sangle + sinStep * cangle;
+    const tc = cosStep * cangle - sinStep * sangle;
     sangle = ts;
     cangle = tc;
   }

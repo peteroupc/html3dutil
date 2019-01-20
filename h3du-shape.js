@@ -82,7 +82,7 @@ Shape.prototype.getVisible = function() {
  * @returns {Shape} A copy of this object.
  */
 Shape.prototype.copy = function() {
-  var ret = new Shape(this.meshBuffer);
+  const ret = new Shape(this.meshBuffer);
   ret.visible = this.visible;
   ret.parent = null;
   ret.transform = this.getTransform().copy();
@@ -111,29 +111,29 @@ Shape.prototype.getTransform = function() {
  */
 Shape.prototype.getBounds = function() {
   if(!this.meshBuffer) {
-    var inf = Number.POSITIVE_INFINITY;
+    const inf = Number.POSITIVE_INFINITY;
     return [inf, inf, inf, -inf, -inf, -inf];
   }
-  var bounds = this.meshBuffer.getBounds();
+  const bounds = this.meshBuffer.getBounds();
   if(MathUtil.boxIsEmpty(bounds))return bounds;
-  var matrix = this.getMatrix();
+  const matrix = this.getMatrix();
   if(MathUtil.mat4isIdentity(matrix)) {
     return bounds.slice(0, 6);
   } else if(matrix[1] === 0 && matrix[2] === 0 && matrix[3] === 0 &&
     matrix[4] === 0 && matrix[6] === 0 && matrix[7] === 0 && matrix[8] === 0 &&
     matrix[9] === 0 && matrix[11] === 0 && matrix[15] === 1) {
     // just a scale and/or translate
-    var ret = [];
-    var t2 = matrix[0];
-    var t3 = matrix[12];
+    const ret = [];
+    const t2 = matrix[0];
+    const t3 = matrix[12];
     ret[0] = t2 * bounds[0] + t3;
-    var t4 = matrix[5];
-    var t5 = matrix[13];
+    const t4 = matrix[5];
+    const t5 = matrix[13];
     ret[1] = t4 * bounds[1] + t5;
-    var t6 = matrix[10];
-    var t7 = matrix[14];
+    const t6 = matrix[10];
+    const t7 = matrix[14];
     ret[2] = t6 * bounds[2] + t7;
-    var ret2 = [t2 * bounds[3] + t3, t4 * bounds[4] + t5, t6 * bounds[5] + t7];
+    const ret2 = [t2 * bounds[3] + t3, t4 * bounds[4] + t5, t6 * bounds[5] + t7];
     return [
       Math.min(ret[0], ret2[0]),
       Math.min(ret[1], ret2[1]),
@@ -144,7 +144,7 @@ Shape.prototype.getBounds = function() {
     ];
   } else {
     // rotation, shear, and/or non-affine transformation
-    var boxVertices = [
+    const boxVertices = [
       MathUtil.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[2]),
       MathUtil.mat4projectVec3(matrix, bounds[0], bounds[1], bounds[5]),
       MathUtil.mat4projectVec3(matrix, bounds[0], bounds[4], bounds[2]),
@@ -154,9 +154,9 @@ Shape.prototype.getBounds = function() {
       MathUtil.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[2]),
       MathUtil.mat4projectVec3(matrix, bounds[3], bounds[4], bounds[5])
     ];
-    var bv = boxVertices[0];
-    var retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
-    for(var i = 1; i < 8; i++) {
+    let bv = boxVertices[0];
+    const retval = [bv[0], bv[1], bv[2], bv[0], bv[1], bv[2]];
+    for(let i = 1; i < 8; i++) {
       bv = boxVertices[i];
       retval[0] = Math.min(retval[0], bv[0]);
       retval[1] = Math.min(retval[1], bv[1]);
@@ -226,13 +226,13 @@ Shape.prototype.setQuaternion = function(quat) {
  * @returns {Array<number>} The current transformation matrix.
  */
 Shape.prototype.getMatrix = function() {
-  var xform = this.getTransform();
-  var thisIdentity = xform.isIdentity();
-  var mat;
+  const xform = this.getTransform();
+  const thisIdentity = xform.isIdentity();
+  let mat;
   if(typeof this.parent === "undefined" || this.parent === null) {
     mat = xform.getMatrix();
   } else {
-    var pmat = this.parent.getMatrix();
+    const pmat = this.parent.getMatrix();
     if(thisIdentity) {
       mat = pmat;
     } else if(MathUtil.mat4isIdentity(pmat)) {

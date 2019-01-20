@@ -145,8 +145,8 @@ Curve.prototype.velocity = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.velocity !== "undefined" && this.curve.velocity !== null) {
     return this.curve.velocity(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.evaluate(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.evaluate(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -169,8 +169,8 @@ Curve.prototype.accel = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.accel !== "undefined" && this.curve.accel !== null) {
     return this.curve.accel(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.velocity(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.velocity(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -193,8 +193,8 @@ Curve.prototype.jerk = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.jerk !== "undefined" && this.curve.jerk !== null) {
     return this.curve.jerk(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.accel(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.accel(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -218,8 +218,8 @@ Curve.prototype.normal = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.normal !== "undefined" && this.curve.normal !== null) {
     return this.curve.normal(this._getCoord(u));
   } else {
-    var du = Curve._EPSILON;
-    var vector = this.tangent(u + du);
+    let du = Curve._EPSILON;
+    let vector = this.tangent(u + du);
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
@@ -246,11 +246,11 @@ Curve.prototype.tangent = function(u) {
  * @returns {number} The distance from the start of the curve to its end.
  */
 Curve.prototype.getLength = function() {
-  var ep = this.endPoints();
+  const ep = this.endPoints();
   return this.arcLength(ep[1]);
 };
 
-var gaussKronrodArray = [
+const gaussKronrodArray = [
   0.99693392252959545, 0.00825771143316837, 0.00000000000000000,
   0.98156063424671924, 0.02303608403898155, 0.04717533638651112,
   0.95053779594312127, 0.03891523046929952, 0.00000000000000000,
@@ -266,15 +266,15 @@ var gaussKronrodArray = [
   0.00000000000000000, 0.12555689390547423, 0.00000000000000000
 ];
 function gaussKronrod(func, mn, mx, dir, depth) {
-  var bm = (mx - mn) * 0.5;
-  var bp = mn + bm;
-  var gauss = 0;
-  var kronrod = 0;
-  for(var i = 0; i < gaussKronrodArray.length; i += 3) {
-    var gaussWeight = gaussKronrodArray[i + 2];
-    var kronrodWeight = gaussKronrodArray[i + 1];
-    var abscissa = gaussKronrodArray[i];
-    var x = func(bm * abscissa + bp);
+  const bm = (mx - mn) * 0.5;
+  const bp = mn + bm;
+  let gauss = 0;
+  let kronrod = 0;
+  for(let i = 0; i < gaussKronrodArray.length; i += 3) {
+    const gaussWeight = gaussKronrodArray[i + 2];
+    const kronrodWeight = gaussKronrodArray[i + 1];
+    const abscissa = gaussKronrodArray[i];
+    let x = func(bm * abscissa + bp);
     gauss += gaussWeight * x;
     kronrod += kronrodWeight * x;
     if(abscissa > 0) {
@@ -311,12 +311,12 @@ Curve.prototype.arcLength = function(u) {
   if(typeof this.curve !== "undefined" && this.curve !== null && this.curve !== this && typeof this.curve.arcLength !== "undefined" && this.curve.arcLength !== null) {
     return this.curve.arcLength(this._getCoord(u));
   } else {
-    var ep = this.endPoints();
+    const ep = this.endPoints();
     if(u === ep[0])return 0;
-    var mn = Math.min(u, ep[0]);
-    var mx = Math.max(u, ep[0]);
-    var dir = u >= ep[0] ? 1 : -1;
-    var that = this;
+    const mn = Math.min(u, ep[0]);
+    const mx = Math.max(u, ep[0]);
+    const dir = u >= ep[0] ? 1 : -1;
+    const that = this;
     return gaussKronrod(function(x) {
       return MathInternal.vecLength(that.velocity(x));
     }, mn, mx, dir, 0);
@@ -364,11 +364,11 @@ function _pointToObject(p) {
 Curve.prototype.getPoints = function(count) {
   if(count === 0)return [];
   if(count < 0)throw new Error();
-  var ep = this.endPoints();
-  var ret = [this.evaluate(ep[0])];
-  for(var i = 1; i < count; i++) {
-    var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
-    var pt = this.evaluate(u);
+  const ep = this.endPoints();
+  const ret = [this.evaluate(ep[0])];
+  for(let i = 1; i < count; i++) {
+    const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
+    const pt = this.evaluate(u);
     ret.push(pt);
   }
   return ret;
@@ -395,11 +395,11 @@ Curve.prototype.getPoints = function(count) {
 Curve.prototype.getPointsAsObjects = function(count) {
   if(count === 0)return [];
   if(count < 0)throw new Error();
-  var ep = this.endPoints();
-  var ret = [_pointToObject(this.evaluate(ep[0]))];
-  for(var i = 1; i < count; i++) {
-    var u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
-    var pt = this.evaluate(u);
+  const ep = this.endPoints();
+  const ret = [_pointToObject(this.evaluate(ep[0]))];
+  for(let i = 1; i < count; i++) {
+    const u = ep[0] + (ep[1] - ep[0]) * (i / (count - 1));
+    const pt = this.evaluate(u);
     ret.push(_pointToObject(pt));
   }
   return ret;
@@ -422,11 +422,11 @@ Curve._FitRange = function(curve, ep1, ep2) {
   this.newEp1 = ep1;
   this.newEp2 = ep2;
   this.invNewEpDelta = 1.0 / (ep2 - ep1);
-  var ep = curve.endPoints();
+  const ep = curve.endPoints();
   this.origEp1 = ep[0];
   this.origEp2 = ep[1];
   this.getCoordinate = function(u) {
-    var uNorm = (u - this.newEp1) * this.invNewEpDelta;
+    const uNorm = (u - this.newEp1) * this.invNewEpDelta;
     return this.origEp1 + (this.origEp2 - this.origEp1) * uNorm;
   };
   this.endPoints = function() {
@@ -439,13 +439,13 @@ Curve._ArcLengthParam = function(curve) {
   this.curve = curve;
   this.ep = this.curve.endPoints();
   this.segments = [];
-  var lastT = this.ep[0];
-  var lastS = 0;
-  var totalLength = this.curve.getLength();
-  var segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
-  for(var i = 1; i <= segments; i++) {
-    var t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
-    var s = this.curve.arcLength(t);
+  let lastT = this.ep[0];
+  let lastS = 0;
+  const totalLength = this.curve.getLength();
+  const segments = Math.min(Math.max(10, Math.ceil(totalLength * 18)), 50);
+  for(let i = 1; i <= segments; i++) {
+    const t = this.ep[0] + (this.ep[1] - this.ep[0]) * (i / segments);
+    const s = this.curve.arcLength(t);
     this.segments.push([lastS, s, lastT, t]);
     lastT = t;
     lastS = s;
@@ -453,17 +453,17 @@ Curve._ArcLengthParam = function(curve) {
   this.length = this.segments.length === 0 ? 0 :
     this.segments[this.segments.length - 1][1];
   this._vecLength = function(vec) {
-    var ret = 0;
-    for(var i = 0; i < vec.length; i++) {
+    let ret = 0;
+    for(let i = 0; i < vec.length; i++) {
       ret += vec[i] * vec[i];
     }
     return Math.sqrt(ret);
   };
   // solve arcLength(t)-s = 0 numerically
   this._solveArcLength = function(s, guess, minValue, maxExclusive) {
-    var ret = guess;
-    for(var i = 0; i < 10; i++) {
-      var val = this.curve.arcLength(ret) - s;
+    let ret = guess;
+    for(let i = 0; i < 10; i++) {
+      const val = this.curve.arcLength(ret) - s;
       if(Math.abs(val) < 1e-10 && ret >= minValue &&
        ret < maxExclusive) {
         // already accurate enough
@@ -476,13 +476,13 @@ Curve._ArcLengthParam = function(curve) {
       // plus any constant (s is a constant here because the
       // integral is with respect to time, not speed)
       // is another antiderivative of the same function.
-      var deriv = this._vecLength(this.curve.velocity(ret));
+      const deriv = this._vecLength(this.curve.velocity(ret));
       if(deriv === 0) {
         // won't converge anymore
         break;
       }
-      var solutionDiff = val / deriv;
-      var r = ret - solutionDiff;
+      const solutionDiff = val / deriv;
+      const r = ret - solutionDiff;
       if(solutionDiff === 0) {
         // won't converge anymore
         break;
@@ -513,7 +513,7 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
   // NOTE: Note that velocity and acceleration depend on parameterization; for
   // example, the length of the velocity vector may differ for the underlying curve object
   // than for this one, even though both vectors generally point in the same direction.
-  var ep, guess;
+  let ep, guess;
   if(Number.isNaN(s))throw new Error();
   if(s > this.length) {
     ep = this.curve.endPoints();
@@ -532,21 +532,21 @@ Curve._ArcLengthParam.prototype.getCoordinate = function(s) {
     ep = this.curve.endPoints();
     return ep[0];
   }
-  var startPt = 0;
-  var endPt = this.segments.length;
-  var k = 0;
+  let startPt = 0;
+  let endPt = this.segments.length;
+  let k = 0;
   while(startPt < endPt) {
     k += 1;
     if(k > 20)throw new Error();
-    var middle = startPt + ((endPt - startPt) / 2 | 0);
-    var m = this.segments[middle];
+    const middle = startPt + ((endPt - startPt) / 2 | 0);
+    const m = this.segments[middle];
     if(s === m[0]) {
       return m[2];
     } else if(s === m[1]) {
       return m[3];
     } else if(s > m[0] && s < m[1]) {
-      var r = (s - m[0]) / (m[1] - m[0]);
-      var u = m[2] + (m[3] - m[2]) * r;
+      const r = (s - m[0]) / (m[1] - m[0]);
+      const u = m[2] + (m[3] - m[2]) * r;
       if(m[1] - m[0] >= 1e-10) {
         return this._solveArcLength(s, u, m[2], m[3]);
       }
@@ -612,6 +612,11 @@ Curve.prototype.fitRange = function(ep1, ep2) {
  * point on the curve. The arc length parameterization used in
  * this method is approximate.
  * @returns {Curve} Return value. Returns this object if this curve already uses an arc length parameterization.
+ * @example <caption>The following example uses the arc-length
+ * parameterization to generate, uniformly at random, a point that lies anywhere
+ * on the curve.</caption>
+ * var arclen = curve.toArcLengthParam();
+ * var point = arclen.evaluate(Math.random()*arclen.getLength())
  */
 Curve.prototype.toArcLengthParam = function() {
   if(typeof this.curveParam !== "undefined" && this.curveParam !== null && this.curveParam instanceof Curve._ArcLengthParam) {

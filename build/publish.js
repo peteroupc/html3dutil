@@ -8,10 +8,10 @@
 */
 /* eslint no-sync: "off" */
 /* global exports, require */
-var path = require("jsdoc/path");
-var fs = require("jsdoc/fs");
-var helper = require("jsdoc/util/templateHelper");
-var markdown = require("jsdoc/util/markdown");
+const path = require("jsdoc/path");
+const fs = require("jsdoc/fs");
+const helper = require("jsdoc/util/templateHelper");
+const markdown = require("jsdoc/util/markdown");
 // TODO: Document module filename for "Global" members
 
 function normalizeLines(x) {
@@ -25,7 +25,7 @@ function normalizeLines(x) {
 }
 
 function writeFileIfNeeded(filename, str, enc) {
-  var oldstr = null;
+  let oldstr = null;
   try {
     oldstr = fs.readFileSync(filename, enc);
   } catch(ex) {
@@ -37,7 +37,7 @@ function writeFileIfNeeded(filename, str, enc) {
 }
 
 function resolveLinks(x) {
-  var ret = helper.resolveLinks(x);
+  let ret = helper.resolveLinks(x);
   ret = ret.replace(/href\s*=\s*\"([^\"\n>\#]+?)\.\w+(\"|\#)/, function(a, b, c) {
     return "href=\"" + b + helper.fileExtension + c;
   });
@@ -59,7 +59,7 @@ TextWriter.prototype.normtags = function(x) {
   x = x.replace(/<\/p>/g, "");
   x = x.replace(/\*/g, "\\*");
   x = x.replace(/<pre>\s*([\s\S]+?)<\/pre>/g, function(a, b) {
-    var unescaped = b.replace(/\&lt;/g, "<");
+    let unescaped = b.replace(/\&lt;/g, "<");
     unescaped = unescaped.replace(/\&gt;/g, ">");
     unescaped = unescaped.replace(/\&amp;/g, "&");
     unescaped = unescaped.replace(/\\\*/g, "*");
@@ -77,9 +77,9 @@ TextWriter.prototype.footer = function() {
 };
 /** @ignore */
 TextWriter.prototype.heading = function(level, x) {
-  var ret = "";
+  let ret = "";
   if(level >= 1 && level <= 6) {
-    for(var i = 0; i < level; i++) {
+    for(let i = 0; i < level; i++) {
       ret += "#";
     }
     ret += " " + x + "\n\n";
@@ -123,9 +123,9 @@ TextWriter.prototype.normspacebreak = function(x) {
 };
 /** @ignore */
 TextWriter.prototype.normexample = function(x) {
-  var io = x.indexOf("</caption>");
+  const io = x.indexOf("</caption>");
   if(io >= 0) {
-    var xs = x.substr(0, io + 10);
+    let xs = x.substr(0, io + 10);
     xs = xs.replace(/<caption>/g, "<p>");
     xs = xs.replace(/<\/caption>/g, "</p>");
     return this.normspace(xs + "<pre>" + x.substr(io + 10) + "</pre>");
@@ -135,7 +135,7 @@ TextWriter.prototype.normexample = function(x) {
 };
 /** @ignore */
 TextWriter.prototype.jsval = function(x) {
-  var str = JSON.stringify(x);
+  const str = JSON.stringify(x);
   return helper.htmlsafe("`" + str + "`");
 };
 /** @ignore */
@@ -144,7 +144,7 @@ TextWriter.prototype.jsname = function(x) {
 };
 /** @ignore */
 TextWriter.prototype.listText = function(list) {
-  var ret = "";
+  let ret = "";
   list.forEach(function(item) {
     ret += "* " + item + "\n";
   });
@@ -162,7 +162,7 @@ HtmlWriter.prototype = Object.create(TextWriter.prototype);
 HtmlWriter.prototype.constructor = HtmlWriter;
 /** @ignore */
 HtmlWriter.prototype.listText = function(list) {
-  var ret = "<ul>";
+  let ret = "<ul>";
   list.forEach(function(item) {
     ret += "<li>" + item;
   });
@@ -203,7 +203,7 @@ HtmlWriter.prototype.linkText = function(url, text) {
 };
 /** @ignore */
 HtmlWriter.prototype.fromMarkdown = function(text) {
-  var parser = markdown.getParser();
+  const parser = markdown.getParser();
   if(!parser) {
     return "<pre>" + helper.htmlsafe(text) + "</pre>";
   }
@@ -211,7 +211,7 @@ HtmlWriter.prototype.fromMarkdown = function(text) {
 };
 /** @ignore */
 HtmlWriter.prototype.heading = function(level, x) {
-  var ret = "";
+  let ret = "";
   if(level >= 1 && level <= 6) {
     ret += "<h" + level + ">";
     ret += " " + x + "</h" + level + ">";
@@ -220,7 +220,7 @@ HtmlWriter.prototype.heading = function(level, x) {
 };
 /** @ignore */
 HtmlWriter.prototype.jsval = function(x) {
-  var str = JSON.stringify(x);
+  const str = JSON.stringify(x);
   return "<code>" + helper.htmlsafe(str) + "</code>";
 };
 /** @ignore */
@@ -238,20 +238,20 @@ function Doc(name) {
       Doc.typeToName(this.name));
   };
   this.getText = function(docs, writer) {
-    var entry = writer.header(helper.htmlsafe(this.name)) +
+    let entry = writer.header(helper.htmlsafe(this.name)) +
        this.entry + this.constructorEntry;
-    var keys;
+    let keys;
     function memToIndex(mem, title, docs) {
       if(Object.keys(mem).length > 0) {
-        var indexStr = writer.heading(3, helper.htmlsafe(title));
-        var indexList = [];
+        let indexStr = writer.heading(3, helper.htmlsafe(title));
+        const indexList = [];
         Object.keys(mem).sort().forEach(function(name) {
-          var val = mem[name];
-          var hname = name;
+          const val = mem[name];
+          let hname = name;
           if(hname.lastIndexOf("#") >= 0)
             hname = hname.substr(hname.lastIndexOf("#") + 1);
-          var tname = writer.linkText("#" + val[1], helper.htmlsafe(hname));
-          var tdesc = docs.descriptions[val[2]];
+          let tname = writer.linkText("#" + val[1], helper.htmlsafe(hname));
+          const tdesc = docs.descriptions[val[2]];
           if(tdesc) {
             tname += writer.breaktext(tdesc);
           }
@@ -292,7 +292,7 @@ Doc.typeToName = function(type) {
 };
 /** @ignore */
 Doc.toHash = function(type) {
-  var t = type.replace(/^module\:/g, "");
+  const t = type.replace(/^module\:/g, "");
   return t.replace(/[^a-zA-Z0-9_\.$\u0080-\uffff]/g, "_");
 };
 function DocCollection() {
@@ -340,25 +340,25 @@ function DocCollection() {
       .replace(/\.\w+$/, helper.fileExtension);
   };
   this.write = function(writer, dir) {
-    var that = this;
+    const that = this;
     // Write individual type files
     Object.keys(this.docs).forEach(function(doc) {
       writeFileIfNeeded(that.docs[doc].getFileName(dir),
         normalizeLines(that.docs[doc].getText(that, writer)), "utf8");
     });
     // Write index
-    var indexStr = writer.header("Documentation") +
+    let indexStr = writer.header("Documentation") +
         writer.heading(1, "Documentation Index");
-    var indexList = [];
-    var tnames = this.typeNames;
+    let indexList = [];
+    const tnames = this.typeNames;
     Object.keys(this.docs).sort().forEach(function(name) {
-      var tname = name;
+      let tname = name;
       if(tname === "Global") {
         tname = writer.linkText("Global" + helper.fileExtension, "Global Members");
         indexList.push(tname);
       } else if(tnames[tname]) {
         tname = helper.linkto(tname, helper.htmlsafe(tname));
-        var tdesc = that.descriptions[name] || "";
+        const tdesc = that.descriptions[name] || "";
         if(tdesc) {
           tname += writer.breaktext(tdesc);
         }
@@ -371,7 +371,7 @@ function DocCollection() {
     if(this.tutorials.children.length > 0) {
       indexStr += writer.heading(2, "Tutorials");
       this.tutorials.children.forEach(function(tut) {
-        var tname = writer.linkText(that.tutorialName(tut), helper.htmlsafe(tut.title));
+        const tname = writer.linkText(that.tutorialName(tut), helper.htmlsafe(tut.title));
         indexList.push(tname);
       });
       indexStr += writer.listText(indexList);
@@ -386,9 +386,9 @@ function DocCollection() {
       path.join(dir, "index" + helper.fileExtension),
       normalizeLines(indexStr), "utf8");
     this.tutorials.children.forEach(function(tut) {
-      var content = writer.header(helper.htmlsafe(tut.title)) +
+      let content = writer.header(helper.htmlsafe(tut.title)) +
         writer.heading(1, helper.htmlsafe(tut.title));
-      var doclink = writer.paragraph(writer.linkText("index" +
+      const doclink = writer.paragraph(writer.linkText("index" +
       helper.fileExtension, "Back to documentation index."));
       content += doclink;
       content += writer.fromMarkdown(writer.textblock(resolveLinks(tut.content)));
@@ -405,13 +405,13 @@ function typeval(x) {
   if(!x.names) {
     return "????";
   }
-  var xnames = x.names;
+  let xnames = x.names;
   if(x.names.length === 0) {
     xnames = [x.names];
   }
-  var xn = [];
-  for(var i = 0; i < xnames.length; i++) {
-    var tname = xnames[i];
+  const xn = [];
+  for(let i = 0; i < xnames.length; i++) {
+    let tname = xnames[i];
     tname = helper.linkto(tname, helper.htmlsafe(tname));
     xn.push(tname);
   }
@@ -419,9 +419,9 @@ function typeval(x) {
 }
 
 function augmentsval(x) {
-  var xn = [];
-  for(var i = 0; i < x.length; i++) {
-    var tname = x[i];
+  const xn = [];
+  for(let i = 0; i < x.length; i++) {
+    let tname = x[i];
     tname = helper.linkto(tname, helper.htmlsafe(tname));
     xn.push(tname);
   }
@@ -429,7 +429,7 @@ function augmentsval(x) {
 }
 
 function typeNames(nodes) {
-  var names = {};
+  const names = {};
   nodes.forEach(function (node) {
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
@@ -445,16 +445,16 @@ function typeNames(nodes) {
 }
 
 function descriptions(nodes, writer) {
-  var descriptions = {};
+  const descriptions = {};
   nodes.forEach(function (node) {
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private") {
       return;
     }
-    var desc = "";
+    let desc = "";
     if(typeof node.deprecated !== "undefined" && node.deprecated !== null) {
-      var dep = node.deprecated === true ? "Yes" : node.deprecated;
+      const dep = node.deprecated === true ? "Yes" : node.deprecated;
       desc = writer.bold("Deprecated: " + writer.normspace(dep));
     } else if(node.kind === "class") {
       desc = writer.normspace(node.classdesc || "") + " ";
@@ -500,8 +500,8 @@ function registerLinks(docCollection, nodes) {
 
 function fillCollection(docCollection, nodes, parentlong, writer) {
   nodes.forEach(function (node) {
-    var i;
-    var entry;
+    let i;
+    let entry;
     if(node.ignore === true)return;
     if(node.undocumented === true)return;
     if(node.access === "private")return;
@@ -510,7 +510,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         return;
       }
     } else {
-      var memberof = node.memberof;
+      const memberof = node.memberof;
       if(typeof memberof !== "undefined" && memberof !== null) {
         // Work around issue jsdoc3/jsdoc#924
         if(memberof.replace(/\~/, ".") !==
@@ -519,11 +519,11 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
 
     }
     if (node.kind === "function" || node.kind === "event" || node.kind === "class" || node.kind === "namespace" || node.kind === "module") {
-      var paramnames = [];
+      const paramnames = [];
       if(node.params) {
         var p = node.params;
         for(i = 0; i < p.length; i++) {
-          var pname = p[i].name;
+          let pname = p[i].name;
           if(p[i].optional) {
             pname = "[" + pname + "]";
           }
@@ -531,7 +531,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         }
       }
       entry = "";
-      var elname = helper.htmlsafe(node.longname);
+      let elname = helper.htmlsafe(node.longname);
       if(elname.indexOf("#") >= 0) {
         if(node.name.indexOf("#") >= 0) {
           elname = helper.htmlsafe(node.name);
@@ -542,8 +542,8 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
         entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
           "Back to documentation index."));
       }
-      var attribs = helper.getAttribs(node);
-      var attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
+      const attribs = helper.getAttribs(node);
+      const attribstr = attribs && attribs.length > 0 ? "(" + attribs.join(", ") + ") " : "";
       entry += writer.anchor(Doc.toHash(node.longname));
       var heading = attribstr;
       if(node.kind === "class") {
@@ -563,7 +563,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
           writer.bold("Augments:") + " " + augmentsval(node.augments));
       }
       if(typeof node.deprecated !== "undefined" && node.deprecated !== null) {
-        var dep = node.deprecated === true ? "Yes" : node.deprecated;
+        const dep = node.deprecated === true ? "Yes" : node.deprecated;
         entry += writer.paragraph(
           writer.bold("Deprecated: " + writer.normspace(dep)));
       }
@@ -577,10 +577,10 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       if (node.params && node.params.length > 0) {
         p = node.params;
         entry += writer.heading(4, "Parameters");
-        var listItems = [];
+        const listItems = [];
         for(i = 0; i < p.length; i++) {
-          var pi = p[i];
-          var listitem = writer.jsname(pi.name);
+          const pi = p[i];
+          let listitem = writer.jsname(pi.name);
           if(pi.type) {
             listitem += " (Type: " + typeval(pi.type) + ")";
           }
@@ -605,8 +605,8 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
       }
       if (node.returns) {
         entry += writer.heading(4, "Return Value");
-        var r = node.returns[0];
-        var retval = writer.normspace(r.description || "");
+        const r = node.returns[0];
+        let retval = writer.normspace(r.description || "");
         if(r.type) {
           retval += " (Type: " + typeval(r.type) + ")";
         }
@@ -635,7 +635,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
     } else if (node.kind === "member" || node.kind === "constant" ||
         node.kind === "namespace" || node.kind === "mixin") {
       entry = "";
-      var safelongname = helper.htmlsafe(node.longname);
+      const safelongname = helper.htmlsafe(node.longname);
       if(node.kind === "namespace" || node.kind === "mixin") {
         entry += writer.heading(1, safelongname);
         entry += writer.paragraph(writer.linkText("index" + helper.fileExtension,
@@ -692,10 +692,10 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
 
 function publishFormat(input, o, t, extension) {
   helper.fileExtension = extension;
-  var writer = extension === ".html" ? new HtmlWriter() : new TextWriter();
+  const writer = extension === ".html" ? new HtmlWriter() : new TextWriter();
   helper.setTutorials(t);
-  var inputget = input().get();
-  var docCollection = new DocCollection();
+  const inputget = input().get();
+  const docCollection = new DocCollection();
   docCollection.tutorials = t;
   docCollection.readme = o.readme;
   docCollection.typeNames = typeNames(inputget);

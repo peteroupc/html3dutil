@@ -12,54 +12,54 @@ import {MathInternal} from "./h3du-mathinternal";
 import {Surface} from "./h3du-surface";
 
 function linear(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  for(var i = 0; i < elementsPerValue; i++) {
-    var pp0 = p0[i];
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  for(let i = 0; i < elementsPerValue; i++) {
+    const pp0 = p0[i];
     ret[i] = pp0 + (p1[i] - pp0) * t;
   }
   return ret;
 }
 function bezierCubic(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  var p3 = points[3];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  const p3 = points[3];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = (((3 - t) * t - 3) * t + 1) * p0[i] + ((3 * t - 6) * t + 3) * t * p1[i] + (-3 * t + 3) * t * t * p2[i] + t * t * t * p3[i];
   }
   return ret;
 }
 
 function bezierCubicDerivative(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  var p3 = points[3];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  const p3 = points[3];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = ((-3 * t + 6) * t - 3) * p0[i] + ((9 * t - 12) * t + 3) * p1[i] + (-9 * t + 6) * t * p2[i] + 3 * t * t * p3[i];
   }
   return ret;
 }
 function bezierQuadratic(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = ((t - 2) * t + 1) * p0[i] + (-2 * t + 2) * t * p1[i] + t * t * p2[i];
   }
   return ret;
 }
 function bezierQuadraticDerivative(points, elementsPerValue, t) {
-  var ret = [];
-  var p0 = points[0];
-  var p1 = points[1];
-  var p2 = points[2];
-  for(var i = 0; i < elementsPerValue; i++) {
+  const ret = [];
+  const p0 = points[0];
+  const p1 = points[1];
+  const p2 = points[2];
+  for(let i = 0; i < elementsPerValue; i++) {
     ret[i] = (2 * t - 2) * p0[i] + (-4 * t + 2) * p1[i] + 2 * t * p2[i];
   }
   return ret;
@@ -229,12 +229,12 @@ function BSplineCurve(controlPoints, knots, bits) {
   if(!knots)throw new Error();
   this.bits = bits || 0;
   this.controlPoints = controlPoints;
-  var order = knots.length - this.controlPoints.length;
+  const order = knots.length - this.controlPoints.length;
   if(order < 1 || order > this.controlPoints.length)
     throw new Error();
   BSplineCurve._checkKnots(knots, order - 1);
-  var cplen = this.controlPoints[0].length;
-  var cplenNeeded = 1;
+  const cplen = this.controlPoints[0].length;
+  let cplenNeeded = 1;
   if((this.bits & BSplineCurve.DIVIDE_BIT) !== 0) {
     cplenNeeded = 2;
   }
@@ -296,12 +296,12 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
   if(kn[i] > u)return 0;
   if(kn[i] === kn[i + d] && kn[i + d + 1] === kn[i + 1])return 0;
   if(kn[i + d + 1] < u)return 0;
-  var v1 = kn[i] === kn[i + d] ? 0 : BSplineCurve._nfunc(i, d - 1, u, kn);
-  var v2 = kn[i + d + 1] === kn[i + 1] ? 0 : BSplineCurve._nfunc(i + 1, d - 1, u, kn);
+  const v1 = kn[i] === kn[i + d] ? 0 : BSplineCurve._nfunc(i, d - 1, u, kn);
+  const v2 = kn[i + d + 1] === kn[i + 1] ? 0 : BSplineCurve._nfunc(i + 1, d - 1, u, kn);
   if(v1 + v2 === 0) {
     return 0;
   }
-  var ret = 0;
+  let ret = 0;
   if(v1 !== 0) {
     var den2 = kn[i + d] - kn[i];
     ret += (u - kn[i]) * v1 * (den2 === 0 ? 1 : 1.0 / den2);
@@ -314,8 +314,8 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
 };
 /** @ignore */
 BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
-  var multStart = 1;
-  var multEnd = 1;
+  let multStart = 1;
+  let multEnd = 1;
   for(var i = 0; i < numPoints; i++) {
     buffer[i] = 0;
   }
@@ -352,7 +352,7 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
     buffer[numPoints - 1] = 1;
 
   } else {
-    var k = -1;
+    let k = -1;
     for(i = 0; i <= kn.length; i++) {
       if(kn[i] <= t && t < kn[i + 1]) {
         k = i;
@@ -360,15 +360,15 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
       }
     }
     if(k < 0)return;
-    var numAfter = kn[k + 1] - t;
-    var knotStart = kn[k];
-    var numBefore = t - knotStart;
+    const numAfter = kn[k + 1] - t;
+    const knotStart = kn[k];
+    const numBefore = t - knotStart;
     buffer[k] = 1;
-    for(var d = 1; d <= degree; d++) {
-      var den = kn[k + 1] - kn[k - d + 1];
+    for(let d = 1; d <= degree; d++) {
+      const den = kn[k + 1] - kn[k - d + 1];
       buffer[k - d] = buffer[k - d + 1] * numAfter / den;
       for(i = k - d + 1; i < k; i++) {
-        var kni = kn[i];
+        const kni = kn[i];
         buffer[i] *= (t - kni) / (kn[i + d] - kni);
         buffer[i] += buffer[i + 1] * (kn[i + d + 1] - t) / (kn[i + d + 1] - kn[i + 1]);
       }
@@ -394,9 +394,9 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
  * }
  */
 BSplineCurve.prototype.evaluate = function(u) {
-  var ret = [];
+  let ret = [];
   if(this.fastBezier) {
-    var cp = this.controlPoints;
+    const cp = this.controlPoints;
     switch(cp.length) {
     case 1:
       ret = cp[0].slice(0, cp[0].length);
@@ -414,9 +414,9 @@ BSplineCurve.prototype.evaluate = function(u) {
       break;
     }
   } else {
-    var numPoints = this.controlPoints.length;
-    var degree = this.knots.length - numPoints - 1;
-    var elementsPerPoint = this.controlPoints[0].length;
+    const numPoints = this.controlPoints.length;
+    const degree = this.knots.length - numPoints - 1;
+    const elementsPerPoint = this.controlPoints[0].length;
     ret = null;
     if(u <= this.knots[degree]) {
       if(this.knots[degree] === this.knots[0]) {
@@ -433,12 +433,12 @@ BSplineCurve.prototype.evaluate = function(u) {
     }
 
     if(typeof ret === "undefined" || ret === null) {
-      var mult = 0;
-      var index = -1;
-      var i;
+      let mult = 0;
+      let index = -1;
+      let i;
       for(i = 0; i < this.knots.length; i++) {
-        var curKnot = this.knots[i];
-        var isThisKnot = u === curKnot;
+        const curKnot = this.knots[i];
+        const isThisKnot = u === curKnot;
         if(isThisKnot)mult++;
         if(curKnot < this.knots[i + 1]) {
           if(isThisKnot) {
@@ -455,21 +455,21 @@ BSplineCurve.prototype.evaluate = function(u) {
       if(mult === degree) {
         ret = this.controlPoints[index - degree].slice(0, elementsPerPoint);
       } else {
-        var h = degree - mult;
-        var buffer = [];
+        const h = degree - mult;
+        const buffer = [];
         for(i = index - degree; i <= index - mult; i++) {
           buffer.push(this.controlPoints[i]);
         }
-        for(var r = 1; r <= h; r++) {
-          var lastPt = buffer[r - 1];
+        for(let r = 1; r <= h; r++) {
+          let lastPt = buffer[r - 1];
           for(i = r; i < buffer.length; i++) {
-            var kindex = index - degree + i;
-            var ki = this.knots[kindex];
-            var a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
-            var thisPt = buffer[i];
-            var newPt = [];
+            const kindex = index - degree + i;
+            const ki = this.knots[kindex];
+            const a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
+            const thisPt = buffer[i];
+            const newPt = [];
             // console.log("p"+[kindex,r]+"="+(1-a)+"*p"+[kindex-1,r-1]+"+"+(a)+"*p"+[kindex,r-1])
-            for(var j = 0; j < elementsPerPoint; j++) {
+            for(let j = 0; j < elementsPerPoint; j++) {
               newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
             }
             buffer[i] = newPt;
@@ -487,10 +487,10 @@ BSplineCurve.prototype.evaluate = function(u) {
 };
 /** @ignore */
 BSplineCurve._splitKnots = function(knots, degree, u) {
-  var lastFront = -1;
-  var firstBack = -1;
-  var front = [];
-  var back = [];
+  let lastFront = -1;
+  let firstBack = -1;
+  const front = [];
+  const back = [];
   for(var i = 0; i < knots.length; i++) {
     if(knots[i] > u) {
       firstBack = i;
@@ -523,20 +523,20 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
  * will be null if <code>u</code> is at or after the end of the curve.
  */
 BSplineCurve.prototype.split = function(u) {
-  var numPoints = this.controlPoints.length;
-  var degree = this.knots.length - numPoints - 1;
-  var elementsPerPoint = this.controlPoints[0].length;
-  var i;
+  const numPoints = this.controlPoints.length;
+  const degree = this.knots.length - numPoints - 1;
+  const elementsPerPoint = this.controlPoints[0].length;
+  let i;
   if(u <= this.knots[degree]) {
     return [null, this];
   } else if(u >= this.knots[this.knots.length - 1 - degree]) {
     return [this, null];
   }
-  var mult = 0;
-  var index = -1;
+  let mult = 0;
+  let index = -1;
   for(i = 0; i < this.knots.length; i++) {
-    var curKnot = this.knots[i];
-    var isThisKnot = u === curKnot;
+    const curKnot = this.knots[i];
+    const isThisKnot = u === curKnot;
     if(isThisKnot)mult++;
     if(curKnot < this.knots[i + 1]) {
       if(isThisKnot) {
@@ -550,15 +550,15 @@ BSplineCurve.prototype.split = function(u) {
   }
   if(index < 0)throw new Error();
   if(mult > degree)throw new Error();
-  var newKnots = BSplineCurve._splitKnots(this.knots, degree, u);
-  var front = [];
-  var backPoints = [];
+  const newKnots = BSplineCurve._splitKnots(this.knots, degree, u);
+  let front = [];
+  let backPoints = [];
   if(mult === degree) {
     front = this.controlPoints.slice(0, index - degree + 1);
     backPoints = this.controlPoints.slice(index - degree, this.controlPoints.length);
   } else {
-    var h = degree - mult;
-    var buffer = [];
+    const h = degree - mult;
+    const buffer = [];
     for(i = index - degree; i <= index - mult; i++) {
       buffer.push(this.controlPoints[i]);
     }
@@ -567,16 +567,16 @@ BSplineCurve.prototype.split = function(u) {
     for(i = 0; i <= index - degree; i++) {
       front.push(this.controlPoints[i]);
     }
-    var back = [];
-    for(var r = 1; r <= h; r++) {
-      var lastPt = buffer[r - 1];
+    const back = [];
+    for(let r = 1; r <= h; r++) {
+      let lastPt = buffer[r - 1];
       for(i = r; i < buffer.length; i++) {
-        var kindex = index - degree + i;
-        var ki = this.knots[kindex];
-        var a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
-        var thisPt = buffer[i];
-        var newPt = [];
-        for(var j = 0; j < elementsPerPoint; j++) {
+        const kindex = index - degree + i;
+        const ki = this.knots[kindex];
+        const a = (u - ki) / (this.knots[kindex + degree - r + 1] - ki);
+        const thisPt = buffer[i];
+        const newPt = [];
+        for(let j = 0; j < elementsPerPoint; j++) {
           newPt[j] = lastPt[j] * (1 - a) + thisPt[j] * a;
         }
         buffer[i] = newPt;
@@ -597,8 +597,8 @@ BSplineCurve.prototype.split = function(u) {
       backPoints.push(this.controlPoints[i]);
     }
   }
-  var curve1 = new BSplineCurve(front, newKnots[0], this.bits);
-  var curve2 = new BSplineCurve(backPoints, newKnots[1], this.bits);
+  const curve1 = new BSplineCurve(front, newKnots[0], this.bits);
+  const curve2 = new BSplineCurve(backPoints, newKnots[1], this.bits);
   return [curve1, curve2];
 };
 
@@ -608,8 +608,8 @@ BSplineCurve.prototype.split = function(u) {
  * the starting and ending U coordinates, respectively, of the curve.
  */
 BSplineCurve.prototype.endPoints = function() {
-  var numPoints = this.controlPoints.length;
-  var degree = this.knots.length - numPoints - 1;
+  const numPoints = this.controlPoints.length;
+  const degree = this.knots.length - numPoints - 1;
   return [this.knots[degree], this.knots[this.knots.length - 1 - degree]];
 };
 
@@ -639,9 +639,9 @@ BSplineCurve.prototype.getKnots = function() {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineCurve.prototype.velocity = function(u) {
-  var ret = [];
+  let ret = [];
   if(this.fastBezier) {
-    var cp = this.controlPoints;
+    const cp = this.controlPoints;
     switch(cp.length) {
     case 1:
       ret = MathInternal.vecZeros(cp[0].length);
@@ -659,23 +659,23 @@ BSplineCurve.prototype.velocity = function(u) {
       break;
     }
   } else {
-    var numPoints = this.controlPoints.length;
-    var degree = this.knots.length - numPoints - 1;
-    var elementsPerPoint = this.controlPoints[0].length;
+    const numPoints = this.controlPoints.length;
+    const degree = this.knots.length - numPoints - 1;
+    const elementsPerPoint = this.controlPoints[0].length;
     BSplineCurve._getFactors(this.knots, u, degree - 1, numPoints,
       this.buffer);
-    var i, j;
-    var coeffs = [];
+    let i, j;
+    const coeffs = [];
     for(i = 0; i < numPoints; i++) {
       coeffs[i] = 0;
     }
     for(j = 0; j < numPoints - 1; j++) {
-      var pix = degree * this.buffer[j + 1] / (this.knots[j + degree + 1] - this.knots[j + 1]);
+      const pix = degree * this.buffer[j + 1] / (this.knots[j + degree + 1] - this.knots[j + 1]);
       coeffs[j + 1] += pix;
       coeffs[j] -= pix;
     }
     for(i = 0; i < elementsPerPoint; i++) {
-      var value = 0;
+      let value = 0;
       for(j = 0; j < numPoints; j++) {
         value += coeffs[j] * this.controlPoints[j][i];
       }
@@ -690,9 +690,9 @@ BSplineCurve.prototype.velocity = function(u) {
 
 /** @ignore */
 BSplineCurve._fromHomogen = function(cp) {
-  var cplen = cp.length;
-  var div = 1.0 / cp[cplen - 1];
-  for(var i = 0; i < cplen - 1; i++) {
+  const cplen = cp.length;
+  const div = 1.0 / cp[cplen - 1];
+  for(let i = 0; i < cplen - 1; i++) {
     cp[i] *= div;
   }
   cp = cp.slice(0, cplen - 1);
@@ -737,14 +737,14 @@ BSplineCurve._fromHomogen = function(cp) {
  * };
  */
 function BSplineSurface(controlPoints, knotsU, knotsV, bits) {
-  var cpoints = controlPoints;
+  const cpoints = controlPoints;
   this.bits = bits || 0;
-  var vcplen = cpoints.length;
+  const vcplen = cpoints.length;
   if(vcplen <= 0)throw new Error();
-  var ucplen = cpoints[0].length;
+  const ucplen = cpoints[0].length;
   if(ucplen <= 0)throw new Error();
-  var cplen = cpoints[0][0].length;
-  var cplenNeeded = 1;
+  const cplen = cpoints[0][0].length;
+  let cplenNeeded = 1;
   if((this.bits & BSplineCurve.DIVIDE_BIT) !== 0) {
     cplenNeeded = 2;
   }
@@ -885,13 +885,13 @@ BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
 BSplineCurve.uniformKnots = function(controlPoints, degree) {
   if(typeof controlPoints === "object")
     controlPoints = controlPoints.length;
-  var deg = typeof degree === "undefined" || degree === null ? 3 : degree;
+  const deg = typeof degree === "undefined" || degree === null ? 3 : degree;
   if(controlPoints < deg + 1)
     throw new Error("too few control points for degree " + deg + " curve");
-  var order = deg + 1;
-  var ret = [];
-  var scale = 1.0 / (controlPoints + order - 1);
-  for(var i = 0; i < controlPoints + order; i++) {
+  const order = deg + 1;
+  const ret = [];
+  const scale = 1.0 / (controlPoints + order - 1);
+  for(let i = 0; i < controlPoints + order; i++) {
     ret.push(i * scale);
   }
   return ret;
@@ -913,12 +913,12 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
 BSplineCurve.clampedKnots = function(controlPoints, degree) {
   if(typeof controlPoints === "object")
     controlPoints = controlPoints.length;
-  var deg = typeof degree === "undefined" || degree === null ? 3 : degree;
+  const deg = typeof degree === "undefined" || degree === null ? 3 : degree;
   if(controlPoints < deg + 1)
     throw new Error("too few control points for degree " + deg + " curve");
-  var order = deg + 1;
-  var extras = controlPoints - order;
-  var ret = [];
+  const order = deg + 1;
+  const extras = controlPoints - order;
+  const ret = [];
   for(var i = 0; i < order; i++) {
     ret.push(0);
   }
@@ -945,15 +945,15 @@ BSplineCurve.clampedKnots = function(controlPoints, degree) {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineSurface.prototype.evaluate = function(u, v) {
-  var elementsPerPoint = this.controlPoints[0][0].length;
-  var bu = this.bufferU;
-  var bv = this.bufferV;
-  var tt, uu, i, value;
+  const elementsPerPoint = this.controlPoints[0][0].length;
+  const bu = this.bufferU;
+  const bv = this.bufferV;
+  let tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
     this.bufferV);
-  var output = [];
+  let output = [];
   for(i = 0; i < elementsPerPoint; i++) {
     value = 0;
     for(tt = 0; tt < this.ucplen; tt++) {
@@ -995,20 +995,20 @@ BSplineSurface.prototype.getKnots = function() {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineSurface.prototype.tangent = function(u, v) {
-  var elementsPerPoint = this.controlPoints[0][0].length;
-  var bv = this.bufferV;
-  var tt, uu, i, value;
+  const elementsPerPoint = this.controlPoints[0][0].length;
+  const bv = this.bufferV;
+  let tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU - 1, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV, this.vcplen,
     this.bufferV);
-  var ret = [];
-  var coeffs = [];
+  let ret = [];
+  const coeffs = [];
   for(i = 0; i < this.ucplen; i++) {
     coeffs[i] = 0;
   }
-  for(var j = 0; j < this.ucplen - 1; j++) {
-    var pix = this.degreeU * this.bufferU[j + 1] / (this.knotsU[j + this.degreeU + 1] - this.knotsU[j + 1]);
+  for(let j = 0; j < this.ucplen - 1; j++) {
+    const pix = this.degreeU * this.bufferU[j + 1] / (this.knotsU[j + this.degreeU + 1] - this.knotsU[j + 1]);
     coeffs[j + 1] += pix;
     coeffs[j] -= pix;
   }
@@ -1036,20 +1036,20 @@ BSplineSurface.prototype.tangent = function(u, v) {
  * if DIVIDE_BIT is set), as specified in the constructor.
  */
 BSplineSurface.prototype.bitangent = function(u, v) {
-  var elementsPerPoint = this.controlPoints[0][0].length;
-  var bu = this.bufferU;
-  var tt, uu, i, value;
+  const elementsPerPoint = this.controlPoints[0][0].length;
+  const bu = this.bufferU;
+  let tt, uu, i, value;
   BSplineCurve._getFactors(this.knotsU, u, this.degreeU, this.ucplen,
     this.bufferU);
   BSplineCurve._getFactors(this.knotsV, v, this.degreeV - 1, this.vcplen,
     this.bufferV);
-  var ret = [];
-  var coeffs = [];
+  let ret = [];
+  const coeffs = [];
   for(i = 0; i < this.vcplen; i++) {
     coeffs[i] = 0;
   }
-  for(var j = 0; j < this.vcplen - 1; j++) {
-    var pix = this.degreeV * this.bufferV[j + 1] / (this.knotsV[j + this.degreeV + 1] - this.knotsV[j + 1]);
+  for(let j = 0; j < this.vcplen - 1; j++) {
+    const pix = this.degreeV * this.bufferV[j + 1] / (this.knotsV[j + this.degreeV + 1] - this.knotsV[j + 1]);
     coeffs[j + 1] += pix;
     coeffs[j] -= pix;
   }
