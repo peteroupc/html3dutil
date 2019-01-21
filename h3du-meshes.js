@@ -1,4 +1,3 @@
-/* global rso */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -503,12 +502,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   let x;
   let y;
   let k;
+  let rso;
   if(inner === 0 && loops === 1 && sweep === 360) {
     vertices = [];
     const indices = [];
     const fan = new TriangleFan(indices);
     const radius = outer * (i / loops);
-    const rso = radius / outer;
+    rso = radius / outer;
     for(k = 0; k < slices; k++) {
       x = sc[k];
       y = sc[k + 1];
@@ -521,11 +521,11 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
     height = outer - inner;
-
+    const invouter = 1.0 / outer;
     vertices = [];
     for(i = 0; i <= loops; i++) {
       radius = inner + height * (i / loops);
-      // rso = radius / outer;
+      rso = radius * invouter;
       for(k = 0; k < slp1; k++) {
         x = sc[k];
         y = sc[k + 1];

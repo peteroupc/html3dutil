@@ -1,4 +1,3 @@
-/* global den2 */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -309,12 +308,13 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
     return 0;
   }
   let ret = 0;
+  let den2;
   if(v1 !== 0) {
-    const den2 = kn[i + d] - kn[i];
+    den2 = kn[i + d] - kn[i];
     ret += (u - kn[i]) * v1 * (den2 === 0 ? 1 : 1.0 / den2);
   }
   if(v2 !== 0) {
-    // den2 = kn[i + d + 1] - kn[i + 1];
+    den2 = kn[i + d + 1] - kn[i + 1];
     ret += (kn[i + d + 1] - u) * v2 * (den2 === 0 ? 1 : 1.0 / den2);
   }
   return ret;

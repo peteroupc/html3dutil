@@ -8151,7 +8151,14 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   return this;
 };
 
-/* global den2 */
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
 
 function linear(points, elementsPerValue, t) {
   const ret = [];
@@ -8450,12 +8457,13 @@ BSplineCurve._nfunc = function(i, d, u, kn) {
     return 0;
   }
   let ret = 0;
+  let den2;
   if(v1 !== 0) {
-    const den2 = kn[i + d] - kn[i];
+    den2 = kn[i + d] - kn[i];
     ret += (u - kn[i]) * v1 * (den2 === 0 ? 1 : 1.0 / den2);
   }
   if(v2 !== 0) {
-    // den2 = kn[i + d + 1] - kn[i + 1];
+    den2 = kn[i + d + 1] - kn[i + 1];
     ret += (kn[i + d + 1] - u) * v2 * (den2 === 0 ? 1 : 1.0 / den2);
   }
   return ret;
@@ -9720,7 +9728,14 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   return new PiecewiseCurve(curves);
 };
 
-/* global bx, by, tx, ty */
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
 
 /** @ignore
  * @private
@@ -10543,6 +10558,8 @@ GraphicsPath.prototype.getBounds = function() {
     const y1 = s[2];
     let x2 = endpt[0];
     let y2 = endpt[1];
+    let bx;
+    let by;
     if(first) {
       ret[0] = Math.min(x1, x2);
       ret[1] = Math.min(y1, y2);
@@ -10574,8 +10591,8 @@ GraphicsPath.prototype.getBounds = function() {
       if(denomX !== 0 || denomY !== 0) {
         ax = x1 - 2 * s[3] + s[5];
         ay = y1 - 2 * s[4] + s[6];
-        let bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
-        let by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
+        bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
+        by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
         if(bx >= 0 && denomX !== 0) {
           bx = Math.sqrt(bx);
           GraphicsPath._accBounds(ret, s, (ax - bx) / denomX);
@@ -10611,8 +10628,8 @@ GraphicsPath.prototype.getBounds = function() {
           sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
           ax = cosp * rx;
           ay = sinp * rx;
-          // bx = -sinp * ry;
-          // by = cosp * ry;
+          bx = -sinp * ry;
+          by = cosp * ry;
           distx = Math.sqrt(ax * ax + bx * bx);
           disty = Math.sqrt(ay * ay + by * by);
         }
@@ -10835,12 +10852,14 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       }
       oldpos = GraphicsPath._endPoint(segThis);
     }
+    let tx;
+    let ty;
     if(segThis[0] === GraphicsPath.QUAD) {
       tmpThis[0] = GraphicsPath.CUBIC;
       tmpThis[1] = segThis[1];
       tmpThis[2] = segThis[2];
-      const tx = 2 * segThis[3];
-      const ty = 2 * segThis[4];
+      tx = 2 * segThis[3];
+      ty = 2 * segThis[4];
       tmpThis[3] = (segThis[1] + tx) / 3;
       tmpThis[4] = (segThis[2] + ty) / 3;
       tmpThis[5] = (segThis[5] + tx) / 3;
@@ -10853,8 +10872,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       tmpOther[0] = GraphicsPath.CUBIC;
       tmpOther[1] = segOther[1];
       tmpOther[2] = segOther[2];
-      // tx = 2 * segOther[3];
-      // ty = 2 * segOther[4];
+      tx = 2 * segOther[3];
+      ty = 2 * segOther[4];
       tmpOther[3] = (segOther[1] + tx) / 3;
       tmpOther[4] = (segOther[2] + ty) / 3;
       tmpOther[5] = (segOther[5] + tx) / 3;
@@ -15144,7 +15163,14 @@ ShapeGroup.prototype.setScale = function(x, y, z) {
   return this;
 };
 
-/* global rso */
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids.<p>
@@ -15638,12 +15664,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   let x;
   let y;
   let k;
+  let rso;
   if(inner === 0 && loops === 1 && sweep === 360) {
     vertices = [];
     const indices = [];
     const fan = new TriangleFan(indices);
     const radius = outer * (i / loops);
-    const rso = radius / outer;
+    rso = radius / outer;
     for(k = 0; k < slices; k++) {
       x = sc[k];
       y = sc[k + 1];
@@ -15656,11 +15683,11 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
     return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
   } else {
     height = outer - inner;
-
+    const invouter = 1.0 / outer;
     vertices = [];
     for(i = 0; i <= loops; i++) {
       radius = inner + height * (i / loops);
-      // rso = radius / outer;
+      rso = radius * invouter;
       for(k = 0; k < slp1; k++) {
         x = sc[k];
         y = sc[k + 1];

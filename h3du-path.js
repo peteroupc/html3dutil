@@ -1,4 +1,3 @@
-/* global bx, by, tx, ty */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -835,6 +834,8 @@ GraphicsPath.prototype.getBounds = function() {
     const y1 = s[2];
     let x2 = endpt[0];
     let y2 = endpt[1];
+    let bx;
+    let by;
     if(first) {
       ret[0] = Math.min(x1, x2);
       ret[1] = Math.min(y1, y2);
@@ -866,8 +867,8 @@ GraphicsPath.prototype.getBounds = function() {
       if(denomX !== 0 || denomY !== 0) {
         ax = x1 - 2 * s[3] + s[5];
         ay = y1 - 2 * s[4] + s[6];
-        let bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
-        let by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
+        bx = s[3] * s[3] + s[5] * s[5] - s[5] * (x1 + s[3]) + x2 * (x1 - s[3]);
+        by = s[4] * s[4] + s[6] * s[6] - s[6] * (y1 + s[4]) + y2 * (y1 - s[4]);
         if(bx >= 0 && denomX !== 0) {
           bx = Math.sqrt(bx);
           GraphicsPath._accBounds(ret, s, (ax - bx) / denomX);
@@ -903,8 +904,8 @@ GraphicsPath.prototype.getBounds = function() {
           sinp = rot >= 0 && rot < 6.283185307179586 ? rot <= 3.141592653589793 ? Math.sqrt(1.0 - cosp * cosp) : -Math.sqrt(1.0 - cosp * cosp) : Math.sin(rot);
           ax = cosp * rx;
           ay = sinp * rx;
-          // bx = -sinp * ry;
-          // by = cosp * ry;
+          bx = -sinp * ry;
+          by = cosp * ry;
           distx = Math.sqrt(ax * ax + bx * bx);
           disty = Math.sqrt(ay * ay + by * by);
         }
@@ -1127,12 +1128,14 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       }
       oldpos = GraphicsPath._endPoint(segThis);
     }
+    let tx;
+    let ty;
     if(segThis[0] === GraphicsPath.QUAD) {
       tmpThis[0] = GraphicsPath.CUBIC;
       tmpThis[1] = segThis[1];
       tmpThis[2] = segThis[2];
-      const tx = 2 * segThis[3];
-      const ty = 2 * segThis[4];
+      tx = 2 * segThis[3];
+      ty = 2 * segThis[4];
       tmpThis[3] = (segThis[1] + tx) / 3;
       tmpThis[4] = (segThis[2] + ty) / 3;
       tmpThis[5] = (segThis[5] + tx) / 3;
@@ -1145,8 +1148,8 @@ GraphicsPath.prototype.interpolate = function(other, t) {
       tmpOther[0] = GraphicsPath.CUBIC;
       tmpOther[1] = segOther[1];
       tmpOther[2] = segOther[2];
-      // tx = 2 * segOther[3];
-      // ty = 2 * segOther[4];
+      tx = 2 * segOther[3];
+      ty = 2 * segOther[4];
       tmpOther[3] = (segOther[1] + tx) / 3;
       tmpOther[4] = (segOther[2] + ty) / 3;
       tmpOther[5] = (segOther[5] + tx) / 3;
