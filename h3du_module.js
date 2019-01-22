@@ -6271,7 +6271,7 @@ Semantic.JOINTMATRIX = 108;
  * of vertex indices to null.
  * @constructor
  * @memberof H3DU
- * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). This example requires the three.js library.</caption>
+ * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.</caption>
  * function toBufferGeometry(mesh) {
  * var p=mesh.getAttribute("POSITION")
  * var n=mesh.getAttribute("NORMAL")
@@ -7510,7 +7510,7 @@ CurveBuilder._addValue = function(a, value) {
   for (i = 0; i < mm; i++) {
     a[3].push(value[i]);
   }
-  for(mm; i < a[2]; i++) {
+  for(i = mm; i < a[2]; i++) {
     a[3].push(0);
   }
 };
@@ -8403,7 +8403,7 @@ function BSplineCurve(controlPoints, knots, bits) {
         break;
       }
     }
-    for(order; this.fastBezier && i < knots.length; i++) {
+    for(i = order; this.fastBezier && i < knots.length; i++) {
       if(knots[i] !== 1) {
         this.fastBezier = false;
         break;
@@ -8434,7 +8434,7 @@ BSplineCurve._checkKnots = function(knots, degree) {
     if(knots[i] < knots[i - 1])
       throw new Error();
   }
-  for(1; i < knots.length - 2 - degree; i++) {
+  for(i = 1; i < knots.length - 2 - degree; i++) {
     if(knots[i + degree] <= knots[i])
       throw new Error();
   }
@@ -8476,14 +8476,14 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
   for (i = 0; i < numPoints; i++) {
     buffer[i] = 0;
   }
-  for(1; i < kn.length; i++) {
+  for(i = 1; i < kn.length; i++) {
     if(kn[i] === kn[0]) {
       multStart += 1;
     } else {
       break;
     }
   }
-  for(kn.length - 2; i >= 0; i--) {
+  for(i = kn.length - 2; i >= 0; i--) {
     if(kn[i] === kn[kn.length - 1]) {
       multEnd += 1;
     } else {
@@ -8527,7 +8527,7 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
     for (d = 1; d <= degree; d++) {
       const den = kn[k + 1] - kn[k - d + 1];
       buffer[k - d] = buffer[k - d + 1] * numAfter / den;
-      for(k - d + 1; i < k; i++) {
+      for(i = k - d + 1; i < k; i++) {
         const kni = kn[i];
         buffer[i] *= (t - kni) / (kn[i + d] - kni);
         buffer[i] += buffer[i + 1] * (kn[i + d + 1] - t) / (kn[i + d + 1] - kn[i + 1]);
@@ -8672,7 +8672,7 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
     front.push(u);
     back.push(u);
   }
-  for(firstBack; i < knots.length; i++) {
+  for(i = firstBack; i < knots.length; i++) {
     back.push(knots[i]);
   }
   return [front, back];
@@ -9916,7 +9916,9 @@ LineCurve.prototype.arcLength = function(u) {
   return ret;
 };
 
-/** @ignore */
+/** @ignore
+ * @constructor
+ */
 function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
   this.x1 = x1;
   this.x2 = x2;
@@ -14672,8 +14674,6 @@ const Shape = function(mesh) {
 Shape.prototype.getMeshBuffer = function() {
   return this.meshBuffer;
 };
-/** @ignore */
-Shape._meshBufferWarning = false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.

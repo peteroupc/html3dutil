@@ -254,7 +254,7 @@ function BSplineCurve(controlPoints, knots, bits) {
         break;
       }
     }
-    for(order; this.fastBezier && i < knots.length; i++) {
+    for(i = order; this.fastBezier && i < knots.length; i++) {
       if(knots[i] !== 1) {
         this.fastBezier = false;
         break;
@@ -285,7 +285,7 @@ BSplineCurve._checkKnots = function(knots, degree) {
     if(knots[i] < knots[i - 1])
       throw new Error();
   }
-  for(1; i < knots.length - 2 - degree; i++) {
+  for(i = 1; i < knots.length - 2 - degree; i++) {
     if(knots[i + degree] <= knots[i])
       throw new Error();
   }
@@ -327,14 +327,14 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
   for (i = 0; i < numPoints; i++) {
     buffer[i] = 0;
   }
-  for(1; i < kn.length; i++) {
+  for(i = 1; i < kn.length; i++) {
     if(kn[i] === kn[0]) {
       multStart += 1;
     } else {
       break;
     }
   }
-  for(kn.length - 2; i >= 0; i--) {
+  for(i = kn.length - 2; i >= 0; i--) {
     if(kn[i] === kn[kn.length - 1]) {
       multEnd += 1;
     } else {
@@ -378,7 +378,7 @@ BSplineCurve._getFactors = function(kn, t, degree, numPoints, buffer) {
     for (d = 1; d <= degree; d++) {
       const den = kn[k + 1] - kn[k - d + 1];
       buffer[k - d] = buffer[k - d + 1] * numAfter / den;
-      for(k - d + 1; i < k; i++) {
+      for(i = k - d + 1; i < k; i++) {
         const kni = kn[i];
         buffer[i] *= (t - kni) / (kn[i + d] - kni);
         buffer[i] += buffer[i + 1] * (kn[i + d + 1] - t) / (kn[i + d + 1] - kn[i + 1]);
@@ -523,7 +523,7 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
     front.push(u);
     back.push(u);
   }
-  for(firstBack; i < knots.length; i++) {
+  for(i = firstBack; i < knots.length; i++) {
     back.push(knots[i]);
   }
   return [front, back];

@@ -101,7 +101,7 @@ CurveBuilder._addValue = function(a, value) {
   for (i = 0; i < mm; i++) {
     a[3].push(value[i]);
   }
-  for(mm; i < a[2]; i++) {
+  for(i = mm; i < a[2]; i++) {
     a[3].push(0);
   }
 };

@@ -192,7 +192,9 @@ LineCurve.prototype.arcLength = function(u) {
   return ret;
 };
 
-/** @ignore */
+/** @ignore
+ * @constructor
+ */
 function ArcCurve(x1, y1, x2, y2, rx, ry, rot, cx, cy, theta, delta) {
   this.x1 = x1;
   this.x2 = x2;

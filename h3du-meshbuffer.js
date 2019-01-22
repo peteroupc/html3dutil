@@ -24,7 +24,7 @@ import {toGLColor} from "./h3du-misc";
  * of vertex indices to null.
  * @constructor
  * @memberof H3DU
- * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). This example requires the three.js library.</caption>
+ * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.</caption>
  * function toBufferGeometry(mesh) {
  * var p=mesh.getAttribute("POSITION")
  * var n=mesh.getAttribute("NORMAL")

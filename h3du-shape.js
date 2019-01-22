@@ -6,7 +6,6 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global console */
 
 import {MathUtil} from "./h3du-math";
 import {Transform} from "./h3du-transform";
@@ -38,8 +37,6 @@ export const Shape = function(mesh) {
 Shape.prototype.getMeshBuffer = function() {
   return this.meshBuffer;
 };
-/** @ignore */
-Shape._meshBufferWarning = false;
 /**
  * Gets the number of vertices composed by
  * all shapes in this scene.
