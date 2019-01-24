@@ -20,6 +20,7 @@ or in the reverse order around
 * [GlobalRollYawPitch](#H3DU.MathUtil.GlobalRollYawPitch)<br>Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 * [GlobalYawPitchRoll](#H3DU.MathUtil.GlobalYawPitchRoll)<br>Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 * [GlobalYawRollPitch](#H3DU.MathUtil.GlobalYawRollPitch)<br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
+* [HalfPi](#H3DU.MathUtil.HalfPi)<br>Closest approximation to pi divided by 2, or a 90-degree turn in radians.
 * [LocalPitchRollYaw](#H3DU.MathUtil.LocalPitchRollYaw)<br>Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
 * [LocalPitchYawRoll](#H3DU.MathUtil.LocalPitchYawRoll)<br>Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
@@ -32,6 +33,15 @@ occur around the rotated object's new axes and not necessarily the original axes
 occur around the rotated object's new axes and not necessarily the original axes.
 * [LocalYawRollPitch](#H3DU.MathUtil.LocalYawRollPitch)<br>Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
+* [Num180DividedByPi](#H3DU.MathUtil.Num180DividedByPi)<br>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian.
+* [PiDividedBy180](#H3DU.MathUtil.PiDividedBy180)<br>Closest approximation to pi divided by 180, or the number
+of radians in a degree.
+* [PiTimes2](#H3DU.MathUtil.PiTimes2)<br>Closest approximation to pi times 2, or a 360-degree turn in radians.
+* [ToDegrees](#H3DU.MathUtil.ToDegrees)<br>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian.
+* [ToRadians](#H3DU.MathUtil.ToRadians)<br>Closest approximation to pi divided by 180, or the number
+of radians in a degree.
 
 ### Methods
 
@@ -322,6 +332,13 @@ Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each 
 
 Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
+<a name='H3DU.MathUtil.HalfPi'></a>
+### H3DU.MathUtil.HalfPi (constant)
+
+Closest approximation to pi divided by 2, or a 90-degree turn in radians.
+
+Default Value: `1.5707963267948966`
+
 <a name='H3DU.MathUtil.LocalPitchRollYaw'></a>
 ### H3DU.MathUtil.LocalPitchRollYaw (constant)
 
@@ -357,6 +374,41 @@ occur around the rotated object's new axes and not necessarily the original axes
 
 Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
+
+<a name='H3DU.MathUtil.Num180DividedByPi'></a>
+### H3DU.MathUtil.Num180DividedByPi (constant)
+
+Closest approximation to 180 divided by pi, or the number of
+degrees in a radian. Multiply by this number to convert radians to degrees.
+
+Default Value: `57.29577951308232`
+
+<a name='H3DU.MathUtil.PiDividedBy180'></a>
+### H3DU.MathUtil.PiDividedBy180 (constant)
+
+Closest approximation to pi divided by 180, or the number
+of radians in a degree. Multiply by this number to convert degrees to radians.
+
+Default Value: `0.017453292519943295`
+
+<a name='H3DU.MathUtil.PiTimes2'></a>
+### H3DU.MathUtil.PiTimes2 (constant)
+
+Closest approximation to pi times 2, or a 360-degree turn in radians.
+
+Default Value: `6.283185307179586`
+
+<a name='H3DU.MathUtil.ToDegrees'></a>
+### H3DU.MathUtil.ToDegrees (constant)
+
+Closest approximation to 180 divided by pi, or the number of
+degrees in a radian. Multiply by this number to convert radians to degrees.
+
+<a name='H3DU.MathUtil.ToRadians'></a>
+### H3DU.MathUtil.ToRadians (constant)
+
+Closest approximation to pi divided by 180, or the number
+of radians in a degree. Multiply by this number to convert degrees to radians.
 
 <a name='H3DU.MathUtil.boxCenter'></a>
 ### (static) H3DU.MathUtil.boxCenter(box)

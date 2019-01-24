@@ -174,6 +174,12 @@ have the same path as the original curve.
     // fromBezierCurve method:
     // var curve=BSplineCurve.fromBezierCurve(newControlPoints);
 
+### Members
+
+* [DIVIDE_BIT](#H3DU.BSplineCurve.DIVIDE_BIT)<br>Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate.
+
 ### Methods
 
 * [clamped](#H3DU.BSplineCurve.clamped)<br>Creates a B-spline curve with uniform knots, except that
@@ -199,6 +205,20 @@ in this curve object.
 passed to the BSplineCurve or BSplineCurve constructor.
 * [velocity](#H3DU.BSplineCurve_velocity)<br>Finds the velocity (derivative) of
 this curve at the given point.
+
+<a name='H3DU.BSplineCurve.DIVIDE_BIT'></a>
+### H3DU.BSplineCurve.DIVIDE_BIT (constant)
+
+Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate. This is used to convert
+homogeneous coordinates to conventional coordinates.
+If this bit is set, the length of each control point must be at least 2.
+
+A B-spline curve that has control points whose last coordinate is other than
+1 is a <i>rational</i> B-spline curve.
+
+Default Value: `2`
 
 <a name='H3DU.BSplineCurve.clamped'></a>
 ### (static) H3DU.BSplineCurve.clamped(controlPoints, [degree], [bits])

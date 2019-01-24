@@ -3,7 +3,7 @@
 events.
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
-library. <p><h4> Parameters</h4><ul><li><code>element</code> (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application's HTML document.</ul><h3> Members</h3><ul><li><a href='#extras_camera_InputTracker_deltaXY'>deltaXY</a><br><b>Deprecated: Yes</b><li><a href='#extras_camera_InputTracker_leftButton'>leftButton</a><br>True if the left mouse button was detected as being down.<li><a href='#extras_camera_InputTracker_middleButton'>middleButton</a><br>True if the middle mouse button was detected as being down.<li><a href='#extras_camera_InputTracker_rightButton'>rightButton</a><br>True if the right mouse button was detected as being down.</ul><h3> Methods</h3><ul><li><a href='#extras_camera_InputTracker_dispose'>dispose</a><br>Disposes all resources used by this input tracker.<li><a href='#extras_camera_InputTracker_getKey'>getKey</a><br>Gets whether a key is pressed, as detected by this
+library. <p><h4> Parameters</h4><ul><li><code>element</code> (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application's HTML document.</ul><h3> Members</h3><ul><li><a href='#extras_camera_InputTracker.A'>A</a><br>Key code for the A key.<li><a href='#extras_camera_InputTracker.ADD'>ADD</a><br>Key code for the plus key.<li><a href='#extras_camera_InputTracker.ALT'>ALT</a><br>Key code for the return key.<li><a href='#extras_camera_InputTracker.CTRL'>CTRL</a><br>Key code for the return key.<li><a href='#extras_camera_InputTracker.DELETE'>DELETE</a><br>Key code for the delete key.<li><a href='#extras_camera_InputTracker.DOWN'>DOWN</a><br>Key code for the down arrow key.<li><a href='#extras_camera_InputTracker.END'>END</a><br>Key code for the end key.<li><a href='#extras_camera_InputTracker.ENTER'>ENTER</a><br>Key code for the enter key.<li><a href='#extras_camera_InputTracker.ESC'>ESC</a><br>Key code for the return key.<li><a href='#extras_camera_InputTracker.HOME'>HOME</a><br>Key code for the home key.<li><a href='#extras_camera_InputTracker.LEFT'>LEFT</a><br>Key code for the left arrow key.<li><a href='#extras_camera_InputTracker.PAGEDOWN'>PAGEDOWN</a><br>Key code for the page down key.<li><a href='#extras_camera_InputTracker.PAGEUP'>PAGEUP</a><br>Key code for the page up key.<li><a href='#extras_camera_InputTracker.RETURN'>RETURN</a><br>Key code for the return key.<li><a href='#extras_camera_InputTracker.RIGHT'>RIGHT</a><br>Key code for the right arrow key.<li><a href='#extras_camera_InputTracker.SHIFT'>SHIFT</a><br>Key code for the shift key.<li><a href='#extras_camera_InputTracker.SPACE'>SPACE</a><br>Key code for the space bar.<li><a href='#extras_camera_InputTracker.SUBTRACT'>SUBTRACT</a><br>Key code for the minus key.<li><a href='#extras_camera_InputTracker.TAB'>TAB</a><br>Key code for the tab key.<li><a href='#extras_camera_InputTracker.UP'>UP</a><br>Key code for the up arrow key.<li><a href='#extras_camera_InputTracker.ZERO'>ZERO</a><br>Key code for the 0 key.<li><a href='#extras_camera_InputTracker_deltaXY'>deltaXY</a><br><b>Deprecated: Yes</b><li><a href='#extras_camera_InputTracker_leftButton'>leftButton</a><br>True if the left mouse button was detected as being down.<li><a href='#extras_camera_InputTracker_middleButton'>middleButton</a><br>True if the middle mouse button was detected as being down.<li><a href='#extras_camera_InputTracker_rightButton'>rightButton</a><br>True if the right mouse button was detected as being down.</ul><h3> Methods</h3><ul><li><a href='#extras_camera_InputTracker_dispose'>dispose</a><br>Disposes all resources used by this input tracker.<li><a href='#extras_camera_InputTracker_getKey'>getKey</a><br>Gets whether a key is pressed, as detected by this
 input tracker.<li><a href='#extras_camera_InputTracker_mousePos'>mousePos</a><br>Returns the current mouse position, delta
 mouse position, and delta mouse wheel
 position (see the "update" method).<li><a href='#extras_camera_InputTracker_mousewheel'>mousewheel</a><br><b>Deprecated: Will be removed in the future. Use the
@@ -13,7 +13,114 @@ the page's client area, as detected by the input
 tracker and calculates the "delta mouse position",
 or the difference between
 those values and the values they had the last
-time this method was called.</ul><a name='extras_camera_InputTracker_deltaXY'></a>
+time this method was called.</ul><a name='extras_camera_InputTracker.A'></a>
+<h3> module:extras/camera~InputTracker.A (constant)
+
+</h3>Key code for the A key. Add 1 through 25 to get
+the keys for the other letters of the English alphabet.
+
+<p>Default Value: <code>65</code></p><a name='extras_camera_InputTracker.ADD'></a>
+<h3> module:extras/camera~InputTracker.ADD (constant)
+
+</h3>Key code for the plus key.
+
+<p>Default Value: <code>107</code></p><a name='extras_camera_InputTracker.ALT'></a>
+<h3> module:extras/camera~InputTracker.ALT (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>18</code></p><a name='extras_camera_InputTracker.CTRL'></a>
+<h3> module:extras/camera~InputTracker.CTRL (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>17</code></p><a name='extras_camera_InputTracker.DELETE'></a>
+<h3> module:extras/camera~InputTracker.DELETE (constant)
+
+</h3>Key code for the delete key.
+
+<p>Default Value: <code>46</code></p><a name='extras_camera_InputTracker.DOWN'></a>
+<h3> module:extras/camera~InputTracker.DOWN (constant)
+
+</h3>Key code for the down arrow key.
+
+<p>Default Value: <code>40</code></p><a name='extras_camera_InputTracker.END'></a>
+<h3> module:extras/camera~InputTracker.END (constant)
+
+</h3>Key code for the end key.
+
+<p>Default Value: <code>35</code></p><a name='extras_camera_InputTracker.ENTER'></a>
+<h3> module:extras/camera~InputTracker.ENTER (constant)
+
+</h3>Key code for the enter key.
+
+<p>Default Value: <code>13</code></p><a name='extras_camera_InputTracker.ESC'></a>
+<h3> module:extras/camera~InputTracker.ESC (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>27</code></p><a name='extras_camera_InputTracker.HOME'></a>
+<h3> module:extras/camera~InputTracker.HOME (constant)
+
+</h3>Key code for the home key.
+
+<p>Default Value: <code>36</code></p><a name='extras_camera_InputTracker.LEFT'></a>
+<h3> module:extras/camera~InputTracker.LEFT (constant)
+
+</h3>Key code for the left arrow key.
+
+<p>Default Value: <code>37</code></p><a name='extras_camera_InputTracker.PAGEDOWN'></a>
+<h3> module:extras/camera~InputTracker.PAGEDOWN (constant)
+
+</h3>Key code for the page down key.
+
+<p>Default Value: <code>34</code></p><a name='extras_camera_InputTracker.PAGEUP'></a>
+<h3> module:extras/camera~InputTracker.PAGEUP (constant)
+
+</h3>Key code for the page up key.
+
+<p>Default Value: <code>33</code></p><a name='extras_camera_InputTracker.RETURN'></a>
+<h3> module:extras/camera~InputTracker.RETURN (constant)
+
+</h3>Key code for the return key.
+
+<p>Default Value: <code>10</code></p><a name='extras_camera_InputTracker.RIGHT'></a>
+<h3> module:extras/camera~InputTracker.RIGHT (constant)
+
+</h3>Key code for the right arrow key.
+
+<p>Default Value: <code>39</code></p><a name='extras_camera_InputTracker.SHIFT'></a>
+<h3> module:extras/camera~InputTracker.SHIFT (constant)
+
+</h3>Key code for the shift key.
+
+<p>Default Value: <code>16</code></p><a name='extras_camera_InputTracker.SPACE'></a>
+<h3> module:extras/camera~InputTracker.SPACE (constant)
+
+</h3>Key code for the space bar.
+
+<p>Default Value: <code>32</code></p><a name='extras_camera_InputTracker.SUBTRACT'></a>
+<h3> module:extras/camera~InputTracker.SUBTRACT (constant)
+
+</h3>Key code for the minus key.
+
+<p>Default Value: <code>109</code></p><a name='extras_camera_InputTracker.TAB'></a>
+<h3> module:extras/camera~InputTracker.TAB (constant)
+
+</h3>Key code for the tab key.
+
+<p>Default Value: <code>9</code></p><a name='extras_camera_InputTracker.UP'></a>
+<h3> module:extras/camera~InputTracker.UP (constant)
+
+</h3>Key code for the up arrow key.
+
+<p>Default Value: <code>38</code></p><a name='extras_camera_InputTracker.ZERO'></a>
+<h3> module:extras/camera~InputTracker.ZERO (constant)
+
+</h3>Key code for the 0 key. Add 1 through 9 to get
+the keys for the other basic digits 1 through 9.
+
+<p>Default Value: <code>48</code></p><a name='extras_camera_InputTracker_deltaXY'></a>
 <h3> module:extras/camera~InputTracker#deltaXY
 
 </h3><p><b>Deprecated: Yes</b></p>An alias for InputTracker#mousePos.

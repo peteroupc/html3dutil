@@ -42,16 +42,15 @@ and their transformed _window coordinates_ when rendering things on the screen.
 <a id=Projection_Transform></a>
 ## Projection Transform
 
-A _projection matrix_ transforms coordinates in eye space to _clip space_.
+A _projection transform_ (usually in the form of a _projection matrix_) transforms coordinates in eye space to _clip space_.
 
 Two commonly used projections in 3D graphics are the perspective projection and
-orthographic projection, described below. (Other kinds of projections, such as oblique projections and isometric projections, are not treated here.)
+orthographic projection, described below. (Other kinds of projections, such as oblique projections, isometric projections, and nonlinear projection functions, are not treated here.)
 
 <a id=Perspective_Projection></a>
 ### Perspective Projection
 
-A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects
-look bigger than more distant objects with the same size, making the
+A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the
 projection similar to how our eyes see the world.
 
 ![**Two rows of spheres, and a drawing of a perspective view volume.**](persp1.png)
@@ -73,10 +72,7 @@ Note further that:
 * The angle separating the top and bottom clipping planes is the projection's _field of view_. This angle is similar to the aperture of a camera. The greater the vertical field of view, the greater the vertical visibility range.
 * In a perspective projection, the view volume will resemble a "pyramid" with the top chopped off (a _frustum_). The near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.
 
-The perspective projection converts 3D coordinates to 4-element vectors in _clip space_.
-However, this is not the whole story, since in general, lines that are parallel in world space
-will not appear parallel in a perspective projection, so additional math is needed to
-achieve the perspective effect. This will be [**explained later**](#Vertex Coordinates in the Graphics System).
+The perspective projection converts 3D coordinates to 4-element vectors in _clip space_. However, this is not the whole story, since in general, lines that are parallel in world space will not appear parallel in a perspective projection, so additional math is needed to achieve the perspective effect. This will be [**explained later**](#Vertex Coordinates in the Graphics System).
 
 The following methods define a perspective projection.
 

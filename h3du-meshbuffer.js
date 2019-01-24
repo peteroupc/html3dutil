@@ -21,7 +21,9 @@ import {toGLColor} from "./h3du-misc";
  * vertex normals, and texture coordinates. A mesh buffer
  * can store vertices that make up triangles, line segments, or points.<p>
  * This constructor creates an empty mesh buffer and sets the array
- * of vertex indices to null.
+ * of vertex indices to null.<p>
+ * The `MeshBuffer` class contains four methods (`fromPositions`,
+ * `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.
  * @constructor
  * @memberof H3DU
  * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.</caption>
@@ -235,7 +237,7 @@ MeshBuffer.prototype.getIndex = function(indicesIndex) {
  * @returns {BufferAccessor} A vertex buffer accessor, or null
  * if the attribute doesn't exist.
  * @example <caption>The following function gets the positions,
- * normals, texture coordinates, and colors of each primitive
+ * normals, [texture coordinates]{@link H3DU.Semantic.TEXCOORD} and colors of each primitive
  * (line, text, or point) in the mesh buffer. A point will have one
  * vertex per primitive, a line two vertices and a triangle three.
  * The attributes, if present, will be stored in the "position",
@@ -317,8 +319,22 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * array's length must be divisible by 3; every 3 elements are the
  * X, Y, and Z coordinates, in that order, of one vertex.
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
- * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
+ * @example <caption>The following example shows how to define a mesh
+ * buffer from a predefined array of vertex positions.</caption>
+ * // First, create an array of numbers giving the X, Y, and
+ * // Z coordinate for each vertex position. Here, three vertices
+ * // are defined.
+ * var vertices = [x1, y1, z1, x2, y2, z2, x3, y3, z3 ];
+ * // Second -- and this is optional -- create a second array of numbers
+ * // giving the indices to vertices defined in the previous step.
+ * // Each index refers to the (n+1)th vertex; since 3 vertices
+ * // were defined, the highest index is 2.
+ * var indices = [0, 1, 2];
+ * // Finally, create the mesh buffer. (If there are no indices,
+ * // leave out the "indices" argument.)
+ * var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
  */
 MeshBuffer.fromPositions = function(vertices, indices) {
   const vertarray = new Float32Array(vertices);
@@ -335,8 +351,26 @@ MeshBuffer.fromPositions = function(vertices, indices) {
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
- * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
+ * @example <caption>The following example shows how to define a mesh
+ * buffer from a predefined array of vertex positions and normals.</caption>
+ * // First, create an array of numbers giving the X, Y, and
+ * // Z coordinate for each vertex position and normal. Here, three vertices
+ * // are defined. For each vertex, the position is given, followed by
+ * // the normal.
+ * var vertices = [
+ * x1, y1, z1, nx1, ny1, nz1,
+ * x2, y2, z2, nx2, ny2, nz2,
+ * x3, y3, z3, nx3, ny3, nz3 ];
+ * // Second -- and this is optional -- create a second array of numbers
+ * // giving the indices to vertices defined in the previous step.
+ * // Each index refers to the (n+1)th vertex; since 3 vertices
+ * // were defined, the highest index is 2.
+ * var indices = [0, 1, 2];
+ * // Finally, create the mesh buffer. (If there are no indices,
+ * // leave out the "indices" argument.)
+ * var meshBuffer=MeshBuffer.fromPositionsNormals(vertices, indices);
  */
 MeshBuffer.fromPositionsNormals = function(vertices, indices) {
   const vertarray = new Float32Array(vertices);
@@ -353,10 +387,30 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
- * <li>U and V texture coordinates, in that order, of the vertex.</ol>
+ * <li>U and V [texture coordinates]{@link H3DU.Semantic.TEXCOORD} in that order, of the vertex.</ol>
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
- * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
+ * @example <caption>The following example shows how to define a mesh
+ * buffer from a predefined array of vertex positions, normals,
+ * and texture cordinates.</caption>
+ * // First, create an array of numbers giving the X, Y, and
+ * // Z coordinate for each vertex position, normal, and associated
+ * // texture coordinates. Here, three vertices
+ * // are defined. For each vertex, the position is given, followed by
+ * // the normal, followed by the texture coordinates.
+ * var vertices = [
+ * x1, y1, z1, nx1, ny1, nz1, u1, v1,
+ * x2, y2, z2, nx2, ny2, nz2, u2, v2,
+ * x3, y3, z3, nx3, ny3, nz3, u3, v3 ];
+ * // Second -- and this is optional -- create a second array of numbers
+ * // giving the indices to vertices defined in the previous step.
+ * // Each index refers to the (n+1)th vertex; since 3 vertices
+ * // were defined, the highest index is 2.
+ * var indices = [0, 1, 2];
+ * // Finally, create the mesh buffer. (If there are no indices,
+ * // leave out the "indices" argument.)
+ * var meshBuffer=MeshBuffer.fromPositionsNormalsUV(vertices, indices);
  */
 MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
   const vertarray = new Float32Array(vertices);
@@ -373,10 +427,30 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
  * array's length must be divisible by 5; every 5 elements describe
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
- * <li>U and V texture coordinates, in that order, of the vertex.</ol>
+ * <li>U and V [texture coordinates]{@link H3DU.Semantic.TEXCOORD} in that order, of the vertex.</ol>
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
- * that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
+ * @example <caption>The following example shows how to define a mesh
+ * buffer from a predefined array of vertex positions, normals,
+ * and texture cordinates.</caption>
+ * // First, create an array of numbers giving the X, Y, and
+ * // Z coordinate for each vertex position and associated
+ * // texture coordinates. Here, three vertices
+ * // are defined. For each vertex, the position is given, followed by
+ * // the texture coordinates.
+ * var vertices = [
+ * x1, y1, z1, u1, v1,
+ * x2, y2, z2, u2, v2,
+ * x3, y3, z3, u3, v3 ];
+ * // Second -- and this is optional -- create a second array of numbers
+ * // giving the indices to vertices defined in the previous step.
+ * // Each index refers to the (n+1)th vertex; since 3 vertices
+ * // were defined, the highest index is 2.
+ * var indices = [0, 1, 2];
+ * // Finally, create the mesh buffer. (If there are no indices,
+ * // leave out the "indices" argument.)
+ * var meshBuffer=MeshBuffer.fromPositionsUV(vertices, indices);
  */
 MeshBuffer.fromPositionsUV = function(vertices, indices) {
   const vertarray = new Float32Array(vertices);
@@ -781,25 +855,31 @@ MeshBuffer.prototype._countPerValue = function(sem) {
 };
 
 /**
- * Recalculates the normal vectors for triangles
- * in this mesh. For this to properly affect shading, each triangle in
- * the mesh must have its vertices defined in
- * counterclockwise order (if the triangle is being rendered
- * in a right-handed coordinate system). Each normal calculated will
+ * Recalculates the normal vectors (directions that generally point up and away from the mesh buffer's surface) for triangles
+ * in this mesh buffer, in order to give the shape described by this buffer a flat or smooth appearance or to shade the shape from the inside or the outside upon rendering.<p> Each normal calculated will
  * be normalized to have a length of 1 (unless the normal is (0,0,0)),
- * and will be stored in an attribute with semantic <code>NORMAL_0</code>.
- * Will have an effect only if the buffer includes an attribute with
+ * and will be stored in an attribute with semantic <code>NORMAL_0</code>.<p>
+ * This method will have an effect only if the buffer includes an attribute with
  * semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
  * long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
- * ensures its values are each at least 3 elements long.
+ * ensures its values are each at least 3 elements long.<p>For normal calculation to properly affect shading:<ul>
+ * <li>Each triangle's vertices in the mesh buffer (as they appear when the triangle's front side is seen) must be ordered in the same winding (counterclockwise or clockwise) throughout. If the vertices have the wrong order, use the [`reverseWinding()`]{@link H3DU.MeshBuffer#reverseWinding}
+ * method to change their order.
+ * <li>If the mesh describes a closed convex surface (such as a sphere or cube) and is being rendered in a right-handed coordinate system (e.g., X-right, Y-up, Z-backward), each of its triangles must have counterclockwise winding for the shape to be shaded from the outside.</ul>
  * @param {boolean} [flat] If true, each triangle in the mesh
  * will have the same normal, which usually leads to a flat
  * appearance. If false, each unique vertex in the mesh
  * will have its own normal, which usually leads to a smooth
  * appearance. If null, undefined, or omitted, the default is false.
  * @param {boolean} [inward] If true, the generated normals
- * will point inward; otherwise, outward. If null, undefined, or omitted, the default is false.
+ * will point inward, so that the shape
+ * is shaded from the inside upon rendering; otherwise, the normals will point outward. If null, undefined, or omitted, the default is false.
  * @returns {MeshBuffer} This object.
+ * @example
+ * // Use flat shading, and shape is shaded from the outside
+ * meshBuffer.recalcNormals(true, false);
+ * // Both parameters can be omitted, setting both to false
+ * meshBuffer.recalcNormals();
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
   flat = typeof flat === "undefined" || flat === null ? false : flat;
@@ -940,7 +1020,7 @@ MeshBuffer.prototype.merge = function(other) {
 
 /**
  * Transforms the positions and normals of all the vertices currently
- * in this mesh. Only values with the attribute semantic <code>POSITION_0</code>
+ * in this mesh, with the help of a [4x4 matrix]{@tutorial glmath}. Only values with the attribute semantic <code>POSITION_0</code>
  * or <code>NORMAL_0</code> will be affected by this method; values of
  * other attributes will be unaffected.
  * @param {Array<number>} matrix A 4x4 matrix described in

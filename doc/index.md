@@ -1,6 +1,5 @@
 # Documentation Index
 
-* [Global Members](Global.md)
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
@@ -35,7 +34,9 @@ from one coordinate system to another.
 view of a 3D scene, in the nature of an abstract "camera".
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
 * <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
-to uniforms and vertex attributes.
+to vertex attributes found in mesh buffers and
+to data that is uniform throughout a particular
+geometry draw call.
 * <a href="extras_arrow.md">module:extras/arrow</a><br>The <code>extras/arrow.js</code> module.
 * <a href="extras_camera.md">module:extras/camera</a><br>The <code>extras/camera.js</code> module.
 * <a href="extras_camera.InputTracker.md">module:extras/camera.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
@@ -83,6 +84,7 @@ and other polyhedra.
 * <a href="extras_stripesbackshader.md">module:extras/stripesbackshader</a><br>The <code>extras/stripesbackshader.js</code> module.
 * <a href="extras_sunburstbackshader.md">module:extras/sunburstbackshader</a><br>The <code>extras/sunburstbackshader.js</code> module.
 * <a href="extras_superellipsoid.md">module:extras/superellipsoid</a><br>The <code>extras/superellipsoid.js</code> module.
+* <a href="extras_superellipsoid.Supershape.md">module:extras/superellipsoid.Supershape</a><br>TODO: Not documented yet.
 * <a href="extras_superellipsoid.Supertoroid.md">module:extras/superellipsoid.Supertoroid</a><br>TODO: Not documented yet.
 * <a href="extras_text.md">module:extras/text</a><br>The <code>extras/text.js</code> module.
 * <a href="extras_tga.md">module:extras/tga</a><br>The <code>extras/tga.js</code> module.

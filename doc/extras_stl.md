@@ -23,10 +23,10 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `str` (Type: <a href="_.md">*</a>)
+* `str` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

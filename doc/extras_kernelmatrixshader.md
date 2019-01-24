@@ -48,11 +48,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `kind` (Type: <a href="_.md">*</a>)
+* `kind` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_kernelmatrixshader.normalizeKernelInPlace'></a>
 ### (static) module:extras/kernelmatrixshader.normalizeKernelInPlace(matrix)
@@ -61,10 +61,10 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `matrix` (Type: <a href="_.md">*</a>)
+* `matrix` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

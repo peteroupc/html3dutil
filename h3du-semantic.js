@@ -8,56 +8,76 @@
 */
 /**
  * Contains constants for assigning semantics
- * to uniforms and vertex attributes.
+ * to vertex attributes found in mesh buffers and
+ * to data that is uniform throughout a particular
+ * geometry draw call.
  * @constructor
  * @alias Semantic
  */
 export const Semantic = {};
 /** Attribute semantic for a vertex position.
- * The default shader uses 3-dimensional positions.
- * @const * @static
+ * In general, vertex positions are 2-dimensional or 3-dimensional.
+ * @const
+ * @static
  */
 Semantic.POSITION = 0;
-/** Attribute semantic for a vertex normal.
- * The default shader uses 3-dimensional normals.
- * @const * @static
+/** Attribute semantic for a vertex normal.<p>
+ * For 3D graphics libraries to calculate a mesh buffer's lighting and shading correctly, that mesh buffer must specify normals for all its vertices.<p>
+ * <b>What are normals?</b> A normal is a set of numbers (usually three numbers) describing a particular direction. Generally, a normal's direction is perpendicular to a surface's edges, and points up and
+ * away from the surface.<p>
+ * Normals are important in the lighting and shading model. When light hits an object's surface, how brightly the surface will be lit depends on how directly the light points to the surface. It will be lit the most brightly if the light is directly opposite to its normal, and not at all if the light is perpendicular to the normal or in the same direction as the normal.<p>
+ * In general, vertex normals are 3-dimensional
+ * and are defined for a mesh buffer only if it
+ * also contains vertex positions.
+ * @const
+ * @static
  */
 Semantic.NORMAL = 1;
-/** Attribute semantic for a texture coordinate.<p>
- * Note that the default shader supports only 2-dimensional
- * texture coordinates. For such texturing tasks as mapping
- * a square to a trapezoid, 3-dimensional texture coordinates
+/** Attribute semantic for a tuple of texture coordinates.<p>
+ * If a texture (array of bits) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.<p>
+ * By default in most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1), and V coordinates start at the bottom of the texture (0) and increase to the top (1). (An exception is WebGL, where, by default, V coordinates start at the top and increase to the bottom.) Thus, for example, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.<p>
+ * In general, texture coordinates describe 2-dimensional points.
+ * However, for such texturing tasks as mapping
+ * a square to a trapezoid, trios of 3-dimensional texture coordinates
  * are useful to ensure the texturing is perspective-correct.
  * In this case, the 3-D texture coordinates are converted
  * to 2-D by dividing the X and Y components by the Z component.
- * In a fragment shader, this can look like the following
+ * In a fragment shader or pixel shader, this can look like
+ * the following
  * code: <code>texCoord.xy/texCoord.z</code>.
- * @const * @static
+ * @const
+ * @static
  */
 Semantic.TEXCOORD = 2;
 /** Attribute semantic for a color.
- * The default shader uses 3-component colors.
- * @const * @static
+ * In general, each color consists of three components.
+ * @const
+ * @static
  */
 Semantic.COLOR = 3;
 /** Attribute semantic for a skinning joint.
- * @const * @static
+ * @const
+ * @static
  */
 Semantic.JOINT = 4;
 /** Attribute semantic for a skinning weight.
- * @const * @static
+ * @const
+ * @static
  */
 Semantic.WEIGHT = 5;
 /** Attribute semantic for a tangent vector.
- * @const * @static
+ * @const
+ * @static
  */
 Semantic.TANGENT = 6;
 /** Attribute semantic for a bitangent vector.
- * @const * @static
+ * @const
+ * @static
  */
 Semantic.BITANGENT = 7;
 /** Attribute semantic for custom attributes.
- * @const * @static
+ * @const
+ * @static
  */
 Semantic.CUSTOM = 8;
 /** Uniform semantic for a model matrix.

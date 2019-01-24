@@ -32,13 +32,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
-* `ox` (Type: <a href="_.md">*</a>)
-* `oy` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
+* `ox` (Type: *)
+* `oy` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.curveEvolute'></a>
 ### (static) module:extras/derivedcurves.curveEvolute(evaluator)
@@ -47,11 +47,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.curveInverse'></a>
 ### (static) module:extras/derivedcurves.curveInverse(evaluator, ox, oy, radius)
@@ -60,14 +60,14 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
-* `ox` (Type: <a href="_.md">*</a>)
-* `oy` (Type: <a href="_.md">*</a>)
-* `radius` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
+* `ox` (Type: *)
+* `oy` (Type: *)
+* `radius` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.curveInvolute'></a>
 ### (static) module:extras/derivedcurves.curveInvolute(evaluator)
@@ -76,11 +76,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.curveOrthotomic'></a>
 ### (static) module:extras/derivedcurves.curveOrthotomic(evaluator, ox, oy)
@@ -89,13 +89,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
-* `ox` (Type: <a href="_.md">*</a>)
-* `oy` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
+* `ox` (Type: *)
+* `oy` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.curvePedalCurve'></a>
 ### (static) module:extras/derivedcurves.curvePedalCurve(evaluator, ox, oy)
@@ -104,13 +104,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
-* `ox` (Type: <a href="_.md">*</a>)
-* `oy` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
+* `ox` (Type: *)
+* `oy` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.curveRadialCurve'></a>
 ### (static) module:extras/derivedcurves.curveRadialCurve(evaluator, ox, oy)
@@ -119,13 +119,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `evaluator` (Type: <a href="_.md">*</a>)
-* `ox` (Type: <a href="_.md">*</a>)
-* `oy` (Type: <a href="_.md">*</a>)
+* `evaluator` (Type: *)
+* `ox` (Type: *)
+* `oy` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.polarCurve'></a>
 ### (static) module:extras/derivedcurves.polarCurve(func, phase)
@@ -134,12 +134,12 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `func` (Type: <a href="_.md">*</a>)
-* `phase` (Type: <a href="_.md">*</a>)
+* `func` (Type: *)
+* `phase` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.ruledSurface'></a>
 ### (static) module:extras/derivedcurves.ruledSurface(directrix, director)
@@ -148,12 +148,12 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `directrix` (Type: <a href="_.md">*</a>)
-* `director` (Type: <a href="_.md">*</a>)
+* `directrix` (Type: *)
+* `director` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 <a name='extras_derivedcurves.spiralCurve'></a>
 ### (static) module:extras/derivedcurves.spiralCurve(radius, phase)
@@ -162,11 +162,11 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `radius` (Type: <a href="_.md">*</a>)
-* `phase` (Type: <a href="_.md">*</a>)
+* `radius` (Type: *)
+* `phase` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

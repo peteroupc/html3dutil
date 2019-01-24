@@ -3795,24 +3795,28 @@ MathUtil.quatScale = MathUtil.vec4scale;
 MathUtil.quatCopy = MathUtil.vec4copy;
 /**
  * Closest approximation to pi times 2, or a 360-degree turn in radians.
- * @const * @default
+ * @const
+ * @default
  */
 MathUtil.PiTimes2 = 6.283185307179586476925286766559;
 /**
  * Closest approximation to pi divided by 2, or a 90-degree turn in radians.
- * @const * @default
+ * @const
+ * @default
  */
 MathUtil.HalfPi = 1.5707963267948966192313216916398;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @const * @default
+ * @const
+ * @default
  */
 MathUtil.PiDividedBy180 = 0.01745329251994329576923690768489;
 /**
  * Closest approximation to pi divided by 180, or the number
  * of radians in a degree. Multiply by this number to convert degrees to radians.
- * @const * @default
+ * @const
+ * @default
  */
 MathUtil.ToRadians = MathUtil.PiDividedBy180;
 /**
@@ -3826,13 +3830,15 @@ MathUtil.Num360DividedByPi = 114.59155902616464175359630962821;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @const * @default
+ * @const
+ * @default
  */
 MathUtil.Num180DividedByPi = 57.295779513082320876798154814105;
 /**
  * Closest approximation to 180 divided by pi, or the number of
  * degrees in a radian. Multiply by this number to convert radians to degrees.
- * @const * @default
+ * @const
+ * @default
  */
 MathUtil.ToDegrees = MathUtil.Num180DividedByPi;
 /**

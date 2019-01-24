@@ -23,13 +23,13 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `inner` (Type: <a href="_.md">*</a>)
-* `outer` (Type: <a href="_.md">*</a>)
-* `height` (Type: <a href="_.md">*</a>)
-* `slices` (Type: <a href="_.md">*</a>)
+* `inner` (Type: *)
+* `outer` (Type: *)
+* `height` (Type: *)
+* `slices` (Type: *)
 
 #### Return Value
 
-Return value. (Type: <a href="_.md">*</a>)
+Return value. (Type: *)
 
 [Back to documentation index.](index.md)

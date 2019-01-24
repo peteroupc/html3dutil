@@ -275,7 +275,8 @@ BSplineCurve.prototype.constructor = BSplineCurve;
  * If this bit is set, the length of each control point must be at least 2.<p>
  * A B-spline curve that has control points whose last coordinate is other than
  * 1 is a <i>rational</i> B-spline curve.
- * @const * @default
+ * @const
+ * @default
  */
 BSplineCurve.DIVIDE_BIT = 2;
 /** @ignore */
