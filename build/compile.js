@@ -184,7 +184,7 @@ async function realpathAsync(p) {
 async function readdirAsync(dir, regex) {
   try {
     let files = await fsReaddir(dir);
-    files = regex === null ? files :
+    files = typeof regex === "undefined" || regex === null ? files :
       files.filter((f) => regex.test(f));
     return files.map((f) => dir + "/" + f);
   } catch(ex) {

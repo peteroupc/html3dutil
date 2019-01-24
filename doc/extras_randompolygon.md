@@ -14,24 +14,24 @@ To import all symbols in this module, either of the following can be used:
 
 ### Methods
 
-* [randomPolygon](#extras_randompolygon.randomPolygon)<br>TODO: Not documented yet.
+* [randomPolygon](#extras_randompolygon.randomPolygon)<br>Generates a simple polygon at random.
 
 <a name='extras_randompolygon.randomPolygon'></a>
-### (static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, irregular, spiky)
+### (static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, [irregular], [spiky])
 
-TODO: Not documented yet.
+Generates a simple polygon at random.
 
 #### Parameters
 
-* `cx` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
-* `cy` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
-* `avgRadius` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
-* `sides` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
-* `irregular` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
-* `spiky` (Type: <a href="_.md">*</a>)<br>TODO: Not documented yet.
+* `cx` (Type: number)<br>X coordinate of the polygon's approximate center.
+* `cy` (Type: number)<br>Y coordinate of the polygon's approximate center.
+* `avgRadius` (Type: number)<br>Average distance of the polygon's vertices from the center.
+* `sides` (Type: number)<br>Number of sides in the polygon.
+* `irregular` (Type: number) (optional)<br>Degree to which the angular distance from one vertex to the next is uneven. If 0, the vertices will be evenly spaced in terms of angular distance. Usually no more than half pi. If null, undefined, or omitted, the default is 0.
+* `spiky` (Type: number) (optional)<br>Degree of variation among distances of the polygon's vertices from the center, in terms of a standard deviation from the average. If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: <a href="_.md">*</a>)
+The randomly generated polygon. (Type: GraphicsPath)
 
 [Back to documentation index.](index.md)

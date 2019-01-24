@@ -802,8 +802,8 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
-  flat = flat === null ? false : flat;
-  inward = inward === null ? false : inward;
+  flat = typeof flat === "undefined" || flat === null ? false : flat;
+  inward = typeof inward === "undefined" || inward === null ? false : inward;
   const primtype = this.primitiveType();
   if(primtype === MeshBuffer.TRIANGLES) {
     if(this._countPerValue(Semantic.POSITION) < 3) {

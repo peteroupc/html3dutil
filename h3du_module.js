@@ -7049,8 +7049,8 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.recalcNormals = function(flat, inward) {
-  flat = flat === null ? false : flat;
-  inward = inward === null ? false : inward;
+  flat = typeof flat === "undefined" || flat === null ? false : flat;
+  inward = typeof inward === "undefined" || inward === null ? false : inward;
   const primtype = this.primitiveType();
   if(primtype === MeshBuffer.TRIANGLES) {
     if(this._countPerValue(Semantic.POSITION) < 3) {
@@ -10364,10 +10364,10 @@ GraphicsPath.prototype.getLines = function(flatness) {
     const s = this.segments[i];
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-        s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0);
+        s[5], s[6], 0.0, 1.0, ret, flatness * 2, 0, 0);
     } else if(s[0] === GraphicsPath.CUBIC) {
       GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-        s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0);
+        s[5], s[6], s[7], s[8], 0.0, 1.0, ret, flatness * 2, 0, 0);
     } else if(s[0] === GraphicsPath.ARC) {
       GraphicsPath._flattenArc(s, 0.0, 1.0, ret, flatness * 2, 0, 0);
     } else if(s[0] !== GraphicsPath.CLOSE) {
@@ -10781,13 +10781,13 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
     }
     if(s[0] === GraphicsPath.QUAD) {
       GraphicsPath._flattenQuad(s[1], s[2], s[3], s[4],
-        s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0);
+        s[5], s[6], 0.0, 1.0, tmp, flatness * 2, 0, 0);
       for(j = 0; j < tmp.length; j++) {
         GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
       }
     } else if(s[0] === GraphicsPath.CUBIC) {
       GraphicsPath._flattenCubic(s[1], s[2], s[3], s[4],
-        s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0);
+        s[5], s[6], s[7], s[8], 0.0, 1.0, tmp, flatness * 2, 0, 0);
       for(j = 0; j < tmp.length; j++) {
         GraphicsPath._pushXY(curPath, tmp[j][2], tmp[j][3], nodegen);
       }
@@ -10807,7 +10807,7 @@ GraphicsPath.prototype._getSubpaths = function(flatness, nodegen) {
  * @private
  * @constructor */
 GraphicsPath._CurveList = function(curves) {
-  Curve.apply(this,
+  Curve.prototype.constructor.apply(this,
     [new PiecewiseCurve(curves).toArcLengthParam().fitRange(0, 1)]);
   this.curves = curves;
 };
@@ -12182,7 +12182,7 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
  */
 GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInDegrees) {
   if(sides <= 2)return this;
-  let phase = phaseInDegrees === null ? phaseInDegrees : 0;
+  let phase = typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? phaseInDegrees : 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
@@ -12769,7 +12769,7 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
       const iterPrev = iterVert.prev ? iterVert.prev : lastVert;
       const iterNext = iterVert.next ? iterVert.next : firstVert;
       const orient = orient2D(iterPrev.data, iterVert.data, iterNext.data);
-      if(orient !== 0 && orient !== this.vertexList.winding) {
+      if(orient !== 0 && orient !== this.winding) {
         // This is a reflex vertex
         const pointIn = Triangulate._pointInTri(
           triangle1, triangle2, nextVert.data, iterVert.data);

@@ -83,7 +83,6 @@ and other polyhedra.
 * <a href="extras_stripesbackshader.md">module:extras/stripesbackshader</a><br>The <code>extras/stripesbackshader.js</code> module.
 * <a href="extras_sunburstbackshader.md">module:extras/sunburstbackshader</a><br>The <code>extras/sunburstbackshader.js</code> module.
 * <a href="extras_superellipsoid.md">module:extras/superellipsoid</a><br>The <code>extras/superellipsoid.js</code> module.
-* <a href="extras_superellipsoid.Superellipsoid.md">module:extras/superellipsoid.Superellipsoid</a><br>TODO: Not documented yet.
 * <a href="extras_superellipsoid.Supertoroid.md">module:extras/superellipsoid.Supertoroid</a><br>TODO: Not documented yet.
 * <a href="extras_text.md">module:extras/text</a><br>The <code>extras/text.js</code> module.
 * <a href="extras_tga.md">module:extras/tga</a><br>The <code>extras/tga.js</code> module.
