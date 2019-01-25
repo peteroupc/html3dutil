@@ -2,28 +2,30 @@
 
 [Back to documentation index.](index.md)
 
-<a id=Public_Domain_HTML_3D_Library></a>
-## Public-Domain HTML 3D Library
+<a id=Public_Domain_Geometry_Utilities_Library></a>
+## Public-Domain Geometry Utilities Library
 
-This page will introduce the [**HTML 3D Library**](https://github.com/peteroupc/html3dutil/releases), an open-source JavaScript library that I wrote.
+This page will introduce the [**Geometry Utilities Library**](https://github.com/peteroupc/html3dutil/releases), an open-source JavaScript library that I wrote.
 
-This library contains classes and utility methods to ease the development of HTML 3D applications, such as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.
+This library contains classes and utility methods to represent 3-D geometries, including curves and surfaces, in JavaScript, and methods that support the development of 3D applications, including HTML applications that use the 3-D canvas.
 
 The library differs from many others because this one is in the public domain, so no permission is required to use it.
 
-This page includes information on how to use the HTML 3D library, an overview of its features, and an example of a simple 3D-enabled Web page.
+This page includes information on how to use the Geometry Utilities Library and an overview of its features.
 
-NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta3 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the section "History" for more information.)
+NOTE: The Geometry Utilities Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Utilities Library currently doesn't use them directly).
 
 <a id=Example></a>
 ## Example
+
+The following is a screen shot of a scene generated with the help of the former Public Domain HTML 3D Library.  Currently, however, the Geometry Utilities library has no means to render 3-D geometry directly.
 
 ![](https://peteroupc.github.io/html3dutil/html3d.png)
 
 <a id=Contents></a>
 ## Contents
 
-- [**Public-Domain HTML 3D Library**](#Public_Domain_HTML_3D_Library)
+- [**Public-Domain Geometry Utilities Library**](#Public_Domain_Geometry_Utilities_Library)
 - [**Example**](#Example)
 - [**Contents**](#Contents)
 - [**How to Use**](#How_to_Use)
@@ -32,10 +34,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
     - [**3D Models**](#3D_Models)
     - [**Shapes**](#Shapes)
     - [**The Render Loop**](#The_Render_Loop)
-- [**A Skeleton for 3D Apps**](#A_Skeleton_for_3D_Apps)
 - [**Demos**](#Demos)
-    - [**Simple Demos**](#Simple_Demos)
-    - [**Materials**](#Materials)
     - [**Shapes and meshes**](#Shapes_and_meshes)
     - [**Paths**](#Paths)
     - [**Curves and Surfaces**](#Curves_and_Surfaces)
@@ -53,7 +52,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 <a id=How_to_Use></a>
 ## How to Use
 
-1. [**Download the HTML 3D library**](https://github.com/peteroupc/html3dutil/releases).
+1. [**Download the Geometry Utilities Library**](https://github.com/peteroupc/html3dutil/releases).
 2. Extract the file <i>"h3du_min.js"</i>, and write the following code in every HTML page where you will use the library.
 
         <script type="text/javascript" src="h3du_min.js"></script>
@@ -62,7 +61,7 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 
         <canvas width="640" height="480" id="canvas"></canvas>
 
-4. To use the HTML 3D library in JavaScript, either add the JavaScript code to the bottom of the page or use an event listener, as in this example:
+4. To use the Geometry Utilities Library in JavaScript, either add the JavaScript code to the bottom of the page or use an event listener, as in this example:
 
         <script>
         window.addEventListener("load",function(){
@@ -76,52 +75,37 @@ NOTE: This section and the rest of this page will largely discuss the 2.0.0-beta
 ### List of Classes
 This is an overview of most of the JavaScript classes available in this library:
 
-* [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the HTML 3D Library
-* [**`H3DU.Math`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors
-* [**`H3DU.Mesh`**](https://peteroupc.github.io/html3dutil/H3DU.Mesh.html) - Helper class for building a 3D model
-* [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model
+* [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the Geometry Utilities Library
+* [**`H3DU.MathUtil`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors
+* [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model.
 * [**`H3DU.Meshes`**](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
-* [**`H3DU.Material`**](https://peteroupc.github.io/html3dutil/H3DU.Material.html),
- [**`H3DU.PbrMaterial`**](https://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html),
- [**`H3DU.Texture`**](https://peteroupc.github.io/html3dutil/H3DU.Texture.html) - Represents textures and colors for a 3D object&#39;s appearance.
-* [**`H3DU.Lights`**](https://peteroupc.github.io/html3dutil/H3DU.Lights.html),
- [**`H3DU.LightSource`**](https://peteroupc.github.io/html3dutil/H3DU.LightSource.html) - Represents light sources
-* [**`H3DU.Batch3D`**](https://peteroupc.github.io/html3dutil/H3DU.Batch3D.html) - Represents a collection of shapes to draw and a projection and view.
-* [**`H3DU.FrameBufferInfo`**](https://peteroupc.github.io/html3dutil/H3DU.FrameBufferInfo.html) - Describes a frame buffer, or an offscreen buffer for rendering graphics content.
-* [**`H3DU.ShaderInfo`**](https://peteroupc.github.io/html3dutil/H3DU.ShaderInfo.html) - Represents a GLSL shader program
-* [**`H3DU.Shape`**](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform and appearance
-* [**`H3DU.ShapeGroup`**](https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html) - Represents a group of 3D shapes
+* [**`H3DU.Shape`**](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform.
+* [**`H3DU.ShapeGroup`**](https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html) - Represents a group of 3D shapes.
 *  [**`H3DU.BSplineCurve`**](https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html),
  [**`H3DU.BSplineSurface`**](https://peteroupc.github.io/html3dutil/H3DU.BSplineSurface.html),
  [**`H3DU.CurveBuilder`**](https://peteroupc.github.io/html3dutil/H3DU.CurveBuilder.html),
- [**`H3DU.SurfaceBuilder`**](https://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html) - Supports generating parametric curves and surfaces
+ [**`H3DU.SurfaceBuilder`**](https://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html) - Supports generating parametric curves and surfaces. Many curves and surfaces can be expressed as so-called _curve evaluator objects_ and _surface evaluator objects_, and the extras to the library include many kinds of such objects.
 
-The following classes concern themselves with the HTML 3D canvas context:
-
-* [**`H3DU.Scene3D`**](https://peteroupc.github.io/html3dutil/H3DU.Scene3D.html) - Holds an HTML 3D canvas context (GL context).
-* [**`H3DU.TextureLoader`**](https://peteroupc.github.io/html3dutil/H3DU.TextureLoader.html) - Caches textures loaded by the application and maps them to GL contexts.
-
-For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the HTML 3D library</a>.
+For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the Geometry Utilities Library</a>.
 
 The following sections detail how an application that renders 3-D graphics can use this library.
 
 <a id=The_Camera></a>
 ### The "Camera"
 
-The `H3DU.MathUtil` class contains methods that support the concepts of a "projection transform" and a "view transform", as are common in many 3D graphics libraries. If we
-use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.MathUtil` has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including `H3DU.MathUtil.mat4perspective` (a perspective projection) and `H3DU.MathUtil.mat4lookat` (a look-at view transform). For more information, see _<a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The "Camera" and Geometric Transforms</a>_.
+The `H3DU.MathUtil` class contains methods that support the concepts of a "projection transform" and a "view transform", as are common in many 3D rendering libraries. If we
+use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.MathUtil` has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including `H3DU.MathUtil.mat4perspective` (a perspective projection) and `H3DU.MathUtil.mat4lookat` (a look-at view transform). For more information, see [**_The "Camera" and Geometric Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms).
 
 <a id=3D_Models></a>
 ### 3D Models
 
-Every 3D scene is made up of "meshes", or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `H3DU.MeshBuffer` class, or create a built-in geometric shape using a method in the `H3DU.Meshes` class. The example below shows how you can create a box mesh:
+Most 3D scenes are made up of _meshes_, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `H3DU.MeshBuffer` class, or create a built-in geometric shape using a method in the `H3DU.Meshes` class. The example below shows how you can create a box mesh:
 
     // Create a box mesh 10 units in width, 20 units
     // in height, and 25 units in depth
     var mesh=H3DU.Meshes.createBox(10,20,25);
 
-Here are some other built-in mesh methods. This page doesn&#39;t explain all the
-features or parameters in the `Meshes` class; for that, see the
+Here are some other built-in methods for creating meshes. This page doesn&#39;t explain all the features or parameters in the `Meshes` class; for that, see the
 <a href="http://peteroupc.github.io/html3dutil/H3DU.Meshes.md">Meshes API documentation</a>.
 
   * <dfn>`H3DU.Meshes.createSphere(radius)`</dfn>
@@ -137,23 +121,28 @@ features or parameters in the `Meshes` class; for that, see the
   * <dfn>`H3DU.Meshes.createDisk(inner, outer)`</dfn>
   <br>Same as calling `createPartialDisk` with `start` 0 and `sweep` 360.
 
+The methods described above return a `MeshBuffer` object describing the appropriate mesh's geometry.  Methods that can be called on a `MeshBuffer` include the following:
+
+  * <dfn>`meshBuffer.setColor(color)`</dfn>
+  <br>Gives all vertices in a mesh a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).
+   See my [**colors tutorial**](https://peteroupc.github.io/html3dutil/tutorial-colors.html).
+
 <a id=Shapes></a>
 ### Shapes
+
+TODO: Rewrite.
 
 Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
 Use the `H3DU.Shape` constructor method to convert the mesh to a shape. Then you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D object batch.
 
     // Create a shape based on the mesh
     var shape=new H3DU.Shape(mesh);
-    // Make it red (you can also use the HTML color string
-    // "#FF0000" instead)
-    shape.setColor("red");
     // Move it 1 unit along the X axis
     shape.setPosition(1,0,0);
     // Add the shape to the scene
     batch.addShape(shape);
 
-> **Note:** The appearance of a 3D shape is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library.
+> **Note:** The appearance of a 3D shape is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library, not least because there are many ways to describe a material's parameters, as well as many ways to implement the rendering behavior of materials associated with shapes, such as physically-based rendering, cartoon styling, constant-color shading, the Blinn&ndash;Phong model, and so on.
 
 Here are details on some of the `Shape` class&#39;s methods.
 
@@ -163,13 +152,8 @@ Here are details on some of the `Shape` class&#39;s methods.
   <br>Sets the shape&#39;s scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.
   * <dfn>`shape.getTransform().setRotation(angle, x, y, z)`</dfn>
   <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).
-  * <dfn>`shape.setColor(color)`</dfn>
-  <br>Gives the shape a particular color. `color` can be an HTML color ("#ff0000"), CSS color ("red"), RGB color("rgb(20, 30, 40)") or HSL color("hsl(20, 50%, 50%)"), or a set of values from 0 to 1 (example: `[1.0,0.5,0.0]`).
-   See my [**colors tutorial**](https://peteroupc.github.io/html3dutil/tutorial-colors.html).
-  * <dfn>`shape.setTexture(name)`</dfn>
-  <br>Gives the shape a particular texture, with the URL `name`. The texture should be in the same origin as the Web page (which usually means the same directory).
   * <dfn>`shape.copy()`</dfn>
-  <br>Creates a copy of this shape. Can be more efficient than calling `new H3DU.Shape` if the same geometric mesh will be used more than once in the same 3D scene, with different positions and attributes.
+  <br>Creates a copy of this shape. Can be more efficient than calling `new H3DU.Shape` if the same geometric mesh will be used more than once in the same 3D scene, with different transformations.
 
 <a id=The_Render_Loop></a>
 ### The Render Loop
@@ -185,39 +169,10 @@ An important part of a 3D application is the render loop. The render loop is a b
 
 The render loop method takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
 
-<a id=A_Skeleton_for_3D_Apps></a>
-## A Skeleton for 3D Apps
-
-The following is a minimal skeleton you can use for writing HTML apps using this library.
-
-    <head>
-    <meta charset=utf-8>
-    <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
-    <script type="text/javascript" src="h3du_min.js"></script>
-    </head>
-    <body style="margin:0px">
-    <canvas id=canvas style="width:100%; height:100%; overflow: hidden;"></canvas>
-    <script>
-    // Your script goes here
-    </script>
-    </body>
-
 <a id=Demos></a>
 ## Demos
 
-The following are HTML Web pages showing a variety of features of the HTML 3D library. Each demo includes a link to access source code for that demo.
-
-<a id=Simple_Demos></a>
-### Simple Demos
-
-* [**demos/simple.html**](https://peteroupc.github.io/html3dutil/demos/simple.html) - A simple demo using this library.
-* [**demos/triangle.html**](https://peteroupc.github.io/html3dutil/demos/triangle.html) - Demonstrates drawing a triangle.
-
-<a id=Materials></a>
-### Materials
-
-* [**demos/selfpulse.html**](https://peteroupc.github.io/html3dutil/demos/selfpulse.html) - Demonstrates
-a rotating, pulsating box.
+The following are HTML Web pages showing a variety of features of the Geometry Utilities Library. Each demo includes a link to access source code for that demo.
 
 <a id=Shapes_and_meshes></a>
 ### Shapes and meshes
@@ -334,7 +289,7 @@ of different sizes.
 <a id=Example_2></a>
 ## Example
 
-The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
+The following is a simple example of an HTML page that uses the Geometry Utilities Library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
 
     <head>
     <script type="text/javascript" src="h3du_min.js"></script>
