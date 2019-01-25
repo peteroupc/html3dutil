@@ -5,7 +5,6 @@ This page contains source code for creating various kinds of 3D models on the fl
 
 - [**Contents**](#Contents)
 - [**3D Line**](#3D_Line)
-- [**Striped Disk**](#Striped_Disk)
 - [**Miscellaneous**](#Miscellaneous)
 
 <a id=3D_Line></a>
@@ -29,33 +28,6 @@ This method creates a thin line-like 3D object.
       return line.transform(matrix);
     }
 
-<a id=Striped_Disk></a>
-## Striped Disk
-
-This method creates a ring or disk striped in two colors.
-
-![**Image of a disk striped in red and almost-white**](mesh2.png)
-
-    // inner, outer - inner and outer radius of the disk
-    // color1, color2 - colors of each stripe; for example:
-    //   "red", "#223344", "rgb(255,0,0)", [0,1,0]
-    // sections - number of stripes
-    // sectionCount - number of sections per stripe
-    function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
-     if(sectionCount==null)sectionCount=4
-     var firstColor=true
-     var ret=new H3DU.MeshBuffer()
-     var sweep=360.0/sections;
-     for(var i=0;i<sections;i++){
-      var angle=360.0*(i*1.0/sections);
-      var mesh=H3DU.Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
-         .setColor3(firstColor ? color1 : color2)
-      firstColor=!firstColor
-      ret.merge(mesh);
-     }
-     return ret;
-    }
-
 <a id=Miscellaneous></a>
 ## Miscellaneous
 
@@ -67,16 +39,12 @@ function pathClosedFigure(path, zBottom, zTop, flatness) {
   mesh.merge(path.toMeshBuffer(zBottom, flatness).reverseWinding().reverseNormals());
   return mesh;
 }
-    function setBoxSizeAndBounds(shape,box){
+
+    function wireBox(box, color){
+     var boxMesh=H3DU.Meshes.createBox(1,1,1)
+       .setColor(color).wireFrame()
+     var shape=new H3DU.Shape(boxMesh)
      shape.setPosition(H3DU.MathUtil.boxCenter(box))
      shape.setScale(H3DU.MathUtil.boxDimensions(box))
      return shape
-    }
-
-    function wireBox(box, color){
-      if(!color)color="gray";
-     var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
-     var shape=new H3DU.Shape(boxMesh).setMaterial(
-        H3DU.Material.fromBasic(color))
-     return setBoxSizeAndBounds(shape,box)
     }

@@ -75,8 +75,8 @@ The following is a screen shot of a scene generated with the help of the former 
 ### List of Classes
 This is an overview of most of the JavaScript classes available in this library:
 
-* [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the Geometry Utilities Library
-* [**`H3DU.MathUtil`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors
+* [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the Geometry Utilities Library.
+* [**`H3DU.MathUtil`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors.
 * [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model.
 * [**`H3DU.Meshes`**](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
 * [**`H3DU.Shape`**](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform.
@@ -130,8 +130,6 @@ The methods described above return a `MeshBuffer` object describing the appropri
 <a id=Shapes></a>
 ### Shapes
 
-TODO: Rewrite.
-
 Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
 Use the `H3DU.Shape` constructor method to convert the mesh to a shape. Then you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D object batch.
 
@@ -153,7 +151,7 @@ Here are details on some of the `Shape` class&#39;s methods.
   * <dfn>`shape.getTransform().setRotation(angle, x, y, z)`</dfn>
   <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).
   * <dfn>`shape.copy()`</dfn>
-  <br>Creates a copy of this shape. Can be more efficient than calling `new H3DU.Shape` if the same geometric mesh will be used more than once in the same 3D scene, with different transformations.
+  <br>Creates a copy of this shape.
 
 <a id=The_Render_Loop></a>
 ### The Render Loop

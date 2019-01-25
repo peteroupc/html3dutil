@@ -244,6 +244,32 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 The generated mesh. (Type: MeshBuffer)
 
+#### Examples
+
+This method creates a ring or disk striped in two colors.<br/>
+<img src='mesh2.png' alt='Image of a disk striped in red and almost-white'/>
+
+    // inner, outer - inner and outer radius of the disk
+    // color1, color2 - each a color vector or string specifying
+    // one of the two stripe colors
+    // sections - number of stripes
+    // sectionCount - number of sections per stripe
+    function stripedDisk(inner,outer,color1,color2,sections,sectionCount) {
+    if(sectionCount==null)sectionCount=4
+    var firstColor=true
+    var ret=new MeshBuffer()
+    var sweep=360.0/sections;
+    for(var i=0;i<sections;i++) {
+    var angle=360.0*(i*1.0/sections);
+    var mesh=Meshes.createPartialDisk(inner,outer,
+    sectionCount,1,angle,sweep)
+    .setColor(firstColor ? color1 : color2)
+    firstColor=!firstColor
+    ret.merge(mesh);
+    }
+    return ret;
+    }
+
 <a name='H3DU.Meshes.createPlane'></a>
 ### (static) H3DU.Meshes.createPlane([width], [height], [widthDiv], [heightDiv], [inward])
 

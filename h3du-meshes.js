@@ -439,6 +439,28 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * method will point in the opposite direction of the positive Z axis; otherwise,
  * in the same direction of the positive Z axis. Default is false.
  * @returns {MeshBuffer} The generated mesh.
+ * @example <caption>This method creates a ring or disk striped in two colors.<br/>
+ * <img src='mesh2.png' alt='Image of a disk striped in red and almost-white'/></caption>
+ * // inner, outer - inner and outer radius of the disk
+ * // color1, color2 - each a color vector or string specifying
+ * // one of the two stripe colors
+ * // sections - number of stripes
+ * // sectionCount - number of sections per stripe
+ * function stripedDisk(inner,outer,color1,color2,sections,sectionCount) {
+ * if(sectionCount==null)sectionCount=4
+ * var firstColor=true
+ * var ret=new MeshBuffer()
+ * var sweep=360.0/sections;
+ * for(var i=0;i<sections;i++) {
+ * var angle=360.0*(i*1.0/sections);
+ * var mesh=Meshes.createPartialDisk(inner,outer,
+ * sectionCount,1,angle,sweep)
+ * .setColor(firstColor ? color1 : color2)
+ * firstColor=!firstColor
+ * ret.merge(mesh);
+ * }
+ * return ret;
+ * }
  */
 Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, inward) {
   if(typeof slices === "undefined" || slices === null)slices = 32;
