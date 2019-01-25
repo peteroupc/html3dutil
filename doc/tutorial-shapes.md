@@ -14,9 +14,6 @@ the _shapes.html_ and _platonic.html_ demos mentioned in this page.
 
 This page will discuss:
 
-* Using the Meshes methods to make built-in shapes
-* Making your own shapes with the `H3DU.Mesh` constructor
-* Building up your own shapes using the vertex methods of `H3DU.Mesh`
 * Binding mesh buffers to shapes
 * Shape groups, or combinations of several shapes
 
@@ -29,7 +26,6 @@ This page will discuss:
     - [**Built-In Shapes**](#Built_In_Shapes)
     - [**Custom Shapes**](#Custom_Shapes)
     - [**The Mesh Constructor**](#The_Mesh_Constructor)
-    - [**Vertex Methods**](#Vertex_Methods)
 - [**Binding Shapes**](#Binding_Shapes)
 - [**Shape Groups**](#Shape_Groups)
 - [**Other Pages**](#Other_Pages)
@@ -51,93 +47,17 @@ The <a href="H3DU.Meshes.md">`H3DU.Meshes`</a> class includes several handy meth
 All methods described below return a `H3DU.MeshBuffer` object that describes the triangles they
 are composed of.  See "Custom Shapes" below for more on meshes.
 
-**3D Figures:**
-
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createBox">Meshes.createBox()</a> - Creates a cube or box.
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
-  or top.
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createSphere">Meshes.createSphere()</a> - Creates a sphere.
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.
-
-**2D Figures:**
-
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createDisk">Meshes.createDisk()</a> - Creates a circular disk or a regular polygon, possibly
-  with a hole in the middle.
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createPartialDisk">Meshes.createPartialDisk()</a> - Creates a portion of a circular disk, possibly
-  with a hole where the middle of the complete disk would be.
-* <a href="H3DU.Meshes.md#H3DU.Meshes.createPlane">Meshes.createPlane()</a> - Creates a rectangle.
-
 <a id=Custom_Shapes></a>
 ### Custom Shapes
 
-Also included is a `H3DU.Mesh` class for defining shapes not given among the built-in ones.
-Shapes can consist of triangles, lines, or points.
-
-There are two ways for specifying shapes: through the Mesh constructor, or through
-methods that specify the mesh's data vertex by vertex.
+The `H3DU.MeshBuffer` class can be used to store geometric figures not given among the built-in ones.
+Such figures can consist of triangles, lines, or points.
 
 <a id=The_Mesh_Constructor></a>
 ### The Mesh Constructor
 
 The `MeshBuffer` class contains four methods (`fromPositions`,
 `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data.  See the documentation for those methods for more information.
-
-<a id=Vertex_Methods></a>
-### Vertex Methods
-
-Alternatively, or in addition, to the method described above,
-you can specify the mesh's shape by calling methods that give each vertex's position and parameters:
-
-1. Call the `mode()` method and choose a primitive mode, such as `H3DU.Mesh.TRIANGLES`
-or `H3DU.Mesh.QUAD_STRIP`:
-
-        mesh.mode(H3DU.Mesh.TRIANGLES);
-
-    The mesh will build up the shape from the vertices you give it depending on the mesh's
-primitive mode. For example, `QUAD_STRIP` defines a strip of connecting quadrilaterals,
-and `TRIANGLES` defines a set of triangles that are not necessarily connected:
-
-    * `H3DU.Mesh.TRIANGLES` - Set of triangles, 3 vertices each.
-    * `H3DU.Mesh.LINES` - Set of line segments, 2 vertices each.
-    * `H3DU.Mesh.QUADS` - Set of quadrilaterals, 4 vertices each.
-    * `H3DU.Mesh.TRIANGLE_STRIP` - A triangle strip. The first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last 2 vertices and 1
-new vertex.
-    * `H3DU.Mesh.TRIANGLE_FAN` - A triangle fan. The first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last vertex, the first vertex of
-the first trangle, and 1 new vertex.
-    * `H3DU.Mesh.QUAD_STRIP` - A strip of quadrilaterals (quads).
-The first 4 vertices make up the first quad, and each additional
-quad is made up of the last 2 vertices of the previous quad and
-2 new vertices.
-    * `H3DU.Mesh.LINE_STRIP` - A series of points making up a connected line segment path.
-
-2. Call the `normal3()`, `color3()`, and `texCoord2()` methods, as needed, to set the
-next vertex's parameters. You don't need to do this for each vertex if multiple
-consecutive vertices will share the same normal, color, or texture coordinates.
-
-        mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
-        mesh.color3(0.1,0.6,1); // Set the red, green, and blue of the color.
-        mesh.color3("red"); // Set a CSS color.
-        mesh.color3("#123FE8"); // Set an HTML color.
-        mesh.texCoord3(0.5,0.5); // Set the texture coordinates.
-
-3. Call the `vertex3()` method to add a new vertex and set its position. The vertex will
-have the last normal, color, and texture coordinates defined on the mesh, if any
-were given:
-
-        mesh.vertex3(x, y, z);
-
-You can also call the `mode()` method any time to change the primitive mode, even to
-the same mode. What this does is reset the state of the primitive so that future vertices
-won't depend on previous vertices. For example, if you define a `TRIANGLE_FAN`, and
-you call `mesh.mode(H3DU.Mesh.TRIANGLE_FAN)`, the newly defined `TRIANGLE_FAN` will be
-"disconnected" from the previous one as far as the mesh object is concerned. However,
-a single `Mesh` can contain only one kind of primitive (triangles, lines, or points) at a time.
 
 <a id=Binding_Shapes></a>
 ## Binding Shapes

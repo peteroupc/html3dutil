@@ -458,6 +458,127 @@ MeshBuffer.fromPositionsUV = function(vertices, indices) {
     .setAttribute("POSITION", vertarray, 3, 0, 5)
     .setAttribute("TEXCOORD", vertarray, 2, 3, 5).setIndices(indices);
 };
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.
+ * @param {number} vertexCount Number of vertices that make up the line loop.
+ * @returns {Array<number>} Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if 'vertexCount' is less than 2.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.lineStripIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+
+MeshBuffer.lineStripIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 2) {
+    let i;
+    for (i = 1; i < vertexCount; i++)ret.push(i - 1, i);
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.
+ * @param {number} vertexCount Number of vertices that make up the line loop.
+ * @returns {Array<number>} Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if 'vertexCount' is less than 2.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.lineLoopIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.lineLoopIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 2) {
+    let i;
+    for (i = 1; i < vertexCount; i++)ret.push(i - 1, i);
+    ret.push(vertexCount - 1, 0);
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon. For triangle fans and convex polygons, the first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the last vertex, the first vertex of
+ * the first trangle, and 1 new vertex.
+ * @param {number} vertexCount Number of vertices that make up the triangle fan or convex polygon.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.triangleFanIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.triangleFanIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 3) {
+    let i;
+    for (i = 2; i < vertexCount; i++)ret.push(0, i - 1, i);
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a triangle strip. For a triangle strip, the first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the last 2 vertices and 1
+ * new vertex.
+ * @param {number} vertexCount Number of vertices that make up the triangle strip.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.triangleStripIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.triangleStripIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 3) {
+    const flip = false;
+    let i;
+    for (i = 2; i < vertexCount; i++) {
+      ret.push(flip ? i - 2 : i - 1,
+        flip ? i - 1 : i - 2, i);
+    }
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.
+ * @param {number} vertexCount Number of vertices that make up the quadrilaterals.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 4. If 'vertexCount' is not divisible by 4, any excess vertices are ignored.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.quadsIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.quadsIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 4) {
+    let i;
+    for (i = 3; i < vertexCount; i += 4) {
+      ret.push(i - 3, i - 2, i, i, i - 2, i - 1);
+    }
+  }
+  return ret;
+};
+
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals. For a quadrilateral strip, the first 4 vertices make up the first quadrilateral, and each additional
+ * quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
+ * 2 new vertices.
+ * @param {number} vertexCount Number of vertices that make up the quadrilateral strip.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 4. If 'vertexCount' is not divisible by 2, the excess vertex is ignored.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.quadStripIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.quadStripIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 4) {
+    let i;
+    for (i = 3; i < vertexCount; i += 2) {
+      ret.push(i - 3, i - 2, i - 1, i - 1, i - 2, i);
+    }
+  }
+  return ret;
+};
 
 /**
  * Gets the number of primitives (triangles, lines,
@@ -478,8 +599,7 @@ MeshBuffer.prototype.primitiveCount = function() {
  * @returns {Array<Array<number>>} An array of primitives,
  * each of which holds the vertices that make up that primitive.
  * If this mesh holds triangles, each primitive will contain three
- * vertices; if lines, two; and if points, one. Each vertex is an at least 3-element
- * array containing that vertex's X, Y, and Z coordinates, in that order.
+ * vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex's coordinates (for example, if the attribute holds 3 elements per value, the coordinates are X, Y, and Z coordinates, in that order).
  */
 MeshBuffer.prototype.getPositions = function() {
   const posattr = this.getAttribute(Semantic.POSITION, 0);
