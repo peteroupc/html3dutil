@@ -212,7 +212,7 @@ const MathUtil = {
     return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
   },
   /**
-   * Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+   * Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
    * a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
    * by a surface of the given color.
    * @param {Array<number>} srgb A three- or four-element vector giving
@@ -232,7 +232,7 @@ const MathUtil = {
       srgb.length <= 3 ? 1.0 : srgb[3]];
   },
   /**
-   * Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+   * Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
    * a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
    * by a surface of the given color.
    * @param {Array<number>} lin A three- or four-element vector giving
@@ -241,7 +241,7 @@ const MathUtil = {
    * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
    * @returns {Array<number>} lin A four-element vector giving
    * the red, green, blue, and alpha components, in that order, of the given color
-   * in companded sRGB. The alpha component will be as specified
+   * in encoded sRGB. The alpha component will be as specified
    * in the "lin" parameter.
    */
   "colorTosRGB":function(lin) {

@@ -12,12 +12,8 @@ import {Transform} from "./h3du-transform";
 
 /**
  * An object that associates a geometric mesh (the shape of the object) with
- * material data (which defines what is seen on the object's surface)
- * and a transformation matrix (which defines the object's position and size).
+ * a transformation matrix (which defines the object's position and size).
  * See the "{@tutorial shapes}" tutorial.<p>
- * NOTE: The default shader program assumes that all colors and the diffuse texture
- * specified in this object are in
- * [companded sRGB]{@link MathUtil.colorTosRGB}.
  * @constructor
  * @memberof H3DU
  * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
@@ -71,10 +67,7 @@ Shape.prototype.getVisible = function() {
 };
 /**
  * Makes a copy of this object. The copied object
- * will have its own version of the transform and
- * material data, but any texture
- * image data and mesh buffers will not be duplicated,
- * but rather just references to them will be used.
+ * will have its own version of the transform.
  * The copied shape won't have a parent.
  * @returns {Shape} A copy of this object.
  */
@@ -185,11 +178,19 @@ Shape.prototype.setTransform = function(transform) {
 /**
  * Sets the scale of this shape relative to its original
  * size. See {@link Transform#setScale}
- * @param {number|Array<number>} x Scaling factor for this object's width,
- * or a 3-element scaling array, as specified in {@link Transform#setScale}.
- * @param {number} y Scaling factor for this object's height.
- * @param {number} z Scaling factor for this object's depth.
+ * @param {number|Array<number>} x X axis scaling factor for this shape object.
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
+ * a 3-element array giving the scaling factors
+ * for the X, Y, and Z dimensions, respectively, or a single number
+ * giving the scaling factor for all three dimensions.
+ * @param {number} [y] Y axis scaling factor for this shape object.
+ * @param {number} [z] Z axis scaling factor for this shape object.
  * @returns {Shape} This object.
+ * @example
+ * // scale the shape by 2x in all axes
+ * shape.setScale(2,2,2);
+ * // same, but passing an array
+ * shape.setScale([2,2,2]);
  */
 Shape.prototype.setScale = function(x, y, z) {
   this.getTransform().setScale(x, y, z);
@@ -198,11 +199,21 @@ Shape.prototype.setScale = function(x, y, z) {
 /**
  * Sets the relative position of this shape from its original
  * position. See {@link Transform#setPosition}
- * @param {number|Array<number>} x X coordinate
- * or a 3-element position array, as specified in {@link Transform#setScale}.
- * @param {number} y Y coordinate.
- * @param {number} z Z coordinate.
+ * @param {Array<number>|number} x The X coordinate.
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
+ * a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {number} [y] The Y coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} [z] The Z coordinate.
+ * If "x" is an array, this parameter may be omitted.
  * @returns {Shape} This object.
+ * @example
+ * // Set the relative position to 2 units along X axis, 4 units along Y axis,
+ * // and 5 units along Z axis
+ * shape.setPosition(2,4,5);
+ * // same, but passing an array
+ * shape.setPosition([2,4,5]);
  */
 Shape.prototype.setPosition = function(x, y, z) {
   this.getTransform().setPosition(x, y, z);
@@ -213,6 +224,12 @@ Shape.prototype.setPosition = function(x, y, z) {
  * See {@link Transform#setQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
  * @returns {Shape} This object.
+ * @example
+ * // rotate the shape 40 units about X axis, 20 units about Y axis,
+ * // and 50 units about Z axis
+ * shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+ * // rotate the shape 20 units about Y axis
+ * shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
  */
 Shape.prototype.setQuaternion = function(quat) {
   this.getTransform().setQuaternion(quat);

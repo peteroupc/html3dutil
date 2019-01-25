@@ -9,9 +9,6 @@ This page explains how my [**HTML 3D Library**](http://peteroupc.github.io/html3
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.
 
-**Download the latest version of the HTML 3D Library at the [**library's Releases page**](https://github.com/peteroupc/html3dutil/releases).** As of version 1.2.1, it includes
-the _shapes.html_ and _platonic.html_ demos mentioned in this page.
-
 This page will discuss:
 
 * Binding mesh buffers to shapes
@@ -28,7 +25,6 @@ This page will discuss:
     - [**The Mesh Constructor**](#The_Mesh_Constructor)
 - [**Binding Shapes**](#Binding_Shapes)
 - [**Shape Groups**](#Shape_Groups)
-- [**Other Pages**](#Other_Pages)
 
 <a id=Creating_Shapes></a>
 ## Creating Shapes
@@ -73,49 +69,6 @@ To attach a mesh to a 3D scene:
 
         var shape = new H3DU.Shape(meshBuffer);
 
-2. You may also set the `Shape`'s color, appearance, and position, using the examples below:
-
-    Examples for setting appearance:
-
-        shape.setColor("red"); // set the color to a CSS color
-        shape.setColor("#338845"); // set the color to an HTML color
-        shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-        // set material parameters (NOTE: if the mesh defines its own colors they
-        // will override diffuse reflection given below)
-        shape.setMaterial(new H3DU.Material({
-     "ambient":"blue",
-     "diffuse":"blue",
-     "specular":"white",
-     "shininess":30}));
-        // set material parameters: ambient, diffuse,
-        // specular, shininess, emission
-        shape.setMaterial(new H3DU.Material({
-     "ambient":"lime",
-     "diffuse":"lime",
-     "specular":"white",
-     "emission":[0.2,0.2,0.2],
-     "shininess":30}));
-        // set a texture; this requires the mesh to have texture
-        // coordinates assigned to each vertex
-        shape.setTexture("texture.png");
-
-    Examples for setting position and transformation:
-
-        // move the shape 2 units along X axis, 4 units along Y axis,
-        // and 5 units along Z axis
-        shape.setPosition(2,4,5);
-        // same, but passing an array
-        shape.setPosition([2,4,5]);
-        // rotate the shape 40 units about X axis, 20 units about Y axis,
-        // and 50 units about Z axis
-        shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
-        // rotate the shape 20 units about Y axis
-        shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
-        // scale the shape by 2x in all axes
-        shape.setScale(2,2,2);
-        // same, but passing an array
-        shape.setScale([2,2,2]);
-
     Note that `setPosition`, `setQuaternion`, and `setScale` don't change
 the vertices of the underlying mesh the shape uses, but rather set up
 a <a href="tutorial-glmath.md">_transformation matrix_</a> that adjusts each vertex
@@ -157,14 +110,5 @@ are added to a single ShapeGroup which represents the whole clock, as follows:
 To create a shape group, call `new H3DU.ShapeGroup()`. To add a `Shape` object to the group,
 call `new H3DU.Shape(shape)`. Note that you can add only shapes or other shape groups, not meshes,
 to a shape group.
-
-<a id=Other_Pages></a>
-## Other Pages
-
-The following pages of mine on CodeProject also discuss this library:
-
-* [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
-* [**_Drawing parametric surfaces using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai)
-* [**_The "Camera" and the Projection and View Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms)
 
 [Back to documentation index.](index.md)

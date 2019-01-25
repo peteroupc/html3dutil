@@ -48,9 +48,9 @@ of radians in a degree.
 * [boxCenter](#H3DU.MathUtil.boxCenter)<br>Finds the center of a 3D bounding box.
 * [boxDimensions](#H3DU.MathUtil.boxDimensions)<br>Finds the dimensions of a 3D bounding box.
 * [boxIsEmpty](#H3DU.MathUtil.boxIsEmpty)<br>Determines whether a 3D bounding box is empty.
-* [colorToLinear](#H3DU.MathUtil.colorToLinear)<br>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+* [colorToLinear](#H3DU.MathUtil.colorToLinear)<br>Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
 a new vector with the result.
-* [colorTosRGB](#H3DU.MathUtil.colorTosRGB)<br>Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+* [colorTosRGB](#H3DU.MathUtil.colorTosRGB)<br>Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
 a new vector with the result.
 * [frustumHasBox](#H3DU.MathUtil.frustumHasBox)<br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.
@@ -463,7 +463,7 @@ corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 <a name='H3DU.MathUtil.colorToLinear'></a>
 ### (static) H3DU.MathUtil.colorToLinear(srgb)
 
-Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
 a new vector with the result.
 
 Linear RGB is linear because of its linear relationship of light emitted
@@ -483,7 +483,7 @@ in the "srgb" parameter. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.colorTosRGB'></a>
 ### (static) H3DU.MathUtil.colorTosRGB(lin)
 
-Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
 a new vector with the result.
 
 Linear RGB is linear because of its linear relationship of light emitted
@@ -497,7 +497,7 @@ by a surface of the given color.
 
 lin A four-element vector giving
 the red, green, blue, and alpha components, in that order, of the given color
-in companded sRGB. The alpha component will be as specified
+in encoded sRGB. The alpha component will be as specified
 in the "lin" parameter. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.frustumHasBox'></a>

@@ -21,7 +21,6 @@ This page will discuss:
     - [**The Mesh Constructor**](#The_Mesh_Constructor)
 - [**Binding Shapes**](#Binding_Shapes)
 - [**Shape Groups**](#Shape_Groups)
-- [**Other Pages**](#Other_Pages)
 
 <a id=Creating_Shapes></a>
 ## Creating Shapes
@@ -65,49 +64,6 @@ To attach a mesh to a 3D scene:
 1. Create a `Shape` object by passing the mesh buffer to the `H3DU.Shape` constructor:
 
         var shape = new H3DU.Shape(meshBuffer);
-
-2. You may also set the `Shape`'s color, appearance, and position, using the examples below:
-
-    Examples for setting appearance:
-
-        shape.setColor("red"); // set the color to a CSS color
-        shape.setColor("#338845"); // set the color to an HTML color
-        shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-        // set material parameters (NOTE: if the mesh defines its own colors they
-        // will override diffuse reflection given below)
-        shape.setMaterial(new H3DU.Material({
-     "ambient":"blue",
-     "diffuse":"blue",
-     "specular":"white",
-     "shininess":30}));
-        // set material parameters: ambient, diffuse,
-        // specular, shininess, emission
-        shape.setMaterial(new H3DU.Material({
-     "ambient":"lime",
-     "diffuse":"lime",
-     "specular":"white",
-     "emission":[0.2,0.2,0.2],
-     "shininess":30}));
-        // set a texture; this requires the mesh to have texture
-        // coordinates assigned to each vertex
-        shape.setTexture("texture.png");
-
-    Examples for setting position and transformation:
-
-        // move the shape 2 units along X axis, 4 units along Y axis,
-        // and 5 units along Z axis
-        shape.setPosition(2,4,5);
-        // same, but passing an array
-        shape.setPosition([2,4,5]);
-        // rotate the shape 40 units about X axis, 20 units about Y axis,
-        // and 50 units about Z axis
-        shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
-        // rotate the shape 20 units about Y axis
-        shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
-        // scale the shape by 2x in all axes
-        shape.setScale(2,2,2);
-        // same, but passing an array
-        shape.setScale([2,2,2]);
 
     Note that `setPosition`, `setQuaternion`, and `setScale` don't change
 the vertices of the underlying mesh the shape uses, but rather set up

@@ -331,7 +331,7 @@ if (typeof window !== "undefined" && window !== null && !(typeof window.Promise 
  * @namespace H3DU
  * @license CC0-1.0
  */
-
+// TODO: Maybe bring back H3DU.RenderLoop
 /** @suppress {checkTypes}
  * @ignore */
 function objectKeysPolyfill() {
@@ -1337,7 +1337,7 @@ const MathUtil = {
     return box[0] > box[3] || box[1] > box[4] || box[2] > box[5];
   },
   /**
-   * Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+   * Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
    * a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
    * by a surface of the given color.
    * @param {Array<number>} srgb A three- or four-element vector giving
@@ -1357,7 +1357,7 @@ const MathUtil = {
       srgb.length <= 3 ? 1.0 : srgb[3]];
   },
   /**
-   * Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+   * Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
    * a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
    * by a surface of the given color.
    * @param {Array<number>} lin A three- or four-element vector giving
@@ -1366,7 +1366,7 @@ const MathUtil = {
    * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
    * @returns {Array<number>} lin A four-element vector giving
    * the red, green, blue, and alpha components, in that order, of the given color
-   * in companded sRGB. The alpha component will be as specified
+   * in encoded sRGB. The alpha component will be as specified
    * in the "lin" parameter.
    */
   "colorTosRGB":function(lin) {
@@ -14602,14 +14602,19 @@ Transform.prototype.isIdentity = function() {
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link Transform#setMatrix}
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @param {number|Array<number>} x Scaling factor for this transform's width.
- *   If "y" and "z" are null or omitted, this is instead
+ * @param {number|Array<number>} x X axis scaling factor for this transform.
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
  * a 3-element array giving the scaling factors
- * for width, height, and depth, respectively, or a single number
+ * for X, Y, and Z dimensions, respectively, or a single number
  * giving the scaling factor for all three dimensions.
- * @param {number} y Scaling factor for this transform's height.
- * @param {number} z Scaling factor for this transform's depth.
+ * @param {number} [y] Y axis scaling factor for this transform.
+ * @param {number} [z] Z axis scaling factor for this transform.
  * @returns {Transform} This object.
+ * @example
+ * // scale coordinates by 2x in all axes
+ * transform.setScale(2,2,2);
+ * // same, but passing an array
+ * transform.setScale([2,2,2]);
  */
 Transform.prototype.setScale = function(x, y, z) {
   if(this.complexMatrix)return this;
@@ -14633,14 +14638,20 @@ Transform.prototype.setScale = function(x, y, z) {
  * position. Has no effect if a matrix was defined with {@link Transform#setMatrix}
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
  * @param {Array<number>|number} x The X coordinate.
- *   If "y" and "z" are null or omitted, this is instead
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
  * a 3-element array giving the X, Y, and Z coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} y The Y coordinate.
+ * @param {number} [y] The Y coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z The Z coordinate.
+ * @param {number} [z] The Z coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {Transform} This object.
+ * @example
+ * // Set the relative position to 2 units along X axis, 4 units along Y axis,
+ * // and 5 units along Z axis
+ * transform.setPosition(2,4,5);
+ * // same, but passing an array
+ * transform.setPosition([2,4,5]);
  */
 Transform.prototype.setPosition = function(x, y, z) {
   if(this.complexMatrix)return this;
@@ -14665,7 +14676,7 @@ Transform.prototype.setPosition = function(x, y, z) {
  * position. Has no effect if a matrix was defined with {@link Transform#setMatrix}
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
  * @param {Array<number>|number} x Number to add to the X coordinate,
- *   If "y" and "z" are null or omitted, this is instead
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
  * a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number
  * to add to all three coordinates.
  * @param {number} y Number to add to the Y coordinate.
@@ -14714,6 +14725,11 @@ Transform.prototype.movePosition = function(x, y, z) {
  * // Set an object's rotation to 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.setQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
+ * // Set an object's rotation to 40 units about X axis, 20 units about Y axis,
+ * // and 50 units about Z axis
+ * transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+ * // Set an object's rotation to 20 units about Y axis
+ * transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
  */
 Transform.prototype.setQuaternion = function(quat) {
   if(this.complexMatrix)return this;
@@ -14875,12 +14891,8 @@ Transform.prototype.copy = function() {
 
 /**
  * An object that associates a geometric mesh (the shape of the object) with
- * material data (which defines what is seen on the object's surface)
- * and a transformation matrix (which defines the object's position and size).
+ * a transformation matrix (which defines the object's position and size).
  * See the "{@tutorial shapes}" tutorial.<p>
- * NOTE: The default shader program assumes that all colors and the diffuse texture
- * specified in this object are in
- * [companded sRGB]{@link MathUtil.colorTosRGB}.
  * @constructor
  * @memberof H3DU
  * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
@@ -14934,10 +14946,7 @@ Shape.prototype.getVisible = function() {
 };
 /**
  * Makes a copy of this object. The copied object
- * will have its own version of the transform and
- * material data, but any texture
- * image data and mesh buffers will not be duplicated,
- * but rather just references to them will be used.
+ * will have its own version of the transform.
  * The copied shape won't have a parent.
  * @returns {Shape} A copy of this object.
  */
@@ -15048,11 +15057,19 @@ Shape.prototype.setTransform = function(transform) {
 /**
  * Sets the scale of this shape relative to its original
  * size. See {@link Transform#setScale}
- * @param {number|Array<number>} x Scaling factor for this object's width,
- * or a 3-element scaling array, as specified in {@link Transform#setScale}.
- * @param {number} y Scaling factor for this object's height.
- * @param {number} z Scaling factor for this object's depth.
+ * @param {number|Array<number>} x X axis scaling factor for this shape object.
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
+ * a 3-element array giving the scaling factors
+ * for the X, Y, and Z dimensions, respectively, or a single number
+ * giving the scaling factor for all three dimensions.
+ * @param {number} [y] Y axis scaling factor for this shape object.
+ * @param {number} [z] Z axis scaling factor for this shape object.
  * @returns {Shape} This object.
+ * @example
+ * // scale the shape by 2x in all axes
+ * shape.setScale(2,2,2);
+ * // same, but passing an array
+ * shape.setScale([2,2,2]);
  */
 Shape.prototype.setScale = function(x, y, z) {
   this.getTransform().setScale(x, y, z);
@@ -15061,11 +15078,21 @@ Shape.prototype.setScale = function(x, y, z) {
 /**
  * Sets the relative position of this shape from its original
  * position. See {@link Transform#setPosition}
- * @param {number|Array<number>} x X coordinate
- * or a 3-element position array, as specified in {@link Transform#setScale}.
- * @param {number} y Y coordinate.
- * @param {number} z Z coordinate.
+ * @param {Array<number>|number} x The X coordinate.
+ *   If "y" and "z" are null, undefined, or omitted, this is instead
+ * a 3-element array giving the X, Y, and Z coordinates, or a single number
+ * giving the coordinate for all three dimensions.
+ * @param {number} [y] The Y coordinate.
+ * If "x" is an array, this parameter may be omitted.
+ * @param {number} [z] The Z coordinate.
+ * If "x" is an array, this parameter may be omitted.
  * @returns {Shape} This object.
+ * @example
+ * // Set the relative position to 2 units along X axis, 4 units along Y axis,
+ * // and 5 units along Z axis
+ * shape.setPosition(2,4,5);
+ * // same, but passing an array
+ * shape.setPosition([2,4,5]);
  */
 Shape.prototype.setPosition = function(x, y, z) {
   this.getTransform().setPosition(x, y, z);
@@ -15076,6 +15103,12 @@ Shape.prototype.setPosition = function(x, y, z) {
  * See {@link Transform#setQuaternion}.
  * @param {Array<number>} quat A four-element array describing the rotation.
  * @returns {Shape} This object.
+ * @example
+ * // rotate the shape 40 units about X axis, 20 units about Y axis,
+ * // and 50 units about Z axis
+ * shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+ * // rotate the shape 20 units about Y axis
+ * shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
  */
 Shape.prototype.setQuaternion = function(quat) {
   this.getTransform().setQuaternion(quat);
