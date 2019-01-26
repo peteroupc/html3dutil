@@ -180,9 +180,9 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * @param {number} [slices] Number of lengthwise "slices" the cylinder consists
  * of, each slice going through the center of the cylinder. This function will
  * create a triangular prism if "slices" is 3
- * and both radiuses are the same; a triangular pyramid if "slices" is
+ * and both radii are the same; a triangular pyramid if "slices" is
  * 3 and either radius is zero; a rectangular prism if "slices" is 4
- * and both radiuses are the same; and a rectangular pyramid if "slices"
+ * and both radii are the same; and a rectangular pyramid if "slices"
  * is 4 and either radius is zero. Must be 3 or greater.
  * May be null, undefined, or omitted, in which case the default is 32.
  * @param {number} [stacks] Number of vertical stacks the cylinder consists of.
