@@ -6300,7 +6300,7 @@ Semantic.JOINTMATRIX = 108;
  * The [`Meshes`]{@link H3DU.Meshes} class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
  * are composed of.
  * <p><b>Instancing</b>
- * <p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive mode <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
+ * <p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
  * @constructor
  * @memberof H3DU
  * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.</caption>
@@ -6379,7 +6379,7 @@ MeshBuffer.prototype.setIndices = function(indices) {
  * a single point.
  * @returns {MeshBuffer} This object.
  */
-MeshBuffer.prototype.setPrimitiveType = function(primType) {
+MeshBuffer.prototype.setType = function(primType) {
   this.format = primType;
   return this;
 };
@@ -7511,7 +7511,7 @@ MeshBuffer.prototype.wireFrame = function() {
     MeshBuffer._addLine(lineIndices, existingLines, f3, f1);
   }
   return this.setIndices(lineIndices)
-    .setPrimitiveType(MeshBuffer.LINES);
+    .setType(MeshBuffer.LINES);
 };
 /**
  * Finds the tightest
@@ -7693,7 +7693,7 @@ CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
   const indexArray = maxIndex < 65536 ?
     new Uint16Array(indices) :
     new Uint32Array(indices);
-  mb.setPrimitiveType(mode);
+  mb.setType(mode);
   mb.setIndices(indexArray);
 
   for (i = 0; i < attributes.length; i++) {
@@ -13233,7 +13233,7 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
   }
-  return MeshBuffer.fromPositions(vertices).setPrimitiveType(
+  return MeshBuffer.fromPositions(vertices).setType(
     MeshBuffer.LINES);
 };
 /**

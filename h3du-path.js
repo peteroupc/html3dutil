@@ -3279,7 +3279,7 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
   }
-  return MeshBuffer.fromPositions(vertices).setPrimitiveType(
+  return MeshBuffer.fromPositions(vertices).setType(
     MeshBuffer.LINES);
 };
 /**

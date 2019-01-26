@@ -55,7 +55,7 @@ CurveBuilder._toMeshBuffer = function(attributes, indices, mode) {
   const indexArray = maxIndex < 65536 ?
     new Uint16Array(indices) :
     new Uint32Array(indices);
-  mb.setPrimitiveType(mode);
+  mb.setType(mode);
   mb.setIndices(indexArray);
 
   for (i = 0; i < attributes.length; i++) {

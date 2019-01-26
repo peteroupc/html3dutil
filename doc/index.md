@@ -47,12 +47,6 @@ events.
 * <a href="extras_curvetube.md">module:extras/curvetube</a><br>The <code>extras/curvetube.js</code> module.
 * <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A surface evaluator object for a tube extruded from a parametric curve.
 * <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>Additional curve evaluator and surface evaluator objects.
-* <a href="extras_derivedcurves.curveCatacaustic.md">module:extras/derivedcurves.curveCatacaustic</a><br>Creates a curve evaluator object for TODO: Not documented yet.
-* <a href="extras_derivedcurves.curveEvolute.md">module:extras/derivedcurves.curveEvolute</a><br>Curve evaluator object for the curve from which an involute curve
-is generated.
-* <a href="extras_derivedcurves.curveInvolute.md">module:extras/derivedcurves.curveInvolute</a><br>TODO: Notdocumented yet.
-* <a href="extras_derivedcurves.curveOrthotomic.md">module:extras/derivedcurves.curveOrthotomic</a><br>Creates a curve evaluator object for TODO: Not documented yet.
-* <a href="extras_derivedcurves.curveRadialCurve.md">module:extras/derivedcurves.curveRadialCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.
 * <a href="extras_derivedcurves.ruledSurface.md">module:extras/derivedcurves.ruledSurface</a><br>Creates a surface evaluator object for TODO: Not documented yet.
 * <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.

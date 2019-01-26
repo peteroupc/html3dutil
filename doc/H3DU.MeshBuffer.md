@@ -23,7 +23,7 @@ are composed of.
 
 <b>Instancing</b>
 
-Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive mode <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
+Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
 
 #### Examples
 
@@ -101,7 +101,7 @@ an additional parameter.
 assigning each value with the attribute semantic <code>COLOR</code>
 to the given color.
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the vertex indices used by this mesh buffer.
-* [setPrimitiveType](#H3DU.MeshBuffer_setPrimitiveType)<br>Sets the type of graphics primitives stored in this mesh buffer.
+* [setType](#H3DU.MeshBuffer_setType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
 in this mesh, with the help of a <a href="tutorial-glmath.md">4x4 matrix</a>.
 * [triangleFanIndices](#H3DU.MeshBuffer.triangleFanIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.
@@ -689,8 +689,8 @@ Sets the vertex indices used by this mesh buffer.
 
 This object. (Type: MeshBuffer)
 
-<a name='H3DU.MeshBuffer_setPrimitiveType'></a>
-### H3DU.MeshBuffer#setPrimitiveType(primType)
+<a name='H3DU.MeshBuffer_setType'></a>
+### H3DU.MeshBuffer#setType(primType)
 
 Sets the type of graphics primitives stored in this mesh buffer.
 
