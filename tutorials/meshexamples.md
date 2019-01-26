@@ -1,5 +1,7 @@
 This page contains source code for creating various kinds of 3D models on the fly.
 
+TODO: Place in documentation examples, not here.
+
 <a id=Contents></a>
 ## Contents
 
@@ -16,12 +18,13 @@ This method creates a thin line-like 3D object.
     // thickness - thickness of the line in units, default 1
     function create3DLine(point1,point2,thickness){
       if(thickness==null)thickness=1
-      var vector=H3DU.MathUtil.vec3sub(point1,point2);
-      var dist=H3DU.MathUtil.vec3length(vector);
-      var normVector=H3DU.MathUtil.vec3norm(vector);
-      var midPoint=H3DU.MathUtil.vec3lerp(point1,point2,0.5);
-      var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
-      var matrix=H3DU.MathUtil.quatToMat4(H3DU.MathUtil.quatFromVectors([0,0,1],normVector));
+      var vector=MathUtil.vec3sub(point1,point2);
+      var dist=MathUtil.vec3length(vector);
+      var normVector=MathUtil.vec3norm(vector);
+      var midPoint=MathUtil.vec3lerp(point1,point2,0.5);
+      var line=Meshes.createCapsule(thickness/2,dist,6,4);
+      var matrix=MathUtil.quatToMat4(
+         MathUtil.quatFromVectors([0,0,1],normVector));
       matrix[12]=midPoint[0]
       matrix[13]=midPoint[1]
       matrix[14]=midPoint[2]
@@ -41,10 +44,10 @@ function pathClosedFigure(path, zBottom, zTop, flatness) {
 }
 
     function wireBox(box, color){
-     var boxMesh=H3DU.Meshes.createBox(1,1,1)
+  dims=H3DU.MathUtil.boxDimensions(box)
+     var boxMesh=H3DU.Meshes.createBox(dims[0],dims[1],dims[2])
        .setColor(color).wireFrame()
      var shape=new H3DU.Shape(boxMesh)
      shape.setPosition(H3DU.MathUtil.boxCenter(box))
-     shape.setScale(H3DU.MathUtil.boxDimensions(box))
      return shape
     }

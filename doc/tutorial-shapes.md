@@ -19,41 +19,8 @@ This page will discuss:
 
 - [**Introduction**](#Introduction)
 - [**Contents**](#Contents)
-- [**Creating Shapes**](#Creating_Shapes)
-    - [**Built-In Shapes**](#Built_In_Shapes)
-    - [**Custom Shapes**](#Custom_Shapes)
-    - [**The Mesh Constructor**](#The_Mesh_Constructor)
 - [**Binding Shapes**](#Binding_Shapes)
 - [**Shape Groups**](#Shape_Groups)
-
-<a id=Creating_Shapes></a>
-## Creating Shapes
-
-The HTML 3D library contains several methods for creating 3D shapes such
-as cubes, cylinders, spheres, and custom shapes.
-
-![**An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
-orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
-green square, and a purple cone on the second row.**](shapes.png)
-
-<a id=Built_In_Shapes></a>
-### Built-In Shapes
-
-The <a href="H3DU.Meshes.md">`H3DU.Meshes`</a> class includes several handy methods for creating built-in shapes.
-All methods described below return a `H3DU.MeshBuffer` object that describes the triangles they
-are composed of.  See "Custom Shapes" below for more on meshes.
-
-<a id=Custom_Shapes></a>
-### Custom Shapes
-
-The `H3DU.MeshBuffer` class can be used to store geometric figures not given among the built-in ones.
-Such figures can consist of triangles, lines, or points.
-
-<a id=The_Mesh_Constructor></a>
-### The Mesh Constructor
-
-The `MeshBuffer` class contains four methods (`fromPositions`,
-`fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data.  See the documentation for those methods for more information.
 
 <a id=Binding_Shapes></a>
 ## Binding Shapes

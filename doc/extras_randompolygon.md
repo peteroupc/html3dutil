@@ -5,7 +5,8 @@
 <a name='extras_randompolygon'></a>
 ### module:extras/randompolygon()
 
-The <code>extras/randompolygon.js</code> module.
+Contains a method to generate a simple polygon at random.
+
 To import all symbols in this module, either of the following can be used:
 
     import * from "extras/randompolygon.js";
@@ -20,6 +21,7 @@ To import all symbols in this module, either of the following can be used:
 ### (static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, [irregular], [spiky])
 
 Generates a simple polygon at random.
+Inspired by [http://stackoverflow.com/questions/8997099](http://stackoverflow.com/questions/8997099) .
 
 #### Parameters
 

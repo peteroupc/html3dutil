@@ -13,7 +13,7 @@ The library differs from many others because this one is in the public domain, s
 
 This page includes information on how to use the Geometry Utilities Library and an overview of its features.
 
-NOTE: The Geometry Utilities Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Utilities Library currently doesn't use them directly).
+> **Note:** The Geometry Utilities Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Utilities Library currently doesn't use them directly).
 
 <a id=Example></a>
 ## Example
@@ -34,42 +34,15 @@ The following is a screen shot of a scene generated with the help of the former 
     - [**3D Models**](#3D_Models)
     - [**Shapes**](#Shapes)
     - [**The Render Loop**](#The_Render_Loop)
-- [**Demos**](#Demos)
-    - [**Shapes and meshes**](#Shapes_and_meshes)
-    - [**Paths**](#Paths)
-    - [**Curves and Surfaces**](#Curves_and_Surfaces)
-    - [**Textures**](#Textures)
-    - [**Shaders**](#Shaders)
-    - [**Particle Systems**](#Particle_Systems)
-    - [**Loading 3D Models**](#Loading_3D_Models)
-    - [**Selecting Objects**](#Selecting_Objects)
-    - [**Lights**](#Lights)
-    - [**Text**](#Text)
-    - [**Projections**](#Projections)
-- [**Example**](#Example_2)
 - [**History**](#History)
 
 <a id=How_to_Use></a>
 ## How to Use
 
 1. [**Download the Geometry Utilities Library**](https://github.com/peteroupc/html3dutil/releases).
-2. Extract the file <i>"h3du_min.js"</i>, and write the following code in every HTML page where you will use the library.
+2. Extract the file <i>"h3du_min.js"</i> or <i>"h3du_module.js"</i>, and write the following code in every HTML page where you will use the library.
 
         <script type="text/javascript" src="h3du_min.js"></script>
-
-3. Include an HTML 3D canvas somewhere on the Web page, since drawing 3D objects requires a 3D canvas. You may set its `width` and `height`. You should also give it an ID so you can refer to it more easily in your JavaScript code, as shown in this example.
-
-        <canvas width="640" height="480" id="canvas"></canvas>
-
-4. To use the Geometry Utilities Library in JavaScript, either add the JavaScript code to the bottom of the page or use an event listener, as in this example:
-
-        <script>
-        window.addEventListener("load",function(){
-          var scene=new Scene3D(document.getElementById("canvas"));
-          // We have the 3D scene, use it. (See the example code
-          // at the bottom of this article for a more complete example.)
-        })
-        </script>
 
 <a id=List_of_Classes></a>
 ### List of Classes
@@ -130,17 +103,14 @@ The methods described above return a `MeshBuffer` object describing the appropri
 <a id=Shapes></a>
 ### Shapes
 
-Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
-Use the `H3DU.Shape` constructor method to convert the mesh to a shape. Then you can set the shape&#39;s properties such as color, size, and position. Then, call `addShape()` to add the shape to the 3D object batch.
+The `H3DU.Shape` constructor method assigns a linear or perspective transformation (includins shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.
 
     // Create a shape based on the mesh
     var shape=new H3DU.Shape(mesh);
     // Move it 1 unit along the X axis
     shape.setPosition(1,0,0);
-    // Add the shape to the scene
-    batch.addShape(shape);
 
-> **Note:** The appearance of a 3D shape is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library, not least because there are many ways to describe a material's parameters, as well as many ways to implement the rendering behavior of materials associated with shapes, such as physically-based rendering, cartoon styling, constant-color shading, the Blinn&ndash;Phong model, and so on.
+> **Note:** The appearance of a 3D shape's surface is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library, not least because there are many ways to describe a material's parameters, as well as many ways to implement the rendering behavior of materials associated with shapes, such as physically-based rendering, cartoon styling, constant-color shading, the Blinn&ndash;Phong model, and so on.
 
 Here are details on some of the `Shape` class&#39;s methods.
 
@@ -156,182 +126,24 @@ Here are details on some of the `Shape` class&#39;s methods.
 <a id=The_Render_Loop></a>
 ### The Render Loop
 
-An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the `H3DU.Scene3D.render()` method, passing a batch of shapes to render. Render loops are created using the `H3DU.renderLoop()` method. Here is an example of a render loop.
+An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. The exact details of rendering depend on the 3D rendering library in use; the Geometry Utilities Library has no means to directly render 3D objects.
+
+For example, in an HTML Web page, a render loop could look like the following; it depends on the `requestAnimationFrame` API implemented in most modern Web browsers.
 
     // Set up the render loop
-    H3DU.renderLoop(function(time){
+    var rafCallback = function(time){
      // This will be called once each frame.
-     // Here, we render the scene
-     scene.render(batch);
+     // Render the scene here before calling
+     // requestAnimationFrame again
+     requestAnimationFrame(rafCallback);
     });
+    requestAnimationFrame(rafCallback);
 
-The render loop method takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
-
-<a id=Demos></a>
-## Demos
-
-The following are HTML Web pages showing a variety of features of the Geometry Utilities Library. Each demo includes a link to access source code for that demo.
-
-<a id=Shapes_and_meshes></a>
-### Shapes and meshes
-
-* [**demos/compositeMesh.html**](https://peteroupc.github.io/html3dutil/demos/compositeMesh.html) - Demonstrates
-combining multiple meshes into one.
-* [**demos/shapes.html**](https://peteroupc.github.io/html3dutil/demos/shapes.html) - Demonstrates
-the built-in shapes.
-* [**demos/newshapes.html**](https://peteroupc.github.io/html3dutil/demos/newshapes.html) - Fancier
-demo of some of the built-in shapes.
-* [**demos/builtinshapes.html**](https://peteroupc.github.io/html3dutil/demos/builtinshapes.html) - Interactive demo of
-the built-in shapes.
-* [**demos/platonic.html**](https://peteroupc.github.io/html3dutil/demos/platonic.html) - A demo featuring the five
-platonic solids. Demonstrates:
-    * How vertex and index arrays are built up to create geometric meshes, and
-    * How to position HTML elements on top of 3D models based on their 3D positions.
-* [**demos/clock.html**](https://peteroupc.github.io/html3dutil/demos/clock.html) - A demo
-featuring a wall clock.
-* [**demos/gears.html**](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of rotating gears.
-
-<a id=Paths></a>
-### Paths
-
-* [**demos/marchingdots.html**](https://peteroupc.github.io/html3dutil/demos/marchingdots.html) - Demo
-of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.
-* [**demos/polyclip.html**](https://peteroupc.github.io/html3dutil/demos/polyclip.html) -
-Similar to "marchingdots.html", but now uses the union of two circles as a path to demonstrate polygon
-clipping.
-* [**demos/pathtube.html**](https://peteroupc.github.io/html3dutil/demos/pathtube.html) - Demo
-of a tube formed by a path curve.
-* [**demos/pathshapes.html**](https://peteroupc.github.io/html3dutil/demos/pathshapes.html) - Demo
-of 3D and 2D shapes generated by a 2D path.
-
-<a id=Curves_and_Surfaces></a>
-### Curves and Surfaces
-
-* [**demos/surfaces.html**](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates
-using evaluators to generate parametric surfaces.
-* [**demos/curves.html**](https://peteroupc.github.io/html3dutil/demos/curves.html) - Demonstrates
-using evaluators to generate parametric curves.
-* [**demos/surfacesexpr.html**](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates
-parametric surfaces, with a custom formula editor.
-* [**demos/curvesexpr.html**](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates
-parametric curves, with a custom formula editor.
-* [**demos/implicit.html**](https://peteroupc.github.io/html3dutil/demos/implicit.html) - Demonstrates
-implicit surfaces.
-* [**demos/invoevo.html**](https://peteroupc.github.io/html3dutil/demos/invoevo.html) - Demonstrates drawing certain custom curves.
-* [**demos/drawingtoy.html**](https://peteroupc.github.io/html3dutil/demos/drawingtoy.html) - Draws a design that's reminiscent of a popular drawing toy.
-* [**demos/bsplinecircles.html**](https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html) - Demonstrates how circles and ellipses can be generated using the `BSplineCurve` class.
-
-<a id=Textures></a>
-### Textures
-
-* [**demos/textured.html**](https://peteroupc.github.io/html3dutil/demos/textured.html) - Demonstrates loading textures
-and applying them to 3D shapes.
-* [**demos/specular.html**](https://peteroupc.github.io/html3dutil/demos/specular.html) - Demonstrates using
-textures as specular reflection maps.
-* [**demos/normalmap.html**](https://peteroupc.github.io/html3dutil/demos/normalmap.html) - Demonstrates using
-normal map textures.
-* [**demos/gradient.html**](https://peteroupc.github.io/html3dutil/demos/gradient.html) - Demonstrates generating a custom
-texture -- a linear gradient from one color to another.
-* [**demos/skysphere.html**](https://peteroupc.github.io/html3dutil/demos/skysphere.html) - Demonstrates how to
-implement a 360-degree background texture -- a _sky sphere_ -- using custom shader materials.
-* [**demos/procedtexture.html**](https://peteroupc.github.io/html3dutil/demos/procedtexture.html) - Demonstrates how to apply a shader-generated texture to a 3D shape.
-
-<a id=Shaders></a>
-### Shaders
-
-* [**demos/squares.html**](https://peteroupc.github.io/html3dutil/demos/squares.html) - Demonstrates shader-based filters.
-* [**demos/raymarch.html**](https://peteroupc.github.io/html3dutil/demos/gears.html) - A demonstration of the following:
-   * Custom shaders in HTML `script` blocks.
-   * The "ray marching" technique for procedural 3D content.
-* [**demos/checkerboard.html**](https://peteroupc.github.io/html3dutil/demos/checkerboard.html) - Shader for generating a checkerboard texture.
-* [**demos/gradient2.html**](https://peteroupc.github.io/html3dutil/demos/gradient2.html) - Shader-based version of the "gradient" demo.
-* [**demos/marble.html**](https://peteroupc.github.io/html3dutil/demos/marble.html) - Shader for generating a marble background.
-* [**demos/marble2.html**](https://peteroupc.github.io/html3dutil/demos/marble2.html) - Another shader for generating a marble background.
-* [**demos/wood.html**](https://peteroupc.github.io/html3dutil/demos/wood.html) - Shader for generating a wood background.
-
-<a id=Particle_Systems></a>
-### Particle Systems
-
-* [**demos/tris.html**](https://peteroupc.github.io/html3dutil/demos/tris.html) - Demonstrates a particle system.
-* [**demos/fallingballs.html**](https://peteroupc.github.io/html3dutil/demos/fallingballs.html) - Demonstrates falling balls
-of different sizes.
-
-<a id=Loading_3D_Models></a>
-### Loading 3D Models
-
-* [**demos/obj.html**](https://peteroupc.github.io/html3dutil/demos/obj.html) - An object file loader.
-* [**demos/stl.html**](https://peteroupc.github.io/html3dutil/demos/stl.html) - Demonstrates loading 3D models.
-
-<a id=Selecting_Objects></a>
-### Selecting Objects
-
-* [**demos/picking.html**](https://peteroupc.github.io/html3dutil/demos/picking.html),  [**demos/picking2.html**](https://peteroupc.github.io/html3dutil/demos/picking2.html),
-[**demos/picking3.html**](https://peteroupc.github.io/html3dutil/demos/picking3.html) - These demos demonstrate how object picking can be implemented.
-
-<a id=Lights></a>
-### Lights
-
-* [**demos/animation-light.html**](https://peteroupc.github.io/html3dutil/demos/animation-light.html) - Much like _animation.html_, but illuminated using a point light.
-
-<a id=Text></a>
-### Text
-
-* [**demos/textwith3D.html**](https://peteroupc.github.io/html3dutil/demos/textwith3d.html) - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.
-
-<a id=Projections></a>
-### Projections
-
-* [**demos/perspective.html**](https://peteroupc.github.io/html3dutil/demos/perspective.html) - Demonstrates a perspective projection.
-* [**demos/animation-isometric.html**](https://peteroupc.github.io/html3dutil/demos/animation-isometric.html) - Much like _animation.html_, but demonstrates an isometric projection.
-
-<a id=Example_2></a>
-## Example
-
-The following is a simple example of an HTML page that uses the Geometry Utilities Library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the `<canvas>` element it uses on the page.
-
-    <head>
-    <script type="text/javascript" src="h3du_min.js"></script>
-    </head>
-    <body>
-    <canvas width="600" height="450" id=canvas></canvas>
-    <script>
-     // Create the 3D scene; find the HTML canvas and pass it
-     // to Scene3D.
-     var scene=new H3DU.Scene3D(document.getElementById("canvas"));
-     var sub=new H3DU.Batch3D();
-      // Set the perspective view. Camera has a 45-degree field of view
-      // and will see objects from 0.1 to 100 units away.
-      .perspectiveAspect(45,0.1,100)
-      // Move the camera back 40 units.
-      .setLookAt([0,0,40]);
-    sub.getLights().setBasic();
-     // Create a box mesh 10 units in size
-     var mesh=H3DU.Meshes.createBox(10,20,20);
-     // Create a shape based on the mesh and give it a red color
-     var shape=new H3DU.Shape(mesh).setColor("red");
-     // Add the shape to the scene
-     sub.addShape(shape);
-     // Create a timer
-     var timer={};
-     // Set up the render loop
-     H3DU.renderLoop(function(time){
-      // Update the shape's rotation
-      var q=H3DU.MathUtil.quatFromTaitBryan(
-        360*H3DU.getTimePosition(timer,time,6000),
-        360*H3DU.getTimePosition(timer,time,12000),
-        0
-      );
-      shape.setQuaternion(q);
-      // Render the scene
-      scene.render(sub);
-    });
-    //-->
-    </script>
-    </body>
+In this example, the callback to `requestAnimationFrame` takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
 
 <a id=History></a>
 ## History
 
-See [**older version history**](https://peteroupc.github.io/html3dutil/tutorial-history.html).
+See [**version history**](https://peteroupc.github.io/html3dutil/tutorial-history.html).
 
 [Back to documentation index.](index.md)

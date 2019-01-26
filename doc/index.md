@@ -1,5 +1,6 @@
 # Documentation Index
 
+* [Global Members](Global.md)
 * <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
 * <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
@@ -14,7 +15,8 @@ with vectors, matrices, quaternions, and other
 mathematical objects.
 * <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
 * <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
-of various geometric shapes and solids.
+of various geometric shapes and solids, such as cubes, cylinders,
+and spheres.
 * <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A curve evaluator object for a curve
 made up of one or more individual curves.
 * <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
@@ -32,10 +34,6 @@ from one coordinate system to another.
 * <a href="H3DU.exports.Camera.md">H3DU.exports.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
-* <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
-to vertex attributes found in mesh buffers and
-to data that is uniform throughout a particular
-geometry draw call.
 * <a href="extras_arrow.md">module:extras/arrow</a><br>The <code>extras/arrow.js</code> module.
 * <a href="extras_camera.md">module:extras/camera</a><br>The <code>extras/camera.js</code> module.
 * <a href="extras_camera.InputTracker.md">module:extras/camera.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
@@ -48,8 +46,15 @@ events.
 * <a href="extras_createwasher.md">module:extras/createwasher</a><br>The <code>extras/createwasher.js</code> module.
 * <a href="extras_curvetube.md">module:extras/curvetube</a><br>The <code>extras/curvetube.js</code> module.
 * <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A surface evaluator object for a tube extruded from a parametric curve.
-* <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>The <code>extras/derivedcurves.js</code> module.
-* <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>The <code>extras/drawingtoy.js</code> module.
+* <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>Additional curve evaluator and surface evaluator objects.
+* <a href="extras_derivedcurves.curveCatacaustic.md">module:extras/derivedcurves.curveCatacaustic</a><br>Creates a curve evaluator object for TODO: Not documented yet.
+* <a href="extras_derivedcurves.curveEvolute.md">module:extras/derivedcurves.curveEvolute</a><br>Curve evaluator object for the curve from which an involute curve
+is generated.
+* <a href="extras_derivedcurves.curveInvolute.md">module:extras/derivedcurves.curveInvolute</a><br>TODO: Notdocumented yet.
+* <a href="extras_derivedcurves.curveOrthotomic.md">module:extras/derivedcurves.curveOrthotomic</a><br>Creates a curve evaluator object for TODO: Not documented yet.
+* <a href="extras_derivedcurves.curveRadialCurve.md">module:extras/derivedcurves.curveRadialCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.
+* <a href="extras_derivedcurves.ruledSurface.md">module:extras/derivedcurves.ruledSurface</a><br>Creates a surface evaluator object for TODO: Not documented yet.
+* <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
 * <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A curve evaluator object for a curve drawn by a curve that rolls along another curve whose position is fixed.
@@ -75,7 +80,7 @@ of 4x4 transformation matrices.
 * <a href="extras_polyhedra.Polyhedra.md">module:extras/polyhedra.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.
 * <a href="extras_radgradshader.md">module:extras/radgradshader</a><br>The <code>extras/radgradshader.js</code> module.
-* <a href="extras_randompolygon.md">module:extras/randompolygon</a><br>The <code>extras/randompolygon.js</code> module.
+* <a href="extras_randompolygon.md">module:extras/randompolygon</a><br>Contains a method to generate a simple polygon at random.
 * <a href="extras_raypick.md">module:extras/raypick</a><br>The <code>extras/raypick.js</code> module.
 * <a href="extras_skysphereshader.md">module:extras/skysphereshader</a><br>The <code>extras/skysphereshader.js</code> module.
 * <a href="extras_starfield.md">module:extras/starfield</a><br>The <code>extras/starfield.js</code> module.

@@ -5,7 +5,8 @@
 <a name='extras_drawingtoy'></a>
 ### module:extras/drawingtoy()
 
-The <code>extras/drawingtoy.js</code> module.
+Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
+
 To import all symbols in this module, either of the following can be used:
 
     import * from "extras/drawingtoy.js";

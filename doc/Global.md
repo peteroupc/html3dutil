@@ -1,19 +1,18 @@
 ### Members
 
-* [*](#_)<br>Indicates to divide each other coordinate of the returned point
-by the last coordinate of the point and omit the last
-coordinate.
+* [Semantic](#Semantic)<br>Contains constants for assigning semantics
+to vertex attributes found in mesh buffers and
+to data that is uniform throughout a particular
+geometry draw call.
 
-<a name='_'></a>
-### * (constant)
+<a name='Semantic'></a>
+### Semantic (constant)
 
-Indicates to divide each other coordinate of the returned point
-by the last coordinate of the point and omit the last
-coordinate. This is used to convert
-homogeneous coordinates to conventional coordinates.
-If this bit is set, the length of each control point must be at least 2.
+Contains constants for assigning semantics
+to vertex attributes found in mesh buffers and
+to data that is uniform throughout a particular
+geometry draw call.
 
-A B-spline curve that has control points whose last coordinate is other than
-1 is a <i>rational</i> B-spline curve.
+Type: number
 
 [Back to documentation index.](index.md)

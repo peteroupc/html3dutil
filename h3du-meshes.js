@@ -11,8 +11,13 @@ import {MathUtil} from "./h3du-math";
 import {MeshBuffer} from "./h3du-meshbuffer";
 /**
  * Contains methods that create meshes
- * of various geometric shapes and solids.<p>
+ * of various geometric shapes and solids, such as cubes, cylinders,
+ * and spheres.<p>
+ * <img src='shapes.png' alt='An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
+ * orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
+ * green square, and a purple cone on the second row.'/>
  * @constructor
+ * @hideconstructor
  * @memberof H3DU
  */
 export const Meshes = {};
@@ -87,8 +92,8 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
  * corner. The resulting mesh buffer
  * will use 36 vertex indices divided into 12 triangles, with each
  * face using two triangles. The faces will be ordered as follows:
- * Negative X face, positive X face, negative Y face,
- * positive Y face, negative Z face, positive Z face.
+ * Negative-X axis-facing face, positive-X axis-facing face, negative-Y axis-facing face,
+ * positive-Y axis-facing face, negative-Z axis-facing face, positive-Z axis-facing face.
  * @param {number} xSize Width of the box.
  * @param {number} ySize Height of the box.
  * @param {number} zSize Depth of the box. If xSize, ySize, and zSize are the
@@ -99,6 +104,7 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
  * @returns {MeshBuffer} The generated mesh.
  */
 Meshes.createBox = function(xSize, ySize, zSize, inward) {
+  // TODO: Add variant of createBox taking arbitrary boxes (MathUtil.box*)
   // Position X, Y, Z, normal NX, NY, NZ, texture U, V
   xSize *= 0.5;
   ySize *= 0.5;
@@ -178,9 +184,9 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * 3 and either radius is zero; a rectangular prism if "slices" is 4
  * and both radiuses are the same; and a rectangular pyramid if "slices"
  * is 4 and either radius is zero. Must be 3 or greater.
- * May be null or omitted, in which case the default is 32.
+ * May be null, undefined, or omitted, in which case the default is 32.
  * @param {number} [stacks] Number of vertical stacks the cylinder consists of.
- * May be null or omitted, in which case the default is 1.
+ * May be null, undefined, or omitted, in which case the default is 1.
  * @param {boolean} [flat] If true, will generate normals such that the
  * cylinder will be flat shaded; otherwise, will generate normals such that the
  * cylinder will be smooth shaded.
@@ -361,7 +367,7 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * @param {number} slices  Number of lengthwise "slices" the cylinder consists
  * of. See {@link Meshes.createCylinder}.
  * @param {number} stacks Number of vertical stacks the cylinder consists of.
- * May be null or omitted, in which case the default is 1.
+ * May be null, undefined, or omitted, in which case the default is 1.
  * @param {boolean} [flat] If true, will generate normals such that the
  * cylinder will be flat shaded; otherwise, will generate normals such that the
  * cylinder will be smooth shaded.
@@ -722,12 +728,12 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
  * left to right, and latitudes range from 90&deg; to 0&deg; to -90&deg; from top to bottom.)<p>
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} [radius] Radius of the sphere.
- * May be null or omitted, in which case the default is 1.
+ * May be null, undefined, or omitted, in which case the default is 1.
  * @param {number} [slices] Number of vertical sections the sphere consists
  * of.  This function will create an octahedron if "slices" is 4 and "stacks" is 2.
- * Must be 3 or greater. May be null or omitted, in which case the default is 16.
+ * Must be 3 or greater. May be null, undefined, or omitted, in which case the default is 16.
  * @param {number} [stacks] Number of horizontal sections the sphere consists of.
- * May be null or omitted, in which case the default is 16.
+ * May be null, undefined, or omitted, in which case the default is 16.
  * @param {boolean} [flat] If true, will generate normals such that the
  * sphere will be flat shaded; otherwise, will generate normals such that the
  * sphere will be smooth shaded.
@@ -757,19 +763,19 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} [radius] Radius of each spherical
  * end of the capsule.
- * May be null or omitted, in which case the default is 1.
+ * May be null, undefined, or omitted, in which case the default is 1.
  * @param {number} [length] Length of the middle section.
- * May be null or omitted, in which case the default is 1.
+ * May be null, undefined, or omitted, in which case the default is 1.
  * If this value is 0, an approximation to a sphere will be generated.
  * @param {number} [slices] Number of vertical sections the capsule consists
  * of.  This function will create an octahedron if "slices" is 4 and "stacks" is 2.
- * Must be 3 or greater. May be null or omitted, in which case the default is 16.
+ * Must be 3 or greater. May be null, undefined, or omitted, in which case the default is 16.
  * @param {number} [stacks] Number of horizontal sections
  * each spherical half consists of.
- * May be null or omitted, in which case the default is 8.
+ * May be null, undefined, or omitted, in which case the default is 8.
  * @param {number} [middleStacks] Number of vertical sections
  * the middle of the capsule consists of.
- * May be null or omitted, in which case the default is 1.
+ * May be null, undefined, or omitted, in which case the default is 1.
  * @param {boolean} [flat] If true, will generate normals such that the
  * capsule will be flat shaded; otherwise, will generate normals such that the
  * capsule will be smooth shaded.

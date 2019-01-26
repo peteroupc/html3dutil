@@ -11,8 +11,8 @@
  * to vertex attributes found in mesh buffers and
  * to data that is uniform throughout a particular
  * geometry draw call.
- * @constructor
- * @alias Semantic
+ * @enum {number}
+ * @readonly
  */
 export const Semantic = {};
 /** Attribute semantic for a vertex position.

@@ -7,7 +7,7 @@ view transforms in 3D graphics, especially when using my
 and explains how a commonly used graphics pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.
 
-**Source code for the latest version of the library is available at the [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil).**
+**Source code for the latest version of the library is available at the** [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil)**.**
 
 <a id=Contents></a>
 ## Contents

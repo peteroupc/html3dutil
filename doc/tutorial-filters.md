@@ -35,7 +35,7 @@ Shading Language.  GLSL programs are called "shaders", and they are compiled int
 GPU, or graphics processing unit.
 
 Graphics filters are considered "fragment shaders", or shaders that process one pixel at a time. GPUs
-can run shaders very fast because fragment shaders can process multiple pixels in parallel, without
+can render graphics very fast with such shaders because one fragment shader can process multiple pixels in parallel, without
 affecting the other pixels, and GPUs are often much better designed for parallel processing than CPUs.
 
 For graphics filters to work, the 3D scene must be rendered to an off-screen buffer called
@@ -49,8 +49,7 @@ In the HTML 3D Library, use the `makeEffect` method of the `H3DU.ShaderInfo` cla
 graphics filters:
 
 * The `H3DU.ShaderInfo` class holds data on shader programs. Each shader program consists
-of a _vertex shader_ and a _fragment shader_. Graphics filters are essentially part of a fragment shader
-and thus process pixels. (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)
+of a _vertex shader_ and a _fragment shader_. Fragment shaders process pixels. (Vertex shaders, which process vertices of triangles, lines, and points, are not discussed on this page.)
 * The `makeEffect` method generates the source code for a shader program, using the graphics
 filter as part of the program's fragment shader. Since shader programs must also have a vertex shader, the method also adds a basic vertex shader for the graphics filter.
 
@@ -83,7 +82,7 @@ The `textureEffect` function returns a `vec4` (4-element vector) giving the colo
 be. The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color
 with that shade of gray. Thus, the filter will convert the screen to grayscale tones.
 
-The shader can also define custom parameters called "uniforms". They are declared by using a line like
+The shader can also define custom parameters called "uniforms", so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like
 `uniform [type] [name];` at the top of the shader. Example: `uniform float time;` Uniforms, once declared,
 can be used in the `textureEffect` function.
 
@@ -130,8 +129,7 @@ When the `render()` method is called each frame using the rendering
 passes mentioned above, the following happens.
 
 * The 3D library renders the first pass.
-    * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
-            uses the usual shaders for drawing the 3D scene.
+    * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then uses the usual shaders for drawing the 3D scene.
     * The current frame is rendered onto the frame buffer. The frame buffer's texture will now contain a
           "snapshot" of the frame that can now be modified by graphics filters.
 * Then, the library renders the second pass.

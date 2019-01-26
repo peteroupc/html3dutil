@@ -2,9 +2,9 @@
 ## Introduction
 
 This page describes parametric curves and surfaces and how to generate them using my
-public-domain [**HTML 3D Library**](http://peteroupc.github.io/html3dutil).
+public-domain [**Geometry Utilities Library**](http://peteroupc.github.io/html3dutil).
 
-**Download the latest version of the library at the [**HTML 3D Library's Releases page**](https://github.com/peteroupc/html3dutil/releases).**
+**Source code for the latest version of the library is available at the** [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil)**.**
 
 <a id=Contents></a>
 ## Contents
@@ -17,9 +17,7 @@ public-domain [**HTML 3D Library**](http://peteroupc.github.io/html3dutil).
 - [**Chaining Surface Functions**](#Chaining_Surface_Functions)
 - [**Parametric Curves**](#Parametric_Curves)
     - [**Generating Parametric Curves**](#Generating_Parametric_Curves)
-- [**Curve and Surface Evaluators in the HTML 3D Library**](#Curve_and_Surface_Evaluators_in_the_HTML_3D_Library)
-- [**Demos**](#Demos)
-    - [**Creating Your Own Curves and Surfaces**](#Creating_Your_Own_Curves_and_Surfaces)
+- [**Curve and Surface Evaluators in the Geometry Utilities Library**](#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library)
 - [**Other Pages**](#Other_Pages)
 
 <a id=What_Is_a_Parametric_Surface></a>
@@ -47,8 +45,7 @@ and we evaluate the UV point (2, 4), then we have:
 * **F**(2, 4) = [ 2 \* 4, -2, 2 \* sqrt(4) ];
 * **F**(2, 4) = [ 8, -2, 4 ];
 
-So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the
-surface can be found by evaluating different UV points. By the way, the surface looks like this:
+So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the surface can be found by evaluating different UV points. By the way, the surface looks like this:
 
 ![**The parametric surface.**](surfaces1.png)
 
@@ -243,10 +240,10 @@ the circle example above.
 
     var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 
-<a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a>
-## Curve and Surface Evaluators in the HTML 3D Library
+<a id=Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library></a>
+## Curve and Surface Evaluators in the Geometry Utilities Library
 
-The HTML 3D Library distribution includes the following evaluators of
+The Geometry Utilities Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an `evaluate`
 method that returns 3D points lying on the curve or surface.
 
@@ -282,37 +279,10 @@ a supplemental extra in the HTML 3D library.
 Surfaces of revolution are created using the {@link H3DU.SurfaceOfRevolution} class,
 a supplemental extra in the HTML 3D library.
 
-<a id=Demos></a>
-## Demos
-
-* [**surfaces.html**](https://peteroupc.github.io/html3dutil/demos/surfaces.html) - Demonstrates parametric surfaces.
-
-This demo contains several examples of parametric surfaces. The source code defines several classes that create evaluators of parametric surfaces:
-
-* `new Superellipsoid(xRadius, yRadius, zRadius, n, m)`<br>
-   Creates a "[**superellipsoid**](http://en.wikipedia.org/wiki/Superellipsoid)" shape, with a radius `xRadius` along the X axis,
-   `yRadius` along the Y axis, and `zRadius` along the Z axis. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal ellipsoid.
-* `new Supertoroid(xRadius, yRadius, zRadius, innerRadius, n, m)`<br>
-   Creates a "[**supertoroid**](http://en.wikipedia.org/wiki/Supertoroid)" shape (with a hole in the middle), with a radius `xRadius` along the X axis, `yRadius` along the Y axis, and `zRadius` along the Z axis. The inner radius will be `innerRadius`. The parameters `m` and `n` may be omitted; the default for each is 1, which creates a normal torus or toroid.
-* `new KleinBottle()`<br>Creates a Klein bottle.
-* `new MoebiusStrip()`<br>Creates a M&ouml;bius strip.
-
-<a id=Creating_Your_Own_Curves_and_Surfaces></a>
-### Creating Your Own Curves and Surfaces
-
-Two other demos include a formula editor allowing you to experiment with
-parametric curves and surfaces, and to export them to source code appropriate
-for use in the Public Domain HTML 3D Library.
-
-* [**curvesexpr.html**](https://peteroupc.github.io/html3dutil/demos/curvesexpr.html) - Demonstrates parametric
-curves, with a custom formula editor.
-* [**surfacesexpr.html**](https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html) - Demonstrates parametric
-surfaces, with a custom formula editor.
-
 <a id=Other_Pages></a>
 ## Other Pages
 
-The following pages of mine on CodeProject also discuss this library:
+The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:
 
 * [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
 * [**_Creating shapes using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)

@@ -18,6 +18,9 @@ of vertex indices to null.
 The `MeshBuffer` class contains four methods (`fromPositions`,
 `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.
 
+The <a href="H3DU.Meshes.md">`Meshes`</a> class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
+are composed of.
+
 #### Examples
 
 The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.
