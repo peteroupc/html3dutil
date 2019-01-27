@@ -47,13 +47,4 @@ function pathClosedFigure(path, zBottom, zTop, flatness) {
   return mesh;
 }
 
-    function wireBox(box, color){
-  dims=H3DU.MathUtil.boxDimensions(box)
-     var boxMesh=H3DU.Meshes.createBox(dims[0],dims[1],dims[2])
-       .setColor(color).wireFrame()
-     var shape=new H3DU.Shape(boxMesh)
-     shape.setPosition(H3DU.MathUtil.boxCenter(box))
-     return shape
-    }
-
 [Back to documentation index.](index.md)
