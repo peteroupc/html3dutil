@@ -19,7 +19,6 @@ import {toGLColor} from "./h3du-misc";
  * vertex attributes for a curve.<p>
  * For more information, see the {@tutorial surfaces} tutorial.
  * @constructor
- * @memberof H3DU
  */
 export const CurveBuilder = function() {
   this.attributes = [];
@@ -32,7 +31,6 @@ export const CurveBuilder = function() {
  * vertex attributes for a surface.<p>
  * For more information, see the {@tutorial surfaces} tutorial.
  * @constructor
- * @memberof H3DU
  */
 export const SurfaceBuilder = function() {
   this.attributes = [];

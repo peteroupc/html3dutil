@@ -80,7 +80,7 @@ The perspective projection converts 3D coordinates to 4-element vectors in _clip
 
 The following methods define a perspective projection.
 
-**<a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4perspective">`MathUtil.mat4perspective(fov, aspect, near, far)`</a>**
+**<a href="MathUtil.md#MathUtil.mat4perspective">`MathUtil.mat4perspective(fov, aspect, near, far)`</a>**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -182,7 +182,7 @@ without transforming them.
 As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in _homogeneous coordinates_, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective</a>, for example,
+perspective matrix returned by <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
 transforms W to the negative Z coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the "eye" or "camera".
 
@@ -192,7 +192,7 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels.
 
-For the perspective matrix returned by <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4perspective">`mat4perspective`</a>, dividing
+For the perspective matrix returned by <a href="MathUtil.md#MathUtil.mat4perspective">`mat4perspective`</a>, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the "eye" or "camera"),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This

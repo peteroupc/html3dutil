@@ -367,7 +367,6 @@ objectKeysPolyfill();
  *  <li>"results" - contains a list of boolean values for each
  * promise, in the order in which the promises were listed.
  * True means success, and false means failure.</ul>
- * @memberof H3DU
  * @function
  */
 const getPromiseResults = function(promises,
@@ -442,7 +441,6 @@ const getPromiseResults = function(promises,
  * in the order in which those promises were listed.
  * Will be rejected if any of the promises is rejected; the result
  * will be an object as specified in {@link getPromiseResults}.</ul>
- * @memberof H3DU
  * @function
  */
 const getPromiseResultsAll = function(promises,
@@ -487,7 +485,6 @@ const getPromiseResultsAll = function(promises,
  * <code>requestAnimationFrame()</code> callback method.
  * </caption>
  * var angle = 360 * getTimePosition(timer, time, 5000);
- * @memberof H3DU
  * @function
  */
 const getTimePosition = function(timer, timeInMs, intervalInMs) {
@@ -514,7 +511,6 @@ const getTimePosition = function(timer, timeInMs, intervalInMs) {
  * the last known time held in the parameter "timer".
  * The number can include fractional frames. If an
  * initial time or last known time wasn't set, returns 0.
- * @memberof H3DU
  * @function
  */
 const newFrames = function(timer, timeInMs) {
@@ -1096,7 +1092,6 @@ const clampRgba = function(x) {
  * invalid, returns [0,0,0,0], or transparent black. Numbers less
  * than 0 are clamped to 0, and numbers greater than 1 are
  * clamped to 1.
- * @memberof H3DU
  * @function
  */
 const toGLColor = function(r, g, b, a) {
@@ -1134,7 +1129,6 @@ const toGLColor = function(r, g, b, a) {
  * mathematical objects.<p>
  * See the tutorial "{@tutorial glmath}" for more information.
  * @class
- * @memberof H3DU
  */
 const MathUtil = {
 /** @ignore */
@@ -5117,7 +5111,6 @@ const MathInternal = {
  * Classes or JavaScript objects defining parametric curves should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
  * @constructor
- * @memberof H3DU
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
  * @param {Object} [curveParam] An object for reparameterizing a curve object. It implements a method
  * named <code>endPoints</code>, which has the same meaning as {@link Curve#endPoints} and whose
@@ -5747,7 +5740,6 @@ Curve.prototype.toArcLengthParam = function() {
  * Classes or JavaScript objects defining parametric surfaces should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
  * @constructor
- * @memberof H3DU
  * @param {Object} surface A <b>surface evaluator object</b>, which is an object that
  * must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>,
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>
@@ -5938,7 +5930,6 @@ Surface.prototype.endPoints = function() {
 /**
  * A <b>vertex attribute object</b>.
  * @constructor
- * @memberof H3DU
  * @param {Float32Array} buffer A buffer to store vertex attribute data; see
  * {@link BufferAccessor#buffer}.
  * @param {number} countPerValue Number of elements per value; see
@@ -6281,12 +6272,11 @@ Semantic.JOINTMATRIX = 108;/*
  * of vertex indices to null.<p>
  * The `MeshBuffer` class contains four methods (`fromPositions`,
  * `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.<p>
- * The [`Meshes`]{@link H3DU.Meshes} class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
+ * The [`Meshes`]{@link Meshes} class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
  * are composed of.
  * <p><b>Instancing</b>
  * <p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
  * @constructor
- * @memberof H3DU
  * @example <caption>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.</caption>
  * function toBufferGeometry(mesh) {
  * var p=mesh.getAttribute("POSITION")
@@ -6498,7 +6488,7 @@ MeshBuffer.prototype.getIndex = function(indicesIndex) {
  * @returns {BufferAccessor} A vertex buffer accessor, or null
  * if the attribute doesn't exist.
  * @example <caption>The following function gets the positions,
- * normals, [texture coordinates]{@link H3DU.Semantic.TEXCOORD} and colors of each primitive
+ * normals, [texture coordinates]{@link Semantic.TEXCOORD} and colors of each primitive
  * (line, text, or point) in the mesh buffer. A point will have one
  * vertex per primitive, a line two vertices and a triangle three.
  * The attributes, if present, will be stored in the "position",
@@ -6648,7 +6638,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
  * <li>X, Y, and Z components, in that order, of the vertex normal.
- * <li>U and V [texture coordinates]{@link H3DU.Semantic.TEXCOORD} in that order, of the vertex.</ol>
+ * <li>U and V [texture coordinates]{@link Semantic.TEXCOORD} in that order, of the vertex.</ol>
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
  * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
@@ -6688,7 +6678,7 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
  * array's length must be divisible by 5; every 5 elements describe
  * one vertex and are in the following order:<ol>
  * <li>X, Y, and Z coordinates, in that order, of the vertex position.
- * <li>U and V [texture coordinates]{@link H3DU.Semantic.TEXCOORD} in that order, of the vertex.</ol>
+ * <li>U and V [texture coordinates]{@link Semantic.TEXCOORD} in that order, of the vertex.</ol>
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
  * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
  * @returns {MeshBuffer} A new mesh buffer.
@@ -7243,7 +7233,7 @@ MeshBuffer.prototype._countPerValue = function(sem) {
  * semantic <code>POSITION_0</code> and each of that attribute's values is at least 3 elements
  * long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
  * ensures its values are each at least 3 elements long.<p>For normal calculation to properly affect shading:<ul>
- * <li>Each triangle's vertices in the mesh buffer (as they appear when the triangle's front side is seen) must be ordered in the same winding (counterclockwise or clockwise) throughout. If the vertices have the wrong order, use the [`reverseWinding()`]{@link H3DU.MeshBuffer#reverseWinding}
+ * <li>Each triangle's vertices in the mesh buffer (as they appear when the triangle's front side is seen) must be ordered in the same winding (counterclockwise or clockwise) throughout. If the vertices have the wrong order, use the [`reverseWinding()`]{@link MeshBuffer#reverseWinding}
  * method to change their order.
  * <li>If the mesh describes a closed convex surface (such as a sphere or cube) and is being rendered in a right-handed coordinate system (e.g., X-right, Y-up, Z-backward), each of its triangles must have counterclockwise winding for the shape to be shaded from the outside.</ul>
  * @param {boolean} [flat] If true, each triangle in the mesh
@@ -7639,7 +7629,6 @@ MeshBuffer._wellKnownAttributes = {
  * vertex attributes for a curve.<p>
  * For more information, see the {@tutorial surfaces} tutorial.
  * @constructor
- * @memberof H3DU
  */
 const CurveBuilder = function() {
   this.attributes = [];
@@ -7652,7 +7641,6 @@ const CurveBuilder = function() {
  * vertex attributes for a surface.<p>
  * For more information, see the {@tutorial surfaces} tutorial.
  * @constructor
- * @memberof H3DU
  */
 const SurfaceBuilder = function() {
   this.attributes = [];
@@ -8506,7 +8494,6 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * another, see the example.
  * @constructor
  * @augments Curve
- * @memberof H3DU
  * @param {Array<Array<number>>} controlPoints An array of control points. Each
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
@@ -9083,7 +9070,6 @@ BSplineCurve._fromHomogen = function(cp) {
  * for {@link BSplineCurve}.
  * @constructor
  * @augments Surface
- * @memberof H3DU
  * @param {Array<Array<Array<number>>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points. Each
  * control point is an array with the same length as the other control points.
@@ -9499,7 +9485,6 @@ BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
  * coordinate equal to N refers to the end of the last curve in
  * the piecewise curve.
  * @constructor
- * @memberof H3DU
  * @extends Curve
  * @param {Array<Object>} curves An array of curve evaluator
  * objects, such as an instance of {@link Curve} or one
@@ -10172,7 +10157,7 @@ ArcCurve.prototype.velocity = function(t) {
  * the path can be discontinuous and/or contain closed parts.
  * <h4>Creating Paths</h4>
  * <p>
- * There are two ways to create paths: using an SVG path string (see {@link H3DU.GraphicsPath.fromString}), or by calling methods that add its segments.
+ * There are two ways to create paths: using an SVG path string (see {@link GraphicsPath.fromString}), or by calling methods that add its segments.
  * <p>A `GraphicsPath` object stores a current position and a starting position, and many methods don't have you specify a starting position, to cover the common case of drawing a series of connected lines and curves.
  * _.moveTo(x, y)_ - Moves the starting position and current position.
  * _.lineTo(x, y)_ - Adds a line segment from the current position to a new ending position.
@@ -10189,7 +10174,6 @@ ArcCurve.prototype.velocity = function(t) {
  * An _elliptical arc_ is a curve which forms part of an ellipse. There are several ways to
  * parameterize an elliptical arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
  * of the `GraphicsPath` class.
- * @memberof H3DU
  * @constructor
  */
 const GraphicsPath = function() {
@@ -14471,7 +14455,6 @@ GraphicsPath.prototype.xor = function(path, flatness) {
  * A class offering a convenient way to set a transformation
  * from one coordinate system to another.
  * @constructor
- * @memberof H3DU
  */
 const Transform = function() {
   /** @ignore */
@@ -14875,7 +14858,6 @@ Transform.prototype.copy = function() {
  * a transformation matrix (which defines the object's position and size).
  * See the "{@tutorial shapes}" tutorial.<p>
  * @constructor
- * @memberof H3DU
  * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
  * Cannot be null.
  */
@@ -15130,7 +15112,6 @@ Shape.prototype.getMatrix = function() {
  * can hold both {@link Shape} objects and
  * other {@link ShapeGroup} objects.
  * @constructor
- * @memberof H3DU
  */
 const ShapeGroup = function() {
   this._init();
@@ -15416,7 +15397,6 @@ ShapeGroup.prototype.setScale = function(x, y, z) {
  * green square, and a purple cone on the second row.'/>
  * @constructor
  * @hideconstructor
- * @memberof H3DU
  */
 const Meshes = {};
 
@@ -15535,7 +15515,6 @@ Meshes.createBoxEx = function(box, inward) {
   if(!box)throw new Error();
   const dims = MathUtil.boxDimensions(box);
   if(dims[0] < 0 || dims[1] < 0 || dims[2] < 0)throw new Error();
-  if(MathUtil.boxIsEmpty())return new MeshBuffer();
   // Position X, Y, Z, normal NX, NY, NZ, texture U, V
   const vertices = [
     box[0], box[1], box[5], -1.0, 0.0, 0.0, 1.0, 0.0,

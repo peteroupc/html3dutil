@@ -34,7 +34,7 @@ that contains all the points given.
 
 #### Return Value
 
-The generated convex hull. (Type: MeshBuffer)
+The generated convex hull. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 <a name='extras_convex.planePointsToConvexHull'></a>
 ### (static) module:extras/convex.planePointsToConvexHull(planepoints)
@@ -48,7 +48,7 @@ of several planes. Each plane is defined by the triangle it lies on.
 
 #### Return Value
 
-The generated convex hull. (Type: MeshBuffer)
+The generated convex hull. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 <a name='extras_convex.randomConvexPolyhedron'></a>
 ### (static) module:extras/convex.randomConvexPolyhedron(avgsize, maxfaces)
@@ -62,6 +62,6 @@ Generates a mesh buffer of a convex polyhedron at random.
 
 #### Return Value
 
-The resulting polyhedron. (Type: MeshBuffer)
+The resulting polyhedron. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 [Back to documentation index.](index.md)

@@ -18,7 +18,6 @@ import {MeshBuffer} from "./h3du-meshbuffer";
  * green square, and a purple cone on the second row.'/>
  * @constructor
  * @hideconstructor
- * @memberof H3DU
  */
 export const Meshes = {};
 
@@ -137,7 +136,6 @@ Meshes.createBoxEx = function(box, inward) {
   if(!box)throw new Error();
   const dims = MathUtil.boxDimensions(box);
   if(dims[0] < 0 || dims[1] < 0 || dims[2] < 0)throw new Error();
-  if(MathUtil.boxIsEmpty())return new MeshBuffer();
   // Position X, Y, Z, normal NX, NY, NZ, texture U, V
   const vertices = [
     box[0], box[1], box[5], -1.0, 0.0, 0.0, 1.0, 0.0,

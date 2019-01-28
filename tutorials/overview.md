@@ -1,7 +1,7 @@
 <a id=Public_Domain_Geometry_Utilities_Library></a>
 ## Public-Domain Geometry Utilities Library
 
-This page will introduce the [**Geometry Utilities Library**](https://github.com/peteroupc/html3dutil/releases), an open-source JavaScript library that I wrote.
+This page will introduce the [**Geometry Utilities Library**](https://github.com/peteroupc/html3dutil), an open-source JavaScript library that I wrote.
 
 This library contains classes and utility methods to represent 3-D geometries, including curves and surfaces, in JavaScript, and methods that support the development of 3D applications, including HTML applications that use the 3-D canvas.
 
@@ -106,7 +106,7 @@ The methods described above return a `MeshBuffer` object describing the appropri
 <a id=Shapes></a>
 ### Shapes
 
-The `H3DU.Shape` constructor method assigns a linear or perspective transformation (includins shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.
+The `H3DU.Shape` constructor method assigns a linear or perspective transformation (including shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.
 
     // Create a shape based on the mesh
     var shape=new H3DU.Shape(mesh);

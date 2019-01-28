@@ -36,7 +36,7 @@ Generates contour lines for two-dimensional data.
 
 #### Return Value
 
-A mesh buffer of line segments for the contour lines. (Type: MeshBuffer)
+A mesh buffer of line segments for the contour lines. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 #### Examples
 
@@ -55,7 +55,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.
 
 #### Parameters
 
-* `mesh` (Type: MeshBuffer)<br>A triangle mesh. It must contain a "POSITION" buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.
+* `mesh` (Type: <a href="MeshBuffer.md">MeshBuffer</a>)<br>A triangle mesh. It must contain a "POSITION" buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.
 * `planes` (Type: Array.&lt;Array.&lt;number>>)<br>An array of 4-element arrays that serve as contour planes. The contour lines will be drawn at the intersection of the contour planes and the surface of the mesh. Each 4-element array describes a plane (A, B, C, D), in that order, whose points satisfy the equation <code>Ax + By + Cz + D = 0</code>, where (x, y, z) is a point lying on the plane.
 
 #### Return Value
@@ -63,6 +63,6 @@ contour lines along the surface of a 3-dimensional triangle mesh.
 A mesh buffer containing the generated contour lines.
 Returns null if the input mesh's primitive type isn't triangles, or if
 the input mesh doesn't contain a "POSITION" buffer attribute with
-three elements per value. (Type: MeshBuffer)
+three elements per value. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 [Back to documentation index.](index.md)

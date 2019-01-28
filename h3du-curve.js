@@ -22,7 +22,6 @@ import {MathInternal} from "./h3du-mathinternal";
  * Classes or JavaScript objects defining parametric curves should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
  * @constructor
- * @memberof H3DU
  * @param {Object} curve A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
  * @param {Object} [curveParam] An object for reparameterizing a curve object. It implements a method
  * named <code>endPoints</code>, which has the same meaning as {@link Curve#endPoints} and whose

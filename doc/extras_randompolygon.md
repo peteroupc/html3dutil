@@ -34,6 +34,6 @@ Inspired by [http://stackoverflow.com/questions/8997099](http://stackoverflow.co
 
 #### Return Value
 
-The randomly generated polygon. (Type: GraphicsPath)
+The randomly generated polygon. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
 
 [Back to documentation index.](index.md)

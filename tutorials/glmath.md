@@ -331,7 +331,7 @@ confusion.
 
 The difference between a left-handed and right-handed coordinate system
 affects how 3D points are transformed, mainly in the projection and view
-matrices.  The projection and view matrices returned by {@link H3DU.Math}
+matrices.  The projection and view matrices returned by {@link Math}
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.
 

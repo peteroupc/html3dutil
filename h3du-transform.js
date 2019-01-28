@@ -12,7 +12,6 @@ import {MathUtil} from "./h3du-math";
  * A class offering a convenient way to set a transformation
  * from one coordinate system to another.
  * @constructor
- * @memberof H3DU
  */
 export const Transform = function() {
   /** @ignore */

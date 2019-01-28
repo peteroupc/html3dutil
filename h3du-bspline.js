@@ -148,7 +148,6 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * another, see the example.
  * @constructor
  * @augments Curve
- * @memberof H3DU
  * @param {Array<Array<number>>} controlPoints An array of control points. Each
  * control point is an array with the same length as the other control points.
  * It is assumed that the first control point's length represents the size of all the control
@@ -725,7 +724,6 @@ BSplineCurve._fromHomogen = function(cp) {
  * for {@link BSplineCurve}.
  * @constructor
  * @augments Surface
- * @memberof H3DU
  * @param {Array<Array<Array<number>>>} controlPoints An array of control point
  * arrays, which in turn contain a number of control points. Each
  * control point is an array with the same length as the other control points.

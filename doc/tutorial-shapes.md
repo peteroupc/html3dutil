@@ -27,7 +27,7 @@ This page will discuss:
 
 Once you have a mesh of a 3D shape, you still need to attach it to a shape
 and a batch of shapes in order for the renderer to draw it. This is where
-the <a href="H3DU.Shape.md">`H3DU.Shape`</a> class comes into
+the <a href="Shape.md">`H3DU.Shape`</a> class comes into
 play; this class associates a 3D mesh with its location in the scene,
 as well as its color, its appearance, and how its vertices will be transformed.
 To attach a mesh to a 3D scene:

@@ -1,41 +1,41 @@
 # Documentation Index
 
-* [Global Members](Global.md)
-* <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
-* <a href="H3DU.BSplineCurve.md">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.
-* <a href="H3DU.BSplineSurface.md">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
+* <a href="BSplineCurve.md">BSplineCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
+* <a href="BSplineSurface.md">BSplineSurface</a><br>A <a href="Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
 whose edges are made up of B-spline curves.
-* <a href="H3DU.BufferAccessor.md">H3DU.BufferAccessor</a><br>A <b>vertex attribute object</b>.
-* <a href="H3DU.Curve.md">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.
-* <a href="H3DU.CurveBuilder.md">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
+* <a href="BufferAccessor.md">BufferAccessor</a><br>A <b>vertex attribute object</b>.
+* <a href="Curve.md">Curve</a><br>A curve evaluator object for a parametric curve.
+* <a href="CurveBuilder.md">CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.
-* <a href="H3DU.GraphicsPath.md">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.
-* <a href="H3DU.MathUtil.md">H3DU.MathUtil</a><br>A collection of math functions for working
-with vectors, matrices, quaternions, and other
-mathematical objects.
-* <a href="H3DU.MeshBuffer.md">H3DU.MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
-* <a href="H3DU.Meshes.md">H3DU.Meshes</a><br>Contains methods that create meshes
-of various geometric shapes and solids, such as cubes, cylinders,
-and spheres.
-* <a href="H3DU.PiecewiseCurve.md">H3DU.PiecewiseCurve</a><br>A curve evaluator object for a curve
-made up of one or more individual curves.
-* <a href="H3DU.Shape.md">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
-a transformation matrix (which defines the object's position and size).
-* <a href="H3DU.ShapeGroup.md">H3DU.ShapeGroup</a><br>Represents a grouping of shapes.
-* <a href="H3DU.Surface.md">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.
-* <a href="H3DU.SurfaceBuilder.md">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
-vertex attributes for a surface.
+* [Global Members](Global.md)
+* <a href="GraphicsPath.md">GraphicsPath</a><br>Represents a two-dimensional path.
+* <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
 * <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.
 * <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
 texture.
-* <a href="H3DU.Transform.md">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
-from one coordinate system to another.
-* <a href="H3DU.exports.Camera.md">H3DU.exports.Camera</a><br>A class for controlling the projection and
-view of a 3D scene, in the nature of an abstract "camera".
+* <a href="MathUtil.md">MathUtil</a><br>A collection of math functions for working
+with vectors, matrices, quaternions, and other
+mathematical objects.
+* <a href="MeshBuffer.md">MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
+* <a href="Meshes.md">Meshes</a><br>Contains methods that create meshes
+of various geometric shapes and solids, such as cubes, cylinders,
+and spheres.
+* <a href="PiecewiseCurve.md">PiecewiseCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve
+made up of one or more individual curves.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
+* <a href="Shape.md">Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
+a transformation matrix (which defines the object's position and size).
+* <a href="ShapeGroup.md">ShapeGroup</a><br>Represents a grouping of shapes.
+* <a href="Surface.md">Surface</a><br>A surface evaluator object for a parametric surface.
+* <a href="SurfaceBuilder.md">SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
+vertex attributes for a surface.
+* <a href="Transform.md">Transform</a><br>A class offering a convenient way to set a transformation
+from one coordinate system to another.
 * <a href="extras_arrow.md">module:extras/arrow</a><br>The <code>extras/arrow.js</code> module.
 * <a href="extras_camera.md">module:extras/camera</a><br>The <code>extras/camera.js</code> module.
+* <a href="extras_camera.Camera.md">module:extras/camera.Camera</a><br>A class for controlling the projection and
+view of a 3D scene, in the nature of an abstract "camera".
 * <a href="extras_camera.InputTracker.md">module:extras/camera.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
 * <a href="extras_checkerboardshader.md">module:extras/checkerboardshader</a><br>The <code>extras/checkerboardshader.js</code> module.
@@ -45,13 +45,13 @@ events.
 * <a href="extras_createfloor.md">module:extras/createfloor</a><br>The <code>extras/createfloor.js</code> module.
 * <a href="extras_createwasher.md">module:extras/createwasher</a><br>The <code>extras/createwasher.js</code> module.
 * <a href="extras_curvetube.md">module:extras/curvetube</a><br>The <code>extras/curvetube.js</code> module.
-* <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A surface evaluator object for a tube extruded from a parametric curve.
+* <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A <a href="Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>Additional curve evaluator and surface evaluator objects.
 * <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
-* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A curve evaluator object for a curve drawn by a curve that rolls along another curve whose position is fixed.
-* <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
+* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve drawn by a curve that rolls along another curve whose position is fixed.
+* <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A <a href="Surface.md">surface evaluator object</a> for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="extras_fourierknot.md">module:extras/fourierknot</a><br>The <code>extras/fourierknot.js</code> module.
 * <a href="extras_fragmentshaderlib.md">module:extras/fragmentshaderlib</a><br>The <code>extras/fragmentshaderlib.js</code> module.

@@ -13,7 +13,6 @@ import {MathInternal} from "./h3du-mathinternal";
 /**
  * A <b>vertex attribute object</b>.
  * @constructor
- * @memberof H3DU
  * @param {Float32Array} buffer A buffer to store vertex attribute data; see
  * {@link BufferAccessor#buffer}.
  * @param {number} countPerValue Number of elements per value; see

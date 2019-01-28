@@ -22,7 +22,6 @@ import {Curve} from "./h3du-curve";
  * coordinate equal to N refers to the end of the last curve in
  * the piecewise curve.
  * @constructor
- * @memberof H3DU
  * @extends Curve
  * @param {Array<Object>} curves An array of curve evaluator
  * objects, such as an instance of {@link Curve} or one

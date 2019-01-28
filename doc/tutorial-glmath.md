@@ -71,10 +71,10 @@ the vector's direction).
 
 The following functions normalize vectors and find their length.
 
-* MathUtil.vec3normalize - Converts a 3-element vector to a unit vector.
-* MathUtil.vec4normalize - Converts a 4-element vector to a unit vector.
-* MathUtil.vec3length - Finds a 3-element vector's length.
-* MathUtil.vec4length - Finds a 4-element vector's length.
+* <a href="MathUtil.md#MathUtil.vec3normalize">MathUtil.vec3normalize</a> - Converts a 3-element vector to a unit vector.
+* <a href="MathUtil.md#MathUtil.vec4normalize">MathUtil.vec4normalize</a> - Converts a 4-element vector to a unit vector.
+* <a href="MathUtil.md#MathUtil.vec3length">MathUtil.vec3length</a> - Finds a 3-element vector's length.
+* <a href="MathUtil.md#MathUtil.vec4length">MathUtil.vec4length</a> - Finds a 4-element vector's length.
 
 Note that due to rounding error, normalizing a vector with an `H3DU.Math` method
 might not necessarily result in a vector with a length of 1.
@@ -94,12 +94,12 @@ For more details, see the <a href="tutorial-matrixdetails.md">Matrix Details</a>
 
 A translation is a shifting of an object's position.
 
-To create a translation matrix, use MathUtil.mat4translated(),
+To create a translation matrix, use <a href="MathUtil.md#MathUtil.mat4translated">MathUtil.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.
 
 To multiply an existing matrix by a translation, use
-MathUtil.mat4translate(). This will put the translation
+<a href="MathUtil.md#MathUtil.mat4translate">MathUtil.mat4translate()</a>. This will put the translation
 before the other transformations.
 
 <a id=Scaling></a>
@@ -107,12 +107,12 @@ before the other transformations.
 
 Scaling changes an object's size.
 
-To create a scaling matrix, use MathUtil.mat4scaled(),
+To create a scaling matrix, use <a href="MathUtil.md#MathUtil.mat4scaled">MathUtil.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
 factors to change the object's size. For example, a Y-factor of 2 doubles an object's height.
 
 To multiply an existing matrix by a scaling, use
-MathUtil.mat4scale(). This will put the scaling
+<a href="MathUtil.md#MathUtil.mat4scale">MathUtil.mat4scale()</a>. This will put the scaling
 before the other transformations.
 
 <a id=Rotation></a>
@@ -120,7 +120,7 @@ before the other transformations.
 
 Rotation changes an object's orientation.
 
-To create a rotation matrix, use MathUtil.mat4rotated(),
+To create a rotation matrix, use <a href="MathUtil.md#MathUtil.mat4rotated">MathUtil.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the [**axis of rotation**](#Axis_of_Rotation). For example:
 
 * Specifying `(45, [1, 0, 0])` means a 45-degree rotation of the point around the X axis.
@@ -131,7 +131,7 @@ When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.
 
 To multiply an existing matrix by a rotation, use
-MathUtil.mat4rotate(). This will put the rotation
+<a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate()</a>. This will put the rotation
 before the other transformations.
 
 <a id=Combining_Transforms></a>
@@ -141,15 +141,15 @@ The order in which you do transforms is important. In general, scaling then tran
 not the same as translating then scaling. Assuming your geometry is centered at the origin
 (0, 0, 0), you should create a transformation in this order:
 
-* Call `MathUtil.mat4identity()`, creating a matrix without a transformation.
-* Do your translations if needed, using `mat4translate()`.
-* Do your rotations if needed, using `mat4rotate()`.
-* Do your scalings if needed, using `mat4scale()`.
+* Call <a href="MathUtil.md#MathUtil.mat4identity">`MathUtil.mat4identity()`</a>, creating a matrix without a transformation.
+* Do your translations if needed, using <a href="MathUtil.md#MathUtil.mat4translate">`mat4translate()`</a>.
+* Do your rotations if needed, using <a href="MathUtil.md#MathUtil.mat4rotate">`mat4rotate()`</a>.
+* Do your scalings if needed, using <a href="MathUtil.md#MathUtil.mat4scale">`mat4scale()`</a>.
 
 This way, the scalings and rotations will affect the object while it's still centered, and
 before the translations (shifts) take place.
 
-You can also multiply transforms using MathUtil.mat4multiply().
+You can also multiply transforms using <a href="MathUtil.md#MathUtil.mat4multiply">MathUtil.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix's transform, then the first matrix's transform.
 
@@ -163,7 +163,7 @@ quaternions, Tait-Bryan angles, and an angle and axis.
 ### Axis of Rotation
 
 A rotation of vectors or points can be described using an _angle_
-and an _axis of rotation_, for example, in the MathUtil.mat4rotate method.
+and an _axis of rotation_, for example, in the <a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate</a> method.
 
 An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
 is rotated at any angle around this axis, the new point (or vector) will lie
@@ -201,13 +201,13 @@ A quaternion is a 4-element vector that can describe a
 
 Functions that generate quaternions include:
 
-* MathUtil.quatIdentity - Generates a quaternion describing an
+* <a href="MathUtil.md#MathUtil.quatIdentity">MathUtil.quatIdentity</a> - Generates a quaternion describing an
 absence of rotations.
-* MathUtil.quatFromVectors - Generates a quaternion describing
+* <a href="MathUtil.md#MathUtil.quatFromVectors">MathUtil.quatFromVectors</a> - Generates a quaternion describing
 a rotation from one vector to another.
-* MathUtil.quatFromMat4 - Generates a quaternion from a [**4x4 matrix**](#Matrices).
-* MathUtil.quatFromAxisAngle - Generates a quaternion from an angle and [**axis of rotation**](#Axis_of_Rotation).
-* MathUtil.quatFromTaitBryan - Generates a quaternion from Tait-Bryan angles.
+* <a href="MathUtil.md#MathUtil.quatFromMat4">MathUtil.quatFromMat4</a> - Generates a quaternion from a [**4x4 matrix**](#Matrices).
+* <a href="MathUtil.md#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> - Generates a quaternion from an angle and [**axis of rotation**](#Axis_of_Rotation).
+* <a href="MathUtil.md#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.
 
 <a id=Using_Quaternions></a>
 #### Using Quaternions
@@ -218,10 +218,10 @@ For best results when using quaternions:
 * As rotations happen each frame, convert the rotation (which may be
   in pitch/yaw/roll or another form, depending on the input device) to a quaternion
   (see [**"Generating Quaternions"**](#Generating_Quaternions)
-  and multiply that quaternion by the current
+  and <a href="MathUtil.md#MathUtil.quatMultiply">multiply</a> that quaternion by the current
   quaternion to get the object's new rotation.
-* Normalize the rotation quaternion (using `quatNormalize()`
- or `quatNormalizeInPlace()`)
+* Normalize the rotation quaternion (using <a href="MathUtil.md#MathUtil.quatNormalize">`quatNormalize()`</a>
+ or <a href="MathUtil.md#MathUtil.quatNormalizeInPlace">`quatNormalizeInPlace()`</a>)
   every few frames. (Quaternions that describe a 3D rotation should be [**unit vectors**](#Unit_Vectors).)
 
 <a id=Multiplying_Quaternions></a>
@@ -251,9 +251,9 @@ axis), so that a rotation along that axis will do nothing.
 
 Related functions:
 
-* MathUtil.quatFromTaitBryan() -
+* <a href="MathUtil.md#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion
-* MathUtil.quatToTaitBryan() -
+* <a href="MathUtil.md#MathUtil.quatToTaitBryan">MathUtil.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles
 
 <a id=4x4_Matrices></a>
@@ -283,7 +283,7 @@ negative if it points away from the origin.
 
 There is one method that deals with planes:
 
-* MathUtil.planeNormalizeInPlace - Converts the plane to a form in which
+* <a href="MathUtil.md#MathUtil.planeNormalizeInPlace">MathUtil.planeNormalizeInPlace</a> - Converts the plane to a form in which
 its normal has a length of 1.
 
 <a id=Boxes></a>
@@ -298,9 +298,9 @@ box is considered empty.
 
 Methods that deal with boxes include:
 
-* MathUtil.boxCenter - Finds a box's center.
-* MathUtil.boxDimensions - Finds a box's dimensions.
-* MathUtil.boxIsEmpty - Determines whether a box is empty.
+* <a href="MathUtil.md#MathUtil.boxCenter">MathUtil.boxCenter</a> - Finds a box's center.
+* <a href="MathUtil.md#MathUtil.boxDimensions">MathUtil.boxDimensions</a> - Finds a box's dimensions.
+* <a href="MathUtil.md#MathUtil.boxIsEmpty">MathUtil.boxIsEmpty</a> - Determines whether a box is empty.
 
 <a id=Coordinate_Systems></a>
 ## Coordinate Systems
@@ -320,7 +320,7 @@ right-handed), if the positive X axis points in the thumb's
 direction and the positive Y axis points in the index finger's direction, the Z axis will
 point in the direction the other three fingers point.
 
-As used here, the Z axis is the cross product
+As used here, the Z axis is the <a href="MathUtil.md#MathUtil.vec3cross">cross product</a>
 of two perpendicular axes, namely the X axis and the Y axis, in that order.
 Which of the X, Y, or Z axes is the right, up, or forward axis is
 arbitrary; for example, some conventions may have the Z axis, rather than Y,
@@ -335,7 +335,7 @@ confusion.
 
 The difference between a left-handed and right-handed coordinate system
 affects how 3D points are transformed, mainly in the projection and view
-matrices.  The projection and view matrices returned by H3DU.Math
+matrices.  The projection and view matrices returned by Math
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.
 
@@ -359,7 +359,7 @@ Given a triangle formed by...
 * points (A minus C), (B minus C), and C, in that order, or
 * points A, B, and (0, 0, 0), in that order,
 
-the cross product of the first point with the second,
+the <a href="MathUtil.md#MathUtil.vec3cross">cross product</a> of the first point with the second,
 in that order, is a _normal_ of that triangle (a vector that's perpendicular to the triangle's surface).
 
 While this particular normal points toward the viewer, the triangle's vertices

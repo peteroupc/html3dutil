@@ -53,7 +53,6 @@ objectKeysPolyfill();
  *  <li>"results" - contains a list of boolean values for each
  * promise, in the order in which the promises were listed.
  * True means success, and false means failure.</ul>
- * @memberof H3DU
  * @function
  */
 export const getPromiseResults = function(promises,
@@ -128,7 +127,6 @@ export const getPromiseResults = function(promises,
  * in the order in which those promises were listed.
  * Will be rejected if any of the promises is rejected; the result
  * will be an object as specified in {@link getPromiseResults}.</ul>
- * @memberof H3DU
  * @function
  */
 export const getPromiseResultsAll = function(promises,
@@ -173,7 +171,6 @@ export const getPromiseResultsAll = function(promises,
  * <code>requestAnimationFrame()</code> callback method.
  * </caption>
  * var angle = 360 * getTimePosition(timer, time, 5000);
- * @memberof H3DU
  * @function
  */
 export const getTimePosition = function(timer, timeInMs, intervalInMs) {
@@ -200,7 +197,6 @@ export const getTimePosition = function(timer, timeInMs, intervalInMs) {
  * the last known time held in the parameter "timer".
  * The number can include fractional frames. If an
  * initial time or last known time wasn't set, returns 0.
- * @memberof H3DU
  * @function
  */
 export const newFrames = function(timer, timeInMs) {
@@ -782,7 +778,6 @@ const clampRgba = function(x) {
  * invalid, returns [0,0,0,0], or transparent black. Numbers less
  * than 0 are clamped to 0, and numbers greater than 1 are
  * clamped to 1.
- * @memberof H3DU
  * @function
  */
 export const toGLColor = function(r, g, b, a) {

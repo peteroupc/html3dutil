@@ -36,7 +36,7 @@ other, and the mention of this link is not an endorsement or sponsorship
 of any particular tool.)
 
 NOTE: The constructor should not be called directly by applications.
-Use the H3DU.TextFont.load method to get an H3DU.TextFont object. This
+Use the TextFont.load method to get an H3DU.TextFont object. This
 constructor's parameters are undocumented and are subject to change.
 
 This class is considered a supplementary class to the

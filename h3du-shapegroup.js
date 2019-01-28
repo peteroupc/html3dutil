@@ -14,7 +14,6 @@ import {Transform} from "./h3du-transform";
  * can hold both {@link Shape} objects and
  * other {@link ShapeGroup} objects.
  * @constructor
- * @memberof H3DU
  */
 export const ShapeGroup = function() {
   this._init();

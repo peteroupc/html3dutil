@@ -35,6 +35,6 @@ entirely be of a square tile.
 
 #### Return Value
 
-The resulting mesh buffer. (Type: MeshBuffer)
+The resulting mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 [Back to documentation index.](index.md)

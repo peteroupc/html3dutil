@@ -15,7 +15,7 @@ texture atlas can specify where those portions are found.
 This implementation supports the ".atlas" format.
 
 NOTE: The constructor should not be called directly by applications.
-Use the H3DU.TextureAtlas.load method to get an H3DU.TextureAtlas object.
+Use the TextureAtlas.load method to get an H3DU.TextureAtlas object.
 
 This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that

@@ -15,7 +15,6 @@ import {Transform} from "./h3du-transform";
  * a transformation matrix (which defines the object's position and size).
  * See the "{@tutorial shapes}" tutorial.<p>
  * @constructor
- * @memberof H3DU
  * @param {MeshBuffer} mesh A mesh in the form of a buffer object.
  * Cannot be null.
  */

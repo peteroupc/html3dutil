@@ -13,7 +13,6 @@
  * mathematical objects.<p>
  * See the tutorial "{@tutorial glmath}" for more information.
  * @class
- * @memberof H3DU
  */
 const MathUtil = {
 /** @ignore */

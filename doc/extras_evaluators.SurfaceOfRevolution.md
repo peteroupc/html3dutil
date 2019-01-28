@@ -5,7 +5,7 @@
 <a name='extras_evaluators.SurfaceOfRevolution'></a>
 ### new module:extras/evaluators.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
-A surface evaluator object for a surface of revolution,
+A <a href="Surface.md">surface evaluator object</a> for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 
 This class is considered a supplementary class to the
@@ -14,7 +14,7 @@ library.
 
 #### Parameters
 
-* `curve` (Type: Object)<br>A curve evaluator object that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
+* `curve` (Type: Object)<br>A <a href="Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to rotate about the axis of rotation, as specified in the "axis" parameter. The curve's X coordinates correspond to elevation, and its Y coordinates correspond to radius.
 
  If the curve function draws a curve that goes both above and below the axis of rotation, such as a circle or ellipse, the V coordinates given in _minval_ and _maxval_ must restrict the curve definition to no more than half of the curve.
 * `minval` (Type: number)<br>Smallest V coordinate.
@@ -25,9 +25,9 @@ library.
 
 * [endPoints](#extras_evaluators_SurfaceOfRevolution_endPoints)
 * [evaluate](#extras_evaluators_SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the given point of this surface.
-* [fromFunction](#extras_evaluators_SurfaceOfRevolution.fromFunction)<br>Creates a surface evaluator object for a surface of revolution
+* [fromFunction](#extras_evaluators_SurfaceOfRevolution.fromFunction)<br>Creates a <a href="Surface.md">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
-* [torus](#extras_evaluators_SurfaceOfRevolution.torus)<br>A surface evaluator object for a torus, a special case of a surface of revolution.
+* [torus](#extras_evaluators_SurfaceOfRevolution.torus)<br>A <a href="Surface.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 <a name='extras_evaluators_SurfaceOfRevolution_endPoints'></a>
 ### module:extras/evaluators~SurfaceOfRevolution#endPoints()
@@ -50,7 +50,7 @@ of the position at the given point. It will have three elements. (Type: Array.&l
 <a name='extras_evaluators_SurfaceOfRevolution.fromFunction'></a>
 ### (static) module:extras/evaluators~SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
 
-Creates a surface evaluator object for a surface of revolution
+Creates a <a href="Surface.md">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 The resulting surface will have a circular cross section
 along its length.
@@ -98,13 +98,13 @@ which runs from 5 to 10 units, and with a radius of 2 units.
 <a name='extras_evaluators_SurfaceOfRevolution.torus'></a>
 ### (static) module:extras/evaluators~SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
 
-A surface evaluator object for a torus, a special case of a surface of revolution.
+A <a href="Surface.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 #### Parameters
 
 * `outerRadius` (Type: number)<br>Radius from the center to the innermost part of the torus.
 * `innerRadius` (Type: number)<br>Radius from the inner edge to the innermost part of the torus.
-* `curve` (Type: Object) (optional)<br>A curve evaluator object that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null, undefined, or omitted, uses a circular cross section with a radius of 1.
+* `curve` (Type: Object) (optional)<br>A <a href="Curve.md">curve evaluator object</a> that describes a 2-dimensional curve to serve as the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result by leaving the ends open. If null, undefined, or omitted, uses a circular cross section with a radius of 1.
 * `axis` (Type: Array.&lt;number>) (optional)<br>Axis of rotation, which the torus will pass through. If null, undefined, or omitted, the positive Z axis (0, 0, 1) will be the axis of rotation. This parameter is a 3-element array describing the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will run in the direction from the origin to the point given in this parameter. This parameter need not be a <a href="tutorial-glmath.md">unit vector</a>.
 
 #### Return Value

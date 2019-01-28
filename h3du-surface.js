@@ -23,7 +23,6 @@ import {MathUtil} from "./h3du-math";
  * Classes or JavaScript objects defining parametric surfaces should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
  * @constructor
- * @memberof H3DU
  * @param {Object} surface A <b>surface evaluator object</b>, which is an object that
  * must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>,
  * <code>tangent</code>, <code>bitangent</code>, and/or <code>gradient</code>

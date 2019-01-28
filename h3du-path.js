@@ -246,7 +246,7 @@ ArcCurve.prototype.velocity = function(t) {
  * the path can be discontinuous and/or contain closed parts.
  * <h4>Creating Paths</h4>
  * <p>
- * There are two ways to create paths: using an SVG path string (see {@link H3DU.GraphicsPath.fromString}), or by calling methods that add its segments.
+ * There are two ways to create paths: using an SVG path string (see {@link GraphicsPath.fromString}), or by calling methods that add its segments.
  * <p>A `GraphicsPath` object stores a current position and a starting position, and many methods don't have you specify a starting position, to cover the common case of drawing a series of connected lines and curves.
  * _.moveTo(x, y)_ - Moves the starting position and current position.
  * _.lineTo(x, y)_ - Adds a line segment from the current position to a new ending position.
@@ -263,7 +263,6 @@ ArcCurve.prototype.velocity = function(t) {
  * An _elliptical arc_ is a curve which forms part of an ellipse. There are several ways to
  * parameterize an elliptical arc, as seen in the _.arc()_, _.arcTo()_, and _.arcSvgTo()_ methods
  * of the `GraphicsPath` class.
- * @memberof H3DU
  * @constructor
  */
 export const GraphicsPath = function() {

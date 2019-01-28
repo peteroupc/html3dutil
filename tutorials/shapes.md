@@ -23,7 +23,7 @@ This page will discuss:
 
 Once you have a mesh of a 3D shape, you still need to attach it to a shape
 and a batch of shapes in order for the renderer to draw it. This is where
-the [`H3DU.Shape`]{@link H3DU.Shape} class comes into
+the [`H3DU.Shape`]{@link Shape} class comes into
 play; this class associates a 3D mesh with its location in the scene,
 as well as its color, its appearance, and how its vertices will be transformed.
 To attach a mesh to a 3D scene:
@@ -41,11 +41,11 @@ in the shape "on the fly" when it comes time to draw it each frame.
 a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.
 
-3. Add the shape to a 3D batch ([`H3DU.Batch3D]{@link H3DU.Batch3D}):
+3. Add the shape to a 3D batch ([`H3DU.Batch3D]{@link Batch3D}):
 
         batch3d.addShape(shape);
 
-    Now, the next time `scene3d.render(batch)` is called, the [`H3DU.Scene3D`]{@link H3DU.Scene3D} will render the
+    Now, the next time `scene3d.render(batch)` is called, the [`H3DU.Scene3D`]{@link Scene3D} will render the
 given shape to the scene through the 3D batch.
 
 <a id=Shape_Groups></a>
