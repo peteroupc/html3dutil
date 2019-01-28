@@ -47,7 +47,6 @@ events.
 * <a href="extras_curvetube.md">module:extras/curvetube</a><br>The <code>extras/curvetube.js</code> module.
 * <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A surface evaluator object for a tube extruded from a parametric curve.
 * <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>Additional curve evaluator and surface evaluator objects.
-* <a href="extras_derivedcurves.ruledSurface.md">module:extras/derivedcurves.ruledSurface</a><br>Creates a surface evaluator object for TODO: Not documented yet.
 * <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
@@ -102,7 +101,6 @@ and other polyhedra.
 * [H3DU's Math Functions](tutorial-glmath.md)
 * [Older Version History](tutorial-history.md)
 * [Matrix Details](tutorial-matrixdetails.md)
-* [Examples of Creating Meshes on the Fly](tutorial-meshexamples.md)
 * [Library Overview](tutorial-overview.md)
 * [Creating Shapes](tutorial-shapes.md)
 * [Parametric Curves and Parametric Surfaces](tutorial-surfaces.md)

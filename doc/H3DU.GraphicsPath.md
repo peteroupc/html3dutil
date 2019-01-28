@@ -100,7 +100,7 @@ at this path's current position.
 * [roundRect](#H3DU.GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
 * [toCurvePath](#H3DU.GraphicsPath_toCurvePath)<br>Creates a path in which arcs are decomposed
 to cubic B&eacute;zier curves (which will approximate those arcs).
-* [toExtrudedMeshBuffer](#H3DU.GraphicsPath_toExtrudedMeshBuffer)<br>Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+* [toExtrudedMeshBuffer](#H3DU.GraphicsPath_toExtrudedMeshBuffer)<br>Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
 * [toLineMeshBuffer](#H3DU.GraphicsPath_toLineMeshBuffer)<br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
 * [toLinePath](#H3DU.GraphicsPath_toLinePath)<br>Creates a path in which curves and arcs are decomposed
 to line segments.
@@ -787,15 +787,16 @@ A path consisting only of line
 segments, B&eacute;zier curves, and close commands. (Type: GraphicsPath)
 
 <a name='H3DU.GraphicsPath_toExtrudedMeshBuffer'></a>
-### H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness])
+### H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness], [closed])
 
-Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
 
 #### Parameters
 
 * `zStart` (Type: number)<br>Starting Z coordinate of the mesh buffer's "walls".
 * `zEnd` (Type: number)<br>Ending Z coordinate of the mesh buffer's "walls".
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
+* `closed` (Type: boolean) (optional)<br>If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
 
 #### Return Value
 

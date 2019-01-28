@@ -24,6 +24,7 @@ is generated.
 * [curvePedalCurve](#extras_derivedcurves.curvePedalCurve)<br>Creates a curve evaluator object for TODO: Not documented yet.
 * [curveRadialCurve](#extras_derivedcurves.curveRadialCurve)<br>Creates a curve evaluator object for TODO: Not documented yet.
 * [polarCurve](#extras_derivedcurves.polarCurve)<br>Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point's radius given its angle.
+* [ruledSurface](#extras_derivedcurves.ruledSurface)<br>Creates a surface evaluator object for TODO: Not documented yet.
 * [spiralCurve](#extras_derivedcurves.spiralCurve)<br>Creates a curve evaluator object for TODO: Not documented yet.
 
 <a name='extras_derivedcurves.curveCatacaustic'></a>
@@ -130,28 +131,42 @@ Creates a curve evaluator object for TODO: Not documented yet.
 The resulting curve evaluator object. (Type: Object)
 
 <a name='extras_derivedcurves.polarCurve'></a>
-### (static) module:extras/derivedcurves.polarCurve(func, phase)
+### (static) module:extras/derivedcurves.polarCurve(func, [phase])
 
 Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point's radius given its angle.
 
 #### Parameters
 
-* `func` (Type: function)<br>Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &pi) or [0, 2&pi;).
-* `phase` (Type: number)<br>Starting angle of the curve. If null, undefined, or omitted, the default is 0.
+* `func` (Type: function)<br>Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &pi;) or [0, 2&pi;).
+* `phase` (Type: number) (optional)<br>Starting polar angle of the curve. If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 
 The resulting curve evaluator object. (Type: Object)
 
+<a name='extras_derivedcurves.ruledSurface'></a>
+### (static) module:extras/derivedcurves.ruledSurface(directrix, director)
+
+Creates a surface evaluator object for TODO: Not documented yet.
+
+#### Parameters
+
+* `directrix` (Type: *)
+* `director` (Type: *)
+
+#### Return Value
+
+The resulting surface evaluator object. (Type: Object)
+
 <a name='extras_derivedcurves.spiralCurve'></a>
-### (static) module:extras/derivedcurves.spiralCurve(radius, phase)
+### (static) module:extras/derivedcurves.spiralCurve(radius, [phase])
 
 Creates a curve evaluator object for TODO: Not documented yet.
 
 #### Parameters
 
 * `radius` (Type: *)
-* `phase` (Type: *)
+* `phase` (Type: number) (optional)<br>TODO If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 

@@ -14,8 +14,8 @@ for BSplineCurve.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
-* `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the U axis. For more information, see BSplineCurve.
-* `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the curve, along the V axis.
+* `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the U axis. For more information, see BSplineCurve.
+* `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the V axis.
 * `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.DIVIDE_BIT. If null, undefined, or omitted, no bits are set.
 
 #### Examples
@@ -96,7 +96,7 @@ in a B-spline surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate. NOTE: Since version 2.0, this parameter and the "v" parameter are no longer scaled according to the curve's knot vector. To get the surface's extents, call this object's <code>endPoints</code> method.
+* `u` (Type: number)<br>U coordinate of the surface to evaluate.
 * `v` (Type: number)<br>V coordinate of the surface to evaluate.
 
 #### Return Value

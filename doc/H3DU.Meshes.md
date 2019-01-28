@@ -90,7 +90,7 @@ The following example creates a wire-frame box of the given corner coordinates (
 Creates a mesh of a capsule, centered at the origin.
 The length of the capsule will run along the Z axis. (If the capsule
 has a high length and a very low radius, it will resemble a 3D line
-with rounded corners.)
+with rounded corners; see the example.)
 
 Will also generate texture coordinates such that the V (vertical)
 coordinates start from the bottom of the texture and increase from the negative
@@ -117,6 +117,27 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 #### Return Value
 
 The generated mesh. (Type: MeshBuffer)
+
+#### Examples
+
+The following method uses <code>createCapsule</code> to create a thin line-like 3D object.
+
+    // point1, point2 - end points of the line
+    // thickness - thickness of the line in units, default 1
+    function create3DLine(point1,point2,thickness) {
+    if(thickness==null)thickness=1
+    var vector=MathUtil.vec3sub(point1,point2);
+    var dist=MathUtil.vec3length(vector);
+    var normVector=MathUtil.vec3norm(vector);
+    var midPoint=MathUtil.vec3lerp(point1,point2,0.5);
+    var line=Meshes.createCapsule(thickness/2,dist,6,4);
+    var matrix=MathUtil.quatToMat4(
+    MathUtil.quatFromVectors([0,0,1],normVector));
+    matrix[12]=midPoint[0]
+    matrix[13]=midPoint[1]
+    matrix[14]=midPoint[2]
+    return line.transform(matrix);
+    }
 
 <a name='H3DU.Meshes.createClosedCylinder'></a>
 ### (static) H3DU.Meshes.createClosedCylinder(baseRad, topRad, height, slices, stacks, [flat], [inside])

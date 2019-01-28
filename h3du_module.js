@@ -312,9 +312,7 @@ if (typeof window !== "undefined" && window !== null && !(typeof window.Promise 
     }
     promfunc();
   }
-}
-
-/*
+}/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -1121,9 +1119,7 @@ const toGLColor = function(r, g, b, a) {
   } else {
     return clampRgba(r || [0, 0, 0, 0]);
   }
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -5020,9 +5016,7 @@ MathUtil.LocalRollPitchYaw = MathUtil.GlobalYawPitchRoll;
  * Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
  * occur around the rotated object's new axes and not necessarily the original axes.
  * @const */
-MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;
-
-/*
+MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -5101,9 +5095,7 @@ const MathInternal = {
     }
     return Math.sqrt(dsq);
   }
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -5733,9 +5725,7 @@ Curve.prototype.toArcLengthParam = function() {
     return this;
   }
   return new Curve(this, new Curve._ArcLengthParam(this));
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -5943,9 +5933,7 @@ Surface.prototype.endPoints = function() {
   } else {
     return [0, 1, 0, 1];
   }
-};
-
-/* global ArrayBuffer, Float32Array, Uint16Array, Uint32Array */
+};/* global ArrayBuffer, Float32Array, Uint16Array, Uint32Array */
 
 /**
  * A <b>vertex attribute object</b>.
@@ -6169,9 +6157,7 @@ BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
     }
   }
   return newAttribute;
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -6276,9 +6262,7 @@ Semantic.MODELVIEWINVERSETRANSPOSE = 106;
 Semantic.VIEWINVERSE = 107;
 /** Uniform semantic for a joint matrix.
  * @const */
-Semantic.JOINTMATRIX = 108;
-
-/*
+Semantic.JOINTMATRIX = 108;/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -7648,9 +7632,7 @@ MeshBuffer._wellKnownAttributes = {
   "WEIGHTS":5,
   "TANGENT":6,
   "BITANGENT":7
-};
-
-/* global Uint16Array, Uint32Array */
+};/* global Uint16Array, Uint32Array */
 
 /**
  * An evaluator of curve evaluator objects for generating
@@ -8378,9 +8360,7 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
     }
   }
   return this;
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -8488,8 +8468,8 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.<p>
  * Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
  * N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
- * for each control point. To convert such control points to homogeneous coordinates, multiply each
- * conventional coordinate by its weight, then append the weight as the control point's last coordinate.
+ * for each control point. To convert such a control point to homogeneous coordinates, multiply each of its
+ * conventional coordinates by its weight, then append the weight as the control point's last coordinate.
  * <p><b>NURBS Curves</b><p>
  * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
  * <p><b>Polynomial Basis</b></p>
@@ -8536,8 +8516,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * points and not more than twice the number of control points.<br>
  * The length of this parameter minus 1, minus the number
  * of control points, represents the <i>degree</i> of the B-spline
- * curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is,
- * four more knots than the number of control points (four). A degree of 1
+ * curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1
  * results in straight line segments.<br>
  * The knot vector must be a monotonically nondecreasing sequence,
  * the first knot must not equal the last, and the same knot may not be repeated
@@ -8545,7 +8524,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * N times elsewhere, where N is the curve's degree.
  * If the difference between one knot and the next isn't the same,
  * the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first
- * knot will be 0 or less and the last knot will be 1 or greater.
+ * knot will be 0 or less and the last knot will be 1 or greater.  (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene's definition by repeating the first knot at the beginning and repeating the last knot at the end.)
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>The following function can be used
@@ -8609,11 +8588,12 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  */
 function BSplineCurve(controlPoints, knots, bits) {
   if(controlPoints.length <= 0)throw new Error();
-  if(!knots)throw new Error();
+  if(!knots)throw new Error("no knots");
   this.bits = bits || 0;
   this.controlPoints = controlPoints;
   const order = knots.length - this.controlPoints.length;
-  if(order < 1 || order > this.controlPoints.length)
+  if(order < 1)throw new Error("degree 0 or less");
+  if(order > this.controlPoints.length)
     throw new Error();
   BSplineCurve._checkKnots(knots, order - 1);
   const cplen = this.controlPoints[0].length;
@@ -8662,7 +8642,7 @@ BSplineCurve._checkKnots = function(knots, degree) {
   let i;
   for (i = 1; i < knots.length; i++) {
     if(knots[i] < knots[i - 1])
-      throw new Error();
+      throw new Error(knots + "---/" + [knots[i - 1], knots[i]]);
   }
   for(i = 1; i < knots.length - 2 - degree; i++) {
     if(knots[i + degree] <= knots[i])
@@ -9115,9 +9095,9 @@ BSplineCurve._fromHomogen = function(cp) {
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Array<number>} knotsU Knot vector of the curve, along the U axis.
+ * @param {Array<number>} knotsU Knot vector of the surface, along the U axis.
  * For more information, see {@link BSplineCurve}.
- * @param {Array<number>} knotsV Knot vector of the curve, along the V axis.
+ * @param {Array<number>} knotsV Knot vector of the surface, along the V axis.
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>Together with 'convertToHomogen' given in the {@link BSplineCurve} documentation, the following function can be used
@@ -9271,7 +9251,7 @@ BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
 };
 /**
  * Generates a knot vector with uniform knots, to be
- * passed to the {@link BSplineCurve} or {@link BSplineCurve} constructor.
+ * passed to the {@link BSplineCurve} or {@link BSplineSurface} constructor.
  * @param {number|Object} controlPoints Number of control points the curve will have,
  * or an array of control points.
  * @param {number} [degree] Degree of the B-spline
@@ -9298,7 +9278,7 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
 };
 /**
  * Generates a knot vector with uniform knots, to be
- * passed to the {@link BSplineCurve} or {@link BSplineCurve} constructor,
+ * passed to the {@link BSplineCurve} or {@link BSplineSurface} constructor,
  * except that with the knot vector the curve will start and end at the first and last control points and will
  * be tangent to the line between the first and second control points
  * and to the line between the next-to-last and last control points.
@@ -9338,10 +9318,6 @@ BSplineCurve.clampedKnots = function(controlPoints, degree) {
  * Evaluates the surface function based on a point
  * in a B-spline surface.
  * @param {number} u U coordinate of the surface to evaluate.
- * NOTE: Since version 2.0, this parameter and the "v" parameter
- * are no longer scaled according to the curve's knot vector.
- * To get the surface's extents, call this object's
- * <code>endPoints</code> method.
  * @param {number} v V coordinate of the surface to evaluate.
  * @returns {Array<number>} An array of the result of
  * the evaluation. It will have as many elements as a control point (or one fewer
@@ -9502,9 +9478,7 @@ BSplineSurface.prototype.bitangent = function(u, v) {
 BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
   return BSplineSurface.clamped(controlPoints, controlPoints[0].length - 1,
     controlPoints.length - 1, bits);
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -9956,9 +9930,7 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
       [p0, p1, p2], BSplineCurve.DIVIDE_BIT));
   }
   return new PiecewiseCurve(curves);
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -13237,17 +13209,26 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
     MeshBuffer.LINES);
 };
 /**
- * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+ * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
  * @param {number} zStart Starting Z coordinate of the mesh buffer's "walls".
  * @param {number} zEnd Ending Z coordinate of the mesh buffer's "walls".
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
+ * @param {boolean} [closed] If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
  * @returns {MeshBuffer} The resulting mesh buffer.
  */
-GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
+GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness, closed) {
   if((typeof zStart === "undefined" || zStart === null) || zEnd === null)throw new Error();
+  const isclosed = typeof closed === "undefined" || closed === null ? false : closed;
+  if(isclosed) {
+    const mesh = new MeshBuffer();
+    mesh.merge(this.toExtrudedMeshBuffer(zStart, zEnd, flatness, false));
+    mesh.merge(this.toMeshBuffer(zEnd, flatness));
+    mesh.merge(this.toMeshBuffer(zStart, flatness).reverseWinding().reverseNormals());
+    return mesh;
+  }
   const lines = this.getLines(flatness);
   const z1 = Math.min(zStart, zEnd);
   const z2 = Math.max(zStart, zEnd);
@@ -14478,9 +14459,7 @@ GraphicsPath.prototype.xor = function(path, flatness) {
   const polygon2 = new Polygon(path, flatness);
   const retval = new Clipper(polygon1, polygon2).compute(XOR);
   return retval.toPath();
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -14882,9 +14861,7 @@ Transform.prototype.copy = function() {
   ret._matrixDirty = this._matrixDirty;
   ret.matrix = this.matrix.slice(0, this.matrix.length);
   return ret;
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -15140,9 +15117,7 @@ Shape.prototype.getMatrix = function() {
     }
   }
   return mat;
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -15424,9 +15399,7 @@ ShapeGroup.prototype.setQuaternion = function(quat) {
 ShapeGroup.prototype.setScale = function(x, y, z) {
   this.transform.setScale(x, y, z);
   return this;
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
@@ -16205,7 +16178,7 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * Creates a mesh of a capsule, centered at the origin.
  * The length of the capsule will run along the Z axis. (If the capsule
  * has a high length and a very low radius, it will resemble a 3D line
- * with rounded corners.)<p>
+ * with rounded corners; see the example.)<p>
  * Will also generate texture coordinates such that the V (vertical)
  * coordinates start from the bottom of the texture and increase from the negative
  * to positive Z axis, and the U (horizontal) coordinates start from the left of the
@@ -16238,6 +16211,23 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * method will point inward; otherwise, outward. Should normally be false
  * unless the capsule will be viewed from the inside.
  * @returns {MeshBuffer} The generated mesh.
+ * @example <caption>The following method uses <code>createCapsule</code> to create a thin line-like 3D object. </caption>
+ * // point1, point2 - end points of the line
+ * // thickness - thickness of the line in units, default 1
+ * function create3DLine(point1,point2,thickness) {
+ * if(thickness==null)thickness=1
+ * var vector=MathUtil.vec3sub(point1,point2);
+ * var dist=MathUtil.vec3length(vector);
+ * var normVector=MathUtil.vec3norm(vector);
+ * var midPoint=MathUtil.vec3lerp(point1,point2,0.5);
+ * var line=Meshes.createCapsule(thickness/2,dist,6,4);
+ * var matrix=MathUtil.quatToMat4(
+ * MathUtil.quatFromVectors([0,0,1],normVector));
+ * matrix[12]=midPoint[0]
+ * matrix[13]=midPoint[1]
+ * matrix[14]=midPoint[2]
+ * return line.transform(matrix);
+ * }
  */
 Meshes.createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
   if(typeof stacks === "undefined" || stacks === null)stacks = 8;
@@ -16419,15 +16409,11 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   // Re-add the second index to close the pointed star
   triangleFan.addIndex(1);
   return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
-};
-
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
  If you like this, you should donate
  to Peter O. (original author of
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
-*/
-
-export { MathUtil, Curve, Surface, CurveBuilder, SurfaceBuilder, PiecewiseCurve, BSplineCurve, BSplineSurface, GraphicsPath, Shape, ShapeGroup, Transform, Meshes, BufferAccessor, MeshBuffer, Semantic, getPromiseResults, getPromiseResultsAll, getTimePosition, newFrames, toGLColor };
+*/export{MathUtil,Curve,Surface,CurveBuilder,SurfaceBuilder,PiecewiseCurve,BSplineCurve,BSplineSurface,GraphicsPath,Shape,ShapeGroup,Transform,Meshes,BufferAccessor,MeshBuffer,Semantic,getPromiseResults,getPromiseResultsAll,getTimePosition,newFrames,toGLColor};

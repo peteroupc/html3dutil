@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>H3DU.Transform</title></head><body><h1> H3DU.Transform</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.Transform'></a>
+<h3> new H3DU.Transform()</h3>A class offering a convenient way to set a transformation
+from one coordinate system to another.<h3> Methods</h3><ul><li><a href='#H3DU.Transform_copy'>copy</a><br>Makes a copy of this transform.<li><a href='#H3DU.Transform_getMatrix'>getMatrix</a><br>Gets the transformation matrix used by an object.<li><a href='#H3DU.Transform_getPosition'>getPosition</a><br>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.<li><a href='#H3DU.Transform_getQuaternion'>getQuaternion</a><br>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.<li><a href='#H3DU.Transform_getScale'>getScale</a><br>Returns a copy of a three-element array giving the scaling for an object's width,
+height, and depth, respectively.<li><a href='#H3DU.Transform_isIdentity'>isIdentity</a><br>Returns whether this transform is the identity transform.<li><a href='#H3DU.Transform_movePosition'>movePosition</a><br>Moves the relative position of an object from its original
+position.<li><a href='#H3DU.Transform_multQuaternion'>multQuaternion</a><br>Combines an object's current rotation with another rotation
+described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations).<li><a href='#H3DU.Transform_multRotation'>multRotation</a><br>Combines an object's current rotation with another rotation
+in the form of an angle and an axis of
+rotation.<li><a href='#H3DU.Transform_reset'>reset</a><br>Resets this transform to the untransformed state.<li><a href='#H3DU.Transform_setMatrix'>setMatrix</a><br>Sets this transform's transformation matrix.<li><a href='#H3DU.Transform_setPosition'>setPosition</a><br>Sets the relative position of an object from its original
+position.<li><a href='#H3DU.Transform_setQuaternion'>setQuaternion</a><br>Sets this transform's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations).<li><a href='#H3DU.Transform_setRotation'>setRotation</a><br>Sets this transform's rotation in the form of an angle and an axis of
+rotation.<li><a href='#H3DU.Transform_setScale'>setScale</a><br>Sets the scale of an object relative to its original
+size.</ul><a name='H3DU.Transform_copy'></a>
+<h3> H3DU.Transform#copy()</h3>Makes a copy of this transform. The copied object
+will have its own version of the rotation, scale,
+position, and matrix data.<h4> Return Value</h4>A copy of this transform. (Type: Transform)<a name='H3DU.Transform_getMatrix'></a>
+<h3> H3DU.Transform#getMatrix()</h3>Gets the transformation matrix used by an object. Depending
+on the state of this transform, will return either:<ul>
+<li>The 4x4 matrix passed to Transform#setMatrix, if the
+matrix was defined with that method
+and the transform wasn't reset yet with Transform#resetTransform.
+<li>The matrix resulting from the position, rotation, and scale properties,
+multiplied in that order, otherwise.
+</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='H3DU.Transform_getPosition'></a>
+<h3> H3DU.Transform#getPosition()</h3>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='H3DU.Transform_getQuaternion'></a>
+<h3> H3DU.Transform#getQuaternion()</h3>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='H3DU.Transform_getScale'></a>
+<h3> H3DU.Transform#getScale()</h3>Returns a copy of a three-element array giving the scaling for an object's width,
+height, and depth, respectively.
+For each component, 1 means no scaling.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='H3DU.Transform_isIdentity'></a>
+<h3> H3DU.Transform#isIdentity()</h3>Returns whether this transform is the identity transform.<h4> Return Value</h4>Return value. (Type: boolean)<a name='H3DU.Transform_movePosition'></a>
+<h3> H3DU.Transform#movePosition(x, y, z)</h3>Moves the relative position of an object from its original
+position. Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>x</code> (Type: Array.&lt;number> | number)<br>Number to add to the X coordinate, If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.<li><code>y</code> (Type: number)<br>Number to add to the Y coordinate. If "x" is an array, this parameter may be omitted.<li><code>z</code> (Type: number)<br>Number to add to the Z coordinate. If "x" is an array, this parameter may be omitted.</ul><h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_multQuaternion'></a>
+<h3> H3DU.Transform#multQuaternion(quat)</h3>Combines an object's current rotation with another rotation
+described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations). The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods MathUtil.quatFromAxisAngle or MathUtil.quatFromTaitBryan.</ul><h4> Return Value</h4>This object. (Type: Transform)<h4> Examples</h4><pre>// Combine an object's rotation with a rotation 20 degrees about the X axis
+transform.multQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
+// Combine an object's rotation with identity
+transform.multQuaternion(MathUtil.quatIdentity());
+// Combine an object's rotation with 30 degree pitch multiplied
+// by 40 degree roll
+transform.multQuaternion(MathUtil.quatFromTaitBryan(30,0,40));</pre><a name='H3DU.Transform_multRotation'></a>
+<h3> H3DU.Transform#multRotation(angle, v, vy, vz)</h3>Combines an object's current rotation with another rotation
+in the form of an angle and an axis of
+rotation. The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. See Transform#setRotation.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_reset'></a>
+<h3> H3DU.Transform#reset()</h3>Resets this transform to the untransformed state.<h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_setMatrix'></a>
+<h3> H3DU.Transform#setMatrix(value)</h3>Sets this transform's transformation matrix. This method
+will set the position, rotation, and scale properties
+accordingly to the matrix given.<h4> Parameters</h4><ul><li><code>value</code> (Type: Array.&lt;number>)<br>A 4x4 matrix. This method will copy the value of this parameter.</ul><h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_setPosition'></a>
+<h3> H3DU.Transform#setPosition(x, [y], [z])</h3>Sets the relative position of an object from its original
+position. Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>x</code> (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If "x" is an array, this parameter may be omitted.</ul><h4> Return Value</h4>This object. (Type: Transform)<h4> Examples</h4><pre>// Set the relative position to 2 units along X axis, 4 units along Y axis,
+// and 5 units along Z axis
+transform.setPosition(2,4,5);
+// same, but passing an array
+transform.setPosition([2,4,5]);</pre><a name='H3DU.Transform_setQuaternion'></a>
+<h3> H3DU.Transform#setQuaternion(quat)</h3>Sets this transform's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations). Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods MathUtil.quatFromAxisAngle and MathUtil.quatFromTaitBryan, among others.</ul><h4> Return Value</h4>This object. (Type: Transform)<h4> Examples</h4><pre>// Set an object's rotation to 30 degrees about the X axis
+transform.setQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
+// Set an object's rotation to identity (the object isn't transformed)
+transform.setQuaternion(MathUtil.quatIdentity());
+// Set an object's rotation to 30 degree pitch multiplied
+// by 40 degree roll
+transform.setQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
+// Set an object's rotation to 40 units about X axis, 20 units about Y axis,
+// and 50 units about Z axis
+transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+// Set an object's rotation to 20 units about Y axis
+transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));</pre><a name='H3DU.Transform_setRotation'></a>
+<h3> H3DU.Transform#setRotation(angle, v, vy, vz)</h3>Sets this transform's rotation in the form of an angle and an axis of
+rotation. Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_setScale'></a>
+<h3> H3DU.Transform#setScale(x, [y], [z])</h3>Sets the scale of an object relative to its original
+size. Has no effect if a matrix was defined with Transform#setMatrix
+and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>x</code> (Type: number | Array.&lt;number>)<br>X axis scaling factor for this transform. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.<li><code>y</code> (Type: number) (optional)<br>Y axis scaling factor for this transform.<li><code>z</code> (Type: number) (optional)<br>Z axis scaling factor for this transform.</ul><h4> Return Value</h4>This object. (Type: Transform)<h4> Examples</h4><pre>// scale coordinates by 2x in all axes
+transform.setScale(2,2,2);
+// same, but passing an array
+transform.setScale([2,2,2]);</pre><p><a href='index.html'>Back to documentation index.</a></p></body></html>

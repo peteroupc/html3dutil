@@ -187,8 +187,8 @@ or the makeMesh method above.
     }
 
 And here's an example of its use. We'll take the disc surface given above,
-and create a SurfaceShifter object that shifts the circle by 3 units horizontally
-and vertically (by default, the circle will be centered at the origin (0, 0, 0)).
+and create a SurfaceShifter object that shifts the disc by 3 units horizontally
+and vertically (by default, the disc will be centered at the origin (0, 0, 0)).
 
     // This is the disc surface from before
     var evaluator = {

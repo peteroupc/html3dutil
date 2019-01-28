@@ -110,8 +110,8 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.<p>
  * Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
  * N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
- * for each control point. To convert such control points to homogeneous coordinates, multiply each
- * conventional coordinate by its weight, then append the weight as the control point's last coordinate.
+ * for each control point. To convert such a control point to homogeneous coordinates, multiply each of its
+ * conventional coordinates by its weight, then append the weight as the control point's last coordinate.
  * <p><b>NURBS Curves</b><p>
  * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
  * <p><b>Polynomial Basis</b></p>
@@ -158,8 +158,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * points and not more than twice the number of control points.<br>
  * The length of this parameter minus 1, minus the number
  * of control points, represents the <i>degree</i> of the B-spline
- * curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is,
- * four more knots than the number of control points (four). A degree of 1
+ * curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1
  * results in straight line segments.<br>
  * The knot vector must be a monotonically nondecreasing sequence,
  * the first knot must not equal the last, and the same knot may not be repeated
@@ -167,7 +166,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * N times elsewhere, where N is the curve's degree.
  * If the difference between one knot and the next isn't the same,
  * the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first
- * knot will be 0 or less and the last knot will be 1 or greater.
+ * knot will be 0 or less and the last knot will be 1 or greater.  (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene's definition by repeating the first knot at the beginning and repeating the last knot at the end.)
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>The following function can be used
@@ -231,11 +230,12 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  */
 function BSplineCurve(controlPoints, knots, bits) {
   if(controlPoints.length <= 0)throw new Error();
-  if(!knots)throw new Error();
+  if(!knots)throw new Error("no knots");
   this.bits = bits || 0;
   this.controlPoints = controlPoints;
   const order = knots.length - this.controlPoints.length;
-  if(order < 1 || order > this.controlPoints.length)
+  if(order < 1)throw new Error("degree 0 or less");
+  if(order > this.controlPoints.length)
     throw new Error();
   BSplineCurve._checkKnots(knots, order - 1);
   const cplen = this.controlPoints[0].length;
@@ -284,7 +284,7 @@ BSplineCurve._checkKnots = function(knots, degree) {
   let i;
   for (i = 1; i < knots.length; i++) {
     if(knots[i] < knots[i - 1])
-      throw new Error();
+      throw new Error(knots + "---/" + [knots[i - 1], knots[i]]);
   }
   for(i = 1; i < knots.length - 2 - degree; i++) {
     if(knots[i + degree] <= knots[i])
@@ -737,9 +737,9 @@ BSplineCurve._fromHomogen = function(cp) {
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Array<number>} knotsU Knot vector of the curve, along the U axis.
+ * @param {Array<number>} knotsU Knot vector of the surface, along the U axis.
  * For more information, see {@link BSplineCurve}.
- * @param {Array<number>} knotsV Knot vector of the curve, along the V axis.
+ * @param {Array<number>} knotsV Knot vector of the surface, along the V axis.
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>Together with 'convertToHomogen' given in the {@link BSplineCurve} documentation, the following function can be used
@@ -893,7 +893,7 @@ BSplineSurface.uniform = function(controlPoints, degreeU, degreeV, bits) {
 };
 /**
  * Generates a knot vector with uniform knots, to be
- * passed to the {@link BSplineCurve} or {@link BSplineCurve} constructor.
+ * passed to the {@link BSplineCurve} or {@link BSplineSurface} constructor.
  * @param {number|Object} controlPoints Number of control points the curve will have,
  * or an array of control points.
  * @param {number} [degree] Degree of the B-spline
@@ -920,7 +920,7 @@ BSplineCurve.uniformKnots = function(controlPoints, degree) {
 };
 /**
  * Generates a knot vector with uniform knots, to be
- * passed to the {@link BSplineCurve} or {@link BSplineCurve} constructor,
+ * passed to the {@link BSplineCurve} or {@link BSplineSurface} constructor,
  * except that with the knot vector the curve will start and end at the first and last control points and will
  * be tangent to the line between the first and second control points
  * and to the line between the next-to-last and last control points.
@@ -960,10 +960,6 @@ BSplineCurve.clampedKnots = function(controlPoints, degree) {
  * Evaluates the surface function based on a point
  * in a B-spline surface.
  * @param {number} u U coordinate of the surface to evaluate.
- * NOTE: Since version 2.0, this parameter and the "v" parameter
- * are no longer scaled according to the curve's knot vector.
- * To get the surface's extents, call this object's
- * <code>endPoints</code> method.
  * @param {number} v V coordinate of the surface to evaluate.
  * @returns {Array<number>} An array of the result of
  * the evaluation. It will have as many elements as a control point (or one fewer

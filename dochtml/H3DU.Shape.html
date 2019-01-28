@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>H3DU.Shape</title></head><body><h1> H3DU.Shape</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='H3DU.Shape'></a>
+<h3> new H3DU.Shape(mesh)</h3>An object that associates a geometric mesh (the shape of the object) with
+a transformation matrix (which defines the object's position and size).
+See the "<a href="tutorial-shapes.html">Creating Shapes</a>" tutorial.<p><h4> Parameters</h4><ul><li><code>mesh</code> (Type: MeshBuffer)<br>A mesh in the form of a buffer object. Cannot be null.</ul><h3> Methods</h3><ul><li><a href='#H3DU.Shape_copy'>copy</a><br>Makes a copy of this object.<li><a href='#H3DU.Shape_getBounds'>getBounds</a><br>Finds a bounding box that holds all vertices in this shape.<li><a href='#H3DU.Shape_getMatrix'>getMatrix</a><br>Gets the transformation matrix used by this shape.<li><a href='#H3DU.Shape_getMeshBuffer'>getMeshBuffer</a><br>Returns a reference to the mesh buffer used by this shape.<li><a href='#H3DU.Shape_getTransform'>getTransform</a><br>Returns the transform used by this shape object.<li><a href='#H3DU.Shape_getVisible'>getVisible</a><br>Gets whether this shape will be drawn on rendering.<li><a href='#H3DU.Shape_primitiveCount'>primitiveCount</a><br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this scene.<li><a href='#H3DU.Shape_setPosition'>setPosition</a><br>Sets the relative position of this shape from its original
+position.<li><a href='#H3DU.Shape_setQuaternion'>setQuaternion</a><br>Sets this object's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.<li><a href='#H3DU.Shape_setScale'>setScale</a><br>Sets the scale of this shape relative to its original
+size.<li><a href='#H3DU.Shape_setTransform'>setTransform</a><br>Sets this shape's transformation
+to a copy of the given transformation.<li><a href='#H3DU.Shape_setVisible'>setVisible</a><br>Sets whether this shape will be drawn on rendering.<li><a href='#H3DU.Shape_vertexCount'>vertexCount</a><br>Gets the number of vertices composed by
+all shapes in this scene.</ul><a name='H3DU.Shape_copy'></a>
+<h3> H3DU.Shape#copy()</h3>Makes a copy of this object. The copied object
+will have its own version of the transform.
+The copied shape won't have a parent.<h4> Return Value</h4>A copy of this object. (Type: Shape)<a name='H3DU.Shape_getBounds'></a>
+<h3> H3DU.Shape#getBounds()</h3>Finds a bounding box that holds all vertices in this shape.
+The bounding box is not guaranteed to be the
+tightest, and the box will be transformed to world space
+using this object's transform.<h4> Return Value</h4>An array of six numbers describing an
+axis-aligned bounding box
+that fits all vertices in the shape. The first three numbers
+are the smallest-valued X, Y, and Z coordinates, and the
+last three are the largest-valued X, Y, and Z coordinates.
+If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
+-Inf, -Inf]. (Type: Array.&lt;number>)<a name='H3DU.Shape_getMatrix'></a>
+<h3> H3DU.Shape#getMatrix()</h3>Gets the transformation matrix used by this shape.
+See Transform#getMatrix.<h4> Return Value</h4>The current transformation matrix. (Type: Array.&lt;number>)<a name='H3DU.Shape_getMeshBuffer'></a>
+<h3> H3DU.Shape#getMeshBuffer()</h3>Returns a reference to the mesh buffer used by this shape.<h4> Return Value</h4>Return value. (Type: MeshBuffer)<a name='H3DU.Shape_getTransform'></a>
+<h3> H3DU.Shape#getTransform()</h3>Returns the transform used by this shape object.
+The transform won't be copied.<h4> Return Value</h4>Return value. (Type: Transform)<a name='H3DU.Shape_getVisible'></a>
+<h3> H3DU.Shape#getVisible()</h3>Gets whether this shape will be drawn on rendering.<h4> Return Value</h4>True if this shape will be visible; otherwise, false. (Type: boolean)<a name='H3DU.Shape_primitiveCount'></a>
+<h3> H3DU.Shape#primitiveCount()</h3>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this scene.<h4> Return Value</h4>Return value. (Type: number)<a name='H3DU.Shape_setPosition'></a>
+<h3> H3DU.Shape#setPosition(x, [y], [z])</h3>Sets the relative position of this shape from its original
+position. See Transform#setPosition<h4> Parameters</h4><ul><li><code>x</code> (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If "x" is an array, this parameter may be omitted.</ul><h4> Return Value</h4>This object. (Type: Shape)<h4> Examples</h4><pre>// Set the relative position to 2 units along X axis, 4 units along Y axis,
+// and 5 units along Z axis
+shape.setPosition(2,4,5);
+// same, but passing an array
+shape.setPosition([2,4,5]);</pre><a name='H3DU.Shape_setQuaternion'></a>
+<h3> H3DU.Shape#setQuaternion(quat)</h3>Sets this object's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+See Transform#setQuaternion.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A four-element array describing the rotation.</ul><h4> Return Value</h4>This object. (Type: Shape)<h4> Examples</h4><pre>// rotate the shape 40 units about X axis, 20 units about Y axis,
+// and 50 units about Z axis
+shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+// rotate the shape 20 units about Y axis
+shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));</pre><a name='H3DU.Shape_setScale'></a>
+<h3> H3DU.Shape#setScale(x, [y], [z])</h3>Sets the scale of this shape relative to its original
+size. See Transform#setScale<h4> Parameters</h4><ul><li><code>x</code> (Type: number | Array.&lt;number>)<br>X axis scaling factor for this shape object. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for the X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.<li><code>y</code> (Type: number) (optional)<br>Y axis scaling factor for this shape object.<li><code>z</code> (Type: number) (optional)<br>Z axis scaling factor for this shape object.</ul><h4> Return Value</h4>This object. (Type: Shape)<h4> Examples</h4><pre>// scale the shape by 2x in all axes
+shape.setScale(2,2,2);
+// same, but passing an array
+shape.setScale([2,2,2]);</pre><a name='H3DU.Shape_setTransform'></a>
+<h3> H3DU.Shape#setTransform(transform)</h3>Sets this shape's transformation
+to a copy of the given transformation.<h4> Parameters</h4><ul><li><code>transform</code> (Type: Transform)<br>The transformation to set to a copy of.</ul><h4> Return Value</h4>This object. (Type: Shape)<a name='H3DU.Shape_setVisible'></a>
+<h3> H3DU.Shape#setVisible(value)</h3>Sets whether this shape will be drawn on rendering.<h4> Parameters</h4><ul><li><code>value</code> (Type: boolean)<br>True if this shape will be visible; otherwise, false.</ul><h4> Return Value</h4>This object. (Type: Shape)<a name='H3DU.Shape_vertexCount'></a>
+<h3> H3DU.Shape#vertexCount()</h3>Gets the number of vertices composed by
+all shapes in this scene.<h4> Return Value</h4>Return value. (Type: number)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

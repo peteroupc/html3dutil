@@ -237,7 +237,7 @@ async function asyncMain() {
       filesForDoc = filesForDoc.map((f) => ffq(f)).join(" ");
       await Promise.all([mkdirAsync("doc"), mkdirAsync("dochtml")])
         .then(async () => writeFileIfNeededAsync("./h3du_module.js", normalizeLines(
-          await execAsync("rollup --output.format=esm --name=H3DU ./h3du.js"))))
+          await execAsync("rollup --output.format=esm --compact --name=H3DU ./h3du.js"))))
         .then(async () => writeFileIfNeededAsync(p,
           await execAsync("rollup --output.format=umd --name=H3DU ./h3du.js")))
         .then(() => normalizeAndCompile(compilerJar, [p],

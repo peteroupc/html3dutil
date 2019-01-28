@@ -3,7 +3,7 @@
 
 A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
-include translation (shifting), scaling, and rotation.
+that matrices can describe include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with "mat".
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 

@@ -3283,17 +3283,26 @@ GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
     MeshBuffer.LINES);
 };
 /**
- * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately.
+ * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
  * @param {number} zStart Starting Z coordinate of the mesh buffer's "walls".
  * @param {number} zEnd Ending Z coordinate of the mesh buffer's "walls".
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
+ * @param {boolean} [closed] If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
  * @returns {MeshBuffer} The resulting mesh buffer.
  */
-GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness) {
+GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness, closed) {
   if((typeof zStart === "undefined" || zStart === null) || zEnd === null)throw new Error();
+  const isclosed = typeof closed === "undefined" || closed === null ? false : closed;
+  if(isclosed) {
+    const mesh = new MeshBuffer();
+    mesh.merge(this.toExtrudedMeshBuffer(zStart, zEnd, flatness, false));
+    mesh.merge(this.toMeshBuffer(zEnd, flatness));
+    mesh.merge(this.toMeshBuffer(zStart, flatness).reverseWinding().reverseNormals());
+    return mesh;
+  }
   const lines = this.getLines(flatness);
   const z1 = Math.min(zStart, zEnd);
   const z2 = Math.max(zStart, zEnd);

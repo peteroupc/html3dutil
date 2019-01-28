@@ -40,9 +40,16 @@ The following is a screen shot of a scene generated with the help of the former 
 ## How to Use
 
 1. [**Download the Geometry Utilities Library**](https://github.com/peteroupc/html3dutil/releases).
-2. Extract the file <i>"h3du_min.js"</i> or <i>"h3du_module.js"</i>, and write the following code in every HTML page where you will use the library.
+2. Extract the file <i>"h3du_min.js"</i> or <i>"h3du_module.js"</i>, as appropriate.
+3.  If using the script version in an HTML Web page, and write the following code in every HTML page where you will use the library.
 
         <script type="text/javascript" src="h3du_min.js"></script>
+
+4.  If using the module version in a modern HTML Web page or a modern ECMAScript module, you can import all symbols in this module with either of the following:
+
+        import * from "h3du_module.js";
+        // -- or --
+        import * as H3DU from "h3du_module.js";
 
 <a id=List_of_Classes></a>
 ### List of Classes
