@@ -120,7 +120,7 @@ By default in most 3D graphics pipelines, U coordinates start at the left of the
 In general, texture coordinates describe 2-dimensional points.
 However, for such texturing tasks as mapping
 a square to a trapezoid, trios of 3-dimensional texture coordinates
-are useful to ensure the texturing is perspective-correct.
+are useful to ensure the texturing remains perspective-correct.
 In this case, the 3-D texture coordinates are converted
 to 2-D by dividing the X and Y components by the Z component.
 In a fragment shader or pixel shader, this can look like

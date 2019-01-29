@@ -35,7 +35,10 @@ geom.addAttribute(attributeNames[i],attr)
 if(ind)geom.index=new THREE.BufferAttribute(
 ind,1)
 return geom
-}</pre><h3> Members</h3><ul><li><a href='#MeshBuffer.LINES'>LINES</a><br>TODO: Not documented yet.<li><a href='#MeshBuffer.POINTS'>POINTS</a><br>TODO: Not documented yet.<li><a href='#MeshBuffer.TRIANGLES'>TRIANGLES</a><br>TODO: Not documented yet.</ul><h3> Methods</h3><ul><li><a href='#MeshBuffer.fromPositions'>fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.<li><a href='#MeshBuffer.fromPositionsNormals'>fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
+}</pre><h3> Members</h3><ul><li><a href='#MeshBuffer.LINES'>LINES</a><br>Indicates that a mesh buffer contains line segments; the mesh
+buffer stores each line segment using two consecutive vertices.<li><a href='#MeshBuffer.POINTS'>POINTS</a><br>Indicates that a mesh buffer contains points; the mesh
+buffer stores each point using one vertex.<li><a href='#MeshBuffer.TRIANGLES'>TRIANGLES</a><br>Indicates that a mesh buffer contains triangles; the mesh
+buffer stores each triangle using three consecutive vertices.</ul><h3> Methods</h3><ul><li><a href='#MeshBuffer.fromPositions'>fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.<li><a href='#MeshBuffer.fromPositionsNormals'>fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.<li><a href='#MeshBuffer.fromPositionsNormalsUV'>fromPositionsNormalsUV</a><br>Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.<li><a href='#MeshBuffer.fromPositionsUV'>fromPositionsUV</a><br>Creates a new mesh buffer with the given array of vertex positions
 and texture coordinates.<li><a href='#MeshBuffer_getAttribute'>getAttribute</a><br>Gets a vertex attribute included in this mesh buffer.<li><a href='#MeshBuffer_getBounds'>getBounds</a><br>Finds the tightest
@@ -59,17 +62,20 @@ number of items that a buffer attribute can hold.<li><a href='#MeshBuffer_vertex
 or point) in this mesh buffer.<li><a href='#MeshBuffer_wireFrame'>wireFrame</a><br>Converts the triangles in this mesh to line segments.</ul><a name='MeshBuffer.LINES'></a>
 <h3> MeshBuffer.LINES (constant)
 
-</h3>TODO: Not documented yet.
+</h3>Indicates that a mesh buffer contains line segments; the mesh
+buffer stores each line segment using two consecutive vertices.
 
 <a name='MeshBuffer.POINTS'></a>
 <h3> MeshBuffer.POINTS (constant)
 
-</h3>TODO: Not documented yet.
+</h3>Indicates that a mesh buffer contains points; the mesh
+buffer stores each point using one vertex.
 
 <a name='MeshBuffer.TRIANGLES'></a>
 <h3> MeshBuffer.TRIANGLES (constant)
 
-</h3>TODO: Not documented yet.
+</h3>Indicates that a mesh buffer contains triangles; the mesh
+buffer stores each triangle using three consecutive vertices.
 
 <a name='MeshBuffer.fromPositions'></a>
 <h3> (static) MeshBuffer.fromPositions(vertices, [indices])</h3>Creates a new mesh buffer with the given array of vertex positions.<h4> Parameters</h4><ul><li><code>vertices</code> (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.<li><code>indices</code> (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</ul><h4> Return Value</h4>A new mesh buffer. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<h4> Examples</h4><p>The following example shows how to define a mesh

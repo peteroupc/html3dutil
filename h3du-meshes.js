@@ -17,7 +17,6 @@ import {MeshBuffer} from "./h3du-meshbuffer";
  * orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
  * green square, and a purple cone on the second row.'/>
  * @constructor
- * @hideconstructor
  */
 export const Meshes = {};
 

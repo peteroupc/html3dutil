@@ -6161,7 +6161,7 @@ BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
  * to vertex attributes found in mesh buffers and
  * to data that is uniform throughout a particular
  * geometry draw call.
- * @enum {number}
+ * @constructor
  * @readonly
  */
 const Semantic = {};
@@ -6189,7 +6189,7 @@ Semantic.NORMAL = 1;
  * In general, texture coordinates describe 2-dimensional points.
  * However, for such texturing tasks as mapping
  * a square to a trapezoid, trios of 3-dimensional texture coordinates
- * are useful to ensure the texturing is perspective-correct.
+ * are useful to ensure the texturing remains perspective-correct.
  * In this case, the 3-D texture coordinates are converted
  * to 2-D by dividing the X and Y components by the Z component.
  * In a fragment shader or pixel shader, this can look like
@@ -7597,15 +7597,18 @@ MeshBuffer._resolveSemantic = function(name, index) {
     }
   }
 };
-/** TODO: Not documented yet.
+/** Indicates that a mesh buffer contains line segments; the mesh
+ * buffer stores each line segment using two consecutive vertices.
  * @constant
  * @static */
 MeshBuffer.LINES = 1;
-/** TODO: Not documented yet.
+/** Indicates that a mesh buffer contains triangles; the mesh
+ * buffer stores each triangle using three consecutive vertices.
  * @constant
  * @static */
 MeshBuffer.TRIANGLES = 4;
-/** TODO: Not documented yet.
+/** Indicates that a mesh buffer contains points; the mesh
+ * buffer stores each point using one vertex.
  * @constant
  * @static */
 MeshBuffer.POINTS = 0;
@@ -15396,7 +15399,6 @@ ShapeGroup.prototype.setScale = function(x, y, z) {
  * orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
  * green square, and a purple cone on the second row.'/>
  * @constructor
- * @hideconstructor
  */
 const Meshes = {};
 

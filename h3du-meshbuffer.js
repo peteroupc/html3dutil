@@ -1350,15 +1350,18 @@ MeshBuffer._resolveSemantic = function(name, index) {
     }
   }
 };
-/** TODO: Not documented yet.
+/** Indicates that a mesh buffer contains line segments; the mesh
+ * buffer stores each line segment using two consecutive vertices.
  * @constant
  * @static */
 MeshBuffer.LINES = 1;
-/** TODO: Not documented yet.
+/** Indicates that a mesh buffer contains triangles; the mesh
+ * buffer stores each triangle using three consecutive vertices.
  * @constant
  * @static */
 MeshBuffer.TRIANGLES = 4;
-/** TODO: Not documented yet.
+/** Indicates that a mesh buffer contains points; the mesh
+ * buffer stores each point using one vertex.
  * @constant
  * @static */
 MeshBuffer.POINTS = 0;

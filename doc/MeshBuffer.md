@@ -55,9 +55,12 @@ The following example converts a MeshBuffer object to three.js buffer geometries
 
 ### Members
 
-* [LINES](#MeshBuffer.LINES)<br>TODO: Not documented yet.
-* [POINTS](#MeshBuffer.POINTS)<br>TODO: Not documented yet.
-* [TRIANGLES](#MeshBuffer.TRIANGLES)<br>TODO: Not documented yet.
+* [LINES](#MeshBuffer.LINES)<br>Indicates that a mesh buffer contains line segments; the mesh
+buffer stores each line segment using two consecutive vertices.
+* [POINTS](#MeshBuffer.POINTS)<br>Indicates that a mesh buffer contains points; the mesh
+buffer stores each point using one vertex.
+* [TRIANGLES](#MeshBuffer.TRIANGLES)<br>Indicates that a mesh buffer contains triangles; the mesh
+buffer stores each triangle using three consecutive vertices.
 
 ### Methods
 
@@ -117,17 +120,20 @@ or point) in this mesh buffer.
 <a name='MeshBuffer.LINES'></a>
 ### MeshBuffer.LINES (constant)
 
-TODO: Not documented yet.
+Indicates that a mesh buffer contains line segments; the mesh
+buffer stores each line segment using two consecutive vertices.
 
 <a name='MeshBuffer.POINTS'></a>
 ### MeshBuffer.POINTS (constant)
 
-TODO: Not documented yet.
+Indicates that a mesh buffer contains points; the mesh
+buffer stores each point using one vertex.
 
 <a name='MeshBuffer.TRIANGLES'></a>
 ### MeshBuffer.TRIANGLES (constant)
 
-TODO: Not documented yet.
+Indicates that a mesh buffer contains triangles; the mesh
+buffer stores each triangle using three consecutive vertices.
 
 <a name='MeshBuffer.fromPositions'></a>
 ### (static) MeshBuffer.fromPositions(vertices, [indices])

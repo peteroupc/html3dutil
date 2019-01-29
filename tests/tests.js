@@ -6,8 +6,10 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, console, valueDiff */
+/* global console */
 // Portions adapted from public domain Mozilla unit tests
+
+import * as H3DU from "../h3du_module.js";
 
 const EPSILON = 0.001;
 let FailedTests = 0;
@@ -86,6 +88,7 @@ function isApproxVec(vec1, vec2, delta) {
 }
 
 // ///////////////////////////////////////////
+
 function valueDiff(numtan, anatan) {
   "use strict";
   const tandiff = H3DU.MathUtil.vec3sub(numtan, anatan);
@@ -770,3 +773,5 @@ testfunctions.push(function() {
     .closePath();
   pathtest.getTriangles();
 });
+
+export {clog,getFailedTests,test};

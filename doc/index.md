@@ -24,6 +24,10 @@ and spheres.
 * <a href="PiecewiseCurve.md">PiecewiseCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
 * <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
+* <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
+to vertex attributes found in mesh buffers and
+to data that is uniform throughout a particular
+geometry draw call.
 * <a href="Shape.md">Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
 a transformation matrix (which defines the object's position and size).
 * <a href="ShapeGroup.md">ShapeGroup</a><br>Represents a grouping of shapes.

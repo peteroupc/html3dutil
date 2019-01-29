@@ -1,10 +1,3 @@
-### Members
-
-* [Semantic](#Semantic)<br>Contains constants for assigning semantics
-to vertex attributes found in mesh buffers and
-to data that is uniform throughout a particular
-geometry draw call.
-
 ### Methods
 
 * [getPromiseResults](#getPromiseResults)<br>Utility function that returns a promise that
@@ -17,16 +10,6 @@ its work.
 * [newFrames](#newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 * [toGLColor](#toGLColor)<br>Creates a 4-element array representing a color.
-
-<a name='Semantic'></a>
-### Semantic (constant)
-
-Contains constants for assigning semantics
-to vertex attributes found in mesh buffers and
-to data that is uniform throughout a particular
-geometry draw call.
-
-Type: number
 
 <a name='getPromiseResults'></a>
 ### getPromiseResults(promises, [progressResolve], [progressReject])
