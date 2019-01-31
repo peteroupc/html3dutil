@@ -6269,10 +6269,10 @@ Semantic.JOINTMATRIX = 108;/*
  * vertex normals, and texture coordinates. A mesh buffer
  * can store vertices that make up triangles, line segments, or points.<p>
  * This constructor creates an empty mesh buffer and sets the array
- * of vertex indices to null.<p>
+ * of vertex indices to null and the primitive type to {@link MeshBuffer.TRIANGLES}.<p>
  * The `MeshBuffer` class contains four methods (`fromPositions`,
  * `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.<p>
- * The [`Meshes`]{@link Meshes} class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
+ * The [`Meshes`]{@link Meshes} class includes several handy methods for creating built-in shapes; those methods return a `MeshBuffer` object that describes the triangles they
  * are composed of.
  * <p><b>Instancing</b>
  * <p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
@@ -6343,6 +6343,7 @@ MeshBuffer.prototype.setIndices = function(indices) {
 };
 /**
  * Sets the type of graphics primitives stored in this mesh buffer.
+ * By default, the primitive type is {@link MeshBuffer.TRIANGLES}.
  * @param {number} primType The primitive type, either {@link MeshBuffer.TRIANGLES},
  * {@link MeshBuffer.LINES}, or {@link MeshBuffer.POINTS}.
  * For TRIANGLES, every three vertices or vertex indices identify
@@ -6586,6 +6587,16 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * // Finally, create the mesh buffer. (If there are no indices,
  * // leave out the "indices" argument.)
  * var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
+ * @example <caption>The following example generates a mesh buffer
+ * consisting of a 10x10x10 grid of points. This mesh buffer can serve, for
+ * example, as instance data to draw multiple instances
+ * of a 3-D cube in different positions.</caption>
+ * var vertices=[]
+ * for(var x=0;x<10;x++)
+ * for(var y=0;y<10;y++)
+ * for(var z=0;z<10;z++)vertices.push(x,y,z);
+ * var meshBuffer=MeshBuffer.fromPositions(vertices)
+ * .setPrimitiveType(MeshBuffer.POINTS);
  */
 MeshBuffer.fromPositions = function(vertices, indices) {
   const vertarray = new Float32Array(vertices);

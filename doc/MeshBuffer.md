@@ -13,12 +13,12 @@ vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.
 
 This constructor creates an empty mesh buffer and sets the array
-of vertex indices to null.
+of vertex indices to null and the primitive type to <a href="MeshBuffer.md#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>.
 
 The `MeshBuffer` class contains four methods (`fromPositions`,
 `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.
 
-The <a href="Meshes.md">`Meshes`</a> class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
+The <a href="Meshes.md">`Meshes`</a> class includes several handy methods for creating built-in shapes; those methods return a `MeshBuffer` object that describes the triangles they
 are composed of.
 
 <b>Instancing</b>
@@ -166,6 +166,18 @@ buffer from a predefined array of vertex positions.
     // Finally, create the mesh buffer. (If there are no indices,
     // leave out the "indices" argument.)
     var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
+
+The following example generates a mesh buffer
+consisting of a 10x10x10 grid of points. This mesh buffer can serve, for
+example, as instance data to draw multiple instances
+of a 3-D cube in different positions.
+
+    var vertices=[]
+    for(var x=0;x<10;x++)
+    for(var y=0;y<10;y++)
+    for(var z=0;z<10;z++)vertices.push(x,y,z);
+    var meshBuffer=MeshBuffer.fromPositions(vertices)
+    .setPrimitiveType(MeshBuffer.POINTS);
 
 <a name='MeshBuffer.fromPositionsNormals'></a>
 ### (static) MeshBuffer.fromPositionsNormals(vertices, [indices])
@@ -699,6 +711,7 @@ This object. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 ### MeshBuffer#setType(primType)
 
 Sets the type of graphics primitives stored in this mesh buffer.
+By default, the primitive type is <a href="MeshBuffer.md#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>.
 
 #### Parameters
 

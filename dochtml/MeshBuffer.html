@@ -6,10 +6,10 @@ the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.<p>
 This constructor creates an empty mesh buffer and sets the array
-of vertex indices to null.<p>
+of vertex indices to null and the primitive type to <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>.<p>
 The `MeshBuffer` class contains four methods (`fromPositions`,
 `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.<p>
-The <a href="Meshes.html">`Meshes`</a> class includes several handy methods for creating built-in shapes; those methods return a `H3DU.MeshBuffer` object that describes the triangles they
+The <a href="Meshes.html">`Meshes`</a> class includes several handy methods for creating built-in shapes; those methods return a `MeshBuffer` object that describes the triangles they
 are composed of.
 <p><b>Instancing</b>
 <p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.<h4> Examples</h4><p>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer's primitive type. This example requires the three.js library.</p><pre>
@@ -91,7 +91,16 @@ var vertices = [x1, y1, z1, x2, y2, z2, x3, y3, z3 ];
 var indices = [0, 1, 2];
 // Finally, create the mesh buffer. (If there are no indices,
 // leave out the "indices" argument.)
-var meshBuffer=MeshBuffer.fromPositions(vertices, indices);</pre><a name='MeshBuffer.fromPositionsNormals'></a>
+var meshBuffer=MeshBuffer.fromPositions(vertices, indices);</pre><p>The following example generates a mesh buffer
+consisting of a 10x10x10 grid of points. This mesh buffer can serve, for
+example, as instance data to draw multiple instances
+of a 3-D cube in different positions.</p><pre>
+var vertices=[]
+for(var x=0;x<10;x++)
+for(var y=0;y<10;y++)
+for(var z=0;z<10;z++)vertices.push(x,y,z);
+var meshBuffer=MeshBuffer.fromPositions(vertices)
+.setPrimitiveType(MeshBuffer.POINTS);</pre><a name='MeshBuffer.fromPositionsNormals'></a>
 <h3> (static) MeshBuffer.fromPositionsNormals(vertices, [indices])</h3>Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.<h4> Parameters</h4><ul><li><code>vertices</code> (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol><li><code>indices</code> (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</ul><h4> Return Value</h4>A new mesh buffer. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<h4> Examples</h4><p>The following example shows how to define a mesh
 buffer from a predefined array of vertex positions and normals.</p><pre>
@@ -300,7 +309,8 @@ value of 3 is created.<p>
 All attributes with the semantic <code>COLOR</code>,
 regardless of semantic index, are affected by this method.<h4> Parameters</h4><ul><li><code>color</code> (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.html">color vector or string</a> identifying the color to set.</ul><h4> Return Value</h4>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<a name='MeshBuffer_setIndices'></a>
 <h3> MeshBuffer#setIndices([indices])</h3>Sets the vertex indices used by this mesh buffer.<h4> Parameters</h4><ul><li><code>indices</code> (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</ul><h4> Return Value</h4>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<a name='MeshBuffer_setType'></a>
-<h3> MeshBuffer#setType(primType)</h3>Sets the type of graphics primitives stored in this mesh buffer.<h4> Parameters</h4><ul><li><code>primType</code> (Type: number)<br>The primitive type, either <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>, <a href="MeshBuffer.html#MeshBuffer.LINES">MeshBuffer.LINES</a>, or <a href="MeshBuffer.html#MeshBuffer.POINTS">MeshBuffer.POINTS</a>. For TRIANGLES, every three vertices or vertex indices identify a single triangle. For LINES, every two vertices or vertex indices identify a single line segment. For POINTS, every vertex or vertex index identifies a single point.</ul><h4> Return Value</h4>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<a name='MeshBuffer_transform'></a>
+<h3> MeshBuffer#setType(primType)</h3>Sets the type of graphics primitives stored in this mesh buffer.
+By default, the primitive type is <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>.<h4> Parameters</h4><ul><li><code>primType</code> (Type: number)<br>The primitive type, either <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>, <a href="MeshBuffer.html#MeshBuffer.LINES">MeshBuffer.LINES</a>, or <a href="MeshBuffer.html#MeshBuffer.POINTS">MeshBuffer.POINTS</a>. For TRIANGLES, every three vertices or vertex indices identify a single triangle. For LINES, every two vertices or vertex indices identify a single line segment. For POINTS, every vertex or vertex index identifies a single point.</ul><h4> Return Value</h4>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<a name='MeshBuffer_transform'></a>
 <h3> MeshBuffer#transform(matrix)</h3>Transforms the positions and normals of all the vertices currently
 in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
 or <code>NORMAL_0</code> will be affected by this method; values of
