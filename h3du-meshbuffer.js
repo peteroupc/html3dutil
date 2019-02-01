@@ -221,9 +221,15 @@ MeshBuffer.prototype._getAttributes = function() {
   return this.attributes;
 };
 /**
- * TODO: Not documented yet.
- * @param {*} indicesIndex TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * Gets the vertex data index for use in referencing
+ * vertex data in buffer attributes.
+ * @param {number} indicesIndex A number 0 or greater, and less
+ * than the return value of {@link MeshBuffer#vertexCount}. For example,
+ * if this mesh buffer holds triangles, 0 means the first vertex, 1 the
+ * second vertex, and 2 the third vertex of the first triangle, regardless
+ * of where that vertex's data is stored in the mesh buffer.
+ * @returns {number} The vertex data index; this is <code>getIndices()[indicesIndex]</code>
+ * if this mesh buffer includes an index array, or <code>indicesIndex</code> otherwise.
  */
 MeshBuffer.prototype.getIndex = function(indicesIndex) {
   if(typeof this.indices === "undefined" || this.indices === null)return indicesIndex;

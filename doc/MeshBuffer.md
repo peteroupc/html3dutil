@@ -74,7 +74,8 @@ and texture coordinates.
 * [getAttribute](#MeshBuffer_getAttribute)<br>Gets a vertex attribute included in this mesh buffer.
 * [getBounds](#MeshBuffer_getBounds)<br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.
-* [getIndex](#MeshBuffer_getIndex)<br>TODO: Not documented yet.
+* [getIndex](#MeshBuffer_getIndex)<br>Gets the vertex data index for use in referencing
+vertex data in buffer attributes.
 * [getIndices](#MeshBuffer_getIndices)<br>Gets the array of vertex indices used by this mesh buffer.
 * [getPositions](#MeshBuffer_getPositions)<br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive.
@@ -368,15 +369,17 @@ or no vertices are defined in this buffer, returns the array
 <a name='MeshBuffer_getIndex'></a>
 ### MeshBuffer#getIndex(indicesIndex)
 
-TODO: Not documented yet.
+Gets the vertex data index for use in referencing
+vertex data in buffer attributes.
 
 #### Parameters
 
-* `indicesIndex` (Type: *)<br>TODO: Not documented yet.
+* `indicesIndex` (Type: number)<br>A number 0 or greater, and less than the return value of <a href="MeshBuffer.md#MeshBuffer_vertexCount">MeshBuffer#vertexCount</a>. For example, if this mesh buffer holds triangles, 0 means the first vertex, 1 the second vertex, and 2 the third vertex of the first triangle, regardless of where that vertex's data is stored in the mesh buffer.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: *)
+The vertex data index; this is <code>getIndices()[indicesIndex]</code>
+if this mesh buffer includes an index array, or <code>indicesIndex</code> otherwise. (Type: number)
 
 <a name='MeshBuffer_getIndices'></a>
 ### MeshBuffer#getIndices()
