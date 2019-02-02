@@ -962,7 +962,7 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
 };
 /**
  * TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.deindex = function() {
   if(typeof this.indices === "undefined" || this.indices === null)return this;
@@ -975,8 +975,8 @@ MeshBuffer.prototype.deindex = function() {
   }
   if(nonUnique) {
     this._makeRedundantInternal();
-    this.indices = null;
   }
+  this.indices = null;
   return this;
 };
 /** @ignore */
@@ -1397,16 +1397,19 @@ MeshBuffer._resolveSemantic = function(name, index) {
 /** Indicates that a mesh buffer contains line segments; the mesh
  * buffer stores each line segment using two consecutive vertices.
  * @constant
+ * @default
  * @static */
 MeshBuffer.LINES = 1;
 /** Indicates that a mesh buffer contains triangles; the mesh
  * buffer stores each triangle using three consecutive vertices.
  * @constant
+ * @default
  * @static */
 MeshBuffer.TRIANGLES = 4;
 /** Indicates that a mesh buffer contains points; the mesh
  * buffer stores each point using one vertex.
  * @constant
+ * @default
  * @static */
 MeshBuffer.POINTS = 0;
 

@@ -2115,7 +2115,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the scene's aspect ratio.
    * @returns {Array<number>} The resulting 4x4 matrix.
    * @example <caption>The following example generates an orthographic
-   * projection matrix with a square view rectangle and an aspect ratio
+   * projection matrix with a square view rectangle, a Z range of 0 to 100, and an aspect ratio
    * retrieved from the HTML DOM.</caption>
    * var matrix=MathUtil.mat4orthoAspect(0,100,0,100,
    * 0, 100,
@@ -2186,7 +2186,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * more likely two objects close to the far plane will have identical depth values.
    * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
    * @returns {Array<number>} The resulting 4x4 matrix.
-   * @example <caption>The following example generates an orthographic
+   * @example <caption>The following example generates a perspective
    * projection matrix with a 55 degree field of view and an aspect ratio
    * retrieved from the HTML DOM.</caption>
    * var matrix=MathUtil.mat4perspective(55,
@@ -2205,7 +2205,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera},
    * given an X axis field of view.</p>
-   * When just this matrix is used to transform vertices, the X, Y, and Z ecoordinates within the
+   * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
    * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
    * component of the transformed vertex) and
    * increase from left to right and bottom to top. For a matrix in which Z coordinates
@@ -2241,8 +2241,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * more likely two objects close to the far plane will have identical depth values.
    * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
    * @returns {Array<number>} The resulting 4x4 matrix.
-   * @example <caption>The following example generates an orthographic
-   * projection matrix with a 120 degree field of view and an aspect ratio
+   * @example <caption>The following example generates a perspective
+   * projection matrix with a 120 degree horizontal field of view and an aspect ratio
    * retrieved from the HTML DOM.</caption>
    * var matrix=MathUtil.mat4perspectiveHorizontal(120,
    * window.innerWidth/Math.max(1,window.innerHeight),
@@ -7232,7 +7232,7 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
 };
 /**
  * TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.deindex = function() {
   if(typeof this.indices === "undefined" || this.indices === null)return this;
@@ -7245,8 +7245,8 @@ MeshBuffer.prototype.deindex = function() {
   }
   if(nonUnique) {
     this._makeRedundantInternal();
-    this.indices = null;
   }
+  this.indices = null;
   return this;
 };
 /** @ignore */
@@ -7667,16 +7667,19 @@ MeshBuffer._resolveSemantic = function(name, index) {
 /** Indicates that a mesh buffer contains line segments; the mesh
  * buffer stores each line segment using two consecutive vertices.
  * @constant
+ * @default
  * @static */
 MeshBuffer.LINES = 1;
 /** Indicates that a mesh buffer contains triangles; the mesh
  * buffer stores each triangle using three consecutive vertices.
  * @constant
+ * @default
  * @static */
 MeshBuffer.TRIANGLES = 4;
 /** Indicates that a mesh buffer contains points; the mesh
  * buffer stores each point using one vertex.
  * @constant
+ * @default
  * @static */
 MeshBuffer.POINTS = 0;
 

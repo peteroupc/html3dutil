@@ -126,17 +126,23 @@ or point) in this mesh buffer.
 Indicates that a mesh buffer contains line segments; the mesh
 buffer stores each line segment using two consecutive vertices.
 
+Default Value: `1`
+
 <a name='MeshBuffer.POINTS'></a>
 ### MeshBuffer.POINTS (constant)
 
 Indicates that a mesh buffer contains points; the mesh
 buffer stores each point using one vertex.
 
+Default Value: `0`
+
 <a name='MeshBuffer.TRIANGLES'></a>
 ### MeshBuffer.TRIANGLES (constant)
 
 Indicates that a mesh buffer contains triangles; the mesh
 buffer stores each triangle using three consecutive vertices.
+
+Default Value: `4`
 
 <a name='MeshBuffer_deindex'></a>
 ### MeshBuffer#deindex()
@@ -145,7 +151,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: *)
+This object. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 <a name='MeshBuffer_ensureIndices'></a>
 ### MeshBuffer#ensureIndices()
