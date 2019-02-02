@@ -1005,6 +1005,15 @@ of coordinates when using this matrix and on adjusting the matrix for other conv
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
+#### Examples
+
+The following example generates an orthographic
+projection matrix with a square view rectangle and an aspect ratio
+retrieved from the HTML DOM.
+
+    var matrix=MathUtil.mat4ortho2dAspect(0,100,0,100,
+    window.innerWidth/Math.max(1,window.innerHeight));
+
 <a name='MathUtil.mat4orthoAspect'></a>
 ### (static) MathUtil.mat4orthoAspect(l, r, b, t, n, f, aspect)
 
@@ -1037,6 +1046,16 @@ when using this matrix and on adjusting the matrix for other conventions.
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
+#### Examples
+
+The following example generates an orthographic
+projection matrix with a square view rectangle and an aspect ratio
+retrieved from the HTML DOM.
+
+    var matrix=MathUtil.mat4orthoAspect(0,100,0,100,
+    0, 100,
+    window.innerWidth/Math.max(1,window.innerHeight));
+
 <a name='MathUtil.mat4perspective'></a>
 ### (static) MathUtil.mat4perspective(fovY, aspectRatio, near, far)
 
@@ -1066,12 +1085,22 @@ This value should be greater than 0, and should be set to the highest distance f
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
 
+#### Examples
+
+The following example generates an orthographic
+projection matrix with a 55 degree field of view and an aspect ratio
+retrieved from the HTML DOM.
+
+    var matrix=MathUtil.mat4perspective(55,
+    window.innerWidth/Math.max(1,window.innerHeight),
+    0.01,100);
+
 <a name='MathUtil.mat4perspectiveHorizontal'></a>
 ### (static) MathUtil.mat4perspectiveHorizontal(fovX, aspectRatio, near, far)
 
 Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
 given an X axis field of view.
-When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
+When just this matrix is used to transform vertices, the X, Y, and Z ecoordinates within the
 view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
 component of the transformed vertex) and
 increase from left to right and bottom to top. For a matrix in which Z coordinates
@@ -1094,6 +1123,16 @@ This value should be greater than 0, and should be set to the highest distance f
 #### Return Value
 
 The resulting 4x4 matrix. (Type: Array.&lt;number>)
+
+#### Examples
+
+The following example generates an orthographic
+projection matrix with a 120 degree field of view and an aspect ratio
+retrieved from the HTML DOM.
+
+    var matrix=MathUtil.mat4perspectiveHorizontal(120,
+    window.innerWidth/Math.max(1,window.innerHeight),
+    0.01,100);
 
 <a name='MathUtil.mat4projectVec3'></a>
 ### (static) MathUtil.mat4projectVec3(mat, v, [vy], [vz])

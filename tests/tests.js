@@ -14,7 +14,6 @@ import * as H3DU from "../h3du_module.js";
 const EPSILON = 0.001;
 let FailedTests = 0;
 function clog(x) {
-  "use strict";
   if(typeof x === "undefined")
     throw new Error();
   if(document) {
@@ -29,17 +28,13 @@ function clog(x) {
   }
 }
 
-/* exported getFailedTests */
 function getFailedTests() {
-  "use strict";
   return FailedTests;
 }
 function info(x) {
-  "use strict";
   clog(x);
 }
 function ok(a, b) {
-  "use strict";
   if(!a) {
     FailedTests++;
     clog(b || "");
@@ -47,7 +42,6 @@ function ok(a, b) {
   }
 }
 function is(a, b, msg) {
-  "use strict";
   if(a !== b) {
     let infomsg = "got " + b + ", expected " + a;
     if(typeof msg !== "undefined" && msg !== null)infomsg += "<br>msg=" + msg;
@@ -59,7 +53,6 @@ function is(a, b, msg) {
 }
 
 function isApprox(num1, num2, delta) {
-  "use strict";
   if (Math.abs(num1 - num2) > (delta || EPSILON)) {
     info("isApprox got " + num1 + ", expected " + num2 + " instead.");
     return false;
@@ -68,7 +61,6 @@ function isApprox(num1, num2, delta) {
 }
 
 function isApproxVec(vec1, vec2, delta) {
-  "use strict";
   vec1 = Array.prototype.slice.call(vec1);
   vec2 = Array.prototype.slice.call(vec2);
 
@@ -90,7 +82,6 @@ function isApproxVec(vec1, vec2, delta) {
 // ///////////////////////////////////////////
 
 function valueDiff(numtan, anatan) {
-  "use strict";
   const tandiff = H3DU.MathUtil.vec3sub(numtan, anatan);
   tandiff[0] = Math.round(tandiff[0] * 10000) / 10000;
   tandiff[1] = Math.round(tandiff[1] * 10000) / 10000;
@@ -102,7 +93,6 @@ function valueDiff(numtan, anatan) {
   }
 }
 function numberDiff(numtan, anatan) {
-  "use strict";
   const adiff = Math.abs(numtan - anatan) <= 0.001;
   if(!adiff) {
     clog("numtan=" + numtan + " anatan=" + anatan);
@@ -110,9 +100,8 @@ function numberDiff(numtan, anatan) {
   }
 }
 
-/* exported compareWithNumericalBitangentSurface */
+/*
 function compareWithNumericalBitangentSurface(curve) {
-  "use strict";
   const oldtan = curve.bitangent;
   if(!(typeof oldtan !== "undefined" && oldtan !== null)) {
     // Skip this test if no bitangent method is defined
@@ -133,9 +122,7 @@ function compareWithNumericalBitangentSurface(curve) {
   }
 }
 
-/* exported compareWithNumericalTangentSurface */
 function compareWithNumericalTangentSurface(curve) {
-  "use strict";
   const oldtan = curve.tangent;
   let j;
   for (j = 0; j <= 100; j += 5) {
@@ -151,8 +138,8 @@ function compareWithNumericalTangentSurface(curve) {
     }
   }
 }
+*/
 function compareWithNumericalCurveValues(curve) {
-  "use strict";
   const oldtan = curve.tangent;
   let i;
   let anatan;
@@ -205,7 +192,6 @@ function compareWithNumericalCurveValues(curve) {
 
 const testfunctions = [];
 function testPathBounds() {
-  "use strict";
   ok(isApproxVec(H3DU.GraphicsPath.fromString("M93.23,2.94A26.875997179195146,41.03845446654058,0,0061.67,69.38").getBounds(), [50.59389174539909, -4.848084961702973, 93.23, 69.38], 1.0));
   ok(isApproxVec(H3DU.GraphicsPath.fromString("M78.24,58.04A56.22,27.21,0,0127.89,77.4").getBounds(), [27.89, 58.04, 78.24, 77.4], 1.0));
   ok(isApproxVec(H3DU.GraphicsPath.fromString("M85.28,38.16A23.120428179414034,34.00342520528416,0,1139.31,45.51").getBounds(), [39.31, 38.16, 85.32584030333675, 75.70666749647984], 1.0));
@@ -396,9 +382,7 @@ function testPathBounds() {
   ok(isApproxVec(H3DU.GraphicsPath.fromString("M34.59,49.9535059556365C79.35,27.576769096776843,32.878602761775255,64.0867683570832,79.32,67.65").getBounds(), [34.59, 42.777317837951706, 79.32, 67.65], 1.0));
 }
 
-/* exported test */
 function test() {
-  "use strict";
   ok(isApprox(H3DU.GraphicsPath._nextNumber("0", [0]), 0));
   ok(isApprox(H3DU.GraphicsPath._nextNumber(" 0", [0]), 0));
   ok(isApprox(H3DU.GraphicsPath._nextNumber(" +0", [0]), 0));
@@ -564,7 +548,6 @@ function test() {
 }
 
 testfunctions.push(function() {
-  "use strict";
   // adapted from public domain World_Seed quat.tests.cpp;
   // "normAxis" is used in the isApproxVec test because, as
   // documented, the axis of rotation need not be a unit vector
@@ -578,13 +561,11 @@ testfunctions.push(function() {
 });
 
 testfunctions.push(function() {
-  "use strict";
   ok(isApproxVec(
     H3DU.MathUtil.quatToAxisAngle([-1, 0, 0, 0]), [-1, 0, 0, 180]));
 });
 
 testfunctions.push(function() {
-  "use strict";
   // adapted from public domain World_Seed quat.tests.cpp
   let i;
   for (i = 0; i < 1000; i++) {
@@ -596,7 +577,6 @@ testfunctions.push(function() {
   }
 });
 testfunctions.push(function() {
-  "use strict";
   let i;
   for (i = 0; i < 1000; i++) {
     const vec = [Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2];
@@ -614,14 +594,12 @@ testfunctions.push(function() {
   }
 });
 testfunctions.push(function() {
-  "use strict";
   const curve = new H3DU.BSplineCurve([[95, 22, 18, 0.62], [52, 19, 31, 0.98], [30, 10, 47, 0.77], [3, 90, 43, 0.08], [63, 11, 53, 0.85], [86, 93, 94, 0.96], [65, 99, 57, 0.46], [25, 73, 97, 0.86], [74, 60, 36, 0.79], [76, 79, 19, 0.74]], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
     H3DU.BSplineCurve.WEIGHTED_BIT);
   compareWithNumericalCurveValues(curve);
 });
 
 testfunctions.push(function() {
-  "use strict";
   const curve = new H3DU.BezierCurve([
     [24, 43.905643],
     [2.3366679, 43.905643],
@@ -641,7 +619,6 @@ testfunctions.push(function() {
 });
 
 testfunctions.push(function() {
-  "use strict";
   ok(isApproxVec(H3DU.MathUtil.mat4rotated(0, [1, 0, 0]), [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]));
   ok(isApproxVec(H3DU.MathUtil.mat4rotated(90, [1, 0, 0]), [1, 0, 0, 0, 0, 6.123233995736766e-17, 1, 0, 0, -1, 6.123233995736766e-17, 0, 0, 0, 0, 1]));
   ok(isApproxVec(H3DU.MathUtil.mat4rotated(180, [1, 0, 0]), [1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1]));
@@ -709,7 +686,6 @@ testfunctions.push(function() {
 });
 
 testfunctions.push(function() {
-  "use strict";
   let i;
   for (i = 0; i < 100; i++) {
     const angle = Math.random() * 360 - 180;
@@ -723,7 +699,6 @@ testfunctions.push(function() {
 });
 
 testfunctions.push(function() {
-  "use strict";
   let i;
   for (i = 0; i < 100; i++) {
     const x = Math.random() * 360 - 180;
@@ -736,7 +711,6 @@ testfunctions.push(function() {
   }
 });
 testfunctions.push(function() {
-  "use strict";
   let pathtest = new H3DU.GraphicsPath()
     .moveTo(0.4713967368259978, 0.8819212643483549 )
     // top left
@@ -774,4 +748,4 @@ testfunctions.push(function() {
   pathtest.getTriangles();
 });
 
-export {clog,getFailedTests,test};
+export {clog, getFailedTests, test};

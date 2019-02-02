@@ -68,6 +68,17 @@ MeshBuffer.prototype.getIndices = function() {
   return this.indices;
 };
 /**
+ * TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+MeshBuffer.prototype.ensureIndices = function() {
+  if(typeof this.indices === "undefined" || this.indices === null) {
+    this.indices = BufferAccessor.makeIndices(this.vertexCount());
+  }
+  return this.indices;
+};
+
+/**
  * Sets the vertex indices used by this mesh buffer.
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
@@ -764,7 +775,7 @@ MeshBuffer.prototype.setColor = function(color) {
  */
 MeshBuffer.prototype.reverseWinding = function() {
   if(this.primitiveType() === MeshBuffer.TRIANGLES) {
-    this._ensureIndices();
+    this.ensureIndices();
     let i;
     for (i = 0; i + 2 < this.indices.length; i += 3) {
       const tmp = this.indices[i + 1];
@@ -949,16 +960,27 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
     }
   }
 };
-/** @ignore */
-MeshBuffer.prototype._ensureIndices = function() {
-  if(typeof this.indices === "undefined" || this.indices === null) {
-    this.indices = BufferAccessor.makeIndices(this.vertexCount());
+/**
+ * TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+MeshBuffer.prototype.deindex = function() {
+  if(typeof this.indices === "undefined" || this.indices === null)return this;
+  let nonUnique = false;
+  let i;
+  for (i = 0; i < this.indices.length; i++) {
+    if(this.indices[i] !== i) {
+      nonUnique = true; break;
+    }
   }
+  if(nonUnique) {
+    this._makeRedundantInternal();
+    this.indices = null;
+  }
+  return this;
 };
-
 /** @ignore */
-MeshBuffer.prototype._makeRedundant = function() {
-  this._ensureIndices();
+MeshBuffer.prototype._makeRedundantInternal = function() {
   const newAttributes = [];
   let i;
   for (i = 0; i < this.attributes.length; i++) {
@@ -967,6 +989,11 @@ MeshBuffer.prototype._makeRedundant = function() {
       BufferAccessor.merge(a[2], this.indices, null, [])]);
   }
   this.attributes = newAttributes;
+};
+/** @ignore */
+MeshBuffer.prototype._makeRedundant = function() {
+  this.ensureIndices();
+  this._makeRedundantInternal();
   this.setIndices(BufferAccessor.makeIndices(this.indices.length));
 };
 /** @ignore */
@@ -1101,7 +1128,7 @@ MeshBuffer.prototype.merge = function(other) {
       // NOTE: Copies the index buffer
       if(typeof other.indices === "undefined" || other.indices === null) {
         this.indices = null;
-        this._ensureIndices();
+        this.ensureIndices();
       } else {
         this.setIndices(other.indices.slice(0, other.indices.length));
       }
@@ -1112,8 +1139,8 @@ MeshBuffer.prototype.merge = function(other) {
     // Primitive types are different
     throw new Error();
   }
-  this._ensureIndices();
-  other._ensureIndices();
+  this.ensureIndices();
+  other.ensureIndices();
   let i;
   for (i = 0; i < this.attributes.length; i++) {
     existingAttribute = null;
@@ -1330,7 +1357,7 @@ MeshBuffer.prototype.vertexCount = function() {
     let mincount = 0;
     let i;
     for (i = 0; i < this.attributes.length; i++) {
-      const a = this.attributes[i];
+      const a = this.attributes[i][2];
       if(i === 0 || a.count() < mincount)mincount = a.count();
     }
     return mincount;

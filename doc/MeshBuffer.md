@@ -64,6 +64,8 @@ buffer stores each triangle using three consecutive vertices.
 
 ### Methods
 
+* [deindex](#MeshBuffer_deindex)<br>TODO: Not documented yet.
+* [ensureIndices](#MeshBuffer_ensureIndices)<br>TODO: Not documented yet.
 * [fromPositions](#MeshBuffer.fromPositions)<br>Creates a new mesh buffer with the given array of vertex positions.
 * [fromPositionsNormals](#MeshBuffer.fromPositionsNormals)<br>Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.
@@ -135,6 +137,24 @@ buffer stores each point using one vertex.
 
 Indicates that a mesh buffer contains triangles; the mesh
 buffer stores each triangle using three consecutive vertices.
+
+<a name='MeshBuffer_deindex'></a>
+### MeshBuffer#deindex()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='MeshBuffer_ensureIndices'></a>
+### MeshBuffer#ensureIndices()
+
+TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
 
 <a name='MeshBuffer.fromPositions'></a>
 ### (static) MeshBuffer.fromPositions(vertices, [indices])

@@ -81,6 +81,8 @@ and other polyhedra.
 * <a href="extras_raypick.md">module:extras/raypick</a><br>The <code>extras/raypick.js</code> module.
 * <a href="extras_skysphereshader.md">module:extras/skysphereshader</a><br>The <code>extras/skysphereshader.js</code> module.
 * <a href="extras_starfield.md">module:extras/starfield</a><br>The <code>extras/starfield.js</code> module.
+* <a href="extras_starfield.StarField.md">module:extras/starfield.StarField</a><br>TODO: Not documented yet.
+* <a href="extras_starpolygon.md">module:extras/starpolygon</a><br>The <code>extras/starpolygon.js</code> module.
 * <a href="extras_stl.md">module:extras/stl</a><br>The <code>extras/stl.js</code> module.
 * <a href="extras_stripesbackshader.md">module:extras/stripesbackshader</a><br>The <code>extras/stripesbackshader.js</code> module.
 * <a href="extras_sunburstbackshader.md">module:extras/sunburstbackshader</a><br>The <code>extras/sunburstbackshader.js</code> module.

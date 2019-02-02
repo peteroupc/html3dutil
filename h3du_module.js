@@ -2074,6 +2074,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} aspect The ratio of width to height of the viewport, usually
    * the scene's aspect ratio.
    * @returns {Array<number>} The resulting 4x4 matrix.
+   * @example <caption>The following example generates an orthographic
+   * projection matrix with a square view rectangle and an aspect ratio
+   * retrieved from the HTML DOM.</caption>
+   * var matrix=MathUtil.mat4ortho2dAspect(0,100,0,100,
+   * window.innerWidth/Math.max(1,window.innerHeight));
    */
   "mat4ortho2dAspect":function(l, r, b, t, aspect) {
     return MathUtil.mat4orthoAspect(l, r, b, t, -1, 1, aspect);
@@ -2109,6 +2114,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} aspect The ratio of width to height of the viewport, usually
    * the scene's aspect ratio.
    * @returns {Array<number>} The resulting 4x4 matrix.
+   * @example <caption>The following example generates an orthographic
+   * projection matrix with a square view rectangle and an aspect ratio
+   * retrieved from the HTML DOM.</caption>
+   * var matrix=MathUtil.mat4orthoAspect(0,100,0,100,
+   * 0, 100,
+   * window.innerWidth/Math.max(1,window.innerHeight));
    */
   "mat4orthoAspect":function(l, r, b, t, n, f, aspect) {
     let newDim;
@@ -2175,6 +2186,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * more likely two objects close to the far plane will have identical depth values.
    * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
    * @returns {Array<number>} The resulting 4x4 matrix.
+   * @example <caption>The following example generates an orthographic
+   * projection matrix with a 55 degree field of view and an aspect ratio
+   * retrieved from the HTML DOM.</caption>
+   * var matrix=MathUtil.mat4perspective(55,
+   * window.innerWidth/Math.max(1,window.innerHeight),
+   * 0.01,100);
    */
   "mat4perspective":function(fovY, aspectRatio, near, far) {
     // NOTE: Converts fovY to radians then divides it by 2
@@ -2188,7 +2205,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns a 4x4 matrix representing a [perspective projection]{@tutorial camera},
    * given an X axis field of view.</p>
-   * When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
+   * When just this matrix is used to transform vertices, the X, Y, and Z ecoordinates within the
    * view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
    * component of the transformed vertex) and
    * increase from left to right and bottom to top. For a matrix in which Z coordinates
@@ -2224,6 +2241,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * more likely two objects close to the far plane will have identical depth values.
    * (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)
    * @returns {Array<number>} The resulting 4x4 matrix.
+   * @example <caption>The following example generates an orthographic
+   * projection matrix with a 120 degree field of view and an aspect ratio
+   * retrieved from the HTML DOM.</caption>
+   * var matrix=MathUtil.mat4perspectiveHorizontal(120,
+   * window.innerWidth/Math.max(1,window.innerHeight),
+   * 0.01,100);
    */
   "mat4perspectiveHorizontal":function(fovX, aspectRatio, near, far) {
     // NOTE: Converts fovX to radians then divides it by 2
@@ -6316,6 +6339,17 @@ MeshBuffer.prototype.getIndices = function() {
   return this.indices;
 };
 /**
+ * TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+MeshBuffer.prototype.ensureIndices = function() {
+  if(typeof this.indices === "undefined" || this.indices === null) {
+    this.indices = BufferAccessor.makeIndices(this.vertexCount());
+  }
+  return this.indices;
+};
+
+/**
  * Sets the vertex indices used by this mesh buffer.
  * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null} [indices] Array of vertex indices
  * that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
@@ -7011,7 +7045,7 @@ MeshBuffer.prototype.setColor = function(color) {
  */
 MeshBuffer.prototype.reverseWinding = function() {
   if(this.primitiveType() === MeshBuffer.TRIANGLES) {
-    this._ensureIndices();
+    this.ensureIndices();
     let i;
     for (i = 0; i + 2 < this.indices.length; i += 3) {
       const tmp = this.indices[i + 1];
@@ -7196,16 +7230,27 @@ MeshBuffer._recalcTangentsInternal = function(positions, normals, texCoords, tan
     }
   }
 };
-/** @ignore */
-MeshBuffer.prototype._ensureIndices = function() {
-  if(typeof this.indices === "undefined" || this.indices === null) {
-    this.indices = BufferAccessor.makeIndices(this.vertexCount());
+/**
+ * TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+MeshBuffer.prototype.deindex = function() {
+  if(typeof this.indices === "undefined" || this.indices === null)return this;
+  let nonUnique = false;
+  let i;
+  for (i = 0; i < this.indices.length; i++) {
+    if(this.indices[i] !== i) {
+      nonUnique = true; break;
+    }
   }
+  if(nonUnique) {
+    this._makeRedundantInternal();
+    this.indices = null;
+  }
+  return this;
 };
-
 /** @ignore */
-MeshBuffer.prototype._makeRedundant = function() {
-  this._ensureIndices();
+MeshBuffer.prototype._makeRedundantInternal = function() {
   const newAttributes = [];
   let i;
   for (i = 0; i < this.attributes.length; i++) {
@@ -7214,6 +7259,11 @@ MeshBuffer.prototype._makeRedundant = function() {
       BufferAccessor.merge(a[2], this.indices, null, [])]);
   }
   this.attributes = newAttributes;
+};
+/** @ignore */
+MeshBuffer.prototype._makeRedundant = function() {
+  this.ensureIndices();
+  this._makeRedundantInternal();
   this.setIndices(BufferAccessor.makeIndices(this.indices.length));
 };
 /** @ignore */
@@ -7348,7 +7398,7 @@ MeshBuffer.prototype.merge = function(other) {
       // NOTE: Copies the index buffer
       if(typeof other.indices === "undefined" || other.indices === null) {
         this.indices = null;
-        this._ensureIndices();
+        this.ensureIndices();
       } else {
         this.setIndices(other.indices.slice(0, other.indices.length));
       }
@@ -7359,8 +7409,8 @@ MeshBuffer.prototype.merge = function(other) {
     // Primitive types are different
     throw new Error();
   }
-  this._ensureIndices();
-  other._ensureIndices();
+  this.ensureIndices();
+  other.ensureIndices();
   let i;
   for (i = 0; i < this.attributes.length; i++) {
     existingAttribute = null;
@@ -7577,7 +7627,7 @@ MeshBuffer.prototype.vertexCount = function() {
     let mincount = 0;
     let i;
     for (i = 0; i < this.attributes.length; i++) {
-      const a = this.attributes[i];
+      const a = this.attributes[i][2];
       if(i === 0 || a.count() < mincount)mincount = a.count();
     }
     return mincount;
