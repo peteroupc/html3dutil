@@ -14,17 +14,21 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [skySphereCubeMapShader](#extras_skysphereshader.skySphereCubeMapShader)<br>TODO: Not documented yet.
-* [skySphereShader](#extras_skysphereshader.skySphereShader)<br>TODO: Not documented yet.
+* [skySphereCubeMapShader](#extras_skysphereshader.skySphereCubeMapShader)<br>GLSL shader code for TODO: Not documented yet.
+* [skySphereShader](#extras_skysphereshader.skySphereShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_skysphereshader.skySphereCubeMapShader'></a>
 ### module:extras/skysphereshader.skySphereCubeMapShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"texture" - TODO: Not documented yet.</ul>
 
 <a name='extras_skysphereshader.skySphereShader'></a>
 ### module:extras/skysphereshader.skySphereShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"texture" - TODO: Not documented yet.</ul>
 
 [Back to documentation index.](index.md)

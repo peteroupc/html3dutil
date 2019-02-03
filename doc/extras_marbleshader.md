@@ -14,11 +14,13 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [marbleShader](#extras_marbleshader.marbleShader)<br>TODO: Not documented yet.
+* [marbleShader](#extras_marbleshader.marbleShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_marbleshader.marbleShader'></a>
 ### module:extras/marbleshader.marbleShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"u_time" - TODO: Not documented yet.</ul>
 
 [Back to documentation index.](index.md)

@@ -104,7 +104,8 @@ to cubic B&eacute;zier curves (which will approximate those arcs).
 * [toLineMeshBuffer](#GraphicsPath_toLineMeshBuffer)<br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
 * [toLinePath](#GraphicsPath_toLinePath)<br>Creates a path in which curves and arcs are decomposed
 to line segments.
-* [toMeshBuffer](#GraphicsPath_toMeshBuffer)<br>TODO: Not documented yet.
+* [toMeshBuffer](#GraphicsPath_toMeshBuffer)<br>Decomposes this path into triangles and generates a mesh
+buffer with those triangles.
 * [toString](#GraphicsPath_toString)<br>Returns this path in the form of a string in SVG path format.
 * [transform](#GraphicsPath_transform)<br>Returns a modified version of this path that is transformed
 according to the given affine transformation (a transformation
@@ -836,7 +837,10 @@ segments and close commands. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
 <a name='GraphicsPath_toMeshBuffer'></a>
 ### GraphicsPath#toMeshBuffer([z], [flatness])
 
-TODO: Not documented yet.
+Decomposes this path into triangles and generates a mesh
+buffer with those triangles. Each triangle's normal will point
+toward the Z axis, and each triangle vertex's texture coordinates will
+be the same as that vertex's position.
 
 #### Parameters
 

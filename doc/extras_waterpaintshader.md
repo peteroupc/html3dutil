@@ -14,11 +14,14 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [waterpaintShader](#extras_waterpaintshader.waterpaintShader)<br>TODO: Not documented yet.
+* [waterpaintShader](#extras_waterpaintshader.waterpaintShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_waterpaintshader.waterpaintShader'></a>
 ### module:extras/waterpaintshader.waterpaintShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"sampler" - TODO: Not documented yet.
+<li>"textureSize" - TODO: Not documented yet.</ul>
 
 [Back to documentation index.](index.md)

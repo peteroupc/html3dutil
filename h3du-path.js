@@ -3237,7 +3237,10 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
   return tris;
 };
 /**
- * TODO: Not documented yet.
+ * Decomposes this path into triangles and generates a mesh
+ * buffer with those triangles. Each triangle's normal will point
+ * toward the Z axis, and each triangle vertex's texture coordinates will
+ * be the same as that vertex's position.
  * @param {number} [z] The Z coordinate of each triangle generated.
  * If null, undefined, or omitted, default is 0.
  * @param {number} [flatness] When curves and arcs

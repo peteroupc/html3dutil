@@ -14,11 +14,15 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [stripesBackShader](#extras_stripesbackshader.stripesBackShader)<br>TODO: Not documented yet.
+* [stripesBackShader](#extras_stripesbackshader.stripesBackShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_stripesbackshader.stripesBackShader'></a>
 ### module:extras/stripesbackshader.stripesBackShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"blackColor" - TODO: Not documented yet.
+<li>"whiteColor" - TODO: Not documented yet.
+<li>"time" - TODO: Not documented yet.</ul>
 
 [Back to documentation index.](index.md)

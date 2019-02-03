@@ -395,18 +395,26 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
   return new PiecewiseCurve(ret);
 };
 /**
- * TODO: Not documented yet.
- * @param {number} x
- * @param {number} y
- * @param {number} radiusX
- * @param {number} radiusY
- * @param {number} start
- * @param {number} sweep
- * @returns {PiecewiseCurve} Return value.
+ * Creates a piecewise curve that describes an arc running along an axis-aligned
+ * ellipse, or a shape based on that arc and ellipse, given the ellipse's center
+ * and dimensions, start angle, and sweep angle.
+ * @param {number} x X coordinate of the ellipse's center.
+ * @param {number} y Y coordinate of the ellipse's center.
+ * @param {number} w Width of the ellipse's bounding box.
+ * @param {number} h Height of the ellipse's bounding box.
+ * @param {number} start Starting angle of the arc, in degrees.
+ * 0 means the positive X axis, 90 means the positive Y axis,
+ * 180 means the negative X axis, and 270 means the negative Y axis.
+ * @param {number} sweep Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or
+ * less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming
+ * the coordinate system's X axis points right and the Y axis down, positive angles run
+ * clockwise and negative angles counterclockwise.
+ * @returns {PiecewiseCurve} The resulting piecewise curve.
  */
 PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   if(typeof start === "undefined" || start === null)start = 0;
   if(typeof sweep === "undefined" || sweep === null)sweep = 0;
+  sweep = sweep * Math.PI / 180;
   let abssweep = sweep;
   const sweepdir = sweep < 0 ? -1 : 1;
   const sweepSegments = abssweep > Math.PI * 0.5 &&

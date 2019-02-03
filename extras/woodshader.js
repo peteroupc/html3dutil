@@ -15,7 +15,10 @@
 */
 import {fragmentShaderLib} from "./fragmentshaderlib";
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"darkColor" - TODO: Not documented yet.
+ * <li>"lightColor" - TODO: Not documented yet.</ul>
  */
 export const woodShader = {
   "uniform":{

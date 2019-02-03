@@ -14,11 +14,15 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [vignetteShader](#extras_vignetteshader.vignetteShader)<br>TODO: Not documented yet.
+* [vignetteShader](#extras_vignetteshader.vignetteShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_vignetteshader.vignetteShader'></a>
 ### module:extras/vignetteshader.vignetteShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"radius" - TODO: Not documented yet.
+<li>"softness" - TODO: Not documented yet.
+<li>"opacity" - TODO: Not documented yet.</ul>
 
 [Back to documentation index.](index.md)

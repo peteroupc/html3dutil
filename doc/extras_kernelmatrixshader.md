@@ -19,7 +19,8 @@ edge detection, and embossing, that process each pixel and its neighbors.
 
 ### Methods
 
-* [getKernelMatrix](#extras_kernelmatrixshader.getKernelMatrix)<br>TODO: Not documented yet.
+* [getKernelMatrix](#extras_kernelmatrixshader.getKernelMatrix)<br>Creates a 3x3 (9-element) kernel matrix for using
+as the "matrix" uniform of the kernel matrix shader.
 * [normalizeKernelInPlace](#extras_kernelmatrixshader.normalizeKernelInPlace)<br>TODO: Not documented yet.
 
 <a name='extras_kernelmatrixshader.kernelMatrixShader'></a>
@@ -44,15 +45,16 @@ This shader program takes three uniforms: "sample", the source texture;
 <a name='extras_kernelmatrixshader.getKernelMatrix'></a>
 ### (static) module:extras/kernelmatrixshader.getKernelMatrix(kind)
 
-TODO: Not documented yet.
+Creates a 3x3 (9-element) kernel matrix for using
+as the "matrix" uniform of the kernel matrix shader.
 
 #### Parameters
 
-* `kind` (Type: *)
+* `kind` (Type: string)<br>One of the following: "blur" for a 3x3 Gaussian blr matrix, or "edge-detect" for an edge detection matrix.
 
 #### Return Value
 
-Return value. (Type: *)
+The created matrix. (Type: Array.&lt;number>)
 
 <a name='extras_kernelmatrixshader.normalizeKernelInPlace'></a>
 ### (static) module:extras/kernelmatrixshader.normalizeKernelInPlace(matrix)

@@ -52,7 +52,9 @@ but has a different set of end points.
 path as this one but has its U coordinates remapped to fit the given range.
 * [fromCatmullRomSpline](#PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline.
-* [fromEllipseArc](#PiecewiseCurve.fromEllipseArc)<br>TODO: Not documented yet.
+* [fromEllipseArc](#PiecewiseCurve.fromEllipseArc)<br>Creates a piecewise curve that describes an arc running along an axis-aligned
+ellipse, or a shape based on that arc and ellipse, given the ellipse's center
+and dimensions, start angle, and sweep angle.
 * [fromHermiteSpline](#PiecewiseCurve.fromHermiteSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 Hermite spline.
 * [fromTCBSpline](#PiecewiseCurve.fromTCBSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
@@ -196,22 +198,24 @@ of neighboring points on the spline.
 A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: <a href="PiecewiseCurve.md">PiecewiseCurve</a>)
 
 <a name='PiecewiseCurve.fromEllipseArc'></a>
-### (static) PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)
+### (static) PiecewiseCurve.fromEllipseArc(x, y, w, h, start, sweep)
 
-TODO: Not documented yet.
+Creates a piecewise curve that describes an arc running along an axis-aligned
+ellipse, or a shape based on that arc and ellipse, given the ellipse's center
+and dimensions, start angle, and sweep angle.
 
 #### Parameters
 
-* `x` (Type: number)
-* `y` (Type: number)
-* `radiusX` (Type: number)
-* `radiusY` (Type: number)
-* `start` (Type: number)
-* `sweep` (Type: number)
+* `x` (Type: number)<br>X coordinate of the ellipse's center.
+* `y` (Type: number)<br>Y coordinate of the ellipse's center.
+* `w` (Type: number)<br>Width of the ellipse's bounding box.
+* `h` (Type: number)<br>Height of the ellipse's bounding box.
+* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
+* `sweep` (Type: number)<br>Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.
 
 #### Return Value
 
-Return value. (Type: <a href="PiecewiseCurve.md">PiecewiseCurve</a>)
+The resulting piecewise curve. (Type: <a href="PiecewiseCurve.md">PiecewiseCurve</a>)
 
 <a name='PiecewiseCurve.fromHermiteSpline'></a>
 ### (static) PiecewiseCurve.fromHermiteSpline(spline)

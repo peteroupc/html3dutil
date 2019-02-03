@@ -14,11 +14,15 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [pixelateShader](#extras_pixelateshader.pixelateShader)<br>TODO: Not documented yet.
+* [pixelateShader](#extras_pixelateshader.pixelateShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_pixelateshader.pixelateShader'></a>
 ### module:extras/pixelateshader.pixelateShader (constant)
 
-TODO: Not documented yet.
+GLSL shader code for TODO: Not documented yet.
+The shader program takes the following uniforms:<ul>
+<li>"sampler" - TODO: Not documented yet.
+<li>"coarseness" - TODO: Not documented yet.
+<li>"textureSize" - TODO: Not documented yet.</ul>
 
 [Back to documentation index.](index.md)
