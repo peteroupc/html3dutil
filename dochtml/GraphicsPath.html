@@ -44,7 +44,7 @@ line segments approximating the path.<li><a href='#GraphicsPath_getLinePointsAsO
 line segments approximating the path.<li><a href='#GraphicsPath_getLines'>getLines</a><br>Gets an array of line segments approximating
 the path.<li><a href='#GraphicsPath_getPoints'>getPoints</a><br>Gets an array of points evenly spaced across the length
 of the path.<li><a href='#GraphicsPath_getPointsAsObjects'>getPointsAsObjects</a><br>Gets an array of points evenly spaced across the length
-of the path.<li><a href='#GraphicsPath_getSubpaths'>getSubpaths</a><br>TODO: Not documented yet.<li><a href='#GraphicsPath_getTriangles'>getTriangles</a><br>Converts the subpaths in this path to triangles.<li><a href='#GraphicsPath_interpolate'>interpolate</a><br>Does a linear interpolation between two graphics paths.<li><a href='#GraphicsPath_intersection'>intersection</a><br>Computes the intersection, or the area common to both this path's shape
+of the path.<li><a href='#GraphicsPath_getSubpaths'>getSubpaths</a><br>Creates an array of the disconnected portions of this path.<li><a href='#GraphicsPath_getTriangles'>getTriangles</a><br>Converts the subpaths in this path to triangles.<li><a href='#GraphicsPath_interpolate'>interpolate</a><br>Does a linear interpolation between two graphics paths.<li><a href='#GraphicsPath_intersection'>intersection</a><br>Computes the intersection, or the area common to both this path's shape
 and another path's shape.<li><a href='#GraphicsPath_isIncomplete'>isIncomplete</a><br>Returns whether the curve path is incomplete
 because of an error in parsing the curve string.<li><a href='#GraphicsPath_line'>line</a><br>Adds a line segment to this path.<li><a href='#GraphicsPath_lineTo'>lineTo</a><br>Adds a line segment to the path, starting
 at the path's end position, then
@@ -148,7 +148,9 @@ is 1. (Type: Array.&lt;Array.&lt;number>>)<h4> Examples</h4><p>The following exa
 var points=path.getPointsAsObjects(50)
 var buffer=new THREE.BufferGeometry()
 .setFromPoints(points);</pre><a name='GraphicsPath_getSubpaths'></a>
-<h3> GraphicsPath#getSubpaths()</h3>TODO: Not documented yet.<h4> Return Value</h4>Return value. (Type: *)<a name='GraphicsPath_getTriangles'></a>
+<h3> GraphicsPath#getSubpaths()</h3>Creates an array of the disconnected portions of this path.<h4> Return Value</h4>An array containing a GraphicsPath object
+for each disconnected portion of this path. Returns an empty
+array if this path has no subpaths. (Type: Array.&lt;<a href="GraphicsPath.html">GraphicsPath</a>>)<a name='GraphicsPath_getTriangles'></a>
 <h3> GraphicsPath#getTriangles([flatness])</h3>Converts the subpaths in this path to triangles.
 Treats each subpath as a polygon even if it isn't closed.
 Each subpath should not contain self-intersections or

@@ -329,7 +329,6 @@ if (typeof window !== "undefined" && window !== null && !(typeof window.Promise 
  * @namespace H3DU
  * @license CC0-1.0
  */
-// TODO: Maybe bring back H3DU.RenderLoop
 /** @suppress {checkTypes}
  * @ignore */
 function objectKeysPolyfill() {
@@ -11261,8 +11260,10 @@ GraphicsPath.prototype.getCurves = function() {
   return new GraphicsPath._CurveList(curves);
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Creates an array of the disconnected portions of this path.
+ * @returns {Array<GraphicsPath>} An array containing a GraphicsPath object
+ * for each disconnected portion of this path. Returns an empty
+ * array if this path has no subpaths.
  */
 GraphicsPath.prototype.getSubpaths = function() {
   const subpaths = [];

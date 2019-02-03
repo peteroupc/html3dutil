@@ -1277,8 +1277,10 @@ GraphicsPath.prototype.getCurves = function() {
   return new GraphicsPath._CurveList(curves);
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Creates an array of the disconnected portions of this path.
+ * @returns {Array<GraphicsPath>} An array containing a GraphicsPath object
+ * for each disconnected portion of this path. Returns an empty
+ * array if this path has no subpaths.
  */
 GraphicsPath.prototype.getSubpaths = function() {
   const subpaths = [];

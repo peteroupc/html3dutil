@@ -76,7 +76,7 @@ the path.
 of the path.
 * [getPointsAsObjects](#GraphicsPath_getPointsAsObjects)<br>Gets an array of points evenly spaced across the length
 of the path.
-* [getSubpaths](#GraphicsPath_getSubpaths)<br>TODO: Not documented yet.
+* [getSubpaths](#GraphicsPath_getSubpaths)<br>Creates an array of the disconnected portions of this path.
 * [getTriangles](#GraphicsPath_getTriangles)<br>Converts the subpaths in this path to triangles.
 * [interpolate](#GraphicsPath_interpolate)<br>Does a linear interpolation between two graphics paths.
 * [intersection](#GraphicsPath_intersection)<br>Computes the intersection, or the area common to both this path's shape
@@ -513,11 +513,13 @@ The following example initializes a three.js BufferGeometry with the points retr
 <a name='GraphicsPath_getSubpaths'></a>
 ### GraphicsPath#getSubpaths()
 
-TODO: Not documented yet.
+Creates an array of the disconnected portions of this path.
 
 #### Return Value
 
-Return value. (Type: *)
+An array containing a GraphicsPath object
+for each disconnected portion of this path. Returns an empty
+array if this path has no subpaths. (Type: Array.&lt;<a href="GraphicsPath.md">GraphicsPath</a>>)
 
 <a name='GraphicsPath_getTriangles'></a>
 ### GraphicsPath#getTriangles([flatness])

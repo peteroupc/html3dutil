@@ -15,7 +15,6 @@
  * @namespace H3DU
  * @license CC0-1.0
  */
-// TODO: Maybe bring back H3DU.RenderLoop
 /** @suppress {checkTypes}
  * @ignore */
 function objectKeysPolyfill() {
