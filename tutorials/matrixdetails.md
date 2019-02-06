@@ -533,7 +533,7 @@ led me to this highly useful insight.
 
 In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called _affine transformations_, those that
-keep parallel lines parallel.) However, this is not the case for
+keep straight lines straight and parallel lines parallel.) However, this is not the case for
 some transformations in the `H3DU.MathUtil` class.
 
 Transformations that don't necessarily preserve parallelism of lines are called _projective transformations_.
