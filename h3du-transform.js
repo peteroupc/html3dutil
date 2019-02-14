@@ -270,7 +270,7 @@ Transform.prototype.setQuaternion = function(quat) {
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
+ * points backward from the "eye", a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {Array<number>|number} v X-component of the point lying on the axis

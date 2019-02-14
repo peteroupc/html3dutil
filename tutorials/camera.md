@@ -86,7 +86,7 @@ and sets the scene's projection matrix accordingly.
 * `aspect` - Aspect ratio of the scene.
 * `near`, `far` - Distance from the camera to the near and far clipping planes.
 
-**[**`MathUtil.mat4frustum(left, right, bottom, top, near, far)`**](http://peteroupc.github.io/html3dutil/H3DU.MathUtil.html#.mat4frustum)**
+**[**`MathUtil.mat4frustum(left, right, bottom, top, near, far)`**](http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum)**
 
 This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection based on the location of the six clipping planes that

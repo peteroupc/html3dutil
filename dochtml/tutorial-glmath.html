@@ -48,7 +48,7 @@ of math functions for working with vectors, matrices, and quaternions.</p>
 having a certain <em>length</em> and an unspecified starting point.
 A particular vector can instead be treated as describing a position
 (by pointing to that position from an <em>origin</em> (0,0,0)), or a color.</p>
-<p>In <code>H3DU.Math</code>, vectors are stored in arrays of numbers (usually
+<p>In <code>MathUtil</code>, vectors are stored in arrays of numbers (usually
 three or four numbers), and functions dealing with vectors begin
 with &quot;vec&quot;.</p>
 <p>If a 4-element vector describes a position or direction, the elements
@@ -73,7 +73,7 @@ the vector's direction).</p>
 <li><a href="MathUtil.html#MathUtil.vec3length">MathUtil.vec3length</a> - Finds a 3-element vector's length.</li>
 <li><a href="MathUtil.html#MathUtil.vec4length">MathUtil.vec4length</a> - Finds a 4-element vector's length.</li>
 </ul>
-<p>Note that due to rounding error, normalizing a vector with an <code>H3DU.Math</code> method
+<p>Note that due to rounding error, normalizing a vector with a <code>MathUtil</code> method
 might not necessarily result in a vector with a length of 1.</p>
 <p><a id=Matrices></a></p>
 <h2>Matrices</h2><p>A matrix is a rectangular array that can describe a
@@ -143,17 +143,17 @@ Here are examples of an axis of rotation.</p>
 <li>The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).</li>
 <li>The Z axis of rotation (side-by-side sway) is (0, 0, 1).</li>
 </ul>
-<p>While the axis of rotation points toward the viewer, if the angle's value
+<p>While the axis of rotation points backward from the &quot;eye&quot;, if the angle's value
 is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is...</p>
 <ul>
 <li>...right handed, then the angle runs counterclockwise.</li>
 <li>...left handed, then the angle runs clockwise.</li>
 </ul>
-<p>While the axis of rotation points toward the viewer, if the angle's value
+<p>While the axis of rotation points backward from the &quot;eye&quot;, if the angle's value
 is negative, then the angle runs in the opposite direction.</p>
 <p>Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
 describe the same axis of rotation.</p>
-<p>Unless stated otherwise, an axis of rotation passed to an <code>H3DU.Math</code>
+<p>Unless stated otherwise, an axis of rotation passed to a <code>MathUtil</code>
 method need not be a <a href="#Unit_Vectors"><strong>unit vector</strong></a>.</p>
 <p><a id=Quaternions></a></p>
 <h3>Quaternions</h3><p>A quaternion is a 4-element vector that can describe a
@@ -248,10 +248,8 @@ box is considered empty.</p>
 <h2>Coordinate Systems</h2><p>There are two conventions of 3D coordinate systems, left-handed and
 right-handed:</p>
 <ul>
-<li>In a <em>left-handed</em> coordinate system, the positive Z axis points <em>away from
-the viewer</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
-<li>In a <em>right-handed</em> coordinate system, the positive Z axis points <em>toward
-the viewer</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
+<li>In a <em>left-handed</em> coordinate system, the positive Z axis points <em>forward from the &quot;eye&quot;</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
+<li>In a <em>right-handed</em> coordinate system, the positive Z axis points <em>backward from the &quot;eye&quot;</em> whenever the positive X axis points to the right and the positive Y axis points up.</li>
 </ul>
 <p>To show this more visually, point one hand's thumb to your right and
 its index finger up, and bend the other three fingers halfway down.  In a
@@ -273,13 +271,13 @@ matrices.  The projection and view matrices returned by Math
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.</p>
 <p><a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a></p>
-<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4><p>While the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a> points toward the viewer, if the angle's value
+<h4>Rotation angles (such as used in <code>mat4rotate</code> and <code>quatRotate</code>)</h4><p>While the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a> points backward from the &quot;eye&quot;, if the angle's value
 is positive and the <a href="#Coordinate_Systems"><strong>coordinate system</strong></a> is...</p>
 <ul>
 <li>...right handed, then the angle runs counterclockwise.</li>
 <li>...left handed, then the angle runs clockwise.</li>
 </ul>
-<p>While the axis of rotation points toward the viewer, if the angle's value
+<p>While the axis of rotation points backward from the &quot;eye&quot;, if the angle's value
 is negative, then the angle runs in the opposite direction.</p>
 <p><a id=Cross_product_vec3cross_and_normals></a></p>
 <h4>Cross product (<code>vec3cross</code>) and normals</h4><p>Given a triangle formed by...</p>
@@ -289,7 +287,7 @@ is negative, then the angle runs in the opposite direction.</p>
 </ul>
 <p>the <a href="MathUtil.html#MathUtil.vec3cross">cross product</a> of the first point with the second,
 in that order, is a <em>normal</em> of that triangle (a vector that's perpendicular to the triangle's surface).</p>
-<p>While this particular normal points toward the viewer, the triangle's vertices
+<p>While this particular normal points backward from the &quot;eye&quot;, the triangle's vertices
 run in a counterclockwise path for right-handed coordinate systems, or a clockwise path
 for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)</p>

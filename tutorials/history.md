@@ -8,7 +8,7 @@ The changes in beta 3 from beta 2 include:
 - The main library files were converted to ECMAScript's import/export convention.  The `rollup` tool
   is used to help generate the `h3du_min.js` file.
 - HTML documentation included in distribution.
-- "Norm" methods in H3DU.Math were renamed to use "Normalize" instead.
+- "Norm" methods in MathUtil were renamed to use "Normalize" instead.
 - New `convex.js` in extras folder generates the convex hull of a set of points.
 - New `interp.js` in extras folder provides a cubic B&eacute;zier interpolation function.
 - New `spline.js` in extras folder generates piecewise interpolating curves.
@@ -49,7 +49,7 @@ The changes in beta 2 from beta 1 include:
 - H3DU.Material can accept a parameter object in the constructor as it can in the setParams method, similarly to the
   new H3DU.PbrMaterial class.
 - Added fromBasic and fromBasicTexture methods to H3DU.Material class.
-- Many new methods were added to the H3DU.Math class, including methods to add and
+- Many new methods were added to the MathUtil class, including methods to add and
    subtract 4-element vectors, to clamp vectors, and to convert to and from linearized RGB colors,
    as well as vec3proj, vec4proj, mat3invert, and vec3fromWindowPoint methods.
    The frustumHasBox method was improved.

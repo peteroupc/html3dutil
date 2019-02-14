@@ -21,7 +21,7 @@ To import all symbols in this module, either of the following can be used:
 ### (static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, [irregular], [spiky])
 
 Generates a simple polygon at random.
-Inspired by [http://stackoverflow.com/questions/8997099](http://stackoverflow.com/questions/8997099) .
+Inspired by [a _Stack Overflow_ question](http://stackoverflow.com/questions/8997099).
 
 #### Parameters
 

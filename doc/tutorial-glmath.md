@@ -44,7 +44,7 @@ having a certain _length_ and an unspecified starting point.
 A particular vector can instead be treated as describing a position
 (by pointing to that position from an _origin_ (0,0,0)), or a color.
 
-In `H3DU.Math`, vectors are stored in arrays of numbers (usually
+In `MathUtil`, vectors are stored in arrays of numbers (usually
 three or four numbers), and functions dealing with vectors begin
 with "vec".
 
@@ -76,7 +76,7 @@ The following functions normalize vectors and find their length.
 * <a href="MathUtil.md#MathUtil.vec3length">MathUtil.vec3length</a> - Finds a 3-element vector's length.
 * <a href="MathUtil.md#MathUtil.vec4length">MathUtil.vec4length</a> - Finds a 4-element vector's length.
 
-Note that due to rounding error, normalizing a vector with an `H3DU.Math` method
+Note that due to rounding error, normalizing a vector with a `MathUtil` method
 might not necessarily result in a vector with a length of 1.
 
 <a id=Matrices></a>
@@ -175,19 +175,19 @@ Here are examples of an axis of rotation.
 * The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).
 * The Z axis of rotation (side-by-side sway) is (0, 0, 1).
 
-While the axis of rotation points toward the viewer, if the angle's value
+While the axis of rotation points backward from the "eye", if the angle's value
 is positive and the [**coordinate system**](#Coordinate_Systems) is...
 
 * ...right handed, then the angle runs counterclockwise.
 * ...left handed, then the angle runs clockwise.
 
-While the axis of rotation points toward the viewer, if the angle's value
+While the axis of rotation points backward from the "eye", if the angle's value
 is negative, then the angle runs in the opposite direction.
 
 Vectors that point in the same direction (for example, vectors (1, 0, 0) and (2, 0, 0))
 describe the same axis of rotation.
 
-Unless stated otherwise, an axis of rotation passed to an `H3DU.Math`
+Unless stated otherwise, an axis of rotation passed to a `MathUtil`
 method need not be a [**unit vector**](#Unit_Vectors).
 
 <a id=Quaternions></a>
@@ -308,10 +308,8 @@ Methods that deal with boxes include:
 There are two conventions of 3D coordinate systems, left-handed and
 right-handed:
 
-* In a _left-handed_ coordinate system, the positive Z axis points _away from
-the viewer_ whenever the positive X axis points to the right and the positive Y axis points up.
-* In a _right-handed_ coordinate system, the positive Z axis points _toward
-the viewer_ whenever the positive X axis points to the right and the positive Y axis points up.
+* In a _left-handed_ coordinate system, the positive Z axis points _forward from the "eye"_ whenever the positive X axis points to the right and the positive Y axis points up.
+* In a _right-handed_ coordinate system, the positive Z axis points _backward from the "eye"_ whenever the positive X axis points to the right and the positive Y axis points up.
 
 To show this more visually, point one hand's thumb to your right and
 its index finger up, and bend the other three fingers halfway down.  In a
@@ -342,13 +340,13 @@ documentation describes how to adjust them for a left-handed coordinate system.
 <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a>
 #### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
 
-While the [**axis of rotation**](#Axis_of_Rotation) points toward the viewer, if the angle's value
+While the [**axis of rotation**](#Axis_of_Rotation) points backward from the "eye", if the angle's value
 is positive and the [**coordinate system**](#Coordinate_Systems) is...
 
 * ...right handed, then the angle runs counterclockwise.
 * ...left handed, then the angle runs clockwise.
 
-While the axis of rotation points toward the viewer, if the angle's value
+While the axis of rotation points backward from the "eye", if the angle's value
 is negative, then the angle runs in the opposite direction.
 
 <a id=Cross_product_vec3cross_and_normals></a>
@@ -362,7 +360,7 @@ Given a triangle formed by...
 the <a href="MathUtil.md#MathUtil.vec3cross">cross product</a> of the first point with the second,
 in that order, is a _normal_ of that triangle (a vector that's perpendicular to the triangle's surface).
 
-While this particular normal points toward the viewer, the triangle's vertices
+While this particular normal points backward from the "eye", the triangle's vertices
 run in a counterclockwise path for right-handed coordinate systems, or a clockwise path
 for left-handed systems. (In general, there are two possible choices for normals, which each
 point in opposite directions.)

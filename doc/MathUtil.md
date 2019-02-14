@@ -806,7 +806,7 @@ transforming world space coordinates, shared by every object in a scene, to coor
 and moves it to somewhere in the scene. In eye space, when just this matrix is used to transform vertices:<ul>
 <li>The "camera" is located at the origin (0,0,0), or
 at <code>cameraPos</code> in world space,
-and points away from the viewer toward the <code>lookingAt</code>
+and points forward to the <code>lookingAt</code>
 position in world space. This generally
 puts <code>lookingAt</code> at the center of the view.
 <li>The X axis points rightward from the "camera"'s viewpoint.
@@ -2478,7 +2478,7 @@ The following are properties of the cross product:<ul>
 vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>,
 but it is <i>anticommutative</i>.)
 <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-While the cross product of A and B points toward the viewer,
+While the cross product of A and B points backward from the "eye",
 the triangle's vertices are oriented counterclockwise for <a href="tutorial-glmath.md">right-handed coordinate systems</a>,
 or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
 <li>The length of the cross

@@ -52,7 +52,7 @@ The following is a screen shot of a scene generated with the help of the former 
 This is an overview of most of the JavaScript classes available in this library:
 
 * [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the Geometry Utilities Library.
-* [**`H3DU.MathUtil`**](https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors.
+* [**`MathUtil`**](https://peteroupc.github.io/html3dutil/MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors.
 * [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model.
 * [**`H3DU.Meshes`**](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
 * [**`H3DU.Shape`**](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform.
@@ -69,8 +69,8 @@ The following sections detail how an application that renders 3-D graphics can u
 <a id=The_Camera></a>
 ### The "Camera"
 
-The `H3DU.MathUtil` class contains methods that support the concepts of a "projection transform" and a "view transform", as are common in many 3D rendering libraries. If we
-use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `H3DU.MathUtil` has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including `H3DU.MathUtil.mat4perspective` (a perspective projection) and `H3DU.MathUtil.mat4lookat` (a look-at view transform). For more information, see [**_The "Camera" and Geometric Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms).
+The `MathUtil` class contains methods that support the concepts of a "projection transform" and a "view transform", as are common in many 3D rendering libraries. If we
+use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `MathUtil` has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including `MathUtil.mat4perspective` (a perspective projection) and `MathUtil.mat4lookat` (a look-at view transform). For more information, see [**_The "Camera" and Geometric Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms).
 
 <a id=3D_Models></a>
 ### 3D Models

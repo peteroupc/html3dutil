@@ -1836,7 +1836,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * and moves it to somewhere in the scene. In eye space, when just this matrix is used to transform vertices:<ul>
    * <li>The "camera" is located at the origin (0,0,0), or
    * at <code>cameraPos</code> in world space,
-   * and points away from the viewer toward the <code>lookingAt</code>
+   * and points forward to the <code>lookingAt</code>
    * position in world space. This generally
    * puts <code>lookingAt</code> at the center of the view.
    * <li>The X axis points rightward from the "camera"'s viewpoint.
@@ -3908,7 +3908,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * vector with the same length but opposite direction. (Thus, the cross product is not <i>commutative</i>,
    * but it is <i>anticommutative</i>.)
    * <li>Let there be a triangle formed by point A, point B, and the point (0,0,0) in that order.
-   * While the cross product of A and B points toward the viewer,
+   * While the cross product of A and B points backward from the "eye",
    * the triangle's vertices are oriented counterclockwise for [right-handed coordinate systems]{@tutorial glmath},
    * or clockwise for left-handed systems. The triangle's area is half of the cross product's length.
    * <li>The length of the cross
@@ -14874,7 +14874,7 @@ Transform.prototype.setQuaternion = function(quat) {
  * instead be a 4-element array giving the axis
  * of rotation as the first three elements, followed by the angle
  * in degrees as the fourth element. If the axis of rotation
- * points toward the viewer, a positive value means the angle runs in
+ * points backward from the "eye", a positive value means the angle runs in
  * a counterclockwise direction for right-handed coordinate systems and
  * in a clockwise direction for left-handed systems.
  * @param {Array<number>|number} v X-component of the point lying on the axis
@@ -15947,7 +15947,7 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
 /**
  * Creates a mesh of a 2D circular disk or regular polygon, possibly with a hole in the middle, centered at the origin.
  * Assuming the Y axis points up, the X axis right,
- * and the Z axis toward the viewer, the first vertex in the outer edge
+ * and the Z axis backward from the "eye", the first vertex in the outer edge
  * of the 2D disk will be at the 12 o'clock position.
  * Will also generate texture coordinates, assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
@@ -15990,7 +15990,7 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * 0 degrees is at the positive Y axis,
  * and 90 degrees at the positive X axis.
  * Assuming the Y axis points up, the X axis right,
- * and the Z axis toward the viewer, 0 degrees is at the 12 o'clock position,
+ * and the Z axis backward from the "eye", 0 degrees is at the 12 o'clock position,
  * and 90 degrees at the 3 o'clock position.
  * @param {number} [sweep] Arc length of the partial disk, in degrees.
  * May be null or omitted; default is 360. May be negative.

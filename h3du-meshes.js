@@ -415,7 +415,7 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
 /**
  * Creates a mesh of a 2D circular disk or regular polygon, possibly with a hole in the middle, centered at the origin.
  * Assuming the Y axis points up, the X axis right,
- * and the Z axis toward the viewer, the first vertex in the outer edge
+ * and the Z axis backward from the "eye", the first vertex in the outer edge
  * of the 2D disk will be at the 12 o'clock position.
  * Will also generate texture coordinates, assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
@@ -458,7 +458,7 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * 0 degrees is at the positive Y axis,
  * and 90 degrees at the positive X axis.
  * Assuming the Y axis points up, the X axis right,
- * and the Z axis toward the viewer, 0 degrees is at the 12 o'clock position,
+ * and the Z axis backward from the "eye", 0 degrees is at the 12 o'clock position,
  * and 90 degrees at the 3 o'clock position.
  * @param {number} [sweep] Arc length of the partial disk, in degrees.
  * May be null or omitted; default is 360. May be negative.
