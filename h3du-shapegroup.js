@@ -20,15 +20,7 @@ export const ShapeGroup = function() {
 };
 /** @ignore */
 ShapeGroup.prototype._init = function() {
-  /** List of shapes contained in this group.
-   * This property should only be used to access properties
-   * and call methods on each shape, and not to add, remove
-   * or replace shapes directly.
-   * @deprecated Use the {@link ShapeGroup#shapeCount},
-   * {@link ShapeGroup#getShape}, and
-   * {@link ShapeGroup#setShape} methods instead.
-   * @readonly
-   */
+  /** @ignore */
   this.shapes = [];
   this.parent = null;
   this.visible = true;

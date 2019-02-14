@@ -21,12 +21,13 @@ a frustum matrix.
 * [loadTransposeMatrix](#extras_matrixstack_MatrixStack_loadTransposeMatrix)<br>Modifies the matrix at the top of this stack by replacing it with the
 transpose of the given matrix.
 * [lookAt](#extras_matrixstack_MatrixStack_lookAt)<br>Modifies the matrix at the top of this stack by multiplying it by
-a matrix representing a camera view.
+a matrix representing a "camera" view.
 * [multMatrix](#extras_matrixstack_MatrixStack_multMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by another matrix.
+* [multTransposeMatrix](#extras_matrixstack_MatrixStack_multTransposeMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix.
 * [ortho](#extras_matrixstack_MatrixStack_ortho)<br>Modifies the matrix at the top of this stack by multiplying it by
-an orthographic projection.
+an orthographic projection matrix.
 * [ortho2d](#extras_matrixstack_MatrixStack_ortho2d)<br>Modifies the matrix at the top of this stack by multiplying it by
-a 2D orthographic projection.
+a 2D orthographic projection matrix.
 * [perspective](#extras_matrixstack_MatrixStack_perspective)<br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.
 * [pickMatrix](#extras_matrixstack_MatrixStack_pickMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by
@@ -35,7 +36,7 @@ a matrix that transforms the view to a portion of the viewport.
 the matrix beneath it the new top matrix.
 * [pushMatrix](#extras_matrixstack_MatrixStack_pushMatrix)<br>Makes a copy of the matrix at the top of this stack
 and puts the copy on top of the stack.
-* [rotate](#extras_matrixstack_MatrixStack_rotate)<br>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
+* [rotate](#extras_matrixstack_MatrixStack_rotate)<br>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix.
 * [scale](#extras_matrixstack_MatrixStack_scale)<br>Modifies the matrix at the top of this stack by multiplying it by a
 scaling transformation.
 * [translate](#extras_matrixstack_MatrixStack_translate)<br>Modifies the matrix at the top of this stack by multiplying it by a
@@ -46,7 +47,8 @@ translation transformation.
 
 Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.
-This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
+
+For more information on the frustum matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4frustum">MathUtil.mat4frustum</a>.
 
 #### Parameters
 
@@ -54,8 +56,8 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 * `r` (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.
 * `b` (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
 * `t` (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.
-* `n` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
-* `f` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
+* `n` (Type: number)<br>The distance from the camera to the near clipping plane.
+* `f` (Type: number)<br>The distance from the camera to the far clipping plane.
 
 #### Return Value
 
@@ -110,18 +112,19 @@ This object. (Type: MatrixStack)
 ### module:extras/matrixstack~MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz)
 
 Modifies the matrix at the top of this stack by multiplying it by
-a matrix representing a camera view.
-This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
+a matrix representing a "camera" view.
+
+For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4lookat">MathUtil.mat4lookat</a>.
 
 #### Parameters
 
-* `ex` (Type: number)<br>X coordinate of the camera position in world space.
-* `ey` (Type: number)<br>Y coordinate of the camera position.
-* `ez` (Type: number)<br>Z coordinate of the camera position.
-* `cx` (Type: number)<br>X coordinate of the position in world space that the camera is looking at.
-* `cy` (Type: number)<br>Y coordinate of the position looked at.
-* `cz` (Type: number)<br>Z coordinate of the position looked at.
-* `ux` (Type: number)<br>X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera's view direction.
+* `ex` (Type: number)<br>X coordinate of the "camera" position in world space.
+* `ey` (Type: number)<br>Y coordinate of the "camera" position.
+* `ez` (Type: number)<br>Z coordinate of the "camera" position.
+* `cx` (Type: number)<br>X coordinate of the position in world space that the "camera" is "looking at".
+* `cy` (Type: number)<br>Y coordinate of the position "looked at".
+* `cz` (Type: number)<br>Z coordinate of the position "looked at".
+* `ux` (Type: number)<br>X coordinate of the up direction vector.
 * `uy` (Type: number)<br>Y coordinate of the up vector.
 * `uz` (Type: number)<br>Z coordinate of the up vector.
 
@@ -147,24 +150,40 @@ the effect of scaling then translation.
 
 This object. (Type: MatrixStack)
 
+<a name='extras_matrixstack_MatrixStack_multTransposeMatrix'></a>
+### module:extras/matrixstack~MatrixStack#multTransposeMatrix(mat)
+
+Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix. Both matrices are multiplied such that the transformation described
+by the top matrix "happens before" the transformation described by the matrix passed
+to this method. For example, if the matrix
+at the top of the stack describes a translation and the matrix
+passed to this method describes a scaling, the multiplied matrix will describe
+the effect of translation than scaling.
+
+#### Parameters
+
+* `mat` (Type: Array.&lt;number>)<br>A matrix whose transpose the current matrix is to be multiplied.
+
+#### Return Value
+
+This object. (Type: MatrixStack)
+
 <a name='extras_matrixstack_MatrixStack_ortho'></a>
 ### module:extras/matrixstack~MatrixStack#ortho(l, r, b, t, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
-an orthographic projection.
-In this projection, the left clipping plane is parallel to the right clipping
-plane and the top to the bottom.
+an orthographic projection matrix.
 
-This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
+For more information on the projection matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4ortho">MathUtil.mat4ortho</a>.
 
 #### Parameters
 
-* `l` (Type: number)<br>Leftmost coordinate of the 3D view.
-* `r` (Type: number)<br>Rightmost coordinate of the 3D view. (Note that r can be greater than l or vice versa.)
-* `b` (Type: number)<br>Bottommost coordinate of the 3D view.
-* `t` (Type: number)<br>Topmost coordinate of the 3D view. (Note that t can be greater than b or vice versa.)
-* `n` (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.
-* `f` (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer.
+* `l` (Type: number)<br>Leftmost coordinate of the orthographic view.
+* `r` (Type: number)<br>Rightmost coordinate of the orthographic view.
+* `b` (Type: number)<br>Bottommost coordinate of the orthographic view.
+* `t` (Type: number)<br>Topmost coordinate of the 3D view.
+* `n` (Type: number)<br>Distance from the camera to the near clipping plane.
+* `f` (Type: number)<br>Distance from the camera to the far clipping plane.
 
 #### Return Value
 
@@ -174,15 +193,16 @@ This object. (Type: MatrixStack)
 ### module:extras/matrixstack~MatrixStack#ortho2d(l, r, b, t)
 
 Modifies the matrix at the top of this stack by multiplying it by
-a 2D orthographic projection.
-This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
+a 2D orthographic projection matrix.
+
+For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4ortho2d">MathUtil.mat4ortho2d</a>.
 
 #### Parameters
 
-* `l` (Type: number)<br>Leftmost coordinate of the 2D view.
-* `r` (Type: number)<br>Rightmost coordinate of the 2D view. (Note that r can be greater than l or vice versa.)
-* `b` (Type: number)<br>Bottommost coordinate of the 2D view.
-* `t` (Type: number)<br>Topmost coordinate of the 2D view. (Note that t can be greater than b or vice versa.)
+* `l` (Type: number)<br>Leftmost coordinate of the orthographic view.
+* `r` (Type: number)<br>Rightmost coordinate of the orthographic view.
+* `b` (Type: number)<br>Bottommost coordinate of the orthographic view.
+* `t` (Type: number)<br>Topmost coordinate of the orthographic view.
 
 #### Return Value
 
@@ -194,14 +214,14 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.
 
-This method is designed for enabling a <a href="tutorial-glmath.md">right-handed coordinate system</a>.
+For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.
 
 #### Parameters
 
-* `fov` (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zoom can be implemented by multiplying field of view by an additional factor.)
+* `fov` (Type: number)<br>Vertical field of view, in degrees.
 * `aspect` (Type: number)<br>The ratio of width to height of the viewport, usually the scene's aspect ratio.
-* `n` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
-* `f` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
+* `n` (Type: number)<br>The distance from the camera to the near clipping plane.
+* `f` (Type: number)<br>The distance from the camera to the far clipping plane.
 
 #### Return Value
 
@@ -213,13 +233,15 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.
 
+For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4pickMatrix">MathUtil.mat4pickMatrix</a>.
+
 #### Parameters
 
 * `wx` (Type: number)<br>X coordinate of the center of the desired viewport portion.
 * `wy` (Type: number)<br>Y coordinate of the center of the desired viewport portion.
 * `ww` (Type: number)<br>Width of the desired viewport portion.
 * `wh` (Type: number)<br>Height of the desired viewport portion.
-* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.
+* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the current viewport's origin followed by the width and height of a rectangle indicating the current viewport.
 
 #### Return Value
 
@@ -249,11 +271,11 @@ This object. (Type: MatrixStack)
 <a name='extras_matrixstack_MatrixStack_rotate'></a>
 ### module:extras/matrixstack~MatrixStack#rotate(angle, x, y, z)
 
-Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
+Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate</a>.
 
 #### Parameters
 
-* `angle` (Type: number)<br>The desired angle to rotate in degrees. If the axis of rotation points toward the viewer, the angle's value is increasing in a counterclockwise direction.
+* `angle` (Type: number)<br>The desired angle to rotate, in degrees.
 * `x` (Type: number)<br>X-component of the axis of rotation.
 * `y` (Type: number)<br>Y-component of the axis of rotation.
 * `z` (Type: number)<br>Z-component of the axis of rotation.

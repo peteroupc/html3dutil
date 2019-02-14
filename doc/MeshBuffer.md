@@ -65,10 +65,15 @@ buffer stores each triangle using three consecutive vertices.
 ### Methods
 
 * [deindex](#MeshBuffer_deindex)<br>TODO: Not documented yet.
-* [ensureIndices](#MeshBuffer_ensureIndices)<br>TODO: Not documented yet.
+* [ensureIndices](#MeshBuffer_ensureIndices)<br>Gets the array of vertex indices used by this mesh buffer, or if
+such an array doesn't exist, builds an array containing one index
+for each vertex in this mesh buffer, in the order in which those
+vertices appear.
 * [fromPositions](#MeshBuffer.fromPositions)<br>Creates a new mesh buffer with the given array of vertex positions.
 * [fromPositionsNormals](#MeshBuffer.fromPositionsNormals)<br>Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.
+* [fromPositionsNormalsColors](#MeshBuffer.fromPositionsNormalsColors)<br>Creates a new mesh buffer with the given array of vertex positions,
+vertex normals, and vertex colors.
 * [fromPositionsNormalsUV](#MeshBuffer.fromPositionsNormalsUV)<br>Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.
 * [fromPositionsUV](#MeshBuffer.fromPositionsUV)<br>Creates a new mesh buffer with the given array of vertex positions
@@ -156,11 +161,14 @@ This object. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 <a name='MeshBuffer_ensureIndices'></a>
 ### MeshBuffer#ensureIndices()
 
-TODO: Not documented yet.
+Gets the array of vertex indices used by this mesh buffer, or if
+such an array doesn't exist, builds an array containing one index
+for each vertex in this mesh buffer, in the order in which those
+vertices appear.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: *)
+The vertex index array. (Type: Uint16Array | Uint32Array | Uint8Array)
 
 <a name='MeshBuffer.fromPositions'></a>
 ### (static) MeshBuffer.fromPositions(vertices, [indices])
@@ -243,6 +251,45 @@ buffer from a predefined array of vertex positions and normals.
     // leave out the "indices" argument.)
     var meshBuffer=MeshBuffer.fromPositionsNormals(vertices, indices);
 
+<a name='MeshBuffer.fromPositionsNormalsColors'></a>
+### (static) MeshBuffer.fromPositionsNormalsColors(vertices, [indices])
+
+Creates a new mesh buffer with the given array of vertex positions,
+vertex normals, and vertex colors.
+
+#### Parameters
+
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 9; every 9 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>Red, green, and blue components, in that order, of the vertex color, where each component ranges from a low of 0 to a high of 1.</ol>
+* `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+
+#### Return Value
+
+A new mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+
+#### Examples
+
+The following example shows how to define a mesh
+buffer from a predefined array of vertex positions, normals,
+and texture cordinates.
+
+    // First, create an array of numbers giving the X, Y, and
+    // Z coordinate for each vertex position and normal, and associated
+    // color components. Here, three vertices
+    // are defined. For each vertex, the position is given, followed by
+    // the normal, followed by the texture coordinates.
+    var vertices = [
+    x1, y1, z1, nx1, ny1, nz1, r1, g1, b1,
+    x2, y2, z2, nx2, ny2, nz2, r2, g2, b2,
+    x3, y3, z3, nx3, ny3, nz3, r3, g3, b3 ];
+    // Second -- and this is optional -- create a second array of numbers
+    // giving the indices to vertices defined in the previous step.
+    // Each index refers to the (n+1)th vertex; since 3 vertices
+    // were defined, the highest index is 2.
+    var indices = [0, 1, 2];
+    // Finally, create the mesh buffer. (If there are no indices,
+    // leave out the "indices" argument.)
+    var meshBuffer=MeshBuffer.fromPositionsNormalsColors(vertices, indices);
+
 <a name='MeshBuffer.fromPositionsNormalsUV'></a>
 ### (static) MeshBuffer.fromPositionsNormalsUV(vertices, [indices])
 
@@ -265,7 +312,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.
 
     // First, create an array of numbers giving the X, Y, and
-    // Z coordinate for each vertex position, normal, and associated
+    // Z coordinate for each vertex position and normal, and associated
     // texture coordinates. Here, three vertices
     // are defined. For each vertex, the position is given, followed by
     // the normal, followed by the texture coordinates.

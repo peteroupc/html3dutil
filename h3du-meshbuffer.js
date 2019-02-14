@@ -55,9 +55,13 @@ import {toGLColor} from "./h3du-misc";
  * }
  */
 export const MeshBuffer = function() {
-  this.format = MeshBuffer.TRIANGLES;
+  /** @ignore */
+  this._primitiveType = MeshBuffer.TRIANGLES;
+  /** @ignore */
   this.attributes = [];
+  /** @ignore */
   this._bounds = null;
+  /** @ignore */
   this.indices = null;
 };
 /**
@@ -68,8 +72,11 @@ MeshBuffer.prototype.getIndices = function() {
   return this.indices;
 };
 /**
- * TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * Gets the array of vertex indices used by this mesh buffer, or if
+ * such an array doesn't exist, builds an array containing one index
+ * for each vertex in this mesh buffer, in the order in which those
+ * vertices appear.
+ * @returns {Uint16Array|Uint32Array|Uint8Array} The vertex index array.
  */
 MeshBuffer.prototype.ensureIndices = function() {
   if(typeof this.indices === "undefined" || this.indices === null) {
@@ -118,7 +125,7 @@ MeshBuffer.prototype.setIndices = function(indices) {
  * @returns {MeshBuffer} This object.
  */
 MeshBuffer.prototype.setType = function(primType) {
-  this.format = primType;
+  this._primitiveType = primType;
   return this;
 };
 
@@ -426,7 +433,7 @@ MeshBuffer.fromPositionsNormals = function(vertices, indices) {
  * buffer from a predefined array of vertex positions, normals,
  * and texture cordinates.</caption>
  * // First, create an array of numbers giving the X, Y, and
- * // Z coordinate for each vertex position, normal, and associated
+ * // Z coordinate for each vertex position and normal, and associated
  * // texture coordinates. Here, three vertices
  * // are defined. For each vertex, the position is given, followed by
  * // the normal, followed by the texture coordinates.
@@ -449,6 +456,47 @@ MeshBuffer.fromPositionsNormalsUV = function(vertices, indices) {
     .setAttribute("POSITION", vertarray, 3, 0, 8)
     .setAttribute("NORMAL", vertarray, 3, 3, 8)
     .setAttribute("TEXCOORD", vertarray, 2, 6, 8).setIndices(indices);
+};
+
+/**
+ * Creates a new mesh buffer with the given array of vertex positions,
+ * vertex normals, and vertex colors.
+ * @param {Array<number>|Float32Array} vertices An array of vertex data. This
+ * array's length must be divisible by 9; every 9 elements describe
+ * one vertex and are in the following order:<ol>
+ * <li>X, Y, and Z coordinates, in that order, of the vertex position.
+ * <li>X, Y, and Z components, in that order, of the vertex normal.
+ * <li>Red, green, and blue components, in that order, of the vertex color, where each component ranges from a low of 0 to a high of 1.</ol>
+ * @param {Array<number>|Uint16Array|Uint32Array|Uint8Array|null|undefined} [indices] Array of vertex indices
+ * that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
+ * @returns {MeshBuffer} A new mesh buffer.
+ * @example <caption>The following example shows how to define a mesh
+ * buffer from a predefined array of vertex positions, normals,
+ * and texture cordinates.</caption>
+ * // First, create an array of numbers giving the X, Y, and
+ * // Z coordinate for each vertex position and normal, and associated
+ * // color components. Here, three vertices
+ * // are defined. For each vertex, the position is given, followed by
+ * // the normal, followed by the texture coordinates.
+ * var vertices = [
+ * x1, y1, z1, nx1, ny1, nz1, r1, g1, b1,
+ * x2, y2, z2, nx2, ny2, nz2, r2, g2, b2,
+ * x3, y3, z3, nx3, ny3, nz3, r3, g3, b3 ];
+ * // Second -- and this is optional -- create a second array of numbers
+ * // giving the indices to vertices defined in the previous step.
+ * // Each index refers to the (n+1)th vertex; since 3 vertices
+ * // were defined, the highest index is 2.
+ * var indices = [0, 1, 2];
+ * // Finally, create the mesh buffer. (If there are no indices,
+ * // leave out the "indices" argument.)
+ * var meshBuffer=MeshBuffer.fromPositionsNormalsColors(vertices, indices);
+ */
+MeshBuffer.fromPositionsNormalsColors = function(vertices, indices) {
+  const vertarray = new Float32Array(vertices);
+  return new MeshBuffer()
+    .setAttribute("POSITION", vertarray, 3, 0, 9)
+    .setAttribute("NORMAL", vertarray, 3, 3, 9)
+    .setAttribute("COLOR", vertarray, 3, 6, 9).setIndices(indices);
 };
 
 /**
@@ -617,9 +665,9 @@ MeshBuffer.quadStripIndices = function(vertexCount) {
  * @returns {number} Return value.
  */
 MeshBuffer.prototype.primitiveCount = function() {
-  if(this.format === MeshBuffer.LINES)
+  if(this._primitiveType === MeshBuffer.LINES)
     return Math.floor(this.vertexCount() / 2);
-  if(this.format === MeshBuffer.POINTS)
+  if(this._primitiveType === MeshBuffer.POINTS)
     return this.vertexCount();
   return Math.floor(this.vertexCount() / 3);
 };
@@ -1104,6 +1152,10 @@ MeshBuffer.prototype.merge = function(other) {
   let oattr;
   let existingAttribute;
   if(!other)throw new Error();
+  if(this._primitiveType !== other._primitiveType) {
+    // Primitive types are different
+    throw new Error();
+  }
   if(other.indices.length === 0) {
     // Nothing to merge into this one, just return
     return this;
@@ -1123,7 +1175,7 @@ MeshBuffer.prototype.merge = function(other) {
         newAttributes.push([o[0], o[1], o[2].copy()]);
       }
       this._bounds = null;
-      this.format = other.format;
+      this._primitiveType = other._primitiveType;
       this.attributes = newAttributes;
       // NOTE: Copies the index buffer
       if(typeof other.indices === "undefined" || other.indices === null) {
@@ -1134,10 +1186,6 @@ MeshBuffer.prototype.merge = function(other) {
       }
       return this;
     }
-  }
-  if(this.format !== other.format) {
-    // Primitive types are different
-    throw new Error();
   }
   this.ensureIndices();
   other.ensureIndices();
@@ -1343,7 +1391,7 @@ MeshBuffer.prototype.getBounds = function() {
  * {@link MeshBuffer.LINES}, or {@link MeshBuffer.POINTS}.
  */
 MeshBuffer.prototype.primitiveType = function() {
-  return this.format;
+  return this._primitiveType;
 };
 /**
  * Gets the number of vertices in this mesh buffer, that

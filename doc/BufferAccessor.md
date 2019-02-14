@@ -35,6 +35,8 @@ value to the start of the next.
 combined vertex attribute.
 * [set](#BufferAccessor_set)<br>Sets the first element of the attribute value with the given vertex index.
 * [setVec](#BufferAccessor_setVec)<br>Sets the elements of a vertex attribute value.
+* [setXy](#BufferAccessor_setXy)<br>Sets the first and second elements of a vertex attribute value.
+* [setXyz](#BufferAccessor_setXyz)<br>Sets the first, second, and third elements of a vertex attribute value.
 
 <a name='BufferAccessor_buffer'></a>
 ### BufferAccessor#buffer
@@ -206,6 +208,45 @@ where noted otherwise.
 
 * `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
 * `vec` (Type: Array.&lt;number>)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array's length or the attribute's count per value (see <a href="BufferAccessor.md#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>), whichever is less.
+
+#### Return Value
+
+This object. (Type: <a href="BufferAccessor.md">BufferAccessor</a>)
+
+<a name='BufferAccessor_setXy'></a>
+### BufferAccessor#setXy(index, x, y)
+
+Sets the first and second elements of a vertex attribute value.
+
+Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute's buffer, except
+where noted otherwise.
+
+#### Parameters
+
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
+* `x` (Type: number)<br>The value to copy to the first element of the value at the given index, if the attribute stores 1-element or bigger values.
+* `y` (Type: number)<br>The value to copy to the second element of the value at the given index, if the attribute stores 2-element or bigger values.
+
+#### Return Value
+
+This object. (Type: <a href="BufferAccessor.md">BufferAccessor</a>)
+
+<a name='BufferAccessor_setXyz'></a>
+### BufferAccessor#setXyz(index, x, y, z)
+
+Sets the first, second, and third elements of a vertex attribute value.
+
+Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute's buffer, except
+where noted otherwise.
+
+#### Parameters
+
+* `index` (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute's buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.
+* `x` (Type: number)<br>The value to copy to the first element of the value at the given index, if the attribute stores 1-element or bigger values.
+* `y` (Type: number)<br>The value to copy to the second element of the value at the given index, if the attribute stores 2-element or bigger values.
+* `z` (Type: number)<br>The value to copy to the third element of the value at the given index, if the attribute stores 3-element or bigger values.
 
 #### Return Value
 

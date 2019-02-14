@@ -113,16 +113,16 @@ Attribute semantic for a tangent vector.
 
 Attribute semantic for a tuple of texture coordinates.
 
-If a texture (array of bits) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.
+If a texture (array of memory units) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.
 
-By default in most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1), and V coordinates start at the bottom of the texture (0) and increase to the top (1). (An exception is WebGL, where, by default, V coordinates start at the top and increase to the bottom.) Thus, for example, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.
+In most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, V coordinates start by default at the bottom of the texture (0) and increase to the top (1), while in others, such as WebGL, Vulkan, Metal, and DirectX, V coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.
 
 In general, texture coordinates describe 2-dimensional points.
 However, for such texturing tasks as mapping
-a square to a trapezoid, trios of 3-dimensional texture coordinates
+a square to a trapezoid, trios of 3-dimensional texture coordinates (U, V, and Z)
 are useful to ensure the texturing remains perspective-correct.
 In this case, the 3-D texture coordinates are converted
-to 2-D by dividing the X and Y components by the Z component.
+to 2-D by dividing the U and V components by the Z component.
 In a fragment shader or pixel shader, this can look like
 the following
 code: <code>texCoord.xy/texCoord.z</code>.

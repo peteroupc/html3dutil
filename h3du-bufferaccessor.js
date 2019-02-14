@@ -145,6 +145,51 @@ BufferAccessor.prototype.setVec = function(index, vec) {
   return this;
 };
 /**
+ * Sets the first and second elements of a vertex attribute value.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when writing to the attribute's buffer, except
+ * where noted otherwise.
+ * @param {number} index A numeric index, starting from 0, that identifies
+ * a value stored in the attribute's buffer. For example, 0 identifies the first
+ * value, 1 identifies the second, and so on.
+ * @param {number} x The value to copy to the first element of the value at the given
+ * index, if the attribute stores 1-element or bigger values.
+ * @param {number} y The value to copy to the second element of the value at the given
+ * index, if the attribute stores 2-element or bigger values.
+ * @returns {BufferAccessor} This object.
+ */
+BufferAccessor.prototype.setXy = function(index, x, y) {
+  const o = this.offset + index * this.stride;
+  const buffer = this.buffer;
+  if(this.countPerValue >= 1)buffer[o] = x;
+  if(this.countPerValue >= 2)buffer[o + 1] = y;
+  return this;
+};
+/**
+ * Sets the first, second, and third elements of a vertex attribute value.<p>
+ * Note that currently, this method does no bounds checking beyond the
+ * checking naturally done when writing to the attribute's buffer, except
+ * where noted otherwise.
+ * @param {number} index A numeric index, starting from 0, that identifies
+ * a value stored in the attribute's buffer. For example, 0 identifies the first
+ * value, 1 identifies the second, and so on.
+ * @param {number} x The value to copy to the first element of the value at the given
+ * index, if the attribute stores 1-element or bigger values.
+ * @param {number} y The value to copy to the second element of the value at the given
+ * index, if the attribute stores 2-element or bigger values.
+ * @param {number} z The value to copy to the third element of the value at the given
+ * index, if the attribute stores 3-element or bigger values.
+ * @returns {BufferAccessor} This object.
+ */
+BufferAccessor.prototype.setXyz = function(index, x, y, z) {
+  const o = this.offset + index * this.stride;
+  const buffer = this.buffer;
+  if(this.countPerValue >= 1)buffer[o] = x;
+  if(this.countPerValue >= 2)buffer[o + 1] = y;
+  if(this.countPerValue >= 2)buffer[o + 2] = z;
+  return this;
+};
+/**
  * Copies the values of this accessor into a new vertex attribute object.
  * @returns {BufferAccessor} A copy of the vertex attribute object.
  */

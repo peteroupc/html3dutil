@@ -9,12 +9,6 @@ Represents a grouping of shapes. This object
 can hold both <a href="Shape.md">Shape</a> objects and
 other <a href="ShapeGroup.md">ShapeGroup</a> objects.
 
-### Members
-
-* [shapes](#ShapeGroup_shapes)<br><b>Deprecated: Use the <a href="ShapeGroup.md#ShapeGroup_shapeCount">ShapeGroup#shapeCount</a>,
-<a href="ShapeGroup.md#ShapeGroup_getShape">ShapeGroup#getShape</a>, and
-<a href="ShapeGroup.md#ShapeGroup_setShape">ShapeGroup#setShape</a> methods instead.</b>
-
 ### Methods
 
 * [addShape](#ShapeGroup_addShape)<br>Adds a 3D shape to this shape group, at the end of the list
@@ -43,18 +37,6 @@ of the given transform.
 * [shapeCount](#ShapeGroup_shapeCount)<br>Returns the number of shapes and/or shape groups that
 are direct children of this shape group.
 * [vertexCount](#ShapeGroup_vertexCount)<br>Gets the number of vertices composed by all shapes in this shape group.
-
-<a name='ShapeGroup_shapes'></a>
-### ShapeGroup#shapes
-
-<b>Deprecated: Use the <a href="ShapeGroup.md#ShapeGroup_shapeCount">ShapeGroup#shapeCount</a>,
-<a href="ShapeGroup.md#ShapeGroup_getShape">ShapeGroup#getShape</a>, and
-<a href="ShapeGroup.md#ShapeGroup_setShape">ShapeGroup#setShape</a> methods instead.</b>
-
-List of shapes contained in this group.
-This property should only be used to access properties
-and call methods on each shape, and not to add, remove
-or replace shapes directly.
 
 <a name='ShapeGroup_addShape'></a>
 ### ShapeGroup#addShape(shape)
