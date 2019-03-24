@@ -51,16 +51,16 @@ The following is a screen shot of a scene generated with the help of the former 
 ### List of Classes
 This is an overview of most of the JavaScript classes available in this library:
 
-* [**`H3DU`**](https://peteroupc.github.io/html3dutil/H3DU.html) - Contains various utility methods in the Geometry Utilities Library.
+* [**`H3DU`**](https://peteroupc.github.io/html3dutil/html) - Contains various utility methods in the Geometry Utilities Library.
 * [**`MathUtil`**](https://peteroupc.github.io/html3dutil/MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors.
-* [**`H3DU.MeshBuffer`**](https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html) - Represents a 3D model.
-* [**`H3DU.Meshes`**](https://peteroupc.github.io/html3dutil/H3DU.Meshes.html) - Contains methods for generating common 3D models.
-* [**`H3DU.Shape`**](https://peteroupc.github.io/html3dutil/H3DU.Shape.html) - Represents an instance of a 3D shape with its own transform.
-* [**`H3DU.ShapeGroup`**](https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html) - Represents a group of 3D shapes.
-*  [**`H3DU.BSplineCurve`**](https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html),
- [**`H3DU.BSplineSurface`**](https://peteroupc.github.io/html3dutil/H3DU.BSplineSurface.html),
- [**`H3DU.CurveBuilder`**](https://peteroupc.github.io/html3dutil/H3DU.CurveBuilder.html),
- [**`H3DU.SurfaceBuilder`**](https://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html) - Supports generating parametric curves and surfaces. Many curves and surfaces can be expressed as so-called _curve evaluator objects_ and _surface evaluator objects_, and the extras to the library include many kinds of such objects.
+* [**`MeshBuffer`**](https://peteroupc.github.io/html3dutil/MeshBuffer.html) - Represents a 3D model.
+* [**`Meshes`**](https://peteroupc.github.io/html3dutil/Meshes.html) - Contains methods for generating common 3D models.
+* [**`Shape`**](https://peteroupc.github.io/html3dutil/Shape.html) - Represents an instance of a 3D shape with its own transform.
+* [**`ShapeGroup`**](https://peteroupc.github.io/html3dutil/ShapeGroup.html) - Represents a group of 3D shapes.
+*  [**`BSplineCurve`**](https://peteroupc.github.io/html3dutil/BSplineCurve.html),
+ [**`BSplineSurface`**](https://peteroupc.github.io/html3dutil/BSplineSurface.html),
+ [**`CurveBuilder`**](https://peteroupc.github.io/html3dutil/CurveBuilder.html),
+ [**`SurfaceBuilder`**](https://peteroupc.github.io/html3dutil/SurfaceBuilder.html) - Supports generating parametric curves and surfaces. Many curves and surfaces can be expressed as so-called _curve evaluator objects_ and _surface evaluator objects_, and the extras to the library include many kinds of such objects.
 
 For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the Geometry Utilities Library</a>.
 
@@ -75,26 +75,26 @@ use the concept of a "camera", the projection is like setting the camera&#39;s f
 <a id=3D_Models></a>
 ### 3D Models
 
-Most 3D scenes are made up of _meshes_, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `H3DU.MeshBuffer` class, or create a built-in geometric shape using a method in the `H3DU.Meshes` class. The example below shows how you can create a box mesh:
+Most 3D scenes are made up of _meshes_, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `MeshBuffer` class, or create a built-in geometric shape using a method in the `Meshes` class. The example below shows how you can create a box mesh:
 
     // Create a box mesh 10 units in width, 20 units
     // in height, and 25 units in depth
-    var mesh=H3DU.Meshes.createBox(10,20,25);
+    var mesh=Meshes.createBox(10,20,25);
 
 Here are some other built-in methods for creating meshes. This page doesn&#39;t explain all the features or parameters in the `Meshes` class; for that, see the
-<a href="http://peteroupc.github.io/html3dutil/H3DU.Meshes.html">Meshes API documentation</a>.
+<a href="http://peteroupc.github.io/html3dutil/Meshes.html">Meshes API documentation</a>.
 
-  * <dfn>`H3DU.Meshes.createSphere(radius)`</dfn>
+  * <dfn>`Meshes.createSphere(radius)`</dfn>
   <br>Creates a sphere with the given `radius`.
-  * <dfn>`H3DU.Meshes.createCylinder(base, top, height)`</dfn>
+  * <dfn>`Meshes.createCylinder(base, top, height)`</dfn>
   <br>Creates a cylinder with the given `base` radius, `top` radius, and `height`. Can be used
   to create a cone if `base` or `top` is `0`.
-  * <dfn>`H3DU.Meshes.createClosedCylinder(base, top, height)`</dfn>
+  * <dfn>`Meshes.createClosedCylinder(base, top, height)`</dfn>
   <br>Like `createCylinder`, except it also covers the base and top.
-  * <dfn>`H3DU.Meshes.createPartialDisk(inner, outer, start, sweep)`</dfn>
+  * <dfn>`Meshes.createPartialDisk(inner, outer, start, sweep)`</dfn>
   <br>Creates a circular ring, of radius `outer` with a hole of radius `inner`, starting at `start`
   degrees and sweeping `sweep` degrees.
-  * <dfn>`H3DU.Meshes.createDisk(inner, outer)`</dfn>
+  * <dfn>`Meshes.createDisk(inner, outer)`</dfn>
   <br>Same as calling `createPartialDisk` with `start` 0 and `sweep` 360.
 
 The methods described above return a `MeshBuffer` object describing the appropriate mesh's geometry.  Methods that can be called on a `MeshBuffer` include the following:
@@ -106,10 +106,10 @@ The methods described above return a `MeshBuffer` object describing the appropri
 <a id=Shapes></a>
 ### Shapes
 
-The `H3DU.Shape` constructor method assigns a linear or perspective transformation (including shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.
+The `Shape` constructor method assigns a linear or perspective transformation (including shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.
 
     // Create a shape based on the mesh
-    var shape=new H3DU.Shape(mesh);
+    var shape=new Shape(mesh);
     // Move it 1 unit along the X axis
     shape.setPosition(1,0,0);
 

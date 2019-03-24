@@ -31,7 +31,7 @@ Most modern 3D rendering engines use the following transformations:
 the coordinate system shared by every object in the scene. The world matrix
 is not discussed in this page.
 * A _view matrix_ transforms coordinates in world space to _eye space_.
-* A _projection matrix_ transforms coordinates in eye space to _clip space_.  If we use the concept of a "camera", the projection matrix is like setting the camera's focus and lens, and the view matrix is like setting its position and orientation.
+* A _projection matrix_ transforms coordinates in eye space to _clip space_.  If we use the concept of a "camera", the projection matrix is like setting the "camera"'s focus and lens, and the view matrix is like setting its position and orientation.
 
 As [**explained later**](#Vertex Coordinates in the Graphics System) on this page,
 however, these transformations and matrices are
@@ -50,8 +50,7 @@ orthographic projection, described below. (Other kinds of projections, such as o
 <a id=Perspective_Projection></a>
 ### Perspective Projection
 
-A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the
-projection similar to how our eyes see the world.
+A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the projection similar to how our eyes see the world.
 
 ![**Two rows of spheres, and a drawing of a perspective view volume.**](persp1.png)
 
@@ -64,7 +63,7 @@ and others would be.
 
 The view volume is bounded on all six sides by six _clipping planes_:
 
-* The near and far clipping planes are placed a certain distance from the camera. For example, if the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume will hold only objects between 3 and 5 units from the camera. (Strictly speaking, a near clipping plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)
+* The near and far clipping planes are placed a certain distance from the "camera". For example, if the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume will hold only objects between 3 and 5 units from the "camera". (Strictly speaking, a near clipping plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)
 * The left, right, top, and bottom clipping planes form the other four sides of the volume.
 
 Note further that:
@@ -84,7 +83,7 @@ and sets the scene's projection matrix accordingly.
 
 * `fov` - Vertical field of view, in degrees.
 * `aspect` - Aspect ratio of the scene.
-* `near`, `far` - Distance from the camera to the near and far clipping planes.
+* `near`, `far` - Distance from the "camera" to the near and far clipping planes.
 
 **[**`MathUtil.mat4frustum(left, right, bottom, top, near, far)`**](http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum)**
 
@@ -94,7 +93,7 @@ bound the view volume. Their positions are chosen so that the result is a perspe
 
 * `left`, `right`, `bottom`, `top` - Location of the left, right, bottom, and top clipping planes in terms
 of where they meet the near clipping plane.
-* `near`, `far` - Distance from the camera to the near and far clipping planes.
+* `near`, `far` - Distance from the "camera" to the near and far clipping planes.
 
 <a id=Orthographic_Projection></a>
 ### Orthographic Projection
@@ -114,12 +113,12 @@ This method returns a 4x4 matrix that adjusts the coordinate system for an ortho
 * `right` - Rightmost coordinate of the 3D view.
 * `bottom` - Topmost coordinate of the 3D view.
 * `top` - Bottommost coordinate of the 3D view.
-* `near`, `far` - Distance from the camera to the near and far clipping planes. Either value
+* `near`, `far` - Distance from the "camera" to the near and far clipping planes. Either value
 can be negative.
 
 **`MathUtil.mat4ortho2d(left, right, bottom, top)`**
 
-This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively. This choice of values makes a Z coordinate of 0 especially appropriate for this projection.
+This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.
 
 * `left`, `right`, `bottom`, `top` - Same as in `mat4ortho`.
 
@@ -137,25 +136,25 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 
 The view matrix transforms _world space_ coordinates, shared by every object in a scene, to coordinates in _eye space_
 (also called _camera space_ or _view space_), in which the "camera" is located at the center of the coordinate system: (0, 0, 0).
-A view matrix essentially rotates the camera and moves it to a given position in world space. Specifically:
+A view matrix essentially rotates the "camera" and moves it to a given position in world space. Specifically:
 
-* The camera is rotated to point at a certain object or location on the scene. This is represented by
+* The "camera" is rotated to point at a certain object or location on the scene. This is represented by
 the `lookingAt` parameter in the `mat4lookat()` method, below.
-* The camera is placed somewhere on the scene. This is represented by
+* The "camera" is placed somewhere on the scene. This is represented by
 the `eye` parameter in the `mat4lookat()` method.  It also represents the "eye position" in the perspective
 projection, above.
-* The camera rolls itself, possibly turning it sideways or upside down. This is guided by
-the `up` parameter in the `mat4lookat()` method. Turning the camera upside down, for example, will swap
+* The "camera" rolls itself, possibly turning it sideways or upside down. This is guided by
+the `up` parameter in the `mat4lookat()` method. Turning the "camera" upside down, for example, will swap
 the placement of the top and bottom clipping planes, thus inverting the view of the scene.
 
 **`MathUtil.mat4lookat(eye, lookingAt, up)`**
 
-This method allows you to generate a view matrix based on the camera's position and view.
+This method allows you to generate a view matrix based on the "camera"'s position and view.
 
-* `eye` - Array of three elements (X, Y, Z) giving the position of the camera in world space.
-* `lookingAt` - Array of three elements (X, Y, Z) giving the position the camera is looking at in world space.
+* `eye` - Array of three elements (X, Y, Z) giving the position of the "camera" in world space.
+* `lookingAt` - Array of three elements (X, Y, Z) giving the position the "camera" is looking at in world space.
 This is optional. The default is [0, 0, 0].
-* `up` - Array of three elements (X, Y, Z) giving the vector from the center of the camera to the top.
+* `up` - Array of three elements (X, Y, Z) giving the vector from the center of the "camera" to the top.
 This is optional. The default is [0, 1, 0].
 
 <a id=Vertex_Coordinates_in_the_Graphics_System></a>
@@ -169,7 +168,7 @@ which exist for convenience in many 3D graphics libraries.
 When a commonly used graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line, or point,
 all it really expects is the location of that primitive's vertices in _clip space_. A
 so-called _vertex shader_ communicates those locations to the graphics pipeline using
-the input it's given. Although the vertex shader can use projection, view, and world
+the data accessible to it. Although the vertex shader can use projection, view, and world
 matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to,
 and can use a different paradigm for this purpose. For example, the vertex shader can
 be passed vertex coordinates that are already in clip space and just output those coordinates

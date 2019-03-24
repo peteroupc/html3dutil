@@ -31,8 +31,7 @@ It also describes several examples of graphics filters.
 
 In the HTML 3D Library, graphics filters are functions used to modify the appearance
 of the screen after each frame. They are implemented in a language called GLSL, or GL
-Shading Language.  GLSL programs are called "shaders", and they are compiled into code that runs on a
-GPU, or graphics processing unit.
+Shading Language.  GLSL programs are called "shaders", and they are compiled into code that runs on a GPU, or graphics processing unit.
 
 Graphics filters are considered "fragment shaders", or shaders that process one pixel at a time. GPUs
 can render graphics very fast with such shaders because one fragment shader can process multiple pixels in parallel, without
@@ -78,13 +77,9 @@ The `textureEffect` function takes these parameters:
 * `vec2 textureSize`: Size of the screenshot, pointed to by `sampler`, in pixels. `textureSize.x` is the
   width, and `textureSize.y` is the height.
 
-The `textureEffect` function returns a `vec4` (4-element vector) giving the color that the current pixel should
-be. The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color
-with that shade of gray. Thus, the filter will convert the screen to grayscale tones.
+The `textureEffect` function returns a `vec4` (4-element vector) giving the color that the current pixel should be. The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color with that shade of gray. Thus, the filter will convert the screen to grayscale tones.
 
-The shader can also define custom parameters called "uniforms", so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like
-`uniform [type] [name];` at the top of the shader. Example: `uniform float time;` Uniforms, once declared,
-can be used in the `textureEffect` function.
+The shader can also define custom parameters called "uniforms", so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like `uniform [type] [name];` at the top of the shader. Example: `uniform float time;` Uniforms, once declared, can be used in the `textureEffect` function.
 
 A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
 be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.

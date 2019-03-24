@@ -14,15 +14,32 @@ To import all symbols in this module, either of the following can be used:
 
 ### Methods
 
-* [fragmentShaderLib](#extras_fragmentshaderlib.fragmentShaderLib)<br>TODO: Not documented yet.
+* [fragmentShaderLib](#extras_fragmentshaderlib.fragmentShaderLib)<br>Returns GLSL shader code for several useful functions
+for shaders, especially fragment shaders.
 
 <a name='extras_fragmentshaderlib.fragmentShaderLib'></a>
 ### (static) module:extras/fragmentshaderlib.fragmentShaderLib()
 
-TODO: Not documented yet.
+Returns GLSL shader code for several useful functions
+for shaders, especially fragment shaders.
+TODO: Not documented fully yet.
+Contains the following functions:<ul>
+<li><code>float rand(float seed)</code>: Generates a randomized
+hash of a number, in the interval [0, 1).
+<li><code>float rand(vec2 seed)</code>: Generates a randomized
+hash of a two-number vector, in the interval [0, 1).
+<li><code>float rand(vec3 seed)</code>: Generates a randomized
+hash of a three-number vector, in the interval [0, 1).
+<li><code>float signedrand(float seed)</code>: Generates a randomized
+hash of a number, in the interval [-1, 1).
+<li><code>float signedrand(vec2 seed)</code>: Generates a randomized
+hash of a two-number vector, in the interval [-1, 1).
+<li><code>float signedrand(vec3 seed)</code>: Generates a randomized
+hash of a three-number vector, in the interval [-1, 1).
+</ul>
 
 #### Return Value
 
-Return value. (Type: *)
+The GLSL shader code. (Type: string)
 
 [Back to documentation index.](index.md)

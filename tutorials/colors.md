@@ -1,4 +1,4 @@
-This page describes common identifiers and names for colors, as used in the HTML 3D Library's `toGLColor` method.
+This page describes common identifiers and names for colors, as used in the Geometry Utilities Library's `toGLColor` method.
 
 <a id=Contents></a>
 ## Contents

@@ -65,17 +65,12 @@ This clock is made up of shapes, which
 are added to a single ShapeGroup which represents the whole clock, as follows:
 
 * Clock: `ShapeGroup`
-    * Edge: Torus
-    * Front face: Disk
-    * Back face: Disk
+    * Edge, faces, 12 o'clock, center: Torus, two disks, two spheres
     * Hour hand: Capsule
     * Minute hand: Capsule
     * Seconds hand: Capsule
-    * 12 o'clock: Sphere
-    * Center: Sphere
 
 To create a shape group, call `new H3DU.ShapeGroup()`. To add a `Shape` object to the group,
-call `new H3DU.Shape(shape)`. Note that you can add only shapes or other shape groups, not meshes,
-to a shape group.
+call `new H3DU.Shape(shape)`. Note that you can add only shapes or other shape groups, not meshes, to a shape group.
 
 [Back to documentation index.](index.md)
