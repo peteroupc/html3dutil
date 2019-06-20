@@ -25,9 +25,9 @@
     "url": "https://github.com/peteroupc/html3dutil/issues"
   },
   "devDependencies": {
-    "eslint": "^3.10.1",
-    "jsdoc": "^3.5.5",
-    "rollup": "^0.54.1",
-    "svgo": "^1.0.3"
+    "eslint": ">=5.16.0",
+    "jsdoc": ">=3.6.2",
+    "rollup": ">=1.15.6",
+    "svgo": ">=1.2.2"
   }
 }

@@ -1,4 +1,4 @@
-/* global yupFalse */
+/* global yUp */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -3306,10 +3306,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
     // Transform the vector and do a perspective divide
     const vec = MathUtil.mat4projectVec3(matrix, vector);
     // Now convert the projected vector to window coordinates
-    // const yupfalse = typeof yUp === "undefined" || yUp === null || yUp === false;
+    const yupfalse = typeof yUp === "undefined" || yUp === null || yUp === false;
     const halfWidth = viewport[2] * 0.5;
     const halfHeight = viewport[3] * 0.5;
-    const vecY = !yupFalse ? vec[1] : -vec[1];
+    const vecY = !yupfalse ? vec[1] : -vec[1];
     const x = vec[0] * halfWidth + halfWidth + viewport[0];
     const y = vecY * halfHeight + halfHeight + viewport[1];
     const z = (vec[2] + 1.0) * 0.5;
