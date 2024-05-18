@@ -1,11 +1,7 @@
 /* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 
 /* exported makeTubeFromPath */
@@ -19,5 +15,3 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
     .evalSurface( H3DU.Mesh.TRIANGLES, resolution,
       Math.ceil(2 * thickness / flatness)).toMeshBuffer();
 }
-
-/* exported starPolygon */

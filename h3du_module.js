@@ -1,10 +1,9 @@
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /* eslint no-extend-native: "off", callback-return: "off" */
@@ -314,11 +313,10 @@ if (typeof window !== "undefined" && window !== null && !(typeof window.Promise 
   }
 }/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /* global JSON, Promise */
 
@@ -1113,14 +1111,12 @@ const toGLColor = function(r, g, b, a) {
   } else {
     return clampRgba(r || [0, 0, 0, 0]);
   }
-};/* global yUp */
-/*
+};/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /**
@@ -4416,7 +4412,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} A 3-element array giving the window
    * coordinates, in that order.
    */
-  "vec3toWindowPoint":function(vector, matrix, viewport) {
+  "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
     // Transform the vector and do a perspective divide
     const vec = MathUtil.mat4projectVec3(matrix, vector);
@@ -5017,11 +5013,10 @@ MathUtil.LocalRollPitchYaw = MathUtil.GlobalYawPitchRoll;
  * @const */
 MathUtil.LocalRollYawPitch = MathUtil.GlobalPitchYawRoll;/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /** @ignore */
 const MathInternal = {
@@ -5096,11 +5091,10 @@ const MathInternal = {
   }
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /**
@@ -5725,11 +5719,10 @@ Curve.prototype.toArcLengthParam = function() {
   return new Curve(this, new Curve._ArcLengthParam(this));
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /**
@@ -6200,11 +6193,10 @@ BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
   return newAttribute;
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /**
  * Contains constants for assigning semantics
@@ -6305,11 +6297,10 @@ Semantic.VIEWINVERSE = 107;
  * @const */
 Semantic.JOINTMATRIX = 108;/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /**
  * A geometric mesh in the form of buffer objects.
@@ -6947,8 +6938,8 @@ MeshBuffer.triangleStripIndices = function(vertexCount) {
   if(vertexCount >= 3) {
     let i;
     for (i = 2; i < vertexCount; i++) {
-      ret.push(i - 1,
-        i - 2, i);
+      ret.push( i - 1,
+         i - 2, i);
     }
   }
   return ret;
@@ -8537,11 +8528,10 @@ SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {
   return this;
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 function linear(points, elementsPerValue, t) {
@@ -8954,8 +8944,6 @@ BSplineCurve.prototype.evaluate = function(u) {
     case 4:
       ret = bezierCubic(cp, cp[0].length, u);
       break;
-    default:
-      break;
     }
   } else {
     const numPoints = this.controlPoints.length;
@@ -9205,8 +9193,6 @@ BSplineCurve.prototype.velocity = function(u) {
       break;
     case 4:
       ret = bezierCubicDerivative(cp, cp[0].length, u);
-      break;
-    default:
       break;
     }
   } else {
@@ -9653,11 +9639,10 @@ BSplineSurface.fromBezierSurface = function(controlPoints, bits) {
     controlPoints.length - 1, bits);
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /**
@@ -10112,11 +10097,10 @@ PiecewiseCurve.fromEllipseArc = function(x, y, radiusX, radiusY, start, sweep) {
   return new PiecewiseCurve(curves);
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /** @ignore
@@ -12217,8 +12201,6 @@ GraphicsPath.prototype.transform = function(trans) {
       }
       break;
     }
-    default:
-      break;
     }
   }
   return ret;
@@ -14645,11 +14627,10 @@ GraphicsPath.prototype.xor = function(path, flatness) {
   return retval.toPath();
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /**
  * A class offering a convenient way to set a transformation
@@ -15046,11 +15027,10 @@ Transform.prototype.copy = function() {
   return ret;
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 
 /**
@@ -15301,11 +15281,10 @@ Shape.prototype.getMatrix = function() {
   return mat;
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /**
  * Represents a grouping of shapes. This object
@@ -15574,11 +15553,10 @@ ShapeGroup.prototype.setScale = function(x, y, z) {
   return this;
 };/*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+https://creativecommons.org/publicdomain/zero/1.0/
+
 */
 /**
  * Contains methods that create meshes

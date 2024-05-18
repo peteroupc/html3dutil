@@ -4,6 +4,7 @@ of math functions for working with vectors, matrices, and quaternions.
 Here is an overview of these data types.
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Contents**](#Contents)
@@ -33,6 +34,7 @@ Here is an overview of these data types.
         - [**Finding a triangle's winding**](#Finding_a_triangle_s_winding)
 
 <a id=Vectors></a>
+
 ## Vectors
 
 A vector is a line segment pointing in a certain _direction_ in space and
@@ -58,6 +60,7 @@ coordinates_, where the 3D position equals the first three elements divided
 by the fourth.)
 
 <a id=Unit_Vectors></a>
+
 ### Unit Vectors
 
 A _unit vector_ is a vector with a length of 1. (A vector's _length_,  or _norm_, is the square root
@@ -76,6 +79,7 @@ Note that due to rounding error, normalizing a vector with a `MathUtil` method
 might not necessarily result in a vector with a length of 1.
 
 <a id=Matrices></a>
+
 ## Matrices
 
 A matrix is a rectangular array that can describe a
@@ -86,6 +90,7 @@ A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 For more details, see the {@tutorial matrixdetails} tutorial.
 
 <a id=Translation></a>
+
 ### Translation
 
 A translation is a shifting of an object's position.
@@ -99,6 +104,7 @@ To multiply an existing matrix by a translation, use
 before the other transformations.
 
 <a id=Scaling></a>
+
 ### Scaling
 
 Scaling changes an object's size.
@@ -112,6 +118,7 @@ To multiply an existing matrix by a scaling, use
 before the other transformations.
 
 <a id=Rotation></a>
+
 ### Rotation
 
 Rotation changes an object's orientation.
@@ -131,6 +138,7 @@ To multiply an existing matrix by a rotation, use
 before the other transformations.
 
 <a id=Combining_Transforms></a>
+
 ### Combining Transforms
 
 The order in which you do transforms is important. In general, scaling then translating is
@@ -150,12 +158,14 @@ This takes two matrices and returns one combined matrix. The combined matrix wil
 of doing the second matrix's transform, then the first matrix's transform.
 
 <a id=Describing_Rotations></a>
+
 ## Describing Rotations
 
 Rotations in 3D space can be described in many ways, including
 quaternions, Tait-Bryan angles, and an angle and axis.
 
 <a id=Axis_of_Rotation></a>
+
 ### Axis of Rotation
 
 A rotation of vectors or points can be described using an _angle_
@@ -187,12 +197,14 @@ Unless stated otherwise, an axis of rotation passed to a `MathUtil`
 method need not be a [**unit vector**](#Unit_Vectors).
 
 <a id=Quaternions></a>
+
 ### Quaternions
 
 A quaternion is a 4-element vector that can describe a
 3D rotation. Functions dealing with quaternions begin with "quat".
 
 <a id=Generating_Quaternions></a>
+
 #### Generating Quaternions
 
 Functions that generate quaternions include:
@@ -206,6 +218,7 @@ a rotation from one vector to another.
 * {@link MathUtil.quatFromTaitBryan} - Generates a quaternion from Tait-Bryan angles.
 
 <a id=Using_Quaternions></a>
+
 #### Using Quaternions
 
 For best results when using quaternions:
@@ -221,6 +234,7 @@ For best results when using quaternions:
   every few frames. (Quaternions that describe a 3D rotation should be [**unit vectors**](#Unit_Vectors).)
 
 <a id=Multiplying_Quaternions></a>
+
 #### Multiplying Quaternions
 
 When two quaternions are multiplied (for example, with {@MathUtil.quatMultiply}),
@@ -229,6 +243,7 @@ before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.
 
 <a id=Tait_Bryan_angles></a>
+
 ### Tait-Bryan angles
 
 Pitch-yaw-roll angles (also called Tait-Bryan angles) describe three different rotations
@@ -253,11 +268,13 @@ Converts from Tait-Bryan angles to a quaternion
 Converts from a quaternion to Tait-Bryan angles
 
 <a id=4x4_Matrices></a>
+
 ### 4x4 Matrices
 
 A 4x4 matrix can describe a 3D vector rotation; see [**"Rotation", above**](#Rotation).
 
 <a id=Planes></a>
+
 ## Planes
 
 A 4-element array can describe a plane in the following manner:
@@ -283,6 +300,7 @@ There is one method that deals with planes:
 its normal has a length of 1.
 
 <a id=Boxes></a>
+
 ## Boxes
 
 An array of six numbers can describe an axis-aligned bounding box (AABB).
@@ -299,6 +317,7 @@ Methods that deal with boxes include:
 * {@link MathUtil.boxIsEmpty} - Determines whether a box is empty.
 
 <a id=Coordinate_Systems></a>
+
 ## Coordinate Systems
 
 There are two conventions of 3D coordinate systems, left-handed and
@@ -322,9 +341,11 @@ be the up axis.  Therefore, these three axes are defined here to avoid
 confusion.
 
 <a id=Differences_in_Behavior></a>
+
 ### Differences in Behavior
 
 <a id=Projection_and_view_matrices></a>
+
 #### Projection and view matrices
 
 The difference between a left-handed and right-handed coordinate system
@@ -334,6 +355,7 @@ matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.
 
 <a id=Rotation_angles_such_as_used_in_mat4rotate_and_quatRotate></a>
+
 #### Rotation angles (such as used in `mat4rotate` and `quatRotate`)
 
 While the [**axis of rotation**](#Axis_of_Rotation) points backward from the "eye", if the angle's value
@@ -346,6 +368,7 @@ While the axis of rotation points backward from the "eye", if the angle's value
 is negative, then the angle runs in the opposite direction.
 
 <a id=Cross_product_vec3cross_and_normals></a>
+
 #### Cross product (`vec3cross`) and normals
 
 Given a triangle formed by...
@@ -362,6 +385,7 @@ for left-handed systems. (In general, there are two possible choices for normals
 point in opposite directions.)
 
 <a id=Winding_and_face_classification></a>
+
 ### Winding and face classification
 
 A two-dimensional triangle has counterclockwise _winding_ if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it's first transformed into 2D _window coordinates_ before its winding is found. (Window coordinates roughly correspond to screen pixels.)
@@ -370,6 +394,7 @@ By default, in the GL pipeline, triangles with counterclockwise winding are _fro
 other triangles are _back faces_.
 
 <a id=Finding_a_triangle_s_winding></a>
+
 #### Finding a triangle's winding
 
 To find a triangle's winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle's signed area.

@@ -1,4 +1,5 @@
 <a id=Introduction></a>
+
 ## Introduction
 
 This page describes conventions for specifying projection and
@@ -10,6 +11,7 @@ it draw triangles, lines, and other graphics primitives.
 **Source code for the latest version of the library is available at the** [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil)**.**
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Introduction**](#Introduction)
@@ -23,6 +25,7 @@ it draw triangles, lines, and other graphics primitives.
 - [**Other Pages**](#Other_Pages)
 
 <a id=Overview_of_Transformations></a>
+
 ### Overview of Transformations
 
 Most modern 3D rendering engines use the following transformations:
@@ -40,6 +43,7 @@ space coordinates of the things it draws. The pipeline uses those coordinates
 and their transformed _window coordinates_ when rendering things on the screen.
 
 <a id=Projection_Transform></a>
+
 ## Projection Transform
 
 A _projection transform_ (usually in the form of a _projection matrix_) transforms coordinates in eye space to _clip space_.
@@ -48,6 +52,7 @@ Two commonly used projections in 3D graphics are the perspective projection and
 orthographic projection, described below. (Other kinds of projections, such as oblique projections, isometric projections, and nonlinear projection functions, are not treated here.)
 
 <a id=Perspective_Projection></a>
+
 ### Perspective Projection
 
 A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the projection similar to how our eyes see the world.
@@ -96,6 +101,7 @@ of where they meet the near clipping plane.
 * `near`, `far` - Distance from the "camera" to the near and far clipping planes.
 
 <a id=Orthographic_Projection></a>
+
 ### Orthographic Projection
 
 An orthographic projection is one in which the left and right clipping planes are parallel to each other,
@@ -132,6 +138,7 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 * `aspect` - Aspect ratio of the viewport.
 
 <a id=View_Transform></a>
+
 ## View Transform
 
 The view matrix transforms _world space_ coordinates, shared by every object in a scene, to coordinates in _eye space_
@@ -158,6 +165,7 @@ This is optional. The default is [0, 0, 0].
 This is optional. The default is [0, 1, 0].
 
 <a id=Vertex_Coordinates_in_the_Graphics_System></a>
+
 ## Vertex Coordinates in the Graphics System
 
 The concepts of _eye space_, _camera space_, and _world space_, as well as
@@ -195,6 +203,7 @@ is the _perspective_ effect mentioned earlier: objects will appear smaller and s
 as they are more and more distant from the "camera".
 
 <a id=Other_Pages></a>
+
 ## Other Pages
 
 The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:

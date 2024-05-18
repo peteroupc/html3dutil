@@ -3,8 +3,6 @@ Geometry Utilities
 
 **Download source code: [ZIP file](https://github.com/peteroupc/html3dutil/archive/master.zip)**
 
-If you like this software, consider donating to me at this link: [http://peteroupc.github.io/](http://peteroupc.github.io/)
-
 ----
 
 This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by established 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.
@@ -52,9 +50,7 @@ information about what has changed in this library.
 
 ## About
 
-Any copyright is dedicated to the Public Domain.
-[http://creativecommons.org/publicdomain/zero/1.0/](http://creativecommons.org/publicdomain/zero/1.0/)
-
-If you like this, you should donate to Peter O. (original author of
-the Public Domain HTML 3D Library) at:
-[http://peteroupc.github.io/](http://peteroupc.github.io/)
+Any copyright to this work is released to the Public Domain.
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
+[https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)

@@ -1,10 +1,6 @@
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 /* exported simpsonRec */
 function simpsonRec(func, mn, mx, dir, depth, f1value, f3value, f5value) {
@@ -31,14 +27,14 @@ function simpsonRec(func, mn, mx, dir, depth, f1value, f3value, f5value) {
 function _numIntegrate(func, xmin, xmax) {
   "use strict";
   /*
-* Estimates the integral of a function. The integral
+* Estimates the integral of a continuous function. The integral
 * is like the area between the function's graph and the X axis,
 * where areas above the X axis add to the integral, and areas
 * below the X axis subtract from it.
 * @private
 * @param {Function} func A function that takes one number
-* and returns a number. For best results,
-* the function should be continuous (informally, this means
+* and returns a number. This function is assumed to be
+* continuous (informally, this means
 * its graph between <code>xmin</code> and
 * <code>xmax</code> can be drawn without lifting the pen).
 * @param {number} xmin Smallest input to the function,

@@ -1,10 +1,6 @@
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 /* global Float32Array, Uint16Array, Uint32Array */
 
@@ -42,7 +38,6 @@ import {toGLColor} from "./h3du-misc";
  * for(var i=0;i<attributes.length;i++) {
  * if(attributes[i]) {
  * var a=attributes[i]
- * //console.log(a)
  * var attr=new THREE.InterleavedBufferAttribute(
  * new THREE.InterleavedBuffer(a.buffer,a.stride),
  * a.countPerValue,a.offset)

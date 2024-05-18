@@ -37,7 +37,7 @@ You can use values like the following.
 <a id=What_Do_Some_Colors_Look_Like></a>
 ## What Do Some Colors Look Like?
 
-Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by various browser applications" for 256-color displays (according to [**Wikipedia**](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes.
+Here is a list of useful colors sorted by hue or color tone.  This particular list was historically called the "Web safe" colors, which were chosen "specifically because they matched the palettes selected by various browser applications" for 256-color displays (according to [**Wikipedia**](http://en.wikipedia.org/wiki/Web_colors)), but this list is still useful because it's short yet gives you a variety of appropriate colors for most purposes. [^1]
 
 ![**A list of the "Web-safe colors". Each entry consists of a color swatch and the corresponding HTML name.**](websafe.svg)
 
@@ -177,3 +177,5 @@ An alternate syntax for HSL colors supports the alpha component (see "What Is an
 An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't use an alpha component, the color is fully opaque.
 
 [Back to documentation index.](index.md)
+
+[^1]: The definition of "Web safe" colors, though not the name, dates as early as 1994, when Microsoft's WinG API provided a _halftone palette_ to "allo[w] applications to simulate true 24-bit color on 8-bit devices" (_WinG Programmer's Reference_, 1994).  WinG was an early attempt by Microsoft to bring high-performance graphics operations to the Windows platform and was superseded by DirectX.

@@ -1,10 +1,6 @@
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 
 import {BSplineCurve} from "./h3du-bspline";
@@ -397,7 +393,8 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
 /**
  * Creates a piecewise curve that describes an arc running along an axis-aligned
  * ellipse, or a shape based on that arc and ellipse, given the ellipse's center
- * and dimensions, start angle, and sweep angle.
+ * and dimensions, start angle, and sweep angle. The arc is rendered as
+ * cubic rational B-spline curves.
  * @param {number} x X coordinate of the ellipse's center.
  * @param {number} y Y coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.

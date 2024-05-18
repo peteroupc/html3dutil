@@ -1,11 +1,6 @@
-/* global yUp */
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 
 /**
@@ -3301,7 +3296,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @returns {Array<number>} A 3-element array giving the window
    * coordinates, in that order.
    */
-  "vec3toWindowPoint":function(vector, matrix, viewport) {
+  "vec3toWindowPoint":function(vector, matrix, viewport, yUp) {
     if(viewport[2] < 0 || viewport[3] < 0)throw new Error();
     // Transform the vector and do a perspective divide
     const vec = MathUtil.mat4projectVec3(matrix, vector);

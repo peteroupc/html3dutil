@@ -8,11 +8,7 @@
 
 /*
  Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 
 import {MathUtil, MeshBuffer} from "../h3du_module.js";
@@ -183,7 +179,8 @@ function drawCurve(contours) {
     .setColor([0, 0, 0]);
 }
 /**
- * Generates contour lines for two-dimensional data.
+ * Generates contour lines for two-dimensional data, using Paul Bourke's
+ * CONREC algorithm.
  * @param {Function} func A function that takes two parameters--a U coordinate
  * and a V coordinate--and returns a number at that point.
  * @param {Array<number>} levels An array of values at which to draw contour lines.
