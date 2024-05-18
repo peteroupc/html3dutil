@@ -27,11 +27,11 @@ TODO: Not documented yet.
 * `pointerLength` (Type: number)
 * `shaftRadius` (Type: number)
 * `pointerRadius` (Type: number)
-* `shaftColor` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> specifying the color of the shaft.
-* `pointerColor` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> specifying the color of the pointer.
+* `shaftColor` (Type: Array.&lt;number> | number | string)<br>A color vector or string specifying the color of the shaft.
+* `pointerColor` (Type: Array.&lt;number> | number | string)<br>A color vector or string specifying the color of the pointer.
 
 #### Return Value
 
-A mesh buffer of the resulting shape. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+A mesh buffer of the resulting shape. (Type: MeshBuffer)
 
 [Back to documentation index.](index.md)

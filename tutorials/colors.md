@@ -86,9 +86,9 @@ It looks complicated at first, but the section "How Do I Make HTML Colors?" will
 
 Look at the table below that shows some of the values possible for the red, green, and blue components of some colors.
 
-    Red 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
+    Red   00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
     Green 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
-    Blue 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
+    Blue  00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 
 Now, to make a custom color, you choose one value from the red row, one value from the green row, and one value from the blue row. Each value shows the intensity of the light that the color reflects. For example, a red value of 00 means that no red light is reflected, and a red value of FF means that red light is fully reflected.
 
@@ -159,7 +159,7 @@ An alternate syntax for RGB colors supports the alpha component (see "What Is an
 
 An HSL color is a color represented in the Hue-Saturation-Lightness color space. Here&#8217;s what each component means in detail.
 
-* **Hue** ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HLS) stands for a different hue:
+* **Hue** ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HSL) stands for a different hue:
 
     * Reds have hue 0 (say, 12 o&#8217;clock);
     * Yellows have hue 60 (2 o&#8217;clock);

@@ -28,7 +28,7 @@ it draw triangles, lines, and other graphics primitives.
 
 ### Overview of Transformations
 
-Most modern 3D rendering engines use the following transformations:
+Many 3D rendering engines use the following transformations:
 
 * A _world matrix_ transforms an object's own coordinates to _world space_,
 the coordinate system shared by every object in the scene. The world matrix

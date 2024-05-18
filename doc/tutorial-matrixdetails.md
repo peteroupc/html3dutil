@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a id=Matrix_Details></a>
+
 ## Matrix Details
 
 A matrix is a rectangular array that can describe a
@@ -14,6 +15,7 @@ A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.
 This section contains detailed information on matrices.
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Matrix Details**](#Matrix_Details)
@@ -32,6 +34,7 @@ This section contains detailed information on matrices.
 - [**Rotation Example**](#Rotation_Example)
 
 <a id=Arrangement></a>
+
 ## Arrangement
 
 In mathematical publications,
@@ -97,6 +100,7 @@ For 3x3 matrices, the elements are arranged in the following order:
 </math>
 
 <a id=A_Matrix_Transforms_Between_Coordinate_Systems></a>
+
 ### A Matrix Transforms Between Coordinate Systems
 
 A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
@@ -179,6 +183,7 @@ Provided the matrix can be [**inverted**](#Matrix_Inversions), the three axis ve
 _basis vectors_ of the coordinate system.
 
 <a id=Why_a_4x4_Matrix></a>
+
 ### Why a 4x4 Matrix?
 A matrix can describe _linear transformations_ from one vector in space
 to another.  These transformations, which include [**scaling**](#Scaling),
@@ -204,6 +209,7 @@ A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
 in 3D between 3x3 and 4x4 matrices.
 
 <a id=Transforming_Points></a>
+
 ## Transforming Points
 
 The transformation formula multiplies a matrix by a 3D point to change that point's
@@ -220,14 +226,15 @@ The following sections describe different kinds of matrix transformations in mor
 
 Related functions:
 
-* <a href="MathUtil.md#MathUtil.mat4transform">MathUtil.mat4transform()</a> -
+* MathUtil.mat4transform() -
  Transforms a 4-element vector with a 4x4 matrix
-* <a href="MathUtil.md#MathUtil.mat3transform">MathUtil.mat3transform()</a> -
+* MathUtil.mat3transform() -
  Transforms a 3-element vector with a 3x3 matrix
-* <a href="MathUtil.md#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> -
+* MathUtil.mat4projectVec3 -
  Does a perspective-correct transformation of a 3D point with a 4x4 matrix
 
 <a id=Scaling></a>
+
 ### Scaling
 
 Scaling changes an object's size. Scaling uses the 1st,
@@ -289,18 +296,19 @@ if `sx` is 2, the X axis will be (2, 0, 0) and thus have a length of 2.
 
 Related functions:
 
-* <a href="MathUtil.md#MathUtil.mat4scaled">MathUtil.mat4scaled()</a> -
+* MathUtil.mat4scaled() -
  Returns a scaling matrix
-* <a href="MathUtil.md#MathUtil.mat4scale">MathUtil.mat4scale()</a> -
+* MathUtil.mat4scale() -
  Multiplies a matrix by a scaling.
-* <a href="MathUtil.md#MathUtil.mat4scaleInPlace">MathUtil.mat4scaleInPlace()</a> -
+* MathUtil.mat4scaleInPlace() -
  Multiplies a matrix in place by a scaling.
-* <a href="MathUtil.md#MathUtil.mat4identity">MathUtil.mat4identity()</a> -
+* MathUtil.mat4identity() -
  Returns a 4x4 identity matrix
-* <a href="MathUtil.md#MathUtil.mat3identity">MathUtil.mat3identity()</a> -
+* MathUtil.mat3identity() -
  Returns a 3x3 identity matrix
 
 <a id=Translation></a>
+
 ### Translation
 
 A translation is a shifting of an object's position. In a transformation matrix,
@@ -351,12 +359,13 @@ remains unchanged. Likewise for y (`ty`) and z (`tz`).
 
 Related functions:
 
-* <a href="MathUtil.md#MathUtil.mat4translated">MathUtil.mat4translated()</a> -
+* MathUtil.mat4translated() -
  Returns a translation matrix
-* <a href="MathUtil.md#MathUtil.mat4translate">MathUtil.mat4translate()</a> -
+* MathUtil.mat4translate() -
  Multiplies a matrix by a translation.
 
 <a id=Rotation></a>
+
 ### Rotation
 
 Rotation changes an object's orientation. Given an angle of rotation, &theta;,
@@ -479,9 +488,9 @@ transformation.
 
 Related functions:
 
-* <a href="MathUtil.md#MathUtil.mat4rotated">MathUtil.mat4rotated()</a> -
+* MathUtil.mat4rotated() -
  Returns a rotation matrix
-* <a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate()</a> -
+* MathUtil.mat4rotate() -
  Multiplies a matrix by a translation.
 
 A list of common sines and cosines follows.  Values
@@ -498,6 +507,7 @@ shown with three decimal places are approximate.
 | cos | -1 | -0.924 | -0.866 | -0.707 | -0.5 | -0.383 | 0 | 0.383 | 0.5 | 0.707 | 0.866 | 0.924 | 1 |
 
 <a id=Matrix_Multiplication></a>
+
 ### Matrix Multiplication
 
 When two matrices are multiplied, the combined matrix will be such
@@ -526,13 +536,14 @@ mat4rotate involve multiplying 4x4 matrices.
 
 Related functions:
 
-* <a href="MathUtil.md#MathUtil.mat4multiply">MathUtil.mat4multiply()</a> -
+* MathUtil.mat4multiply() -
  Multiplies two matrices
 
 \* Reading the [**tutorial by Dmitry Sokolov**](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
 led me to this highly useful insight.
 
 <a id=Projective_Transformations></a>
+
 ### Projective Transformations
 
 In all the transformations described above, the last row in the transformation matrix is
@@ -548,7 +559,7 @@ in the form of linear transformations on homogeneous coordinates (see
 in the matrix is not necessarily (0, 0, 0, 1).
 
 One example of a projective transformation is found in a _perspective projection_ matrix,
-as returned by <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a> or <a href="MathUtil.md#MathUtil.mat4frustum">MathUtil.mat4frustum</a>. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in _eye space_, or more specifically, as follows:
+as returned by MathUtil.mat4perspective or MathUtil.mat4frustum. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in _eye space_, or more specifically, as follows:
 
 * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
 
@@ -556,12 +567,13 @@ For more on perspective projections, see <a href="tutorial-camera.md">_The "Came
 
 Related functions:
 
-* <a href="MathUtil.md#MathUtil.mat4frustum">MathUtil.mat4frustum()</a> -
+* MathUtil.mat4frustum() -
  Returns a frustum matrix
-* <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective()</a> -
+* MathUtil.mat4perspective() -
  Returns a field-of-view perspective matrix
 
 <a id=Matrix_Inversions></a>
+
 ### Matrix Inversions
 
 An inverted matrix describes a transformation that undoes another transformation. For
@@ -583,19 +595,19 @@ rotation to reset an object to its previous orientation.  In general, to invert 
 rotation matrix, _transpose_ that matrix (so that its rows become its columns and vice versa).
 
 <a id=Inverting_a_General_NxN_Matrix></a>
+
 #### Inverting a General NxN Matrix
 
-Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="MathUtil.md#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.md#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.
+Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the MathUtil.mat4invert() or MathUtil.mat3invert() methods, respectively.
 
 To describe how inverting a matrix works, we will need to define some terms:
 
 * A matrix cell's _row index_ and _column index_ tell where that cell appears in the matrix.  For example, a cell on the first row has row index 0 and a cell on the second column has column index 1.
-* A matrix's _minor_ at a given cell is a smaller matrix generated by eliminating the row and column where that cell appears.
 * A matrix's _determinant_ is its overall
   scaling factor. Only an NxN matrix with a determinant other
   than 0 can be inverted.  To find a matrix's determinant:
-  1. For each cell in the first row (or first column), find the determinant of the matrix's minor at that cell.
-  2. Label the minors' determinants (A, B, C, D, ...), in that order.
+  1. For each cell in the first row (or first column), find the matrix's _minor_ at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix).
+  2. Label the minors (A, B, C, D, ...), in that order.
   3. The matrix's determinant is (A - B + C - D + ...).
 
   A 1x1 matrix's determinant is simply the value of its only cell.
@@ -603,8 +615,7 @@ To describe how inverting a matrix works, we will need to define some terms:
 To invert an NxN matrix:
 
 1. Create a new NxN matrix.
-2. For each cell in the original matrix, find the determinant of
-  its minor at that cell, and set the corresponding cell
+2. For each cell in the original matrix, find its minor at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix), and set the corresponding cell
   in the new matrix to that value.
 3. In the new matrix, reverse the sign of each cell whose row index
  plus column index is odd. (These cells will alternate in a checkerboard
@@ -616,6 +627,7 @@ To invert an NxN matrix:
 6. The new matrix will be the inverted form of the original NxN matrix.
 
 <a id=Rotation_Example></a>
+
 ## Rotation Example
 
 As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,

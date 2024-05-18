@@ -48,7 +48,7 @@ translation transformation.
 Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.
 
-For more information on the frustum matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4frustum">MathUtil.mat4frustum</a>.
+For more information on the frustum matrix and the parameters, see MathUtil.mat4frustum.
 
 #### Parameters
 
@@ -114,7 +114,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a "camera" view.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4lookat">MathUtil.mat4lookat</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4lookat.
 
 #### Parameters
 
@@ -174,7 +174,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection matrix.
 
-For more information on the projection matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4ortho">MathUtil.mat4ortho</a>.
+For more information on the projection matrix and the parameters, see MathUtil.mat4ortho.
 
 #### Parameters
 
@@ -195,7 +195,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection matrix.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4ortho2d">MathUtil.mat4ortho2d</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4ortho2d.
 
 #### Parameters
 
@@ -214,7 +214,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4perspective.
 
 #### Parameters
 
@@ -233,7 +233,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4pickMatrix">MathUtil.mat4pickMatrix</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4pickMatrix.
 
 #### Parameters
 
@@ -271,7 +271,7 @@ This object. (Type: MatrixStack)
 <a name='extras_matrixstack_MatrixStack_rotate'></a>
 ### module:extras/matrixstack~MatrixStack#rotate(angle, x, y, z)
 
-Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate</a>.
+Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see MathUtil.mat4rotate.
 
 #### Parameters
 

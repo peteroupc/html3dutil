@@ -81,26 +81,6 @@ function getIntersectionRayBox(ray, box) {
     ray[2] + ray[5] * mn
   ];
 }
-/*
-function polygonToPlane(polygon) {
-  if(polygon.length < 3) {
-    return [0, 0, 0, 0, 0, 0];
-  }
-  var normal = MathUtil.vec3cross(polygon[0], polygon[1]);
-  var centroid = MathUtil.vec3copy(polygon[0]);
-  for(var i = 1; i < polygon.length; i++) {
-    var nextIndex = i + 1 === polygon.length ? 0 : i + 1;
-    MathUtil.vec3addInPlace(normal,
-      MathUtil.vec3cross(polygon[i], polygon[nextIndex]));
-    MathUtil.vec3addInPlace(centroid, polygon[i]);
-  }
-  MathUtil.vec3scaleInPlace(centroid, 1.0 / polygon.length);
-  var plane = [
-    normal[0], normal[1], normal[2],
-    centroid[0], centroid[1], centroid[2]];
-  return plane;
-}*/
-
 function triangleToPlane(face) {
   const ac = MathUtil.vec3sub(face[0], face[2]);
   const bc = MathUtil.vec3sub(face[1], face[2]);

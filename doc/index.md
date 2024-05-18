@@ -1,41 +1,5 @@
 # Documentation Index
 
-* <a href="BSplineCurve.md">BSplineCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-* <a href="BSplineSurface.md">BSplineSurface</a><br>A <a href="Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
-whose edges are made up of B-spline curves.
-* <a href="BufferAccessor.md">BufferAccessor</a><br>A <b>vertex attribute object</b>.
-* <a href="Curve.md">Curve</a><br>A curve evaluator object for a parametric curve.
-* <a href="CurveBuilder.md">CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
-vertex attributes for a curve.
-* [Global Members](Global.md)
-* <a href="GraphicsPath.md">GraphicsPath</a><br>Represents a two-dimensional path.
-* <a href="H3DU.md">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.
-* <a href="H3DU.TextFont.md">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
-text.
-* <a href="H3DU.TextureAtlas.md">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
-texture.
-* <a href="MathUtil.md">MathUtil</a><br>A collection of math functions for working
-with vectors, matrices, quaternions, and other
-mathematical objects.
-* <a href="MeshBuffer.md">MeshBuffer</a><br>A geometric mesh in the form of buffer objects.
-* <a href="Meshes.md">Meshes</a><br>Contains methods that create meshes
-of various geometric shapes and solids, such as cubes, cylinders,
-and spheres.
-* <a href="PiecewiseCurve.md">PiecewiseCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve
-made up of one or more individual curves.
-* <a href="Promise.md">Promise</a><br>A promise holds a value to be resolved in the future.
-* <a href="Semantic.md">Semantic</a><br>Contains constants for assigning semantics
-to vertex attributes found in mesh buffers and
-to data that is uniform throughout a particular
-geometry draw call.
-* <a href="Shape.md">Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
-a transformation matrix (which defines the object's position and size).
-* <a href="ShapeGroup.md">ShapeGroup</a><br>Represents a grouping of shapes.
-* <a href="Surface.md">Surface</a><br>A surface evaluator object for a parametric surface.
-* <a href="SurfaceBuilder.md">SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
-vertex attributes for a surface.
-* <a href="Transform.md">Transform</a><br>A class offering a convenient way to set a transformation
-from one coordinate system to another.
 * <a href="extras_arrow.md">module:extras/arrow</a><br>The <code>extras/arrow.js</code> module.
 * <a href="extras_camera.md">module:extras/camera</a><br>The <code>extras/camera.js</code> module.
 * <a href="extras_camera.Camera.md">module:extras/camera.Camera</a><br>A class for controlling the projection and
@@ -49,13 +13,13 @@ events.
 * <a href="extras_createfloor.md">module:extras/createfloor</a><br>The <code>extras/createfloor.js</code> module.
 * <a href="extras_createwasher.md">module:extras/createwasher</a><br>The <code>extras/createwasher.js</code> module.
 * <a href="extras_curvetube.md">module:extras/curvetube</a><br>The <code>extras/curvetube.js</code> module.
-* <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A <a href="Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
+* <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A surface evaluator object for a tube extruded from a parametric curve.
 * <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>Additional curve evaluator and surface evaluator objects.
 * <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
-* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve drawn by a curve that rolls along another curve whose position is fixed.
-* <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A <a href="Surface.md">surface evaluator object</a> for a surface of revolution,
+* <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A curve evaluator object for a curve drawn by a curve that rolls along another curve whose position is fixed.
+* <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="extras_fourierknot.md">module:extras/fourierknot</a><br>The <code>extras/fourierknot.js</code> module.
 * <a href="extras_fragmentshaderlib.md">module:extras/fragmentshaderlib</a><br>The <code>extras/fragmentshaderlib.js</code> module.
@@ -113,8 +77,8 @@ and other polyhedra.
 
 ## Read Me
 
-<h1>Geometry Utilities</h1><p><strong>Download source code: <a href="https://github.com/peteroupc/html3dutil/archive/master.md">ZIP file</a></strong></p>
-<p>If you like this software, consider donating to me at this link: <a href="http://peteroupc.github.io/">http://peteroupc.github.io/</a></p>
+<h1>Geometry Utilities</h1>
+<p><strong>Download source code: <a href="https://github.com/peteroupc/html3dutil/archive/master.md">ZIP file</a></strong></p>
 <hr>
 <p>This is a public-domain library with classes and methods that were formerly in the Public Domain HTML 3D Library.  Classes and methods that involved WebGL, shaders, or a 3D scene graph were removed, to make this library much more general-purpose.  In any case, maintaining a 3D scene graph, textures, materials, and shaders is not trivial and is better handled by established 3D engines, such as three.js.  The classes and methods remaining in this library don't assume the existence of a 3D rendering pipeline such as WebGL or OpenGL ES, or even the existence of an HTML DOM, and are thus more easily portable to other programming languages.</p>
 <p>(Speaking of OpenGL ES, there are some things supported by some implementations that are strictly not necessary, since they can be implemented with shaders and clever mesh construction.  These things include line primitives, triangle fans, triangle strips, and built-in antialiasing.)</p>
@@ -122,7 +86,10 @@ and other polyhedra.
 or <a href="https://github.com/peteroupc/html3dutil/blob/master/doc/index.md">https://github.com/peteroupc/html3dutil/blob/master/doc/index.md</a>.</p>
 <p>The file &quot;h3du_min.js&quot; is a minified single-file version of the library.  Include it in your HTML
 as follows:</p>
-<pre class="prettyprint source lang-html"><code>  &lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;>&lt;/script></code></pre><h2>Source Code and Building</h2><p>Source code is available in the <a href="https://github.com/peteroupc/html3dutil">project page</a>.</p>
+<pre class="prettyprint source lang-html"><code>  &lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;>&lt;/script>
+</code></pre>
+<h2>Source Code and Building</h2>
+<p>Source code is available in the <a href="https://github.com/peteroupc/html3dutil">project page</a>.</p>
 <p>To build, you will need a Java runtime environment and a JavaScript environment
 that supports <code>npm</code>.</p>
 <ul>
@@ -131,12 +98,18 @@ that supports <code>npm</code>.</p>
 <li>Run <code>npm run-script build</code>. This will generate the documentation and compile
 the library's source code into files called <code>h3du_min.js</code> and <code>h3du_module.js</code>.</li>
 </ul>
-<h2>Overview and Demos</h2><p>For detailed instructions on using this library and a summary of the library's features, visit:</p>
+<h2>Overview and Demos</h2>
+<p>For detailed instructions on using this library and a summary of the library's features, visit:</p>
 <p><a href="https://peteroupc.github.io/html3dutil/tutorial-overview.html">https://peteroupc.github.io/html3dutil/tutorial-overview.html</a></p>
-<h2>History</h2><p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html">the history page</a> to find
+<h2>History</h2>
+<p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html">the history page</a> to find
 information about what has changed in this library.</p>
-<h2>Possible Later Improvements</h2><ul>
+<h2>Possible Later Improvements</h2>
+<ul>
 <li>Support &quot;deg&quot;, &quot;grad&quot;, &quot;rad&quot;, and &quot;turn&quot; in CSS color hue parsing</li>
 </ul>
-<h2>About</h2><p>Any copyright to this work is released to the Public Domain.
+<h2>About</h2>
+<p>Any copyright to this work is released to the Public Domain.
+In case this is not possible, this work is also
+licensed under Creative Commons Zero (CC0):
 <a href="https://creativecommons.org/publicdomain/zero/1.0/">https://creativecommons.org/publicdomain/zero/1.0/</a></p>

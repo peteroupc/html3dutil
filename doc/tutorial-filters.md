@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a id=Introduction></a>
+
 ## Introduction
 
 This page describes what graphics filters are and how they work in my
@@ -12,6 +13,7 @@ It also describes several examples of graphics filters.
 **Download the latest version of the library at the [**HTML 3D Library's Releases page**](https://github.com/peteroupc/html3dutil/releases).**
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Introduction**](#Introduction)
@@ -27,6 +29,7 @@ It also describes several examples of graphics filters.
 - [**Other Pages**](#Other_Pages)
 
 <a id=Graphics_Filters></a>
+
 ## Graphics Filters
 
 In the HTML 3D Library, graphics filters are functions used to modify the appearance
@@ -42,6 +45,7 @@ a _frame buffer_. The frame buffer acts like a texture which will be rendered ba
 the screen with the help of the graphics filter's shader program.
 
 <a id=Writing_Graphics_Filters></a>
+
 ## Writing Graphics Filters
 
 In the HTML 3D Library, use the `makeEffect` method of the `H3DU.ShaderInfo` class to create
@@ -85,6 +89,7 @@ A detailed treatment of GLSL is outside the scope of this page. More information
 be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
 
 <a id=Using_Graphics_Filters></a>
+
 ## Using Graphics Filters
 
 To use a graphics filter, the application needs to prepare for its use by following these steps.
@@ -137,6 +142,7 @@ passes mentioned above, the following happens.
           As a result, a "filtered" version of the current frame will be drawn.
 
 <a id=Sample_Code></a>
+
 ## Sample Code
 
 Here is sample code for using a graphics filter.
@@ -159,6 +165,7 @@ Here is sample code for using a graphics filter.
     scene.render(renders);
 
 <a id=Mirror_Filter></a>
+
 ### Mirror Filter
 
 ![**Mirror filtered image**](filters7.png)
@@ -178,6 +185,7 @@ the current X coordinate).
 With a simple change, this filter can be modified to do a vertical flip (`1.0-uvCoord.y`) or even both flips.
 
 <a id=Pixelate_Filter></a>
+
 ### Pixelate Filter
 
 ![**Pixelate filtered image**](filters5.png)
@@ -203,6 +211,7 @@ each "pixelated" pixel takes up.
 The demo changes the "coarseness" parameter with time to animate the pixelation effect.
 
 <a id=Wave_Filter></a>
+
 ### Wave Filter
 
 ![**Wave filtered image**](filters3.png)
@@ -214,6 +223,7 @@ frame for the undulation effect.
 This filter is implemented in the function `makeWave` in the demo.
 
 <a id=Waterpaint_Filter></a>
+
 ### Waterpaint Filter
 
 ![**Waterpaint filtered image**](filters6.png)
@@ -224,6 +234,7 @@ named "Themaister".
 This filter is implemented in the function `makeWaterpaint` in the demo.
 
 <a id=Other_Pages></a>
+
 ## Other Pages
 
 The following pages of mine on CodeProject also discuss this library:

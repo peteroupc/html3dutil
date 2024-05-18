@@ -41,7 +41,7 @@ Generates a mesh of a regular dodecahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+The generated solid. (Type: MeshBuffer)
 
 <a name='extras_polyhedra_Polyhedra.dodecahedronFaces'></a>
 ### (static) module:extras/polyhedra~Polyhedra.dodecahedronFaces()
@@ -84,7 +84,7 @@ Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+The generated solid. (Type: MeshBuffer)
 
 <a name='extras_polyhedra_Polyhedra.hexahedronFaces'></a>
 ### (static) module:extras/polyhedra~Polyhedra.hexahedronFaces()
@@ -127,7 +127,7 @@ Generates a mesh of a regular icosahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+The generated solid. (Type: MeshBuffer)
 
 <a name='extras_polyhedra_Polyhedra.icosahedronFaces'></a>
 ### (static) module:extras/polyhedra~Polyhedra.icosahedronFaces()
@@ -186,7 +186,7 @@ Generates a mesh of a regular octahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+The generated solid. (Type: MeshBuffer)
 
 <a name='extras_polyhedra_Polyhedra.octahedronFaces'></a>
 ### (static) module:extras/polyhedra~Polyhedra.octahedronFaces()
@@ -214,7 +214,7 @@ Generates a mesh of a regular tetrahedron or a sphere based on that solid.
 
 #### Return Value
 
-The generated solid. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+The generated solid. (Type: MeshBuffer)
 
 <a name='extras_polyhedra_Polyhedra.tetrahedronFaces'></a>
 ### (static) module:extras/polyhedra~Polyhedra.tetrahedronFaces()

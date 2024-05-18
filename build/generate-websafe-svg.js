@@ -20,10 +20,10 @@ function SwatchSvg() {
     this.slack += HEIGHT / 2;
   };
   this.addSwatch = function(color, name) {
-    const cname = name !== null ? name : color;
+    const cname = name !== null && typeof name !== "undefined" ? name : color;
     const svgx = this.x * this.width;
     let svgy;
-    if (typeof name === "undefined" || name === null) {
+    if (typeof cname === "undefined" || cname === null) {
       svgy = this.y * HEIGHT + this.slack;
       this.totalheight = Math.max(this.totalheight, svgy + HEIGHT + this.slack + 4);
       this.output += "<rect x='" + (svgx + 2) + "' y='" + (svgy + 2) + "' width='" + (HEIGHT - 4) + "'" +

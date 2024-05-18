@@ -1,26 +1,31 @@
 <!DOCTYPE html><html><head><meta charset=utf-8><title>Matrix Details</title></head><body><h1> Matrix Details</h1><p><a href='index.html'>Back to documentation index.</a></p><p><a id=Matrix_Details></a></p>
-<h2>Matrix Details</h2><p>A matrix is a rectangular array that can describe a
+<h2>Matrix Details</h2>
+<p>A matrix is a rectangular array that can describe a
 transformation from one coordinate system to another. Transformations
 that matrices can describe include translation (shifting), scaling, and rotation.
 Functions dealing with matrices begin with &quot;mat&quot;.
 A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.</p>
 <p>This section contains detailed information on matrices.</p>
 <p><a id=Contents></a></p>
-<h2>Contents</h2><ul>
+<h2>Contents</h2>
+<ul>
 <li><a href="#Matrix_Details"><strong>Matrix Details</strong></a></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
-<li><a href="#Arrangement"><strong>Arrangement</strong></a><ul>
+<li><a href="#Arrangement"><strong>Arrangement</strong></a>
+<ul>
 <li><a href="#A_Matrix_Transforms_Between_Coordinate_Systems"><strong>A Matrix Transforms Between Coordinate Systems</strong></a></li>
 <li><a href="#Why_a_4x4_Matrix"><strong>Why a 4x4 Matrix?</strong></a></li>
 </ul>
 </li>
-<li><a href="#Transforming_Points"><strong>Transforming Points</strong></a><ul>
+<li><a href="#Transforming_Points"><strong>Transforming Points</strong></a>
+<ul>
 <li><a href="#Scaling"><strong>Scaling</strong></a></li>
 <li><a href="#Translation"><strong>Translation</strong></a></li>
 <li><a href="#Rotation"><strong>Rotation</strong></a></li>
 <li><a href="#Matrix_Multiplication"><strong>Matrix Multiplication</strong></a></li>
 <li><a href="#Projective_Transformations"><strong>Projective Transformations</strong></a></li>
-<li><a href="#Matrix_Inversions"><strong>Matrix Inversions</strong></a><ul>
+<li><a href="#Matrix_Inversions"><strong>Matrix Inversions</strong></a>
+<ul>
 <li><a href="#Inverting_a_General_NxN_Matrix"><strong>Inverting a General NxN Matrix</strong></a></li>
 </ul>
 </li>
@@ -29,7 +34,8 @@ A 3x3 or 4x4 matrix has 9 or 16 elements, respectively.</p>
 <li><a href="#Rotation_Example"><strong>Rotation Example</strong></a></li>
 </ul>
 <p><a id=Arrangement></a></p>
-<h2>Arrangement</h2><p>In mathematical publications,
+<h2>Arrangement</h2>
+<p>In mathematical publications,
 matrices are often notated in column-major order, in which each
 element of the matrix is placed in columns as opposed to rows, as in the following example:</p>
 <math>
@@ -62,7 +68,6 @@ element of the matrix is placed in columns as opposed to rows, as in the followi
 </mtable>
 </mfenced>
 </math>
-
 <p>The numbers in brackets in the matrix above are the zero-based indices
 into the matrix arrays passed to <code>MathUtil</code>'s matrix methods.</p>
 <p>For 3x3 matrices, the elements are arranged in the following order:</p>
@@ -87,9 +92,9 @@ into the matrix arrays passed to <code>MathUtil</code>'s matrix methods.</p>
 </mtable>
 </mfenced>
 </math>
-
 <p><a id=A_Matrix_Transforms_Between_Coordinate_Systems></a></p>
-<h3>A Matrix Transforms Between Coordinate Systems</h3><p>A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
+<h3>A Matrix Transforms Between Coordinate Systems</h3>
+<p>A transformed 3D coordinate system is made up of an X, Y, and Z axis, and a center of the coordinate
 system.  These are four 3-element vectors that describe how the three axes and the center map
 to the new coordinate system in relation to the old coordinate system.</p>
 <p>The following depiction of a 4x4 matrix illustrates the meaning of each of its elements. To keep things
@@ -124,7 +129,6 @@ simple, this matrix's transformation is one that keeps straight lines straight a
 </mtable>
 </mfenced>
 </math>
-
 <p>The following is an example of a transformation matrix.</p>
 <math>
 <mfenced open="[" close="]">
@@ -156,7 +160,6 @@ simple, this matrix's transformation is one that keeps straight lines straight a
 </mtable>
 </mfenced>
 </math>
-
 <p>Here, the first column shows an X-axis vector at (1, 0, 0),
 the second column shows a Y-axis vector at (0, 0.5, 0.866025),
 the third column shows a Z-axis vector at (0, -0.866025, 0.5),
@@ -164,7 +167,8 @@ and the fourth column centers the coordinate system at (2, 3, 4).</p>
 <p>Provided the matrix can be <a href="#Matrix_Inversions"><strong>inverted</strong></a>, the three axis vectors are
 <em>basis vectors</em> of the coordinate system.</p>
 <p><a id=Why_a_4x4_Matrix></a></p>
-<h3>Why a 4x4 Matrix?</h3><p>A matrix can describe <em>linear transformations</em> from one vector in space
+<h3>Why a 4x4 Matrix?</h3>
+<p>A matrix can describe <em>linear transformations</em> from one vector in space
 to another.  These transformations, which include <a href="#Scaling"><strong>scaling</strong></a>,
 <a href="#Rotation"><strong>rotation</strong></a>, and shearing, can change where a vector points <em>at</em>,
 but not where it points <em>from</em>.  It's enough to use a 3x3 matrix to describe
@@ -184,27 +188,29 @@ matrix describes a perspective projection (see
 <p>A similar situation applies in 2D between 2x2 and 3x3 matrices as it does
 in 3D between 3x3 and 4x4 matrices.</p>
 <p><a id=Transforming_Points></a></p>
-<h2>Transforming Points</h2><p>The transformation formula multiplies a matrix by a 3D point to change that point's
+<h2>Transforming Points</h2>
+<p>The transformation formula multiplies a matrix by a 3D point to change that point's
 position:</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>x</em></sub> = matrix[0] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[4] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[8] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[12] &#x22c5; <strong>a</strong><sub><em>w</em></sub></li>
-<li><strong>a&prime;</strong><sub><em>y</em></sub> = matrix[1] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[5] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[9] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[13] &#x22c5; <strong>a</strong><sub><em>w</em></sub></li>
-<li><strong>a&prime;</strong><sub><em>z</em></sub> = matrix[2] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[6] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[10] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[14] &#x22c5; <strong>a</strong><sub><em>w</em></sub></li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = matrix[3] &#x22c5; <strong>a</strong><sub><em>x</em></sub> + matrix[7] &#x22c5; <strong>a</strong><sub><em>y</em></sub> + matrix[11] &#x22c5; <strong>a</strong><sub><em>z</em></sub> + matrix[15] &#x22c5; <strong>a</strong><sub><em>w</em></sub></li>
+<li><strong>a′</strong><sub><em>x</em></sub> = matrix[0] ⋅ <strong>a</strong><sub><em>x</em></sub> + matrix[4] ⋅ <strong>a</strong><sub><em>y</em></sub> + matrix[8] ⋅ <strong>a</strong><sub><em>z</em></sub> + matrix[12] ⋅ <strong>a</strong><sub><em>w</em></sub></li>
+<li><strong>a′</strong><sub><em>y</em></sub> = matrix[1] ⋅ <strong>a</strong><sub><em>x</em></sub> + matrix[5] ⋅ <strong>a</strong><sub><em>y</em></sub> + matrix[9] ⋅ <strong>a</strong><sub><em>z</em></sub> + matrix[13] ⋅ <strong>a</strong><sub><em>w</em></sub></li>
+<li><strong>a′</strong><sub><em>z</em></sub> = matrix[2] ⋅ <strong>a</strong><sub><em>x</em></sub> + matrix[6] ⋅ <strong>a</strong><sub><em>y</em></sub> + matrix[10] ⋅ <strong>a</strong><sub><em>z</em></sub> + matrix[14] ⋅ <strong>a</strong><sub><em>w</em></sub></li>
+<li><strong>a′</strong><sub><em>w</em></sub> = matrix[3] ⋅ <strong>a</strong><sub><em>x</em></sub> + matrix[7] ⋅ <strong>a</strong><sub><em>y</em></sub> + matrix[11] ⋅ <strong>a</strong><sub><em>z</em></sub> + matrix[15] ⋅ <strong>a</strong><sub><em>w</em></sub></li>
 </ul>
-<p>For more on why <strong>a&prime;</strong><sub><em>w</em></sub> appears here, see <a href="#Why_a_4x4_Matrix"><strong>&quot;Why a 4x4 Matrix?&quot;</strong></a>.  In each formula that follows,  <strong>a</strong><sub><em>w</em></sub> is assumed to be 1 (indicating a conventional 3D point).</p>
+<p>For more on why <strong>a′</strong><sub><em>w</em></sub> appears here, see <a href="#Why_a_4x4_Matrix"><strong>&quot;Why a 4x4 Matrix?&quot;</strong></a>.  In each formula that follows,  <strong>a</strong><sub><em>w</em></sub> is assumed to be 1 (indicating a conventional 3D point).</p>
 <p>The following sections describe different kinds of matrix transformations in more detail.</p>
 <p>Related functions:</p>
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4transform">MathUtil.mat4transform()</a> -
+<li>MathUtil.mat4transform() -
 Transforms a 4-element vector with a 4x4 matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat3transform">MathUtil.mat3transform()</a> -
+<li>MathUtil.mat3transform() -
 Transforms a 3-element vector with a 3x3 matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> -
+<li>MathUtil.mat4projectVec3 -
 Does a perspective-correct transformation of a 3D point with a 4x4 matrix</li>
 </ul>
 <p><a id=Scaling></a></p>
-<h3>Scaling</h3><p>Scaling changes an object's size. Scaling uses the 1st,
+<h3>Scaling</h3>
+<p>Scaling changes an object's size. Scaling uses the 1st,
 6th, and 11th elements of the matrix as seen here:</p>
 <math>
 <mfenced open="[" close="]">
@@ -236,15 +242,14 @@ Does a perspective-correct transformation of a 3D point with a 4x4 matrix</li>
 </mtable>
 </mfenced>
 </math>
-
 <p>where the X coordinate is multiplied by <code>sx</code>, the Y coordinate is multiplied by <code>sy</code>, and
 the Z coordinate is multiplied by <code>sz</code>.</p>
 <p>The scaling formula would look like:</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>x</em></sub> = sx &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>y</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + sy &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + sz &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
+<li><strong>a′</strong><sub><em>x</em></sub> = sx ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>y</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + sy ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>z</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + sz ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>w</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
 </ul>
 <p>For example, we multiply the input x by <code>sx</code> to get the output x. If <code>sx</code> is 1, x
 remains unchanged. Likewise for y (<code>sy</code>) and z (<code>sz</code>).</p>
@@ -257,19 +262,20 @@ here will scale the lengths of the corresponding axes.  For example,
 if <code>sx</code> is 2, the X axis will be (2, 0, 0) and thus have a length of 2.</p>
 <p>Related functions:</p>
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4scaled">MathUtil.mat4scaled()</a> -
+<li>MathUtil.mat4scaled() -
 Returns a scaling matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4scale">MathUtil.mat4scale()</a> -
+<li>MathUtil.mat4scale() -
 Multiplies a matrix by a scaling.</li>
-<li><a href="MathUtil.html#MathUtil.mat4scaleInPlace">MathUtil.mat4scaleInPlace()</a> -
+<li>MathUtil.mat4scaleInPlace() -
 Multiplies a matrix in place by a scaling.</li>
-<li><a href="MathUtil.html#MathUtil.mat4identity">MathUtil.mat4identity()</a> -
+<li>MathUtil.mat4identity() -
 Returns a 4x4 identity matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat3identity">MathUtil.mat3identity()</a> -
+<li>MathUtil.mat3identity() -
 Returns a 3x3 identity matrix</li>
 </ul>
 <p><a id=Translation></a></p>
-<h3>Translation</h3><p>A translation is a shifting of an object's position. In a transformation matrix,
+<h3>Translation</h3>
+<p>A translation is a shifting of an object's position. In a transformation matrix,
 this shifting effectively happens after all other transformations such as scaling and rotation.
 It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 <math>
@@ -302,26 +308,26 @@ It uses the 13th, 14th, and 15th elements of the matrix as seen here:</p>
 </mtable>
 </mfenced>
 </math>
-
 <p>where <code>tx</code> is added to the X coordinate, <code>ty</code> is added to the Y coordinate, and
 <code>tz</code> is added to the Z coordinate. The transformation formulas would look like:</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + tx</li>
-<li><strong>a&prime;</strong><sub><em>y</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 1 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + ty</li>
-<li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + tz</li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
+<li><strong>a′</strong><sub><em>x</em></sub> = 1 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + tx</li>
+<li><strong>a′</strong><sub><em>y</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 1 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + ty</li>
+<li><strong>a′</strong><sub><em>z</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 1 ⋅ <strong>a</strong><sub><em>z</em></sub> + tz</li>
+<li><strong>a′</strong><sub><em>w</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
 </ul>
 <p>For example, we add the input x and <code>tx</code> to get the output x. If <code>tx</code> is 0, x
 remains unchanged. Likewise for y (<code>ty</code>) and z (<code>tz</code>).</p>
 <p>Related functions:</p>
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4translated">MathUtil.mat4translated()</a> -
+<li>MathUtil.mat4translated() -
 Returns a translation matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4translate">MathUtil.mat4translate()</a> -
+<li>MathUtil.mat4translate() -
 Multiplies a matrix by a translation.</li>
 </ul>
 <p><a id=Rotation></a></p>
-<h3>Rotation</h3><p>Rotation changes an object's orientation. Given an angle of rotation, &theta;,
+<h3>Rotation</h3>
+<p>Rotation changes an object's orientation. Given an angle of rotation, θ,
 the transformation matrix for rotating 3D points is as follows. (For a list of common
 sines and cosines, see the end of this section.)</p>
 <figure>
@@ -420,7 +426,6 @@ sines and cosines, see the end of this section.)</p>
 </mfenced>
 </math>
 <figcaption>Rotation about the Z axis.</figcaption></figure>
-
 <p>Note that:</p>
 <ul>
 <li>When we rotate a point about the X axis, the X coordinate is unchanged
@@ -439,9 +444,9 @@ When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
 transformation.</p>
 <p>Related functions:</p>
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4rotated">MathUtil.mat4rotated()</a> -
+<li>MathUtil.mat4rotated() -
 Returns a rotation matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4rotate">MathUtil.mat4rotate()</a> -
+<li>MathUtil.mat4rotate() -
 Multiplies a matrix by a translation.</li>
 </ul>
 <p>A list of common sines and cosines follows.  Values
@@ -449,26 +454,24 @@ shown with three decimal places are approximate.</p>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>&nbsp;</th>
-<th>0&deg;</th>
-<th>22.5&deg;</th>
-<th>30&deg;</th>
-<th>45&deg;</th>
-<th>60&deg;</th>
-<th>67.5&deg;</th>
-<th>90&deg;</th>
-<th>112.5&deg;</th>
-<th>120&deg;</th>
-<th>135&deg;</th>
-<th>150&deg;</th>
-<th>157.5&deg;</th>
-<th>180&deg;</th>
+<th> </th>
+<th>0°</th>
+<th>22.5°</th>
+<th>30°</th>
+<th>45°</th>
+<th>60°</th>
+<th>67.5°</th>
+<th>90°</th>
+<th>112.5°</th>
+<th>120°</th>
+<th>135°</th>
+<th>150°</th>
+<th>157.5°</th>
+<th>180°</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td>sin</td>
 <td>0</td>
 <td>0.383</td>
@@ -483,10 +486,8 @@ shown with three decimal places are approximate.</p>
 <td>0.5</td>
 <td>0.383</td>
 <td>0</td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td>cos</td>
 <td>1</td>
 <td>0.924</td>
@@ -501,33 +502,30 @@ shown with three decimal places are approximate.</p>
 <td>-0.866</td>
 <td>-0.924</td>
 <td>-1</td>
-<td></td>
 </tr>
 </tbody>
 </table>
 <table>
 <thead>
 <tr>
-<th></th>
-<th>&nbsp;</th>
-<th>180&deg;</th>
-<th>202.5&deg;</th>
-<th>210&deg;</th>
-<th>225&deg;</th>
-<th>240&deg;</th>
-<th>247.5&deg;</th>
-<th>270&deg;</th>
-<th>292.5&deg;</th>
-<th>300&deg;</th>
-<th>315&deg;</th>
-<th>330&deg;</th>
-<th>337.5&deg;</th>
-<th>360&deg;</th>
+<th> </th>
+<th>180°</th>
+<th>202.5°</th>
+<th>210°</th>
+<th>225°</th>
+<th>240°</th>
+<th>247.5°</th>
+<th>270°</th>
+<th>292.5°</th>
+<th>300°</th>
+<th>315°</th>
+<th>330°</th>
+<th>337.5°</th>
+<th>360°</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
 <td>sin</td>
 <td>0</td>
 <td>-0.383</td>
@@ -542,10 +540,8 @@ shown with three decimal places are approximate.</p>
 <td>-0.5</td>
 <td>-0.383</td>
 <td>0</td>
-<td></td>
 </tr>
 <tr>
-<td></td>
 <td>cos</td>
 <td>-1</td>
 <td>-0.924</td>
@@ -560,12 +556,12 @@ shown with three decimal places are approximate.</p>
 <td>0.866</td>
 <td>0.924</td>
 <td>1</td>
-<td></td>
 </tr>
 </tbody>
 </table>
 <p><a id=Matrix_Multiplication></a></p>
-<h3>Matrix Multiplication</h3><p>When two matrices are multiplied, the combined matrix will be such
+<h3>Matrix Multiplication</h3>
+<p>When two matrices are multiplied, the combined matrix will be such
 that the transformations they describe happen in reverse
 order. For example, if the first matrix (input matrix) describes a translation and the second
 matrix describes a scaling, the multiplied matrix will
@@ -586,13 +582,14 @@ of the output matrix.</p>
 mat4rotate involve multiplying 4x4 matrices.</p>
 <p>Related functions:</p>
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4multiply">MathUtil.mat4multiply()</a> -
+<li>MathUtil.mat4multiply() -
 Multiplies two matrices</li>
 </ul>
 <p>* Reading the <a href="https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection"><strong>tutorial by Dmitry Sokolov</strong></a>
 led me to this highly useful insight.</p>
 <p><a id=Projective_Transformations></a></p>
-<h3>Projective Transformations</h3><p>In all the transformations described above, the last row in the transformation matrix is
+<h3>Projective Transformations</h3>
+<p>In all the transformations described above, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called <em>affine transformations</em>, those that
 keep straight lines straight and parallel lines parallel.) However, this is not the case for
 some transformations in the <code>MathUtil</code> class.</p>
@@ -603,20 +600,21 @@ in the form of linear transformations on homogeneous coordinates (see
 <a href="#Why_a_4x4_Matrix"><strong>&quot;Why a 4x4 Matrix?&quot;</strong></a>).  For a 3D projective transformation, the last row
 in the matrix is not necessarily (0, 0, 0, 1).</p>
 <p>One example of a projective transformation is found in a <em>perspective projection</em> matrix,
-as returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a> or <a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum</a>. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in <em>eye space</em>, or more specifically, as follows:</p>
+as returned by MathUtil.mat4perspective or MathUtil.mat4frustum. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in <em>eye space</em>, or more specifically, as follows:</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -1 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>w</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + -1 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
 </ul>
 <p>For more on perspective projections, see <a href="tutorial-camera.html"><em>The &quot;Camera&quot; and Geometric Transforms</em></a>.</p>
 <p>Related functions:</p>
 <ul>
-<li><a href="MathUtil.html#MathUtil.mat4frustum">MathUtil.mat4frustum()</a> -
+<li>MathUtil.mat4frustum() -
 Returns a frustum matrix</li>
-<li><a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective()</a> -
+<li>MathUtil.mat4perspective() -
 Returns a field-of-view perspective matrix</li>
 </ul>
 <p><a id=Matrix_Inversions></a></p>
-<h3>Matrix Inversions</h3><p>An inverted matrix describes a transformation that undoes another transformation. For
+<h3>Matrix Inversions</h3>
+<p>An inverted matrix describes a transformation that undoes another transformation. For
 example, if a scaling enlarges an object, the inverted matrix reduces the object to its original
 size.</p>
 <p>To invert a <strong>translation</strong>, reverse the sign of the translation elements (given above as <code>tx</code>, <code>ty</code>, and <code>tz</code>)
@@ -631,17 +629,20 @@ elements 1, 4, 2, 8, 6, and 9 respectively). The effect is like reversing the an
 rotation to reset an object to its previous orientation.  In general, to invert an NxN
 rotation matrix, <em>transpose</em> that matrix (so that its rows become its columns and vice versa).</p>
 <p><a id=Inverting_a_General_NxN_Matrix></a></p>
-<h4>Inverting a General NxN Matrix</h4><p>Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the <a href="MathUtil.html#MathUtil.mat4invert">MathUtil.mat4invert()</a> or <a href="MathUtil.html#MathUtil.mat3invert">MathUtil.mat3invert()</a> methods, respectively.</p>
+<h4>Inverting a General NxN Matrix</h4>
+<p>Matrices that use some combination of translation, scaling, and rotation as well as other kinds of matrices are more complicated to invert. In fact, some matrices can't be inverted at all. Many 4x4 or 3x3 matrices can be inverted using the MathUtil.mat4invert() or MathUtil.mat3invert() methods, respectively.</p>
 <p>To describe how inverting a matrix works, we will need to define some terms:</p>
 <ul>
-<li>A matrix cell's <em>row index</em> and <em>column index</em> tell where that cell appears in the matrix.  For example, a cell on the first row has row index 0 and a cell on the second column has column index 1.</li>
-<li>A matrix's <em>minor</em> at a given cell is a smaller matrix generated by eliminating the row and column where that cell appears.</li>
-<li><p>A matrix's <em>determinant</em> is its overall
+<li>
+<p>A matrix cell's <em>row index</em> and <em>column index</em> tell where that cell appears in the matrix.  For example, a cell on the first row has row index 0 and a cell on the second column has column index 1.</p>
+</li>
+<li>
+<p>A matrix's <em>determinant</em> is its overall
 scaling factor. Only an NxN matrix with a determinant other
 than 0 can be inverted.  To find a matrix's determinant:</p>
 <ol>
-<li>For each cell in the first row (or first column), find the determinant of the matrix's minor at that cell.</li>
-<li>Label the minors' determinants (A, B, C, D, ...), in that order.</li>
+<li>For each cell in the first row (or first column), find the matrix's <em>minor</em> at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix).</li>
+<li>Label the minors (A, B, C, D, ...), in that order.</li>
 <li>The matrix's determinant is (A - B + C - D + ...).</li>
 </ol>
 <p>A 1x1 matrix's determinant is simply the value of its only cell.</p>
@@ -650,8 +651,7 @@ than 0 can be inverted.  To find a matrix's determinant:</p>
 <p>To invert an NxN matrix:</p>
 <ol>
 <li>Create a new NxN matrix.</li>
-<li>For each cell in the original matrix, find the determinant of
-its minor at that cell, and set the corresponding cell
+<li>For each cell in the original matrix, find its minor at that cell (that is, the determinant of a matrix generated by eliminating the row and column where that cell appears in the original matrix), and set the corresponding cell
 in the new matrix to that value.</li>
 <li>In the new matrix, reverse the sign of each cell whose row index
 plus column index is odd. (These cells will alternate in a checkerboard
@@ -663,37 +663,38 @@ cell in the new matrix by that value.</li>
 <li>The new matrix will be the inverted form of the original NxN matrix.</li>
 </ol>
 <p><a id=Rotation_Example></a></p>
-<h2>Rotation Example</h2><p>As an example, say we rotate 60 degrees about the X axis (<code>mat4rotated(60, 1, 0, 0)</code>,
-&theta; = 60&deg;).  First, we find the rotation formula for the X axis:</p>
+<h2>Rotation Example</h2>
+<p>As an example, say we rotate 60 degrees about the X axis (<code>mat4rotated(60, 1, 0, 0)</code>,
+θ = 60°).  First, we find the rotation formula for the X axis:</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>y</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + (cos &theta;) &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -(sin &theta;) &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>z</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + (sin &theta;) &#x22c5; <strong>a</strong><sub><em>y</em></sub> + (cos &theta;) &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
+<li><strong>a′</strong><sub><em>x</em></sub> = 1 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>y</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + (cos θ) ⋅ <strong>a</strong><sub><em>y</em></sub> + -(sin θ) ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>z</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + (sin θ) ⋅ <strong>a</strong><sub><em>y</em></sub> + (cos θ) ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>w</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
 </ul>
-<p>We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
+<p>We calculate <i>cos θ</i> as 0.5 and <i>sin θ</i> as about 0.866025.
 We plug those numbers into the rotation formula to get a formula for rotating a
 point 60 degrees about the X axis.</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0 = <strong>a</strong><sub><em>x</em></sub></li>
-<li><strong>a&prime;</strong><sub><em>y</em></sub> ~= 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0.5 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + -0.866025 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>z</em></sub> ~= 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0.866025 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0.5 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 0</li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; <strong>a</strong><sub><em>x</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>y</em></sub> + 0 &#x22c5; <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
+<li><strong>a′</strong><sub><em>x</em></sub> = 1 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0 = <strong>a</strong><sub><em>x</em></sub></li>
+<li><strong>a′</strong><sub><em>y</em></sub> ~= 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0.5 ⋅ <strong>a</strong><sub><em>y</em></sub> + -0.866025 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>z</em></sub> ~= 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0.866025 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0.5 ⋅ <strong>a</strong><sub><em>z</em></sub> + 0</li>
+<li><strong>a′</strong><sub><em>w</em></sub> = 0 ⋅ <strong>a</strong><sub><em>x</em></sub> + 0 ⋅ <strong>a</strong><sub><em>y</em></sub> + 0 ⋅ <strong>a</strong><sub><em>z</em></sub> + 1 = 1</li>
 </ul>
 <p>If a point is located at (10, 20, 30), the rotated point would now be:</p>
 <ul>
-<li><strong>a&prime;</strong><sub><em>x</em></sub> = 1 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 0</li>
-<li>= 1 &#x22c5; 10</li>
+<li><strong>a′</strong><sub><em>x</em></sub> = 1 ⋅ 10 + 0 ⋅ 20 + 0 ⋅ 30 + 0</li>
+<li>= 1 ⋅ 10</li>
 <li>= 10</li>
-<li><strong>a&prime;</strong><sub><em>y</em></sub> ~= 0 &#x22c5; 10 + 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30 + 0</li>
-<li>~= 0.5 &#x22c5; 20 + -0.866025 &#x22c5; 30</li>
+<li><strong>a′</strong><sub><em>y</em></sub> ~= 0 ⋅ 10 + 0.5 ⋅ 20 + -0.866025 ⋅ 30 + 0</li>
+<li>~= 0.5 ⋅ 20 + -0.866025 ⋅ 30</li>
 <li>~= 10 + -25.98075</li>
 <li>~= -15.98075</li>
-<li><strong>a&prime;</strong><sub><em>z</em></sub> ~= 0 &#x22c5; 10 + 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30 + 0</li>
-<li>~= 0.866025 &#x22c5; 20 + 0.5 &#x22c5; 30</li>
+<li><strong>a′</strong><sub><em>z</em></sub> ~= 0 ⋅ 10 + 0.866025 ⋅ 20 + 0.5 ⋅ 30 + 0</li>
+<li>~= 0.866025 ⋅ 20 + 0.5 ⋅ 30</li>
 <li>~= 17.3205 + 15</li>
 <li>~= 32.3205</li>
-<li><strong>a&prime;</strong><sub><em>w</em></sub> = 0 &#x22c5; 10 + 0 &#x22c5; 20 + 0 &#x22c5; 30 + 1</li>
+<li><strong>a′</strong><sub><em>w</em></sub> = 0 ⋅ 10 + 0 ⋅ 20 + 0 ⋅ 30 + 1</li>
 <li>= 1</li>
 </ul>
 <p>So the rotated point would be at about (10, -15.98075, 32.3205).</p><p><a href='index.html'>Back to documentation index.</a></p></body></html>

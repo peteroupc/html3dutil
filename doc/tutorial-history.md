@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a id=Version_History></a>
+
 ## Version History
 
 Version 2.0.0-beta3:
@@ -73,18 +74,18 @@ Version 2.0.0-beta1:
 
 There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are some of them, including the most important ones.
 
-- All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now <a href="Shape.md">Shape</a> and `Mesh` is now Mesh.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
+- All classes in the main library are moved to a new namespace called `H3DU`.  For example, `Shape` is now Shape and `Mesh` is now Mesh.  Many classes in the "extras" directory are also moved to the `H3DU` namespace.
 - `Scene3D`, now Scene3D, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new Batch3D class. Scene3D's `render` method now takes an array of `Batch3D`s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as `makeShape` and `setPerspective`, can still be used until `H3DU.Scene3D` renders a custom `H3DU.Batch3D`. This compatibility behavior may be dropped in the future.
 - Alpha is disabled in WebGL contexts created with the get3DOr2DContext method.
 - The `Scene3D` Scene3D#useProgram method was deprecated and now does nothing.
 - New RenderPass3D class holds information about how a batch of 3D models is to be rendered. It replaces the `Scene3D` Scene3D#useFilter method, which now does nothing.
 - New FrameBufferInfo class holds information about a frame buffer; it replaces FrameBuffer.
-- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="MeshBuffer.md">MeshBuffer</a>, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.
+- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use MeshBuffer, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.
 - Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.
-- The <a href="Shape.md">Shape</a> object is no longer coupled to vertex buffers.
+- The Shape object is no longer coupled to vertex buffers.
 - The LightSource class now supports a radius of the light.
 - The TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
-- `GLMath`, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="MathUtil.md#MathUtil.vec3perp">MathUtil.vec3perp</a>, <a href="MathUtil.md#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a>, and <a href="MathUtil.md#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a>.
+- `GLMath`, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include MathUtil.vec3perp, MathUtil.vec3toWindowPoint, and MathUtil.mat4projectVec3.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, TextFont and TextureAtlas.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now Camera, was rewritten.
@@ -96,7 +97,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The experimental 2D canvas renderer in _surfaces2d.html_, was abandoned.
 - Added `dispose` method to `H3DU.Scene3D`.
 - Added `createPointedStar` and `createLathe` methods to `H3DU.Meshes`.
-- Added `getBounds` and `toLinePath` methods to <a href="GraphicsPath.md">GraphicsPath</a>, an extra, as well
+- Added `getBounds` and `toLinePath` methods to GraphicsPath, an extra, as well
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
  polygons. Path triangulation now supports polygons with holes.
 - The default light configuration is no lights when creating a LightSource. The exception, for compatibility purposes, is when using a Scene3D without rendering a custom `Batch3D`, in which case the default is one light source with its default values.

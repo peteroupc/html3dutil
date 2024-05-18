@@ -31,6 +31,6 @@ Builds a mesh buffer representing a gear centered at the origin.
 
 #### Return Value
 
-Return value. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
+Return value. (Type: MeshBuffer)
 
 [Back to documentation index.](index.md)

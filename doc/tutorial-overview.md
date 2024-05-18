@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a id=Public_Domain_Geometry_Utilities_Library></a>
+
 ## Public-Domain Geometry Utilities Library
 
 This page will introduce the [**Geometry Utilities Library**](https://github.com/peteroupc/html3dutil), an open-source JavaScript library that I wrote.
@@ -16,6 +17,7 @@ This page includes information on how to use the Geometry Utilities Library and 
 > **Note:** The Geometry Utilities Library was formerly called the Public-Domain HTML 3D Library.  Classes that involved the HTML 3D canvas, shaders, or the 3-D scene graph were removed, to make this library much more general-purpose.  In any case, such classes are not as trivial to port to other 3-D rendering APIs or other programming languages as classes that merely generate and store 3-D geometry or implement math functions (however, shader-based filters are still included as extras, even though the Geometry Utilities Library currently doesn't use them directly).
 
 <a id=Example></a>
+
 ## Example
 
 The following is a screen shot of a scene generated with the help of the former Public Domain HTML 3D Library.  Currently, however, the Geometry Utilities library has no means to render 3-D geometry directly.
@@ -23,6 +25,7 @@ The following is a screen shot of a scene generated with the help of the former 
 ![](https://peteroupc.github.io/html3dutil/html3d.png)
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Public-Domain Geometry Utilities Library**](#Public_Domain_Geometry_Utilities_Library)
@@ -37,6 +40,7 @@ The following is a screen shot of a scene generated with the help of the former 
 - [**History**](#History)
 
 <a id=How_to_Use></a>
+
 ## How to Use
 
 1. [**Download the Geometry Utilities Library**](https://github.com/peteroupc/html3dutil/releases).
@@ -52,6 +56,7 @@ The following is a screen shot of a scene generated with the help of the former 
         import * as H3DU from "h3du_module.js";
 
 <a id=List_of_Classes></a>
+
 ### List of Classes
 This is an overview of most of the JavaScript classes available in this library:
 
@@ -71,12 +76,14 @@ For much more information on all of these classes, see my <a href="https://peter
 The following sections detail how an application that renders 3-D graphics can use this library.
 
 <a id=The_Camera></a>
+
 ### The "Camera"
 
 The `MathUtil` class contains methods that support the concepts of a "projection transform" and a "view transform", as are common in many 3D rendering libraries. If we
 use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `MathUtil` has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including `MathUtil.mat4perspective` (a perspective projection) and `MathUtil.mat4lookat` (a look-at view transform). For more information, see [**_The "Camera" and Geometric Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms).
 
 <a id=3D_Models></a>
+
 ### 3D Models
 
 Most 3D scenes are made up of _meshes_, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the `MeshBuffer` class, or create a built-in geometric shape using a method in the `Meshes` class. The example below shows how you can create a box mesh:
@@ -108,6 +115,7 @@ The methods described above return a `MeshBuffer` object describing the appropri
    See my [**colors tutorial**](https://peteroupc.github.io/html3dutil/tutorial-colors.html).
 
 <a id=Shapes></a>
+
 ### Shapes
 
 The `Shape` constructor method assigns a linear or perspective transformation (including shifting position, scaling, and rotation) to meshes.  The library calls this a 3D shape.
@@ -131,6 +139,7 @@ Here are details on some of the `Shape` class&#39;s methods.
   <br>Creates a copy of this shape.
 
 <a id=The_Render_Loop></a>
+
 ### The Render Loop
 
 An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many "frames" a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. The exact details of rendering depend on the 3D rendering library in use; the Geometry Utilities Library has no means to directly render 3D objects.
@@ -149,6 +158,7 @@ For example, in an HTML Web page, a render loop could look like the following; i
 In this example, the callback to `requestAnimationFrame` takes a parameter (here "time"), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.
 
 <a id=History></a>
+
 ## History
 
 See [**version history**](https://peteroupc.github.io/html3dutil/tutorial-history.html).

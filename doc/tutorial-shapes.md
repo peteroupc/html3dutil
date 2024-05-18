@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a id=Introduction></a>
+
 ## Introduction
 
 This page explains how my [**HTML 3D Library**](http://peteroupc.github.io/html3dutil)
@@ -15,6 +16,7 @@ This page will discuss:
 * Shape groups, or combinations of several shapes
 
 <a id=Contents></a>
+
 ## Contents
 
 - [**Introduction**](#Introduction)
@@ -23,11 +25,12 @@ This page will discuss:
 - [**Shape Groups**](#Shape_Groups)
 
 <a id=Binding_Shapes></a>
+
 ## Binding Shapes
 
 Once you have a mesh of a 3D shape, you still need to attach it to a shape
 and a batch of shapes in order for the renderer to draw it. This is where
-the <a href="Shape.md">`H3DU.Shape`</a> class comes into
+the `H3DU.Shape` class comes into
 play; this class associates a 3D mesh with its location in the scene,
 as well as its color, its appearance, and how its vertices will be transformed.
 To attach a mesh to a 3D scene:
@@ -53,6 +56,7 @@ then translating (shifting) the shape in 3D space.
 given shape to the scene through the 3D batch.
 
 <a id=Shape_Groups></a>
+
 ## Shape Groups
 
 The `H3DU.ShapeGroup` class represents a shape that's a combination of multiple shapes. Usually,

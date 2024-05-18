@@ -32,7 +32,7 @@ export function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
     connected[i] = false;
   }
   const phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * MathUtil.ToRadians;
-  const angleStep = MathUtil.PiTimes2 / points;
+  const angleStep = 6.283185307179586 / points;
   const cosStep = Math.cos(angleStep);
   const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);

@@ -390,7 +390,7 @@ point in opposite directions.)
 
 A two-dimensional triangle has counterclockwise _winding_ if its vertices are ordered in a counterclockwise path from the first to second to third to first vertex. Otherwise, it has clockwise winding. If the triangle is in 3D space, it's first transformed into 2D _window coordinates_ before its winding is found. (Window coordinates roughly correspond to screen pixels.)
 
-By default, in the GL pipeline, triangles with counterclockwise winding are _front faces_, and
+By default, in the WebGL pipeline, triangles with counterclockwise winding are _front faces_, and
 other triangles are _back faces_.
 
 <a id=Finding_a_triangle_s_winding></a>

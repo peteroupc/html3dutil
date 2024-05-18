@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "eslint": ">=5.16.0",
-    "jsdoc": ">=3.6.2",
+    "jsdoc": "^4.0.3",
     "rollup": ">=1.15.6",
     "svgo": ">=1.2.2"
   }

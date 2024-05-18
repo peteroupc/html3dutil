@@ -75,7 +75,7 @@ Sets the color to apply when drawing future curves with this object.
 
 #### Parameters
 
-* `color` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> identifying the color to apply.
+* `color` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color to apply.
 
 #### Return Value
 
