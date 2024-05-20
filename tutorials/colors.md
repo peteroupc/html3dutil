@@ -1,4 +1,4 @@
-This page describes common identifiers and names for colors, as used in the Geometry Utilities Library's `toGLColor` method.
+This page describes common identifiers and names for colors, as supported by the Geometry Utilities Library's `toGLColor` method.
 
 <a id=Contents></a>
 
@@ -46,13 +46,13 @@ The following list shows the colors defined in the [**CSS3 Color Module section 
 `grey`,
 `lightgrey`,
 `lightslategrey`, and
-`slategrey` can be used instead of `darkgray`,
+`slategrey` are interchangeable with `darkgray`,
 `darkslategray`,
 `dimgray`,
 `gray`,
 `lightgray`,
 `lightslategray`, and
-`slategray`.
+`slategray`, respectively.
 
 ![**A list of named colors. Each entry consists of a color swatch and the corresponding name.**](colornames.svg)
 
@@ -60,7 +60,7 @@ The following list shows the colors defined in the [**CSS3 Color Module section 
 
 ## What Is the Syntax for HTML Colors?
 
-The notation used to name the colors in the preceding section is used in HTML to define colors. It&#8217;s also known as &#8220;hex colors&#8221;.
+The notation employed in the list of "Web safe colors" in the preceding section is HTML's way to define colors. It&#8217;s also known as &#8220;hex colors&#8221;.
 
 Take `#ff80cc` as an example. The color defined is a carnation pink. There are four parts to this example:
 
@@ -71,7 +71,7 @@ Take `#ff80cc` as an example. The color defined is a carnation pink. There are f
 
 The notation may also include an additional base-16 number, as in this example: `#ac80ccff`.  Here, the last `ff` shows the color's alpha component (see "What Is an Alpha Component?", below).
 
-It looks complicated at first, but the section "How Do I Make HTML Colors?" will show a way to easily make your own colors in this notation.
+It looks complicated at first, but the section "How Do I Make HTML Colors?" will show an easy way to make your own colors in this notation.
 
 <a id=Shortened_Notation></a>
 
@@ -90,9 +90,9 @@ Look at the table below that shows some of the values possible for the red, gree
     Green 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
     Blue  00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
 
-Now, to make a custom color, you choose one value from the red row, one value from the green row, and one value from the blue row. Each value shows the intensity of the light that the color reflects. For example, a red value of 00 means that no red light is reflected, and a red value of FF means that red light is fully reflected.
+Now, to make a custom color, you choose one value from the red row, one value from the green row, and one value from the blue row. Each value shows the intensity of the "light" that the color ideally reflects. For example, a red value of 00 means that, ideally, "red light" is not reflected, and a red value of FF, fully reflected.
 
-If you choose the same value in all three rows, the result is black (if you choose 00), white (if you choose FF) or a shade of gray. This shows that red, green, and blue light are equally reflected.
+If you choose the same value in all three rows, the result is black (if you choose 00), white (if you choose FF) or a shade of gray. This shows that "red light", "green light", and "blue light" are ideally equally reflected.
 
 After you choose the three values, combine them by writing the `#`, then the red value, then the green value, then the blue value. For example, if you choose `FF` for red, `A0` for green, and `00` for blue, write the resulting color (orange) like this: `#FFA000`.
 
@@ -121,7 +121,7 @@ Now, what follows is a list of common colors that are possible by choosing a val
 
 ## How Do I Darken an HTML Color?
 
-To darken a color (make a *shade* of it), use the table shown in &#8220;How Do I Make HTML Colors?&#8221;, above, and move each component (red, green, and blue) the same number of steps to the left. If you can&#8217;t move a component that far to the left, that component becomes 00.
+To darken a color (make a *shade* of it), consult the table shown in &#8220;How Do I Make HTML Colors?&#8221;, above, and move each component (red, green, and blue) the same number of steps to the left. If you can&#8217;t move a component that far to the left, that component becomes 00.
 
 For example, to make a darker sky blue, start with 00, FF, and FF for red, green, and blue. When we move these components ten steps to the left, we get 00, 60, and 60. The final color becomes #006060.
 
@@ -151,7 +151,7 @@ The components of the RGB color (red, green, and blue, in that order) can range 
 
 The steps for darkening, lightening, and desaturating RGB colors are pretty much the same as with HTML colors.
 
-An alternate syntax for RGB colors supports the alpha component (see "What Is an Alpha Component?", below): in the example `rgba(192,64,0,0.5)`, the `0.5` is the alpha component. This component can be used with either range for RGB colors, either 0-255 or percentages. (Note that the example starts with `rgba`, not just `rgb`.)
+An alternate syntax for RGB colors supports the alpha component (see "What Is an Alpha Component?", below): in the example `rgba(192,64,0,0.5)`, the `0.5` is the alpha component. This component supports either range for RGB colors, either 0-255 or percentages. (Note that the example starts with `rgba`, not just `rgb`.)
 
 <a id=What_Is_an_HSL_Color></a>
 
@@ -184,4 +184,4 @@ An alternate syntax for HSL colors supports the alpha component (see "What Is an
 
 ## What Is an Alpha Component?
 
-An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't use an alpha component, the color is fully opaque.
+An alpha component shows how much the color is transparent (see-through) or opaque.  The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't provide for an alpha component, the color is fully opaque.
