@@ -23,7 +23,7 @@ function SwatchSvg() {
     const cname = name !== null && typeof name !== "undefined" ? name : color;
     const svgx = this.x * this.width;
     let svgy;
-    if (typeof cname === "undefined" || cname === null) {
+    if (typeof cname === "undefined" || cname === null || cname == color) {
       svgy = this.y * HEIGHT + this.slack;
       this.totalheight = Math.max(this.totalheight, svgy + HEIGHT + this.slack + 4);
       this.output += "<rect x='" + (svgx + 2) + "' y='" + (svgy + 2) + "' width='" + (HEIGHT - 4) + "'" +
@@ -31,7 +31,7 @@ function SwatchSvg() {
     " fill:" + color + "'/><text x='" + (svgx + HEIGHT) + "' y='" + (svgy + HEIGHT - 2) + "'" +
     " width='" + (this.width - HEIGHT - 2) + "' height='" + (HEIGHT - 4) + "'" +
     " style='font-size:" + (HEIGHT - 4) * 8 / 10 + "px;color:currentColor'>" +
-    "<tspan>" + cname + "</tspan></text>\n";
+    "<tspan>" + color + "</tspan></text>\n";
     } else {
       const ht = HEIGHT * 1.5;
       svgy = this.y * ht + this.slack;
