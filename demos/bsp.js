@@ -14,6 +14,10 @@
  Any copyright to this file is released to the Public Domain.
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
 /* global AABBTree, H3DU, MeshBuffer, classifyPointToPlane3D, classifyPolygonToPlane3D, getIntersectionRayPlane, makeRay, triangleToPlane */
 /*
  Any copyright to this file is released to the Public Domain.
