@@ -224,8 +224,7 @@ This filter is implemented in the function `makeWave` in the demo.
 
 ![**Waterpaint filtered image**](filters6.png)
 
-This is a watercoloring effect based on a public domain shader by someone
-named "Themaister".
+This is a watercoloring effect based on a public domain shader by Hans-Kristian Arntzen, also known as "Themaister".
 
 This filter is implemented in the function `makeWaterpaint` in the demo.
 
