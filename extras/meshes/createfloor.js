@@ -11,7 +11,20 @@
  * import * as CustomModuleName from "extras/createfloor.js";</pre>
  * @module extras/createfloor */
 
-import {MeshBuffer} from "../h3du-module.js";
+function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
+  var geom=new THREE.BufferGeometry()
+  var attr;
+  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),8)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
+  geom.addAttribute("position",attr)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
+  geom.addAttribute("normal",attr)
+  attr=new THREE.InterleavedBufferAttribute(buffer,2,6)
+  geom.addAttribute("uv",attr)
+  geom.index=new THREE.BufferAttribute(ind,1)
+  return geom
+}
+
 /**
  * Generates a mesh buffer of a tiled floor. Texture coordinates
  * of each tile will range from [0,1] across the width and height
@@ -54,5 +67,5 @@ export const createFloor = function(xStart, yStart, width, height, tileSize, z) 
       index += 4;
     }
   }
-  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+  return MesthreejsGeometryFromPositionsNormalsUV(vertices, indices);
 };

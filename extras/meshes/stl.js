@@ -11,7 +11,17 @@
  * import * as CustomModuleName from "extras/stl.js";</pre>
  * @module extras/stl */
 
-import {MeshBuffer} from "../h3du_module.js";
+function threejsGeometryFromPositionsNormals(vertices, indices) {
+  var geom=new THREE.BufferGeometry()
+  var attr;
+  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),6)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
+  geom.addAttribute("position",attr)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
+  geom.addAttribute("normal",attr)
+  geom.index=new THREE.BufferAttribute(ind,1)
+  return geom
+}
 
 /**
  * Primitive mode for rendering a triangle fan. The first 3
@@ -127,5 +137,5 @@ export const fromStlString = function(str) {
     console.error("unsupported line: " + line);
     return null;
   }
-  return MeshBuffer.fromPositionsNormals(vertices, indices);
+  return threejsGeometryFromPositionsNormals(vertices, indices);
 };
