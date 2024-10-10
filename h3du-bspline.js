@@ -155,7 +155,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * of control points, represents the <i>degree</i> of the B-spline
  * curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1
  * results in straight line segments.<br>
- * The knot vector must be a monotonically nondecreasing sequence,
+ * The knot vector must be a nowhere increasing sequence,
  * the first knot must not equal the last, and the same knot may not be repeated
  * more than N+1 times at the beginning and end of the vector, or more than
  * N times elsewhere, where N is the curve's degree.

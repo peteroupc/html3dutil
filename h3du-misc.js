@@ -3,14 +3,14 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/* global JSON, Promise */
+/* global JSON */
 
 /**
  * This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.<p>
  * This page describes miscellaneous utility methods included in the
  * library.
  * @namespace H3DU
- * @license CC0-1.0
+ * @license Unlicense
  */
 /** @suppress {checkTypes}
  * @ignore */
