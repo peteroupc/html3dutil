@@ -14,7 +14,20 @@
 // Adapted by Peter O. from gears.c (3D Gears), a public domain program
 // written by Brian Paul.
 
-import {MathUtil, MeshBuffer} from "../h3du_module.js";
+import {MathUtil} from "../h3du_module.js";
+
+function threejsGeometryFromPositionsNormals(vertices, indices) {
+  var geom=new THREE.BufferGeometry()
+  var attr;
+  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),6)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
+  geom.addAttribute("position",attr)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
+  geom.addAttribute("normal",attr)
+  geom.index=new THREE.BufferAttribute(ind,1)
+  return geom
+}
+
 
 function QuadStrips() {
   this.vertices = [];
@@ -55,7 +68,7 @@ function QuadStrips() {
     }
   };
   this.toMeshBuffer = function() {
-    return MeshBuffer.fromPositionsNormals(
+    return threejsGeometryFromPositionsNormals(
       this.vertices, this.indices);
   };
 }

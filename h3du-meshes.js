@@ -4,7 +4,6 @@
 */
 
 import {MathUtil} from "./h3du-math";
-import {MeshBuffer} from "./h3du-meshbuffer";
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids, such as cubes, cylinders,
@@ -42,6 +41,35 @@ const TriangleFan = function(indices) {
   };
 };
 
+function recalcNormals(buffer, inside) {
+ buffer.computeVectorNormals();
+ if(inside){
+  var attr=getAttribute("normal")
+  if(attr){
+  for(var i=0;i<attr.count;i++){
+   attr.setX(i,-attr.getX(i))
+   attr.setY(i,-attr.getY(i))
+   attr.setZ(i,-attr.getZ(i))
+  }
+  }
+ }
+ return buffer;
+}
+
+function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
+  var geom=new THREE.BufferGeometry()
+  var attr;
+  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),8)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
+  geom.addAttribute("position",attr)
+  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
+  geom.addAttribute("normal",attr)
+  attr=new THREE.InterleavedBufferAttribute(buffer,2,6)
+  geom.addAttribute("uv",attr)
+  geom.index=new THREE.BufferAttribute(ind,1)
+  return geom
+}
+
 function meshBufferFromVertexGrid(vertices, width, height) {
   const indices = [];
   let y;
@@ -56,7 +84,7 @@ function meshBufferFromVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
 }
 
 function meshBufferFromUWrapVertexGrid(vertices, width, height) {
@@ -73,7 +101,7 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
 }
 
 /**
@@ -161,7 +189,7 @@ Meshes.createBoxEx = function(box, inward) {
     box[0], box[1], box[5], 0.0, 0.0, posNormal, 0.0, 0.0];
   const indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
-  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
 };
 
 /**
@@ -280,9 +308,9 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
       }
     }
     const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
-    return flat ? mesh.recalcNormals(flat, inside) : mesh;
+    return flat ? recalcNormals(mesh.toNonIndexed(),inside) : mesh;
   } else {
-    return MeshBuffer.fromPositionsNormalsUV([], []);
+    return threejsGeometryFromPositionsNormalsUV([], []);
   }
 };
 /**
@@ -359,7 +387,7 @@ Meshes.createLathe = function(points, slices, flat, inside) {
     }
   }
   const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
-  return mesh.recalcNormals(flat, inside);
+  return recalcNormals((flat ? mesh.toNonIndexed() : mesh),inside);
 };
 
 /**
@@ -405,7 +433,7 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
   // move the top disk to the top of the cylinder
   top.transform(MathUtil.mat4translated(0, 0, height));
   // merge the base and the top
-  return cylinder.merge(base).merge(top);
+  return THREE.BufferGeometryUtils.mergeGeometries([cylinder,base,top],false);
 };
 
 /**
@@ -480,7 +508,7 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * sectionCount,1,angle,sweep)
  * .setColor(firstColor ? color1 : color2)
  * firstColor=!firstColor
- * ret.merge(mesh);
+ * ret=BufferGeometryUtils.mergeGeometries([ret,mesh],false);
  * }
  * return ret;
  * }
@@ -564,7 +592,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
       fan.addIndex(k);
     }
     fan.addIndex(0);
-    return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+    return threejsGeometryFromPositionsNormalsUV(vertices, indices);
   } else {
     height = outer - inner;
     const invouter = 1.0 / outer;
@@ -673,7 +701,7 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
     }
   }
   const mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
-  return flat ? mesh.recalcNormals(flat, inward) : mesh;
+  return flat ? recalcNormals(mesh.toNonIndexed(),inward) : mesh;
 };
 
 /**
@@ -940,7 +968,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
     }
   }
   const mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
-  return flat ? mesh.recalcNormals(flat, inside) : mesh.normalizeNormals();
+  return flat ? recalcNormals(mesh.toNonIndexed(),inside) : mesh.normalizeNormals();
 };
 
 /**
@@ -997,5 +1025,5 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   }
   // Re-add the second index to close the pointed star
   triangleFan.addIndex(1);
-  return MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
 };
