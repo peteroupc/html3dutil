@@ -475,7 +475,7 @@ Note that:
 and the Y and Z coordinates are adjusted in the rotation. For rotations about the
 Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
 * If the axis of rotation points backward from the "eye", positive rotations mean
-counterclockwise rotation in <a href="tutorial-glmath.md">right-handed coordinate systems</a>. For example,
+counterclockwise rotation in glmath. For example,
 60 degrees about the axis means
 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
 clockwise.

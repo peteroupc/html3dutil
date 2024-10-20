@@ -28,7 +28,6 @@ function threejsGeometryFromPositionsNormals(vertices, indices) {
   return geom
 }
 
-
 function QuadStrips() {
   this.vertices = [];
   this.indices = [];

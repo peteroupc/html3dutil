@@ -11,9 +11,148 @@ import {MathUtil} from "./h3du-math";
  * <img src='shapes.png' alt='An assortment of shapes: a red box, a blue sphere, a bright green 2D ring, and an
  * orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
  * green square, and a purple cone on the second row.'/>
+ * <b>What are normals?</b> A normal is a set of numbers (usually three numbers) describing a particular direction. Generally, a normal's direction is perpendicular to a surface's edges, and points up and
+ * away from the surface. For 3D graphics libraries to calculate a mesh buffer's lighting and shading correctly, that mesh buffer must specify normals for all its vertices.<p><p>
+ * Normals are important in the lighting and shading model. When light hits an object's surface, how brightly the surface will be lit depends on how directly the light points to the surface. It will be lit the most brightly if the light is directly opposite to its normal, and not at all if the light is perpendicular to the normal or in the same direction as the normal.<p>
+ * In general, vertex normals are 3-dimensional
+ * and are defined for a mesh buffer only if it
+ * also contains vertex positions.<p>
+ * <b>What are texture coordinates?</b> If a texture (array of memory units) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.<p>
+ * In most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, V coordinates start by default at the bottom of the texture (0) and increase to the top (1), while in others, such as WebGL, Vulkan, Metal, and Direct3D, V coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.<p>
+ * In general, texture coordinates describe 2-dimensional points.
+ * However, for such texturing tasks as mapping
+ * a square to a trapezoid, trios of 3-dimensional texture coordinates (U, V, and Z)
+ * are useful to ensure the texturing remains perspective-correct.
+ * In this case, the 3-D texture coordinates are converted
+ * to 2-D by dividing the U and V components by the Z component.
+ * In a fragment shader or pixel shader, this can look like
+ * the following
+ * code: <code>texCoord.xy/texCoord.z</code>.
  * @constructor
  */
 export const Meshes = {};
+
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.
+ * @param {number} vertexCount Number of vertices that make up the line loop.
+ * @returns {Array<number>} Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if 'vertexCount' is less than 2.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.lineStripIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+
+MeshBuffer.lineStripIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 2) {
+    let i;
+    for (i = 1; i < vertexCount; i++)ret.push(i - 1, i);
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.
+ * @param {number} vertexCount Number of vertices that make up the line loop.
+ * @returns {Array<number>} Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if 'vertexCount' is less than 2.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.lineLoopIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.lineLoopIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 2) {
+    let i;
+    for (i = 1; i < vertexCount; i++)ret.push(i - 1, i);
+    ret.push(vertexCount - 1, 0);
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon. For triangle fans and convex polygons, the first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the last vertex, the first vertex of
+ * the first trangle, and 1 new vertex.
+ * @param {number} vertexCount Number of vertices that make up the triangle fan or convex polygon.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.triangleFanIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.triangleFanIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 3) {
+    let i;
+    for (i = 2; i < vertexCount; i++)ret.push(0, i - 1, i);
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a triangle strip. For a triangle strip, the first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the last 2 vertices and 1
+ * new vertex.
+ * @param {number} vertexCount Number of vertices that make up the triangle strip.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.triangleStripIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.triangleStripIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 3) {
+    const flip = false;
+    let i;
+    for (i = 2; i < vertexCount; i++) {
+      ret.push(flip ? i - 2 : i - 1,
+        flip ? i - 1 : i - 2, i);
+    }
+  }
+  return ret;
+};
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.
+ * @param {number} vertexCount Number of vertices that make up the quadrilaterals.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 4. If 'vertexCount' is not divisible by 4, any excess vertices are ignored.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.quadsIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.quadsIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 4) {
+    let i;
+    for (i = 3; i < vertexCount; i += 4) {
+      ret.push(i - 3, i - 2, i, i, i - 2, i - 1);
+    }
+  }
+  return ret;
+};
+
+/**
+ * Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals. For a quadrilateral strip, the first 4 vertices make up the first quadrilateral, and each additional
+ * quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
+ * 2 new vertices.
+ * @param {number} vertexCount Number of vertices that make up the quadrilateral strip.
+ * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 4. If 'vertexCount' is not divisible by 2, the excess vertex is ignored.
+ * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</caption>
+ * mesh.setIndices(
+ * MeshBuffer.quadStripIndices(mesh.vertexCount())
+ * .map(x=>mesh.getIndex(x)));
+ */
+MeshBuffer.quadStripIndices = function(vertexCount) {
+  const ret = [];
+  if(vertexCount >= 4) {
+    let i;
+    for (i = 3; i < vertexCount; i += 2) {
+      ret.push(i - 3, i - 2, i - 1, i - 1, i - 2, i);
+    }
+  }
+  return ret;
+};
 
 /**
  * Primitive mode for rendering a triangle fan. The first 3
@@ -67,6 +206,7 @@ function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
   attr=new THREE.InterleavedBufferAttribute(buffer,2,6)
   geom.addAttribute("uv",attr)
   geom.index=new THREE.BufferAttribute(ind,1)
+  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
   return geom
 }
 
@@ -122,7 +262,7 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the box will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createBox = function(xSize, ySize, zSize, inward) {
   const x = 0.5 * xSize;
@@ -150,7 +290,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the box will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.  Throws an error if "box" is null or contains negative dimensions along any of its axes.
+ * @returns {THREE.BufferGeometry} The generated mesh.  Throws an error if "box" is null or contains negative dimensions along any of its axes.
  * @example <caption>The following example creates a wire-frame box of the given corner coordinates (<code>box</code>) and color (<code>color</code>).</caption>
  * var boxMesh=Meshes.createBoxEx(box)
  * .setColor(color).wireFrame()
@@ -238,7 +378,7 @@ Meshes.createBoxEx = function(box, inward) {
  * @param {boolean} [inside] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the cylinder will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
   if(typeof slices === "undefined" || slices === null)slices = 32;
@@ -340,7 +480,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
  * @param {boolean} [inside] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the figure will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createLathe = function(points, slices, flat, inside) {
   // NOTE: Y coordinate should not be the same from one point to the next
@@ -419,7 +559,7 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * @param {boolean} [inside] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the cylinder will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  * @example <caption>The following method creates a cone that's closed at its base.
  * <img src="mesh1.png"></caption>
  * function createClosedCone(radius,height,slices) {
@@ -458,7 +598,7 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point in the opposite direction of the positive Z axis; otherwise,
  * in the same direction of the positive Z axis. Default is false.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createDisk = function(inner, outer, slices, loops, inward) {
   return Meshes.createPartialDisk(inner, outer, slices, loops, 0, 360, inward);
@@ -489,7 +629,7 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point in the opposite direction of the positive Z axis; otherwise,
  * in the same direction of the positive Z axis. Default is false.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  * @example <caption>This method creates a ring or disk striped in two colors.<br/>
  * <img src='mesh2.png' alt='Image of a disk striped in red and almost-white'/></caption>
  * // inner, outer - inner and outer radius of the disk
@@ -632,7 +772,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
  * will be smooth shaded.
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point inward; otherwise, outward. Default is false.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward) {
   if(typeof crosswise === "undefined" || crosswise === null)crosswise = 16;
@@ -724,7 +864,7 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point in the opposite direction of the positive Z axis; otherwise,
  * in the same direction of the positive Z axis. Default is false.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   if(typeof width === "undefined" || width === null)width = 1;
@@ -785,7 +925,7 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
  * @param {boolean} [inside] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the sphere will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
   return Meshes._createCapsule(radius, 0, slices, stacks, 1, flat, inside);
@@ -827,7 +967,7 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * @param {boolean} [inside] If true, the normals generated by this
  * method will point inward; otherwise, outward. Should normally be false
  * unless the capsule will be viewed from the inside.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  * @example <caption>The following method uses <code>createCapsule</code> to create a thin line-like 3D object. </caption>
  * // point1, point2 - end points of the line
  * // thickness - thickness of the line in units, default 1
@@ -987,7 +1127,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
  * @param {boolean} [inward] If true, the normals generated by this
  * method will point in the opposite direction of the positive Z axis; otherwise,
  * in the same direction of the positive Z axis. Default is false.
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   if(points < 2 || firstRadius < 0 || secondRadius < 0)return new MeshBuffer();

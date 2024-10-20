@@ -10,6 +10,7 @@ import {MathInternal} from "./h3du-mathinternal";
 /**
  * A <b>vertex attribute object</b>.
  * @constructor
+ * @deprecated It is planned to render this class obsolete and rely on three.js's BufferGeometry.
  * @param {Float32Array} buffer A buffer to store vertex attribute data; see
  * {@link BufferAccessor#buffer}.
  * @param {number} countPerValue Number of elements per value; see

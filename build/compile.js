@@ -221,7 +221,7 @@ async function normalizeAndCompile(compilerJar, inputArray, output,
     return output;
   } catch(ex) {
     throw new Error("Note that the Closure Compiler (compiler.jar) is needed to minify the HTML 3D library. " +
-      "It it doesn't exist yet, download the Closure Compiler JAR and put it in the same directory " +
+      "If it doesn't exist yet, download the Closure Compiler JAR and put it in the same directory " +
       "as this script. (Running the Closure Compiler requires a Java runtime environment.)");
   }
 }

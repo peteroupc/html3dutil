@@ -8,6 +8,7 @@
  * to vertex attributes found in mesh buffers and
  * to data that is uniform throughout a particular
  * geometry draw call.
+ * @deprecated It is planned to render this class obsolete and rely on three.js's BufferGeometry.
  * @constructor
  * @readonly
  */

@@ -41,7 +41,7 @@ To attach a mesh to a 3D scene:
 
     Note that `setPosition`, `setQuaternion`, and `setScale` don't change
 the vertices of the underlying mesh the shape uses, but rather set up
-a <a href="tutorial-glmath.md">_transformation matrix_</a> that adjusts each vertex
+a glmath that adjusts each vertex
 in the shape "on the fly" when it comes time to draw it each frame.
 
     If `setMatrix` wasn't called, then when the shape is rendered, it will generate
