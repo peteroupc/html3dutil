@@ -1,14 +1,14 @@
 <!DOCTYPE html><html><head><meta charset=utf-8><title>Transform</title></head><body><h1> Transform</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='Transform'></a>
 <h3> new Transform()</h3>A class offering a convenient way to set a transformation
 from one coordinate system to another.<h3> Methods</h3><ul><li><a href='#Transform_copy'>copy</a><br>Makes a copy of this transform.<li><a href='#Transform_getMatrix'>getMatrix</a><br>Gets the transformation matrix used by an object.<li><a href='#Transform_getPosition'>getPosition</a><br>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
-of an object relative to its original position.<li><a href='#Transform_getQuaternion'>getQuaternion</a><br>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.<li><a href='#Transform_getScale'>getScale</a><br>Returns a copy of a three-element array giving the scaling for an object's width,
+of an object relative to its original position.<li><a href='#Transform_getQuaternion'>getQuaternion</a><br>Returns a copy of the rotation of an object in the form of a glmath.<li><a href='#Transform_getScale'>getScale</a><br>Returns a copy of a three-element array giving the scaling for an object's width,
 height, and depth, respectively.<li><a href='#Transform_isIdentity'>isIdentity</a><br>Returns whether this transform is the identity transform.<li><a href='#Transform_movePosition'>movePosition</a><br>Moves the relative position of an object from its original
 position.<li><a href='#Transform_multQuaternion'>multQuaternion</a><br>Combines an object's current rotation with another rotation
-described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+described by a glmath (a 4-element array
 for describing 3D rotations).<li><a href='#Transform_multRotation'>multRotation</a><br>Combines an object's current rotation with another rotation
 in the form of an angle and an axis of
 rotation.<li><a href='#Transform_reset'>reset</a><br>Resets this transform to the untransformed state.<li><a href='#Transform_setMatrix'>setMatrix</a><br>Sets this transform's transformation matrix.<li><a href='#Transform_setPosition'>setPosition</a><br>Sets the relative position of an object from its original
-position.<li><a href='#Transform_setQuaternion'>setQuaternion</a><br>Sets this transform's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+position.<li><a href='#Transform_setQuaternion'>setQuaternion</a><br>Sets this transform's rotation in the form of a glmath (a 4-element array
 for describing 3D rotations).<li><a href='#Transform_setRotation'>setRotation</a><br>Sets this transform's rotation in the form of an angle and an axis of
 rotation.<li><a href='#Transform_setScale'>setScale</a><br>Sets the scale of an object relative to its original
 size.</ul><a name='Transform_copy'></a>
@@ -25,7 +25,7 @@ multiplied in that order, otherwise.
 </ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='Transform_getPosition'></a>
 <h3> Transform#getPosition()</h3>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
 of an object relative to its original position.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='Transform_getQuaternion'></a>
-<h3> Transform#getQuaternion()</h3>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='Transform_getScale'></a>
+<h3> Transform#getQuaternion()</h3>Returns a copy of the rotation of an object in the form of a glmath.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='Transform_getScale'></a>
 <h3> Transform#getScale()</h3>Returns a copy of a three-element array giving the scaling for an object's width,
 height, and depth, respectively.
 For each component, 1 means no scaling.<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='Transform_isIdentity'></a>
@@ -34,7 +34,7 @@ For each component, 1 means no scaling.<h4> Return Value</h4>Return value. (Type
 position. Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
 and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>x</code> (Type: Array.&lt;number> | number)<br>Number to add to the X coordinate, If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.<li><code>y</code> (Type: number)<br>Number to add to the Y coordinate. If "x" is an array, this parameter may be omitted.<li><code>z</code> (Type: number)<br>Number to add to the Z coordinate. If "x" is an array, this parameter may be omitted.</ul><h4> Return Value</h4>This object. (Type: <a href="Transform.html">Transform</a>)<a name='Transform_multQuaternion'></a>
 <h3> Transform#multQuaternion(quat)</h3>Combines an object's current rotation with another rotation
-described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+described by a glmath (a 4-element array
 for describing 3D rotations). The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
@@ -62,7 +62,7 @@ and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters
 transform.setPosition(2,4,5);
 // same, but passing an array
 transform.setPosition([2,4,5]);</pre><a name='Transform_setQuaternion'></a>
-<h3> Transform#setQuaternion(quat)</h3>Sets this transform's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+<h3> Transform#setQuaternion(quat)</h3>Sets this transform's rotation in the form of a glmath (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
 and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> and <a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a>, among others.</ul><h4> Return Value</h4>This object. (Type: <a href="Transform.html">Transform</a>)<h4> Examples</h4><pre>// Set an object's rotation to 30 degrees about the X axis
 transform.setQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));

@@ -44,7 +44,7 @@ method if it implements it; otherwise, does a numerical differentiation
 with respect to the V axis using the <code>evaluate</code> method.
 
 The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively,
-the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 
@@ -113,7 +113,7 @@ a continuous, unbroken surface such as a sphere, an open
 cylinder, or a disk rotated in three dimensions), this can be the cross product
 of the <a href="Surface.md#Surface_tangent">tangent vector</a>
 and <a href="Surface.md#Surface_bitangent">bitangent vector</a>,
-in that order. The gradient returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+in that order. The gradient returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 
@@ -183,7 +183,7 @@ with respect to the U axis using the <code>evaluate</code> method.
 
 The <b>tangent vector</b> is the vector pointing in the direction of the U axis,
 or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
-The tangent vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+The tangent vector returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 

@@ -14,14 +14,14 @@ from one coordinate system to another.
 * [getMatrix](#Transform_getMatrix)<br>Gets the transformation matrix used by an object.
 * [getPosition](#Transform_getPosition)<br>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
 of an object relative to its original position.
-* [getQuaternion](#Transform_getQuaternion)<br>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [getQuaternion](#Transform_getQuaternion)<br>Returns a copy of the rotation of an object in the form of a glmath.
 * [getScale](#Transform_getScale)<br>Returns a copy of a three-element array giving the scaling for an object's width,
 height, and depth, respectively.
 * [isIdentity](#Transform_isIdentity)<br>Returns whether this transform is the identity transform.
 * [movePosition](#Transform_movePosition)<br>Moves the relative position of an object from its original
 position.
 * [multQuaternion](#Transform_multQuaternion)<br>Combines an object's current rotation with another rotation
-described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+described by a glmath (a 4-element array
 for describing 3D rotations).
 * [multRotation](#Transform_multRotation)<br>Combines an object's current rotation with another rotation
 in the form of an angle and an axis of
@@ -30,7 +30,7 @@ rotation.
 * [setMatrix](#Transform_setMatrix)<br>Sets this transform's transformation matrix.
 * [setPosition](#Transform_setPosition)<br>Sets the relative position of an object from its original
 position.
-* [setQuaternion](#Transform_setQuaternion)<br>Sets this transform's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+* [setQuaternion](#Transform_setQuaternion)<br>Sets this transform's rotation in the form of a glmath (a 4-element array
 for describing 3D rotations).
 * [setRotation](#Transform_setRotation)<br>Sets this transform's rotation in the form of an angle and an axis of
 rotation.
@@ -77,7 +77,7 @@ Return value. (Type: Array.&lt;number>)
 <a name='Transform_getQuaternion'></a>
 ### Transform#getQuaternion()
 
-Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+Returns a copy of the rotation of an object in the form of a glmath.
 
 #### Return Value
 
@@ -124,7 +124,7 @@ This object. (Type: <a href="Transform.md">Transform</a>)
 ### Transform#multQuaternion(quat)
 
 Combines an object's current rotation with another rotation
-described by a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+described by a glmath (a 4-element array
 for describing 3D rotations). The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="Transform.md#Transform_setMatrix">Transform#setMatrix</a>
@@ -221,7 +221,7 @@ This object. (Type: <a href="Transform.md">Transform</a>)
 <a name='Transform_setQuaternion'></a>
 ### Transform#setQuaternion(quat)
 
-Sets this transform's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a> (a 4-element array
+Sets this transform's rotation in the form of a glmath (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with <a href="Transform.md#Transform_setMatrix">Transform#setMatrix</a>
 and the transform wasn't reset yet with Transform#resetTransform.
 

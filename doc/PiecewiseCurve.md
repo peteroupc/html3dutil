@@ -81,7 +81,7 @@ The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>a
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
-The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 
@@ -202,7 +202,8 @@ A piecewise curve made up of cubic B-spline curves describing the same path as t
 
 Creates a piecewise curve that describes an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's center
-and dimensions, start angle, and sweep angle.
+and dimensions, start angle, and sweep angle. The arc is rendered as
+cubic rational B-spline curves.
 
 #### Parameters
 
@@ -332,7 +333,7 @@ The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>j
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
 
-The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 
@@ -352,7 +353,7 @@ method if it implements it; otherwise, does a numerical differentiation using th
 
 The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
 vector divided by that derivative's length. The normal returned by this method
-<i>should</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>. (Compare with <a href="Surface.md#Surface_gradient">Surface#gradient</a>.)
+<i>should</i> be "normalized" to a glmath. (Compare with <a href="Surface.md#Surface_gradient">Surface#gradient</a>.)
 
 #### Parameters
 

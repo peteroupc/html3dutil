@@ -268,20 +268,20 @@ _knot vector_, which controls the behavior of the control points. B-spline
 curves include **NURBS** curves (nonuniform and rational B-spline curves,
 with weights and non-uniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
- BSplineCurve class.
+ <a href="BSplineCurve.md">BSplineCurve</a> class.
 * **B&eacute;zier curves.** These are curves in which the first and last
 control point are the curve's end points. B&eacute;zier curves are a subset of B-spline
-curves and are created using the BSplineCurve.fromBezierCurve
+curves and are created using the <a href="BSplineCurve.md#BSplineCurve.fromBezierCurve">BSplineCurve.fromBezierCurve</a>
 method.
 * **Piecewise curves.** These are curves made up of one or more other curves.
-Piecewise curves are created using the PiecewiseCurve class.
+Piecewise curves are created using the <a href="PiecewiseCurve.md">PiecewiseCurve</a> class.
 
 General-purpose surfaces include:
 
 * **B&eacute;zier surfaces.** 3D surfaces where each grid line is a B&eacute;zier
-curve. B&eacute;zier surfaces are created using the BSplineSurface.fromBezierSurface method.
+curve. B&eacute;zier surfaces are created using the <a href="BSplineSurface.md#BSplineSurface.fromBezierSurface">BSplineSurface.fromBezierSurface</a> method.
 * **B-Spline surfaces.** 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the BSplineSurface class.
+curve. B-Spline surfaces are created using the <a href="BSplineSurface.md">BSplineSurface</a> class.
 
 Special surfaces include:
 

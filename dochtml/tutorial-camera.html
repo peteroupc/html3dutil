@@ -66,7 +66,7 @@ and others would be.</p>
 </ul>
 <p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>. However, this is not the whole story, since in general, lines that are parallel in world space will not appear parallel in a perspective projection, so additional math is needed to achieve the perspective effect. This will be [<strong>explained later</strong>](#Vertex Coordinates in the Graphics System).</p>
 <p>The following methods define a perspective projection.</p>
-<p><strong><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></strong></p>
+<p><strong><a href="MathUtil.html#MathUtil.mat4perspective"><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
 and sets the scene's projection matrix accordingly.</p>
@@ -155,7 +155,7 @@ without transforming them.</p>
 <p>As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by MathUtil.mat4perspective, for example,
+perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
 transforms W to the negative Z coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the &quot;eye&quot; or &quot;camera&quot;.</p>
 <p>To take perspective into account, the clip space X, Y, and Z coordinates are
@@ -163,7 +163,7 @@ divided by the clip space W, and then converted to <em>window coordinates</em>,
 which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels.</p>
-<p>For the perspective matrix returned by <code>mat4perspective</code>, dividing
+<p>For the perspective matrix returned by <a href="MathUtil.html#MathUtil.mat4perspective"><code>mat4perspective</code></a>, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This

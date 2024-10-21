@@ -25,8 +25,8 @@ Generates a 32x32 bitmap of a linear gradient in the horizontal direction. This 
 
 #### Parameters
 
-* `color1` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the left edge of the gradient.
-* `color2` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the right edge of the gradient.
+* `color1` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> identifying the color at the left edge of the gradient.
+* `color2` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> identifying the color at the right edge of the gradient.
 
 #### Return Value
 
@@ -56,8 +56,8 @@ Generates a 32x32 bitmap of a radial gradient. This function demonstrates genera
 
 #### Parameters
 
-* `colorCenter` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the center of the gradient.
-* `colorEdges` (Type: Array.&lt;number> | number | string)<br>A color vector or string identifying the color at the edges of the gradient.
+* `colorCenter` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> identifying the color at the center of the gradient.
+* `colorEdges` (Type: Array.&lt;number> | number | string)<br>A <a href="toGLColor.md">color vector or string</a> identifying the color at the edges of the gradient.
 
 #### Return Value
 

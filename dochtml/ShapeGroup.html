@@ -1,19 +1,19 @@
 <!DOCTYPE html><html><head><meta charset=utf-8><title>ShapeGroup</title></head><body><h1> ShapeGroup</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='ShapeGroup'></a>
 <h3> new ShapeGroup()</h3>Represents a grouping of shapes. This object
-can hold both <a href="Shape.html">Shape</a> objects and
+can hold both Shape objects and
 other <a href="ShapeGroup.html">ShapeGroup</a> objects.<h3> Methods</h3><ul><li><a href='#ShapeGroup_addShape'>addShape</a><br>Adds a 3D shape to this shape group, at the end of the list
 of shapes.<li><a href='#ShapeGroup_copy'>copy</a><br>Makes a copy of this shape group and the objects contained
 in it.<li><a href='#ShapeGroup_getBounds'>getBounds</a><br>Finds a bounding box that holds all vertices in this shape group.<li><a href='#ShapeGroup_getMatrix'>getMatrix</a><br>Gets a copy of the transformation needed to transform
 this shape group's coordinates to world coordinates.<li><a href='#ShapeGroup_getShape'>getShape</a><br>Gets the shape or shape group located
 in this shape group at the given index.<li><a href='#ShapeGroup_getTransform'>getTransform</a><br>Gets a reference to the transform used by this shape group object.<li><a href='#ShapeGroup_getVisible'>getVisible</a><br>Gets whether this shape group will be drawn on rendering.<li><a href='#ShapeGroup_primitiveCount'>primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this shape group.<li><a href='#ShapeGroup_removeShape'>removeShape</a><br>Removes all instances of a 3D shape from this shape group<li><a href='#ShapeGroup_setPosition'>setPosition</a><br>Sets the relative position of the shapes in this group
-from their original position.<li><a href='#ShapeGroup_setQuaternion'>setQuaternion</a><br>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.<li><a href='#ShapeGroup_setScale'>setScale</a><br>Sets the scale of this shape group relative to its original
+from their original position.<li><a href='#ShapeGroup_setQuaternion'>setQuaternion</a><br>Sets this shape group's rotation in the form of a glmath.<li><a href='#ShapeGroup_setScale'>setScale</a><br>Sets the scale of this shape group relative to its original
 size.<li><a href='#ShapeGroup_setShape'>setShape</a><br>Sets a shape or shape group at the given index in this shape group.<li><a href='#ShapeGroup_setTransform'>setTransform</a><br>Sets the transform used by this shape group to a copy
 of the given transform.<li><a href='#ShapeGroup_setVisible'>setVisible</a><br>Sets whether this shape group will be drawn on rendering.<li><a href='#ShapeGroup_shapeCount'>shapeCount</a><br>Returns the number of shapes and/or shape groups that
 are direct children of this shape group.<li><a href='#ShapeGroup_vertexCount'>vertexCount</a><br>Gets the number of vertices composed by all shapes in this shape group.</ul><a name='ShapeGroup_addShape'></a>
 <h3> ShapeGroup#addShape(shape)</h3>Adds a 3D shape to this shape group, at the end of the list
 of shapes. Its reference, not a copy,
-will be stored in the list of shapes.<h4> Parameters</h4><ul><li><code>shape</code> (Type: <a href="Shape.html">Shape</a> | <a href="ShapeGroup.html">ShapeGroup</a>)<br>A 3D shape. Throws an error if null.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_copy'></a>
+will be stored in the list of shapes.<h4> Parameters</h4><ul><li><code>shape</code> (Type: Shape | <a href="ShapeGroup.html">ShapeGroup</a>)<br>A 3D shape. Throws an error if null.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_copy'></a>
 <h3> ShapeGroup#copy()</h3>Makes a copy of this shape group and the objects contained
 in it. The copied object will
 will have its own version of the transform and
@@ -33,18 +33,18 @@ If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 this shape group's coordinates to world coordinates.<h4> Return Value</h4>A 4x4 matrix. (Type: <a href="Transform.html">Transform</a>)<a name='ShapeGroup_getShape'></a>
 <h3> ShapeGroup#getShape(index)</h3>Gets the shape or shape group located
 in this shape group at the given index.<h4> Parameters</h4><ul><li><code>index</code> (Type: number)<br>Integer index, starting from 0, of the shape or shape group to set.</ul><h4> Return Value</h4>The shape or shape group located
-in this shape group at the given index, or null if none is found there. (Type: <a href="Shape.html">Shape</a> | <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_getTransform'></a>
+in this shape group at the given index, or null if none is found there. (Type: Shape | <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_getTransform'></a>
 <h3> ShapeGroup#getTransform()</h3>Gets a reference to the transform used by this shape group object.<h4> Return Value</h4>Return value. (Type: <a href="Transform.html">Transform</a>)<a name='ShapeGroup_getVisible'></a>
 <h3> ShapeGroup#getVisible()</h3>Gets whether this shape group will be drawn on rendering.<h4> Return Value</h4>value True if this shape group will be visible; otherwise, false. (Type: boolean)<a name='ShapeGroup_primitiveCount'></a>
 <h3> ShapeGroup#primitiveCount()</h3>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this shape group.<h4> Return Value</h4>Return value. (Type: number)<a name='ShapeGroup_removeShape'></a>
-<h3> ShapeGroup#removeShape(shape)</h3>Removes all instances of a 3D shape from this shape group<h4> Parameters</h4><ul><li><code>shape</code> (Type: <a href="Shape.html">Shape</a> | <a href="ShapeGroup.html">ShapeGroup</a>)<br>The 3D shape to remove.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setPosition'></a>
+<h3> ShapeGroup#removeShape(shape)</h3>Removes all instances of a 3D shape from this shape group<h4> Parameters</h4><ul><li><code>shape</code> (Type: Shape | <a href="ShapeGroup.html">ShapeGroup</a>)<br>The 3D shape to remove.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setPosition'></a>
 <h3> ShapeGroup#setPosition(x, y, z)</h3>Sets the relative position of the shapes in this group
 from their original position.
 See <a href="Transform.html#Transform_setPosition">Transform#setPosition</a>
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.<h4> Parameters</h4><ul><li><code>x</code> (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in <a href="Transform.html#Transform_setScale">Transform#setScale</a>.<li><code>y</code> (Type: number)<br>Y coordinate.<li><code>z</code> (Type: number)<br>Z coordinate.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setQuaternion'></a>
-<h3> ShapeGroup#setQuaternion(quat)</h3>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
+<h3> ShapeGroup#setQuaternion(quat)</h3>Sets this shape group's rotation in the form of a glmath.
 See <a href="Transform.html#Transform_setQuaternion">Transform#setQuaternion</a>.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A four-element array describing the rotation.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setScale'></a>
@@ -52,7 +52,7 @@ rather than the transform for each shape in the group.<h4> Parameters</h4><ul><l
 size. See <a href="Transform.html#Transform_setScale">Transform#setScale</a>.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.<h4> Parameters</h4><ul><li><code>x</code> (Type: number | Array.&lt;number>)<br>Scaling factor for this object's width, or a 3-element scaling array, as specified in <a href="Transform.html#Transform_setScale">Transform#setScale</a>.<li><code>y</code> (Type: number)<br>Scaling factor for this object's height.<li><code>z</code> (Type: number)<br>Scaling factor for this object's depth.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setShape'></a>
-<h3> ShapeGroup#setShape(index, shape)</h3>Sets a shape or shape group at the given index in this shape group.<h4> Parameters</h4><ul><li><code>index</code> (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.<li><code>shape</code> (Type: <a href="Shape.html">Shape</a> | <a href="ShapeGroup.html">ShapeGroup</a>)<br>Shape object to set at the given index.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setTransform'></a>
+<h3> ShapeGroup#setShape(index, shape)</h3>Sets a shape or shape group at the given index in this shape group.<h4> Parameters</h4><ul><li><code>index</code> (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.<li><code>shape</code> (Type: Shape | <a href="ShapeGroup.html">ShapeGroup</a>)<br>Shape object to set at the given index.</ul><h4> Return Value</h4>This object. (Type: <a href="ShapeGroup.html">ShapeGroup</a>)<a name='ShapeGroup_setTransform'></a>
 <h3> ShapeGroup#setTransform(transform)</h3>Sets the transform used by this shape group to a copy
 of the given transform. Child
 shapes can set their own transforms, in which case the

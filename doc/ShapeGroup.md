@@ -6,7 +6,7 @@
 ### new ShapeGroup()
 
 Represents a grouping of shapes. This object
-can hold both <a href="Shape.md">Shape</a> objects and
+can hold both Shape objects and
 other <a href="ShapeGroup.md">ShapeGroup</a> objects.
 
 ### Methods
@@ -27,7 +27,7 @@ and points) composed by all shapes in this shape group.
 * [removeShape](#ShapeGroup_removeShape)<br>Removes all instances of a 3D shape from this shape group
 * [setPosition](#ShapeGroup_setPosition)<br>Sets the relative position of the shapes in this group
 from their original position.
-* [setQuaternion](#ShapeGroup_setQuaternion)<br>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+* [setQuaternion](#ShapeGroup_setQuaternion)<br>Sets this shape group's rotation in the form of a glmath.
 * [setScale](#ShapeGroup_setScale)<br>Sets the scale of this shape group relative to its original
 size.
 * [setShape](#ShapeGroup_setShape)<br>Sets a shape or shape group at the given index in this shape group.
@@ -47,7 +47,7 @@ will be stored in the list of shapes.
 
 #### Parameters
 
-* `shape` (Type: <a href="Shape.md">Shape</a> | <a href="ShapeGroup.md">ShapeGroup</a>)<br>A 3D shape. Throws an error if null.
+* `shape` (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)<br>A 3D shape. Throws an error if null.
 
 #### Return Value
 
@@ -107,7 +107,7 @@ in this shape group at the given index.
 #### Return Value
 
 The shape or shape group located
-in this shape group at the given index, or null if none is found there. (Type: <a href="Shape.md">Shape</a> | <a href="ShapeGroup.md">ShapeGroup</a>)
+in this shape group at the given index, or null if none is found there. (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)
 
 <a name='ShapeGroup_getTransform'></a>
 ### ShapeGroup#getTransform()
@@ -144,7 +144,7 @@ Removes all instances of a 3D shape from this shape group
 
 #### Parameters
 
-* `shape` (Type: <a href="Shape.md">Shape</a> | <a href="ShapeGroup.md">ShapeGroup</a>)<br>The 3D shape to remove.
+* `shape` (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)<br>The 3D shape to remove.
 
 #### Return Value
 
@@ -172,7 +172,7 @@ This object. (Type: <a href="ShapeGroup.md">ShapeGroup</a>)
 <a name='ShapeGroup_setQuaternion'></a>
 ### ShapeGroup#setQuaternion(quat)
 
-Sets this shape group's rotation in the form of a <a href="tutorial-glmath.md">quaternion</a>.
+Sets this shape group's rotation in the form of a glmath.
 See <a href="Transform.md#Transform_setQuaternion">Transform#setQuaternion</a>.
 This method will modify this shape group's transform
 rather than the transform for each shape in the group.
@@ -211,7 +211,7 @@ Sets a shape or shape group at the given index in this shape group.
 #### Parameters
 
 * `index` (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.
-* `shape` (Type: <a href="Shape.md">Shape</a> | <a href="ShapeGroup.md">ShapeGroup</a>)<br>Shape object to set at the given index.
+* `shape` (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)<br>Shape object to set at the given index.
 
 #### Return Value
 

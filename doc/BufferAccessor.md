@@ -5,6 +5,8 @@
 <a name='BufferAccessor'></a>
 ### new BufferAccessor(buffer, countPerValue, [offset], [stride])
 
+**Deprecated: It is planned to render this class obsolete and rely on three.js's BufferGeometry.**
+
 A <b>vertex attribute object</b>.
 
 #### Parameters

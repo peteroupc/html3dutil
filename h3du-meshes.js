@@ -4,6 +4,8 @@
 */
 
 import {MathUtil} from "./h3du-math.js";
+
+if(typeof THREE=='undefined') THREE = {}
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids, such as cubes, cylinders,
@@ -183,7 +185,7 @@ const TriangleFan = function(indices) {
 function recalcNormals(buffer, inside) {
  buffer.computeVectorNormals();
  if(inside){
-  var attr=getAttribute("normal")
+  var attr=buffer.getAttribute("normal")
   if(attr){
   for(var i=0;i<attr.count;i++){
    attr.setX(i,-attr.getX(i))
@@ -196,6 +198,7 @@ function recalcNormals(buffer, inside) {
 }
 
 function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
+  if(!THREE.BufferGeometry)return null;
   var geom=new THREE.BufferGeometry()
   var attr;
   var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),8)
@@ -205,7 +208,7 @@ function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
   geom.addAttribute("normal",attr)
   attr=new THREE.InterleavedBufferAttribute(buffer,2,6)
   geom.addAttribute("uv",attr)
-  geom.index=new THREE.BufferAttribute(ind,1)
+  geom.index=new THREE.BufferAttribute(indices,1)
   // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
   return geom
 }

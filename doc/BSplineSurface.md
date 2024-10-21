@@ -172,7 +172,7 @@ a continuous, unbroken surface such as a sphere, an open
 cylinder, or a disk rotated in three dimensions), this can be the cross product
 of the <a href="Surface.md#Surface_tangent">tangent vector</a>
 and <a href="Surface.md#Surface_bitangent">bitangent vector</a>,
-in that order. The gradient returned by this method <i>should not</i> be "normalized" to a <a href="tutorial-glmath.md">unit vector</a>.
+in that order. The gradient returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 

@@ -27,8 +27,8 @@ export const createArrow = function(shaftLength, pointerLength, shaftRadius, poi
   // move the pointer to the top of the shaft
   pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
   // merge the four parts of the arrow
-  return shaft.merge(base).merge(pointer).merge(pointerBase);
-};
+  return THREE.BufferGeometryUtils.mergeGeometries([base,pointer,pointerBase],false)
+}
 /**
  * TODO: Not documented yet.
  * @param {number} shaftLength
@@ -57,5 +57,5 @@ export const createMultiColoredArrow = function(shaftLength, pointerLength, shaf
   // move the pointer to the top of the shaft
   pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
   // merge the four parts of the arrow
-  return shaft.merge(base).merge(pointer).merge(pointerBase);
+  return THREE.BufferGeometryUtils.mergeGeometries([base,pointer,pointerBase],false)
 };
