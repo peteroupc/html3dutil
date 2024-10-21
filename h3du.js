@@ -3,18 +3,18 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-export * from "./h3du-misc";
-export {MathUtil} from "./h3du-math";
-export {Curve} from "./h3du-curve";
-export {Surface} from "./h3du-surface";
-export {CurveBuilder} from "./h3du-meshbuilder";
-export {SurfaceBuilder} from "./h3du-meshbuilder";
-export {PiecewiseCurve} from "./h3du-piecewisecurve";
-export {BSplineCurve, BSplineSurface} from "./h3du-bspline";
-export {GraphicsPath} from "./h3du-path";
-export {ShapeGroup} from "./h3du-shapegroup";
-export {Transform} from "./h3du-transform";
-export {Meshes} from "./h3du-meshes";
-export {BufferAccessor} from "./h3du-bufferaccessor";
-export {MeshBuffer} from "./h3du-meshbuffer";
-export {Semantic} from "./h3du-semantic";
+export * from "./h3du-misc.js";
+export {MathUtil} from "./h3du-math.js";
+export {Curve} from "./h3du-curve.js";
+export {Surface} from "./h3du-surface.js";
+export {CurveBuilder} from "./h3du-meshbuilder.js";
+export {SurfaceBuilder} from "./h3du-meshbuilder.js";
+export {PiecewiseCurve} from "./h3du-piecewisecurve.js";
+export {BSplineCurve, BSplineSurface} from "./h3du-bspline.js";
+export {GraphicsPath} from "./h3du-path.js";
+export {ShapeGroup} from "./h3du-shapegroup.js";
+export {Transform} from "./h3du-transform.js";
+export {Meshes} from "./h3du-meshes.js";
+export {BufferAccessor} from "./h3du-bufferaccessor.js";
+export {MeshBuffer} from "./h3du-meshbuffer.js";
+export {Semantic} from "./h3du-semantic.js";

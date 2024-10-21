@@ -3,8 +3,8 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {MathUtil} from "./h3du-math";
-import {Transform} from "./h3du-transform";
+import {MathUtil} from "./h3du-math.js";
+import {Transform} from "./h3du-transform.js";
 /**
  * Represents a grouping of shapes. This object
  * can hold both {@link Shape} objects and

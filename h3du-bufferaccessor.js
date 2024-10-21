@@ -5,7 +5,7 @@
 
 /* global ArrayBuffer, Float32Array, Uint16Array, Uint32Array */
 
-import {MathInternal} from "./h3du-mathinternal";
+import {MathInternal} from "./h3du-mathinternal.js";
 
 /**
  * A <b>vertex attribute object</b>.

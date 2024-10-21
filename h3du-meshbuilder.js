@@ -5,11 +5,11 @@
 
 /* global Uint16Array, Uint32Array */
 
-import {Curve} from "./h3du-curve";
-import {MeshBuffer} from "./h3du-meshbuffer";
-import {Semantic} from "./h3du-semantic";
-import {Surface} from "./h3du-surface";
-import {toGLColor} from "./h3du-misc";
+import {Curve} from "./h3du-curve.js";
+import {MeshBuffer} from "./h3du-meshbuffer.js";
+import {Semantic} from "./h3du-semantic.js";
+import {Surface} from "./h3du-surface.js";
+import {toGLColor} from "./h3du-misc.js";
 
 /**
  * An evaluator of curve evaluator objects for generating

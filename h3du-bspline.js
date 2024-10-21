@@ -3,9 +3,9 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {Curve} from "./h3du-curve";
-import {MathInternal} from "./h3du-mathinternal";
-import {Surface} from "./h3du-surface";
+import {Curve} from "./h3du-curve.js";
+import {MathInternal} from "./h3du-mathinternal.js";
+import {Surface} from "./h3du-surface.js";
 
 function linear(points, elementsPerValue, t) {
   const ret = [];

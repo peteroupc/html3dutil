@@ -3,7 +3,7 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {MathInternal} from "./h3du-mathinternal";
+import {MathInternal} from "./h3du-mathinternal.js";
 
 /**
  * A curve evaluator object for a parametric curve.<p>

@@ -3,11 +3,11 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {BSplineCurve} from "./h3du-bspline";
-import {Curve} from "./h3du-curve";
-import {MathUtil} from "./h3du-math";
-import {MeshBuffer} from "./h3du-meshbuffer";
-import {PiecewiseCurve} from "./h3du-piecewisecurve";
+import {BSplineCurve} from "./h3du-bspline.js";
+import {Curve} from "./h3du-curve.js";
+import {MathUtil} from "./h3du-math.js";
+import {MeshBuffer} from "./h3du-meshbuffer.js";
+import {PiecewiseCurve} from "./h3du-piecewisecurve.js";
 
 /** @ignore
  * @private

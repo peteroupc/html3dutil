@@ -3,8 +3,8 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {MathInternal} from "./h3du-mathinternal";
-import {MathUtil} from "./h3du-math";
+import {MathInternal} from "./h3du-mathinternal.js";
+import {MathUtil} from "./h3du-math.js";
 
 /**
  * A surface evaluator object for a parametric surface.<p>

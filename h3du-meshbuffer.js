@@ -7,9 +7,9 @@
 
 import {BufferAccessor} from "./h3du-bufferaccessor.js";
 import {MathInternal} from "./h3du-mathinternal.js";
-import {MathUtil} from "./h3du-math";
+import {MathUtil} from "./h3du-math.js";
 import {Semantic} from "./h3du-semantic.js";
-import {toGLColor} from "./h3du-misc";
+import {toGLColor} from "./h3du-misc.js";
 /**
  * A geometric mesh in the form of buffer objects.
  * A mesh buffer is made up of one or more [vertex attribute objects]{@link BufferAccessor},

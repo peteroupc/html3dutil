@@ -3,8 +3,8 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {BSplineCurve} from "./h3du-bspline";
-import {Curve} from "./h3du-curve";
+import {BSplineCurve} from "./h3du-bspline.js";
+import {Curve} from "./h3du-curve.js";
 
 /**
  * A [curve evaluator object]{@link Curve} for a curve

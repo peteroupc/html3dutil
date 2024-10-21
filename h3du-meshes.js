@@ -3,7 +3,7 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {MathUtil} from "./h3du-math";
+import {MathUtil} from "./h3du-math.js";
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids, such as cubes, cylinders,
@@ -38,11 +38,11 @@ export const Meshes = {};
  * @returns {Array<number>} Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if 'vertexCount' is less than 2.
  * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</caption>
  * mesh.setIndices(
- * MeshBuffer.lineStripIndices(mesh.vertexCount())
+ * Meshes.lineStripIndices(mesh.vertexCount())
  * .map(x=>mesh.getIndex(x)));
  */
 
-MeshBuffer.lineStripIndices = function(vertexCount) {
+Meshes.lineStripIndices = function(vertexCount) {
   const ret = [];
   if(vertexCount >= 2) {
     let i;
@@ -56,10 +56,10 @@ MeshBuffer.lineStripIndices = function(vertexCount) {
  * @returns {Array<number>} Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if 'vertexCount' is less than 2.
  * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</caption>
  * mesh.setIndices(
- * MeshBuffer.lineLoopIndices(mesh.vertexCount())
+ * Meshes.lineLoopIndices(mesh.vertexCount())
  * .map(x=>mesh.getIndex(x)));
  */
-MeshBuffer.lineLoopIndices = function(vertexCount) {
+Meshes.lineLoopIndices = function(vertexCount) {
   const ret = [];
   if(vertexCount >= 2) {
     let i;
@@ -77,10 +77,10 @@ MeshBuffer.lineLoopIndices = function(vertexCount) {
  * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3.
  * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.</caption>
  * mesh.setIndices(
- * MeshBuffer.triangleFanIndices(mesh.vertexCount())
+ * Meshes.triangleFanIndices(mesh.vertexCount())
  * .map(x=>mesh.getIndex(x)));
  */
-MeshBuffer.triangleFanIndices = function(vertexCount) {
+Meshes.triangleFanIndices = function(vertexCount) {
   const ret = [];
   if(vertexCount >= 3) {
     let i;
@@ -97,10 +97,10 @@ MeshBuffer.triangleFanIndices = function(vertexCount) {
  * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 3.
  * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.</caption>
  * mesh.setIndices(
- * MeshBuffer.triangleStripIndices(mesh.vertexCount())
+ * Meshes.triangleStripIndices(mesh.vertexCount())
  * .map(x=>mesh.getIndex(x)));
  */
-MeshBuffer.triangleStripIndices = function(vertexCount) {
+Meshes.triangleStripIndices = function(vertexCount) {
   const ret = [];
   if(vertexCount >= 3) {
     const flip = false;
@@ -118,10 +118,10 @@ MeshBuffer.triangleStripIndices = function(vertexCount) {
  * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 4. If 'vertexCount' is not divisible by 4, any excess vertices are ignored.
  * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</caption>
  * mesh.setIndices(
- * MeshBuffer.quadsIndices(mesh.vertexCount())
+ * Meshes.quadsIndices(mesh.vertexCount())
  * .map(x=>mesh.getIndex(x)));
  */
-MeshBuffer.quadsIndices = function(vertexCount) {
+Meshes.quadsIndices = function(vertexCount) {
   const ret = [];
   if(vertexCount >= 4) {
     let i;
@@ -140,10 +140,10 @@ MeshBuffer.quadsIndices = function(vertexCount) {
  * @returns {Array<number>} Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if 'vertexCount' is less than 4. If 'vertexCount' is not divisible by 2, the excess vertex is ignored.
  * @example <caption>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</caption>
  * mesh.setIndices(
- * MeshBuffer.quadStripIndices(mesh.vertexCount())
+ * Meshes.quadStripIndices(mesh.vertexCount())
  * .map(x=>mesh.getIndex(x)));
  */
-MeshBuffer.quadStripIndices = function(vertexCount) {
+Meshes.quadStripIndices = function(vertexCount) {
   const ret = [];
   if(vertexCount >= 4) {
     let i;
@@ -389,7 +389,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   if(baseRad <= 0 && topRad <= 0 || height === 0) {
   // both baseRad and topRad are zero or negative,
   // or height is zero
-    return new MeshBuffer();
+    return new THREE.BufferGeometry();
   }
   const normDir = inside ? -1 : 1;
   const sc = [];
@@ -640,7 +640,7 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * function stripedDisk(inner,outer,color1,color2,sections,sectionCount) {
  * if(sectionCount==null)sectionCount=4
  * var firstColor=true
- * var ret=new MeshBuffer()
+ * var ret=null
  * var sweep=360.0/sections;
  * for(var i=0;i<sections;i++) {
  * var angle=360.0*(i*1.0/sections);
@@ -648,7 +648,8 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * sectionCount,1,angle,sweep)
  * .setColor(firstColor ? color1 : color2)
  * firstColor=!firstColor
- * ret=BufferGeometryUtils.mergeGeometries([ret,mesh],false);
+ * ret=ret ? BufferGeometryUtils.mergeGeometries(
+ * [ret,mesh],false) : mesh;
  * }
  * return ret;
  * }
@@ -663,7 +664,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   if(inner > outer)throw new Error("inner greater than outer");
   if(inner < 0)inner = 0;
   if(outer < 0)outer = 0;
-  if(outer === 0 || sweep === 0)return new MeshBuffer();
+  if(outer === 0 || sweep === 0)return new THREE.BufferGeometry();
   const fullCircle = sweep === 360 && start === 0;
   const sweepDir = sweep < 0 ? -1 : 1;
   if(sweep < 0)sweep = -sweep;
@@ -780,7 +781,7 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
   if(crosswise < 3)throw new Error("crosswise is less than 3");
   if(lengthwise < 3)throw new Error("lengthwise is less than 3");
   if(inner < 0 || outer < 0)throw new Error("inner or outer is less than 0");
-  if(outer === 0 || inner === 0)return new MeshBuffer();
+  if(outer === 0 || inner === 0)return new THREE.BufferGeometry();
   const tubeRadius = inner;
   const circleRad = outer;
   const sci = [];
@@ -874,7 +875,7 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   if(width < 0 || height < 0)throw new Error("width or height is less than 0");
   if(heightDiv <= 0 || widthDiv <= 0)
     throw new Error("widthDiv or heightDiv is 0 or less");
-  if(width === 0 || height === 0)return new MeshBuffer();
+  if(width === 0 || height === 0)return new THREE.BufferGeometry();
   const xStart = -width * 0.5;
   const yStart = -height * 0.5;
   const normalZ = inward ? -1 : 1;
@@ -1006,7 +1007,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   if(radius < 0)throw new Error("negative radius");
   if(radius === 0) {
   // radius is zero
-    return new MeshBuffer();
+    return new THREE.BufferGeometry();
   }
   let cangle;
   let sangle;
@@ -1130,8 +1131,8 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
 Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
-  if(points < 2 || firstRadius < 0 || secondRadius < 0)return new MeshBuffer();
-  if(firstRadius <= 0 && secondRadius <= 0)return new MeshBuffer();
+  if(points < 2 || firstRadius < 0 || secondRadius < 0)return new THREE.BufferGeometry();
+  if(firstRadius <= 0 && secondRadius <= 0)return new THREE.BufferGeometry();
   if(firstRadius === secondRadius) {
     return Meshes.createDisk(firstRadius, firstRadius, points, 1, inward);
   }

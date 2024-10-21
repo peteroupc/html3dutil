@@ -2392,7 +2392,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     if(d > 0) {
       d = 1 / Math.sqrt(d);
       return [a[0] * d, a[1] * d, a[2] * d,
-        Math.acos(Math.min(1.0, Math.max(0.0, w))) * MathUtil.Num360DividedByPi];
+        Math.acos(Math.min(1.0, Math.max(-1.0, w))) * MathUtil.Num360DividedByPi];
     } else {
       return [0, 1, 0, 0];
     }
