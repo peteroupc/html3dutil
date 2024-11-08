@@ -581,8 +581,6 @@
  * Related functions:
  * [MathUtil.quatFromTaitBryan()]{@link MathUtil.quatFromTaitBryan} -
  * Converts from Tait-Bryan angles to a quaternion
- * [MathUtil.quatToTaitBryan()]{@link MathUtil.quatToTaitBryan} -
- * Converts from a quaternion to Tait-Bryan angles
  * <a id=4x4_Matrices></a>
  * ### 4x4 Matrices
  * A 4x4 matrix can describe a 3D vector rotation; see [**"Rotation", above**](#Rotation).
@@ -2587,7 +2585,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return ret;
   },
-  /**
+  /*
    * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
    * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
    * @param {number} pitchDegrees Vector rotation about the X axis (upward or downward turn), in degrees.
@@ -2648,6 +2646,90 @@ tvar47 * tvar51 + tvar8 * tvar52;
     }
     return t8;
   },
+  /*
+   * XXX: Has a logic error but I can't see it. The return value of
+   * the method as currently written, when passed to quatFromTaitBryan,
+   * will return the correct quaternion but with the wrong signs.
+   * https://github.com/peteroupc/html3dutil/issues/8
+   * ----
+   * Converts this quaternion to the same version of the rotation
+   * in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
+   * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
+   * @param {number} [mode] Specifies the order in which the rotations will occur
+   * (in terms of their effect, not in terms of how they will be returned by this method).
+   * This is one of the {@link MathUtil} constants such as {@link MathUtil.LocalPitchYawRoll}
+   * and {@link MathUtil.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link MathUtil.GlobalRollPitchYaw}.
+   * The constants starting with <code>Global</code>
+   * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
+   * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
+   * where the second and third rotations occur around the rotated object's new axes
+   * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
+   * angles). The order of <code>Local</code> rotations has the same result as the reversed
+   * order of <code>Global</code> rotations and vice versa.
+   * @returns {Array<number>} A 3-element array containing the
+   * pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
+   * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
+  "quatToTaitBryan":function(a, mode) {
+    const c0 = a[3];
+    let c1;
+    let c2;
+    let c3;
+    let e = 1;
+    if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
+    if(mode < 0 || mode >= 6)throw new Error("invalid mode");
+    if(mode === MathUtil.GlobalRollPitchYaw) {
+      c1 = a[1]; c2 = a[0]; c3 = a[2];
+      e = -1;
+    } else if(mode === MathUtil.GlobalPitchYawRoll) {
+      c1 = a[2]; c2 = a[1]; c3 = a[0];
+      e = -1;
+    } else if(mode === MathUtil.GlobalPitchRollYaw) {
+      c1 = a[1]; c2 = a[2]; c3 = a[0];
+    } else if(mode === MathUtil.GlobalYawPitchRoll) {
+      c1 = a[2]; c2 = a[0]; c3 = a[1];
+    } else if(mode === MathUtil.GlobalYawRollPitch) {
+      c1 = a[0]; c2 = a[2]; c3 = a[1];
+      e = -1;
+    } else {
+      c1 = a[0]; c2 = a[1]; c3 = a[2];
+    }
+    const sq1 = c1 * c1;
+    const sq2 = c2 * c2;
+    const sq3 = c3 * c3;
+    let e1 = Math.atan2(2 * (c0 * c1 - e * c2 * c3), 1 - (sq1 + sq2) * 2);
+    e1 *= MathUtil.Num180DividedByPi;
+    let sine = 2 * (c0 * c2 + e * c1 * c3);
+    if(sine > 1.0)sine = 1.0; // for stability
+    if(sine < -1.0)sine = -1.0; // for stability
+    let e2 = Math.asin(sine);
+    let e3 = Math.atan2(2 * (c0 * c3 - e * c1 * c2), 1 - (sq2 + sq3) * 2);
+    e2 *= MathUtil.Num180DividedByPi;
+    e3 *= MathUtil.Num180DividedByPi;
+    // Singularity near the poles
+    if(Math.abs(e2 - 90) < 0.000001 ||
+      Math.abs(e2 + 90) < 0.000001) {
+      e3 = 0;
+      e1 = Math.atan2(c1, c0) * MathUtil.Num180DividedByPi;
+      if(isNaN(e1))e1 = 0;
+    }
+    // Return the pitch/yaw/roll angles in the standard order
+    const angles = [];
+    if(mode === MathUtil.GlobalRollPitchYaw) {
+      angles[0] = e2; angles[1] = e1; angles[2] = e3;
+    } else if(mode === MathUtil.GlobalPitchYawRoll) {
+      angles[0] = e3; angles[1] = e2; angles[2] = e1;
+    } else if(mode === MathUtil.GlobalPitchRollYaw) {
+      angles[0] = e3; angles[1] = e1; angles[2] = e2;
+    } else if(mode === MathUtil.GlobalYawPitchRoll) {
+      angles[0] = e2; angles[1] = e3; angles[2] = e1;
+    } else if(mode === MathUtil.GlobalYawRollPitch) {
+      angles[0] = e1; angles[1] = e3; angles[2] = e2;
+    } else {
+      angles[0] = e1; angles[1] = e2; angles[2] = e3;
+    }
+    return angles;
+  },
+  */
   /**
    * Generates a quaternion describing a rotation between
    * two 3-element vectors. The quaternion
@@ -2901,85 +2983,6 @@ tvar47 * tvar51 + tvar8 * tvar52;
       xz + wy, yz - wx, 1 - (xx + yy), 0,
       0, 0, 0, 1
     ];
-  },
-  /**
-   * Converts this quaternion to the same version of the rotation
-   * in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
-   * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
-   * @param {number} [mode] Specifies the order in which the rotations will occur
-   * (in terms of their effect, not in terms of how they will be returned by this method).
-   * This is one of the {@link MathUtil} constants such as {@link MathUtil.LocalPitchYawRoll}
-   * and {@link MathUtil.GlobalYawRollPitch}. If null, undefined, or omitted, the default is {@link MathUtil.GlobalRollPitchYaw}.
-   * The constants starting with <code>Global</code>
-   * describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i>
-   * angles). The constants starting with <code>Local</code> describe a vector rotation in the order given,
-   * where the second and third rotations occur around the rotated object's new axes
-   * and not necessarily the original axes (these angles are also called <i>intrinsic</i>
-   * angles). The order of <code>Local</code> rotations has the same result as the reversed
-   * order of <code>Global</code> rotations and vice versa.
-   * @returns {Array<number>} A 3-element array containing the
-   * pitch, yaw, and roll angles (X, Y, and Z axis angles), in that order and in degrees, by which to rotate vectors.
-   * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
-   */
-  "quatToTaitBryan":function(a, mode) {
-    const c0 = a[3];
-    let c1;
-    let c2;
-    let c3;
-    let e = 1;
-    if(typeof mode === "undefined" || mode === null)mode = MathUtil.GlobalRollPitchYaw;
-    if(mode < 0 || mode >= 6)throw new Error("invalid mode");
-    if(mode === MathUtil.GlobalRollPitchYaw) {
-      c1 = a[1]; c2 = a[0]; c3 = a[2];
-      e = -1;
-    } else if(mode === MathUtil.GlobalPitchYawRoll) {
-      c1 = a[2]; c2 = a[1]; c3 = a[0];
-      e = -1;
-    } else if(mode === MathUtil.GlobalPitchRollYaw) {
-      c1 = a[1]; c2 = a[2]; c3 = a[0];
-    } else if(mode === MathUtil.GlobalYawPitchRoll) {
-      c1 = a[2]; c2 = a[0]; c3 = a[1];
-    } else if(mode === MathUtil.GlobalYawRollPitch) {
-      c1 = a[0]; c2 = a[2]; c3 = a[1];
-      e = -1;
-    } else {
-      c1 = a[0]; c2 = a[1]; c3 = a[2];
-    }
-    const sq1 = c1 * c1;
-    const sq2 = c2 * c2;
-    const sq3 = c3 * c3;
-    let e1 = Math.atan2(2 * (c0 * c1 - e * c2 * c3), 1 - (sq1 + sq2) * 2);
-    let sine = 2 * (c0 * c2 + e * c1 * c3);
-    if(sine > 1.0)sine = 1.0; // for stability
-    if(sine < -1.0)sine = -1.0; // for stability
-    let e2 = Math.asin(sine);
-    let e3 = Math.atan2(2 * (c0 * c3 - e * c1 * c2), 1 - (sq2 + sq3) * 2);
-    e1 *= MathUtil.Num180DividedByPi;
-    e2 *= MathUtil.Num180DividedByPi;
-    e3 *= MathUtil.Num180DividedByPi;
-    // Singularity near the poles
-    if(Math.abs(e2 - 90) < 0.000001 ||
-      Math.abs(e2 + 90) < 0.000001) {
-      e3 = 0;
-      e1 = Math.atan2(c1, c0) * MathUtil.Num180DividedByPi;
-      if(isNaN(e1))e1 = 0;
-    }
-    // Return the pitch/yaw/roll angles in the standard order
-    const angles = [];
-    if(mode === MathUtil.GlobalRollPitchYaw) {
-      angles[0] = e2; angles[1] = e1; angles[2] = e3;
-    } else if(mode === MathUtil.GlobalPitchYawRoll) {
-      angles[0] = e3; angles[1] = e2; angles[2] = e1;
-    } else if(mode === MathUtil.GlobalPitchRollYaw) {
-      angles[0] = e3; angles[1] = e1; angles[2] = e2;
-    } else if(mode === MathUtil.GlobalYawPitchRoll) {
-      angles[0] = e2; angles[1] = e3; angles[2] = e1;
-    } else if(mode === MathUtil.GlobalYawRollPitch) {
-      angles[0] = e1; angles[1] = e3; angles[2] = e2;
-    } else {
-      angles[0] = e1; angles[1] = e2; angles[2] = e3;
-    }
-    return angles;
   },
   /**
    * Transforms a 3- or 4-element vector using a

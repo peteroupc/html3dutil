@@ -26,6 +26,9 @@ canvas { width:100%; height:100%; overflow: hidden; }
 * <li>The last number is the previous time step (not strictly needed
 * for Verlet integration, but makes the integration more accurate
 * in the face of differing time steps, see http://lonesock.net/article/verlet.html ).
+* For a discussion of implementing basic physics algorithms in a video game,
+* including cloth and rigid body simulations, using particle systems,
+* see Thomas Jakobsen, "Advanced Character Physics", IO Interactive.
 * </ul>
 * @param {number} timeStep Time step for integration. This is usually
 * a fractional number of seconds.

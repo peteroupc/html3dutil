@@ -611,21 +611,40 @@ testfunctions.push(function() {
     ok(isApproxVec(q, q2), "angleaxis=" + [angle, "["+axis+"]", "["+aa+"]"]);
   }
 });
-/*
-// TODO: Fix
+function qftb(x,y,z){
+ var q=[0,0,0,1]
+ var qx=H3DU.MathUtil.quatFromAxisAngle(z,0,0,1)
+ q=H3DU.MathUtil.quatMultiply(qx,q);
+ qx=H3DU.MathUtil.quatFromAxisAngle(x,1,0,0)
+ q=H3DU.MathUtil.quatMultiply(qx,q);
+ qx=H3DU.MathUtil.quatFromAxisAngle(y,0,1,0)
+ q=H3DU.MathUtil.quatMultiply(qx,q);
+ return q;
+}
+// TODO: Fix logic error in quatToTaitBryan
 testfunctions.push(function() {
+  if(!H3DU.MathUtil.quatToTaitBryan){
+    console.warn("can't test quatToTaitBryan since its current implementation may have a logic error."+
+       " https://github.com/peteroupc/html3dutil/issues/8")
+    return
+  }
   let i;
   for (i = 0; i < 100; i++) {
     const x = Math.random() * 360 - 180;
     const y = Math.random() * 360 - 180;
     const z = Math.random() * 360 - 180;
-    const q = H3DU.MathUtil.quatFromTaitBryan(x, y, z);
-    const aa = H3DU.MathUtil.quatToTaitBryan(q);
-    const q2 = H3DU.MathUtil.quatFromTaitBryan(aa[0], aa[1], aa[2]);
-    ok(isApproxVec(q, q2), "taitbryan=" + [x, y, z]);
+    const q = H3DU.MathUtil.quatFromTaitBryan(x, y, z, H3DU.MathUtil.GlobalRollYawPitch);
+    const aa = H3DU.MathUtil.quatToTaitBryan(q, H3DU.MathUtil.GlobalRollYawPitch);
+    const q2 = H3DU.MathUtil.quatFromTaitBryan(aa[0], aa[1], aa[2], H3DU.MathUtil.GlobalRollYawPitch);
+    ok(isApproxVec(q, q2), "taitbryan=" + ["["+[x, y, z]+"]",
+      "<br>q=["+q+"]",
+      "<br>q=["+qftb(x,y,z)+"]",
+      "<br>q=["+H3DU.MathUtil.quatToAxisAngle(q)+"]",
+      "<br>aa=["+aa+"]",
+      "<br>q2=["+q2+"]",
+      "<br>q2=["+H3DU.MathUtil.quatToAxisAngle(q2)+"]"]);
   }
 });
-*/
 testfunctions.push(function() {
   let pathtest = new H3DU.GraphicsPath()
     .moveTo(0.4713967368259978, 0.8819212643483549 )

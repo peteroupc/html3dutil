@@ -5,7 +5,7 @@
 
 import {MathUtil} from "./h3du-math.js";
 
-if(typeof THREE=='undefined') THREE = {}
+if(typeof THREE=='undefined') var THREE = {}
 /**
  * Contains methods that create meshes
  * of various geometric shapes and solids, such as cubes, cylinders,

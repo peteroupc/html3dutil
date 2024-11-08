@@ -132,7 +132,7 @@ and the transform wasn't reset yet with Transform#resetTransform.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.md#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> or <a href="MathUtil.md#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a>.
+* `quat` (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.md#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> or MathUtil.quatFromTaitBryan.
 
 #### Return Value
 
@@ -227,7 +227,7 @@ and the transform wasn't reset yet with Transform#resetTransform.
 
 #### Parameters
 
-* `quat` (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.md#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> and <a href="MathUtil.md#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a>, among others.
+* `quat` (Type: Array.&lt;number>)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.md#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> and MathUtil.quatFromTaitBryan, among others.
 
 #### Return Value
 
