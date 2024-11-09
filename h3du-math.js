@@ -243,7 +243,7 @@
  * system will be scaled up or down along that axis. The scalings given
  * here will scale the lengths of the corresponding axes. For example,
  * if `sx` is 2, the X axis will be (2, 0, 0) and thus have a length of 2.
- * *Translation.** A translation is a shifting of an object's position.
+ * **Translation.** A translation is a shifting of an object's position.
  * To create a translation matrix, use [MathUtil.mat4translated()]{@link MathUtil.mat4translated},
  * and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
  * an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.
@@ -486,7 +486,6 @@
  * Returns a frustum matrix
  * [MathUtil.mat4perspective()]{@link MathUtil.mat4perspective} -
  * Returns a field-of-view perspective matrix
- * <a id=Rotation_Example></a>
  * ## Rotation Example
  * As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
  * &theta; = 60&deg;). First, we find the rotation formula for the X axis:
@@ -541,7 +540,6 @@
  * describe the same axis of rotation.
  * Unless stated otherwise, an axis of rotation passed to a `MathUtil`
  * method need not be a [**unit vector**](#Unit_Vectors).
- * <a id=Quaternions></a>
  * ### Quaternions
  * A quaternion is a 4-element vector that can describe a 3D rotation. Functions dealing with quaternions begin with "quat". Functions that generate quaternions include: {@link MathUtil.quatIdentity}, which generates a quaternion describing an
  * absence of rotations; {@link MathUtil.quatFromVectors}, which generates a quaternion describing
@@ -1232,7 +1230,7 @@ const MathUtil = {
    * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
    * for transforming surface normals in order to keep them perpendicular
    * to a surface transformed by the model-view matrix. Normals are then
-   * transformed by this matrix and then converted to [unit vectors]{@tutorial glmath}. But if the
+   * transformed by this matrix and then converted to unit vectors. But if the
    * input matrix uses only rotations, translations, and/or uniform scaling
    * (same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
    * be used instead of the inverse-transpose matrix to transform the normals.
@@ -2735,7 +2733,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * two 3-element vectors. The quaternion
    * will describe the rotation required to rotate
    * the ray described in the first vector toward the ray described
-   * in the second vector. The vectors need not be [unit vectors]{@tutorial glmath}.
+   * in the second vector. The vectors need not be unit vectors.
    * @param {Array<number>} vec1 The first 3-element vector.
    * @param {Array<number>} vec2 The second 3-element vector.
    * @returns {Array<number>} The generated quaternion, which
@@ -2791,7 +2789,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * The quaternions are multiplied such that the second quaternion's
    * rotation happens before the first quaternion's rotation when applied
    * in the global coordinate frame.<p>
-   * If both quaternions are [unit vectors]{@tutorial glmath}, the resulting
+   * If both quaternions are unit vectors, the resulting
    * quaternion will also be a unit vector. However, for best results, you should
    * normalize the quaternions every few multiplications (using
    * {@link MathUtil.quatNormalize} or {@link MathUtil.quatNormalizeInPlace}), since successive
@@ -3503,7 +3501,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * &theta; is the shortest angle between <b>a</b> and <b>b</b>.
    * It follows that:<ul>
    * <li>If the length is 0, then A and B are parallel vectors (0 or 180 degrees apart).
-   * <li>If A and B are [unit vectors]{@tutorial glmath}, the length equals the absolute value
+   * <li>If A and B are unit vectors, the length equals the absolute value
    * of the sine of the shortest angle between A and B.
    * <li>If A and B are unit vectors, the cross product will be a unit vector only if A is perpendicular
    * to B (the shortest angle between A and B will be 90 degrees, since sin 90&deg; = 1).
@@ -3570,7 +3568,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * (perpendicular to each other).
    * <li>A dot product greater than 0 means less than 90 degrees apart.
    * <li>A dot product less than 0 means greater than 90 degrees apart.
-   * <li>If both vectors are [unit vectors]{@tutorial glmath}, the cosine
+   * <li>If both vectors are unit vectors, the cosine
    * of the shortest angle between them is equal to their dot product.
    * However, <code>Math.acos</code> won't return a negative angle
    * from that cosine, so the dot product can't
