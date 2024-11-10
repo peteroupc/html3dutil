@@ -100,12 +100,8 @@ at this path's current position.
 * [roundRect](#GraphicsPath_roundRect)<br>Adds path segments to this path that form an axis-aligned rounded rectangle.
 * [toCurvePath](#GraphicsPath_toCurvePath)<br>Creates a path in which arcs are decomposed
 to cubic B&eacute;zier curves (which will approximate those arcs).
-* [toExtrudedMeshBuffer](#GraphicsPath_toExtrudedMeshBuffer)<br>Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
-* [toLineMeshBuffer](#GraphicsPath_toLineMeshBuffer)<br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
 * [toLinePath](#GraphicsPath_toLinePath)<br>Creates a path in which curves and arcs are decomposed
 to line segments.
-* [toMeshBuffer](#GraphicsPath_toMeshBuffer)<br>Decomposes this path into triangles and generates a mesh
-buffer with those triangles.
 * [toString](#GraphicsPath_toString)<br>Returns this path in the form of a string in SVG path format.
 * [transform](#GraphicsPath_transform)<br>Returns a modified version of this path that is transformed
 according to the given affine transformation (a transformation
@@ -789,36 +785,6 @@ to cubic B&eacute;zier curves (which will approximate those arcs).
 A path consisting only of line
 segments, B&eacute;zier curves, and close commands. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
 
-<a name='GraphicsPath_toExtrudedMeshBuffer'></a>
-### GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness], [closed])
-
-Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
-
-#### Parameters
-
-* `zStart` (Type: number)<br>Starting Z coordinate of the mesh buffer's "walls".
-* `zEnd` (Type: number)<br>Ending Z coordinate of the mesh buffer's "walls".
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
-* `closed` (Type: boolean) (optional)<br>If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
-
-#### Return Value
-
-The resulting mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
-
-<a name='GraphicsPath_toLineMeshBuffer'></a>
-### GraphicsPath#toLineMeshBuffer([z], [flatness])
-
-Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
-
-#### Parameters
-
-* `z` (Type: number) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
-
-#### Return Value
-
-The resulting mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
-
 <a name='GraphicsPath_toLinePath'></a>
 ### GraphicsPath#toLinePath([flatness])
 
@@ -833,23 +799,6 @@ to line segments.
 
 A path consisting only of line
 segments and close commands. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
-
-<a name='GraphicsPath_toMeshBuffer'></a>
-### GraphicsPath#toMeshBuffer([z], [flatness])
-
-Decomposes this path into triangles and generates a mesh
-buffer with those triangles. Each triangle's normal will point
-toward the Z axis, and each triangle vertex's texture coordinates will
-be the same as that vertex's position.
-
-#### Parameters
-
-* `z` (Type: number) (optional)<br>The Z coordinate of each triangle generated. If null, undefined, or omitted, default is 0.
-* `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
-
-#### Return Value
-
-The resulting mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 <a name='GraphicsPath_toString'></a>
 ### GraphicsPath#toString()

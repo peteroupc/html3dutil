@@ -6,7 +6,6 @@
 import {BSplineCurve} from "./h3du-bspline.js";
 import {Curve} from "./h3du-curve.js";
 import {MathUtil} from "./h3du-math.js";
-import {MeshBuffer} from "./h3du-meshbuffer.js";
 import {PiecewiseCurve} from "./h3du-piecewisecurve.js";
 
 /** @ignore
@@ -3231,98 +3230,6 @@ GraphicsPath.prototype.getTriangles = function(flatness) {
     }
   }
   return tris;
-};
-/**
- * Decomposes this path into triangles and generates a mesh
- * buffer with those triangles. Each triangle's normal will point
- * toward the Z axis, and each triangle vertex's texture coordinates will
- * be the same as that vertex's position.
- * @param {number} [z] The Z coordinate of each triangle generated.
- * If null, undefined, or omitted, default is 0.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {MeshBuffer} The resulting mesh buffer.
- */
-GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
-  if(typeof z === "undefined" || z === null)z = 0;
-  const tris = this.getTriangles(flatness);
-  const vertices = [];
-  let i;
-  for (i = 0; i < tris.length; i++) {
-    const tri = tris[i];
-    // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
-    vertices.push(
-      tri[0], tri[1], z, 0, 0, 1, tri[0], tri[1],
-      tri[2], tri[3], z, 0, 0, 1, tri[2], tri[3],
-      tri[4], tri[5], z, 0, 0, 1, tri[4], tri[5]);
-  }
-  return MeshBuffer.fromPositionsNormalsUV(vertices);
-};
-/**
- * Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
- * @param {number} [z] Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {MeshBuffer} The resulting mesh buffer.
- */
-GraphicsPath.prototype.toLineMeshBuffer = function(z, flatness) {
-  if(typeof z === "undefined" || z === null)z = 0;
-  const lines = this.getLines(flatness);
-  const vertices = [];
-  let i;
-  for (i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    vertices.push(line[0], line[1], z,
-      line[2], line[3], z);
-  }
-  return MeshBuffer.fromPositions(vertices).setType(
-    MeshBuffer.LINES);
-};
-/**
- * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and toop.
- * @param {number} zStart Starting Z coordinate of the mesh buffer's "walls".
- * @param {number} zEnd Ending Z coordinate of the mesh buffer's "walls".
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @param {boolean} [closed] If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
- * @returns {MeshBuffer} The resulting mesh buffer.
- */
-GraphicsPath.prototype.toExtrudedMeshBuffer = function(zStart, zEnd, flatness, closed) {
-  if((typeof zStart === "undefined" || zStart === null) || zEnd === null)throw new Error();
-  const isclosed = typeof closed === "undefined" || closed === null ? false : closed;
-  if(isclosed) {
-    const mesh = new MeshBuffer();
-    mesh.merge(this.toExtrudedMeshBuffer(zStart, zEnd, flatness, false));
-    mesh.merge(this.toMeshBuffer(zEnd, flatness));
-    mesh.merge(this.toMeshBuffer(zStart, flatness).reverseWinding().reverseNormals());
-    return mesh;
-  }
-  const lines = this.getLines(flatness);
-  const z1 = Math.min(zStart, zEnd);
-  const z2 = Math.max(zStart, zEnd);
-  const vertices = [];
-  let i;
-  for (i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const dx = line[2] - line[0];
-    const dy = line[3] - line[1];
-    const dot = dx * dx + dy * dy;
-    if(dot === 0)continue;
-    vertices.push(line[0], line[1], z1,
-      line[2], line[3], z1,
-      line[0], line[1], z2,
-      line[2], line[3], z1,
-      line[2], line[3], z2,
-      line[0], line[1], z2);
-  }
-  return MeshBuffer.fromPositions(vertices)
-    .recalcNormals(true);
 };
 
 /** @ignore */

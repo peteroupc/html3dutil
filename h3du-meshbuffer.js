@@ -6,7 +6,6 @@
 /* global Float32Array, Uint16Array, Uint32Array */
 
 import {BufferAccessor} from "./h3du-bufferaccessor.js";
-import {MathInternal} from "./h3du-mathinternal.js";
 import {MathUtil} from "./h3du-math.js";
 import {Semantic} from "./h3du-semantic.js";
 import {toGLColor} from "./h3du-misc.js";
@@ -635,7 +634,7 @@ MeshBuffer.prototype.normalizeNormals = function() {
     let j;
     for (j = 0; j < count; j++) {
       attr[2].getVec(j, value);
-      MathInternal.vecNormalizeInPlace(value);
+      MathUtil.vecNormalizeInPlace(value);
       attr[2].setVec(j, value);
     }
   }
@@ -967,7 +966,7 @@ MeshBuffer.prototype._ensureAttribute = function(semantic, semanticIndex, desire
     return attr;
   const newattr = BufferAccessor.makeBlank(vertexCount, desiredCount);
   if(attrCount > 0) {
-    const vec = MathInternal.vecZeros(desiredCount);
+    const vec = MathUtil.vecZeros(desiredCount);
     let i;
     for (i = 0; i < vertexCount; i++) {
       attr.getVec(i, vec);

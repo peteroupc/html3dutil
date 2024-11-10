@@ -5,7 +5,7 @@
 
 /* global ArrayBuffer, Float32Array, Uint16Array, Uint32Array */
 
-import {MathInternal} from "./h3du-mathinternal.js";
+import {MathUtil} from "./h3du-math.js";
 
 /**
  * A <b>vertex attribute object</b>.
@@ -258,7 +258,7 @@ BufferAccessor.merge = function(attr1, indices1, attr2, indices2) {
   // NOTE: Buffer returned by makeBlank will be all zeros
   const newAttribute = BufferAccessor.makeBlank(
     indices1.length + indices2.length, elementsPerValue);
-  const value = MathInternal.vecZeros(elementsPerValue);
+  const value = MathUtil.vecZeros(elementsPerValue);
   // NOTE: If undefined or null, first part of buffer will remain all zeros
   if(typeof attr1 !== "undefined" && attr1 !== null) {
     for(i = 0; i < indices1.length; i++) {

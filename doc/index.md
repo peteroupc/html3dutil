@@ -62,7 +62,6 @@ of 4x4 transformation matrices.
 * [The "Camera" and Geometric Transforms](tutorial-camera.md)
 * [Graphics Filters](tutorial-filters.md)
 * [Older Version History](tutorial-history.md)
-* [Matrix Details](tutorial-matrixdetails.md)
 * [Library Overview](tutorial-overview.md)
 * [Creating Shapes](tutorial-shapes.md)
 * [Parametric Curves and Parametric Surfaces](tutorial-surfaces.md)

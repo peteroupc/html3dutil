@@ -4,7 +4,7 @@
 */
 
 import {Curve} from "./h3du-curve.js";
-import {MathInternal} from "./h3du-mathinternal.js";
+import {MathUtil} from "./h3du-math.js";
 import {Surface} from "./h3du-surface.js";
 
 function linear(points, elementsPerValue, t) {
@@ -658,10 +658,10 @@ BSplineCurve.prototype.velocity = function(u) {
     const cp = this.controlPoints;
     switch(cp.length) {
     case 1:
-      ret = MathInternal.vecZeros(cp[0].length);
+      ret = MathUtil.vecZeros(cp[0].length);
       break;
     case 2:
-      ret = MathInternal.vecSub(cp[1], cp[0]);
+      ret = MathUtil.vecSub(cp[1], cp[0]);
       break;
     case 3:
       ret = bezierQuadraticDerivative(cp, cp[0].length, u);

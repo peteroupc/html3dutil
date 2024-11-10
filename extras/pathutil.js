@@ -1,3 +1,10 @@
+/** The <code>extras/pathutil.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/pathutil.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/pathutil.js";</pre>
+ * @module extras/pathutil */
 /*
  Any copyright to this file is released to the Public Domain.
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/

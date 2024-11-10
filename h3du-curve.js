@@ -3,7 +3,7 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {MathInternal} from "./h3du-mathinternal.js";
+import {MathUtil} from "./h3du-math.js";
 
 /**
  * A curve evaluator object for a parametric curve.<p>
@@ -147,7 +147,7 @@ Curve.prototype.velocity = function(u) {
       du = -du;
       vector = this.evaluate(u + du);
     }
-    return MathInternal.vecSubScaleInPlace(vector, this.evaluate(u), 1.0 / du);
+    return MathUtil.vecSubScaleInPlace(vector, this.evaluate(u), 1.0 / du);
   }
 };
 /**
@@ -171,7 +171,7 @@ Curve.prototype.accel = function(u) {
       du = -du;
       vector = this.velocity(u + du);
     }
-    return MathInternal.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
+    return MathUtil.vecSubScaleInPlace(vector, this.velocity(u), 1.0 / du);
   }
 };
 /**
@@ -195,7 +195,7 @@ Curve.prototype.jerk = function(u) {
       du = -du;
       vector = this.accel(u + du);
     }
-    return MathInternal.vecSubScaleInPlace(vector, this.accel(u), 1.0 / du);
+    return MathUtil.vecSubScaleInPlace(vector, this.accel(u), 1.0 / du);
   }
 };
 /**
@@ -218,10 +218,10 @@ Curve.prototype.normal = function(u) {
     if(vector[0] === 0 && vector[1] === 0 && vector[2] === 0) {
     // too abrupt, try the other direction
       du = -du;
-      vector = MathInternal.vecScaleInPlace(this.tangent(u + du), -1);
+      vector = MathUtil.vecScaleInPlace(this.tangent(u + du), -1);
     }
-    vector = MathInternal.vecSubInPlace(vector, this.tangent(u));
-    return MathInternal.vecNormalizeInPlace(vector);
+    vector = MathUtil.vecSubInPlace(vector, this.tangent(u));
+    return MathUtil.vecNormalizeInPlace(vector);
   }
 };
 
@@ -233,7 +233,7 @@ Curve.prototype.normal = function(u) {
  * elements as the number of dimensions of the underlying curve.
  */
 Curve.prototype.tangent = function(u) {
-  return MathInternal.vecNormalizeInPlace(this.velocity(u));
+  return MathUtil.vecNormalizeInPlace(this.velocity(u));
 };
 
 /**
@@ -314,7 +314,7 @@ Curve.prototype.arcLength = function(u) {
     const dir = u >= ep[0] ? 1 : -1;
     const that = this;
     return gaussKronrod(function(x) {
-      return MathInternal.vecLength(that.velocity(x));
+      return MathUtil.vecLength(that.velocity(x));
     }, mn, mx, dir, 0);
   }
 };

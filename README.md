@@ -39,6 +39,8 @@ For detailed instructions on using this library and a summary of the library's f
 
 [https://peteroupc.github.io/html3dutil/tutorial-overview.html](https://peteroupc.github.io/html3dutil/tutorial-overview.html)
 
+Currently, the demos are not expected to work, since a project is in progress to convert the creation of meshes by this library to three.js.
+
 ## History
 
 See [the history page](https://peteroupc.github.io/html3dutil/tutorial-history.html) to find

@@ -3,7 +3,6 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-import {MathInternal} from "./h3du-mathinternal.js";
 import {MathUtil} from "./h3du-math.js";
 
 /**
@@ -54,7 +53,7 @@ Surface.prototype.tangent = function(u, v) {
       du = -du;
       vector = this.evaluate(u + du, v);
     }
-    return MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
+    return MathUtil.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
   }
 };
 /**
@@ -89,7 +88,7 @@ Surface.prototype.bitangent = function(u, v) {
       du = -du;
       vector = this.evaluate(u, v + du);
     }
-    return MathInternal.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
+    return MathUtil.vecSubScaleInPlace(vector, this.evaluate(u, v), 1.0 / du);
   }
 };
 
@@ -102,7 +101,7 @@ Surface.prototype.bitangent = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  */
 Surface.prototype.normal = function(u, v) {
-  return MathInternal.vecNormalizeInPlace(this.gradient(u, v));
+  return MathUtil.vecNormalizeInPlace(this.gradient(u, v));
 };
 
 /**
@@ -151,13 +150,13 @@ Surface.prototype.gradient = function(u, v) {
   } else {
     let tan = this.tangent(u, v);
     let bitan = this.bitangent(u, v);
-    if(MathInternal.vecLength(bitan) === 0) {
+    if(MathUtil.vecLength(bitan) === 0) {
       return tan;
     }
-    if(MathInternal.vecLength(tan) !== 0) {
+    if(MathUtil.vecLength(tan) !== 0) {
       if(tan.length !== 3 || bitan.length !== 3) {
         const dims = tan.length;
-        const ret = MathInternal.vecZeros(dims);
+        const ret = MathUtil.vecZeros(dims);
         tan = [tan[0] || 0, tan[1] || 0, tan[2] || 0];
         bitan = [bitan[0] || 0, bitan[1] || 0, bitan[2] || 0];
         const cr = MathUtil.vec3cross(tan, bitan);
