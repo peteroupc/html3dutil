@@ -1,3 +1,8 @@
+/*
+ Any copyright to this file is released to the Public Domain.
+ In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
+*/
+
 /** The <code>extras/pathtomesh.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -5,10 +10,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/pathtomesh.js";</pre>
  * @module extras/pathtomesh */
-/*
- Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
-*/
 
 import {MathUtil} from "../h3du_module.js";
 import {GraphicsPath} from "../h3du_path.js";
