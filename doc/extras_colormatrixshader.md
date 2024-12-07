@@ -14,7 +14,7 @@ To import all symbols in this module, either of the following can be used:
 
 ### Members
 
-* [colorMatrixShader](#extras_colormatrixshader.colorMatrixShader)<br>GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color.
+* [colorMatrixShader](#extras_colormatrixshader.colorMatrixShader)<br>GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4 &times; 4 matrix that is multiplied by the red/green/blue color to get a new color.
 
 ### Methods
 
@@ -24,9 +24,9 @@ matrix shader.
 <a name='extras_colormatrixshader.colorMatrixShader'></a>
 ### module:extras/colormatrixshader.colorMatrixShader (constant)
 
-GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
+GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4 &times; 4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
 is the texture to which the filter is to be applied, "t", a value from 0 to 1 indicating how strongly to
-apply the color matrix, and "matrix", which is the 4x4 matrix just described.
+apply the color matrix, and "matrix", which is the 4 &times; 4 matrix just described.
 
 <a name='extras_colormatrixshader.getColorMatrix'></a>
 ### (static) module:extras/colormatrixshader.getColorMatrix(kind)
@@ -40,6 +40,6 @@ matrix shader.
 
 #### Return Value
 
-4x4 color matrix. (Type: Array.&lt;number>)
+4 &times; 4 color matrix. (Type: Array.&lt;number>)
 
 [Back to documentation index.](index.md)

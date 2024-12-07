@@ -192,7 +192,7 @@ or the makeMesh method above.
      }
     }
 
-And here's an example of its use. We'll take the disc surface given above,
+And here's an example of its use. We'll take the disc surface given earlier,
 and create a SurfaceShifter object that shifts the disc by 3 units horizontally
 and vertically (by default, the disc will be centered at the origin (0, 0, 0)).
 

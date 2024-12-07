@@ -92,7 +92,7 @@ this shape group's coordinates to world coordinates.
 
 #### Return Value
 
-A 4x4 matrix. (Type: <a href="Transform.md">Transform</a>)
+A 4 &times; 4 matrix. (Type: <a href="Transform.md">Transform</a>)
 
 <a name='ShapeGroup_getShape'></a>
 ### ShapeGroup#getShape(index)

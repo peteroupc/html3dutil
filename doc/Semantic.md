@@ -21,7 +21,7 @@ geometry draw call.
 * [JOINTMATRIX](#Semantic.JOINTMATRIX)<br>Uniform semantic for a joint matrix.
 * [MODEL](#Semantic.MODEL)<br>Uniform semantic for a model matrix.
 * [MODELVIEW](#Semantic.MODELVIEW)<br>Uniform semantic for a model-view matrix.
-* [MODELVIEWINVERSETRANSPOSE](#Semantic.MODELVIEWINVERSETRANSPOSE)<br>Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
+* [MODELVIEWINVERSETRANSPOSE](#Semantic.MODELVIEWINVERSETRANSPOSE)<br>Uniform semantic for the inverse of the 3 &times; 3 transpose of the model-view matrix.
 * [MODELVIEWPROJECTION](#Semantic.MODELVIEWPROJECTION)<br>Uniform semantic for a model-view-projection matrix.
 * [NORMAL](#Semantic.NORMAL)<br>Attribute semantic for a vertex normal.
 * [POSITION](#Semantic.POSITION)<br>Attribute semantic for a vertex position.
@@ -71,7 +71,7 @@ Uniform semantic for a model-view matrix.
 <a name='Semantic.MODELVIEWINVERSETRANSPOSE'></a>
 ### Semantic.MODELVIEWINVERSETRANSPOSE (constant)
 
-Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.
+Uniform semantic for the inverse of the 3 &times; 3 transpose of the model-view matrix.
 
 <a name='Semantic.MODELVIEWPROJECTION'></a>
 ### Semantic.MODELVIEWPROJECTION (constant)

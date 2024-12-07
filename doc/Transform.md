@@ -53,7 +53,7 @@ A copy of this transform. (Type: <a href="Transform.md">Transform</a>)
 
 Gets the transformation matrix used by an object. Depending
 on the state of this transform, will return either:<ul>
-<li>The 4x4 matrix passed to <a href="Transform.md#Transform_setMatrix">Transform#setMatrix</a>, if the
+<li>The 4 &times; 4 matrix passed to <a href="Transform.md#Transform_setMatrix">Transform#setMatrix</a>, if the
 matrix was defined with that method
 and the transform wasn't reset yet with Transform#resetTransform.
 <li>The matrix resulting from the position, rotation, and scale properties,
@@ -187,7 +187,7 @@ accordingly to the matrix given.
 
 #### Parameters
 
-* `value` (Type: Array.&lt;number>)<br>A 4x4 matrix. This method will copy the value of this parameter.
+* `value` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix. This method will copy the value of this parameter.
 
 #### Return Value
 

@@ -62,63 +62,63 @@ partially inside a view frustum.
 cubic B&eacute;zier
 curve with end points (0, 0) and (1, 1) and with two
 configurable control points.
-* [mat3copy](#H3DU.MathUtil.mat3copy)<br>Returns a copy of a 3x3 matrix.
-* [mat3identity](#H3DU.MathUtil.mat3identity)<br>Returns the identity 3x3 matrix (a matrix that keeps
+* [mat3copy](#H3DU.MathUtil.mat3copy)<br>Returns a copy of a 3 &times; 3 matrix.
+* [mat3identity](#H3DU.MathUtil.mat3identity)<br>Returns the identity 3 &times; 3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
-* [mat3invert](#H3DU.MathUtil.mat3invert)<br>Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
-* [mat3multiply](#H3DU.MathUtil.mat3multiply)<br>Multiplies two 3x3 matrices.
-* [mat3transform](#H3DU.MathUtil.mat3transform)<br>Transforms a 3-element vector with a 3x3 matrix and returns
+* [mat3invert](#H3DU.MathUtil.mat3invert)<br>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.
+* [mat3multiply](#H3DU.MathUtil.mat3multiply)<br>Multiplies two 3 &times; 3 matrices.
+* [mat3transform](#H3DU.MathUtil.mat3transform)<br>Transforms a 3-element vector with a 3 &times; 3 matrix and returns
 the transformed vector.
-* [mat3transpose](#H3DU.MathUtil.mat3transpose)<br>Returns the transpose of a 3x3 matrix.
-* [mat3transposeInPlace](#H3DU.MathUtil.mat3transposeInPlace)<br>Transposes a 3x3 matrix in place without creating
+* [mat3transpose](#H3DU.MathUtil.mat3transpose)<br>Returns the transpose of a 3 &times; 3 matrix.
+* [mat3transposeInPlace](#H3DU.MathUtil.mat3transposeInPlace)<br>Transposes a 3 &times; 3 matrix in place without creating
 a new matrix.
-* [mat4copy](#H3DU.MathUtil.mat4copy)<br>Returns a copy of a 4x4 matrix.
-* [mat4frustum](#H3DU.MathUtil.mat4frustum)<br>Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
+* [mat4copy](#H3DU.MathUtil.mat4copy)<br>Returns a copy of a 4 &times; 4 matrix.
+* [mat4frustum](#H3DU.MathUtil.mat4frustum)<br>Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
 in the form of a view frustum, or the limits in the "camera"'s view.
-* [mat4identity](#H3DU.MathUtil.mat4identity)<br>Returns the identity 4x4 matrix (a matrix that keeps
+* [mat4identity](#H3DU.MathUtil.mat4identity)<br>Returns the identity 4 &times; 4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
-* [mat4inverseTranspose3](#H3DU.MathUtil.mat4inverseTranspose3)<br>Returns the transposed result of the inverted 3x3 upper left corner of
-the given 4x4 matrix.
-* [mat4invert](#H3DU.MathUtil.mat4invert)<br>Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
-* [mat4isIdentity](#H3DU.MathUtil.mat4isIdentity)<br>Returns whether a 4x4 matrix is the identity matrix.
-* [mat4lookat](#H3DU.MathUtil.mat4lookat)<br>Returns a 4x4 matrix that represents a camera view,
+* [mat4inverseTranspose3](#H3DU.MathUtil.mat4inverseTranspose3)<br>Returns the transposed result of the inverted 3 &times; 3 upper left corner of
+the given 4 &times; 4 matrix.
+* [mat4invert](#H3DU.MathUtil.mat4invert)<br>Finds the inverse of a 4 &times; 4 matrix, describing a transformation that undoes the given transformation.
+* [mat4isIdentity](#H3DU.MathUtil.mat4isIdentity)<br>Returns whether a 4 &times; 4 matrix is the identity matrix.
+* [mat4lookat](#H3DU.MathUtil.mat4lookat)<br>Returns a 4 &times; 4 matrix that represents a camera view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>).
-* [mat4multiply](#H3DU.MathUtil.mat4multiply)<br>Multiplies two 4x4 matrices.
-* [mat4oblique](#H3DU.MathUtil.mat4oblique)<br>Returns a 4x4 view matrix representing an oblique projection,
+* [mat4multiply](#H3DU.MathUtil.mat4multiply)<br>Multiplies two 4 &times; 4 matrices.
+* [mat4oblique](#H3DU.MathUtil.mat4oblique)<br>Returns a 4 &times; 4 view matrix representing an oblique projection,
 when used in conjunction with an orthographic projection.
-* [mat4ortho](#H3DU.MathUtil.mat4ortho)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
-* [mat4ortho2d](#H3DU.MathUtil.mat4ortho2d)<br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
-* [mat4ortho2dAspect](#H3DU.MathUtil.mat4ortho2dAspect)<br>Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
+* [mat4ortho](#H3DU.MathUtil.mat4ortho)<br>Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
+* [mat4ortho2d](#H3DU.MathUtil.mat4ortho2d)<br>Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
+* [mat4ortho2dAspect](#H3DU.MathUtil.mat4ortho2dAspect)<br>Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
-* [mat4orthoAspect](#H3DU.MathUtil.mat4orthoAspect)<br>Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
+* [mat4orthoAspect](#H3DU.MathUtil.mat4orthoAspect)<br>Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
-* [mat4perspective](#H3DU.MathUtil.mat4perspective)<br>Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
-* [mat4perspectiveHorizontal](#H3DU.MathUtil.mat4perspectiveHorizontal)<br>Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
+* [mat4perspective](#H3DU.MathUtil.mat4perspective)<br>Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
+* [mat4perspectiveHorizontal](#H3DU.MathUtil.mat4perspectiveHorizontal)<br>Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
 given an X axis field of view.
-* [mat4projectVec3](#H3DU.MathUtil.mat4projectVec3)<br>Transforms a 3-element vector with a 4x4 matrix and returns
+* [mat4projectVec3](#H3DU.MathUtil.mat4projectVec3)<br>Transforms a 3-element vector with a 4 &times; 4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
-* [mat4rotate](#H3DU.MathUtil.mat4rotate)<br>Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+* [mat4rotate](#H3DU.MathUtil.mat4rotate)<br>Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
 by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
 and returns a new matrix.
-* [mat4rotated](#H3DU.MathUtil.mat4rotated)<br>Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+* [mat4rotated](#H3DU.MathUtil.mat4rotated)<br>Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
 by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>.
-* [mat4scale](#H3DU.MathUtil.mat4scale)<br>Multiplies a 4x4 matrix by a scaling transformation.
-* [mat4scaleInPlace](#H3DU.MathUtil.mat4scaleInPlace)<br>Modifies a 4x4 matrix by multiplying it by a
+* [mat4scale](#H3DU.MathUtil.mat4scale)<br>Multiplies a 4 &times; 4 matrix by a scaling transformation.
+* [mat4scaleInPlace](#H3DU.MathUtil.mat4scaleInPlace)<br>Modifies a 4 &times; 4 matrix by multiplying it by a
 scaling transformation.
-* [mat4scaled](#H3DU.MathUtil.mat4scaled)<br>Returns a 4x4 matrix representing a scaling transformation.
+* [mat4scaled](#H3DU.MathUtil.mat4scaled)<br>Returns a 4 &times; 4 matrix representing a scaling transformation.
 * [mat4toFrustumPlanes](#H3DU.MathUtil.mat4toFrustumPlanes)<br>Finds the six clipping planes of a view frustum defined
-by a 4x4 matrix.
-* [mat4toMat3](#H3DU.MathUtil.mat4toMat3)<br>Returns the upper-left part of a 4x4 matrix as a new
-3x3 matrix.
-* [mat4transform](#H3DU.MathUtil.mat4transform)<br>Transforms a 4-element vector with a 4x4 matrix and returns
+by a 4 &times; 4 matrix.
+* [mat4toMat3](#H3DU.MathUtil.mat4toMat3)<br>Returns the upper-left part of a 4 &times; 4 matrix as a new
+3 &times; 3 matrix.
+* [mat4transform](#H3DU.MathUtil.mat4transform)<br>Transforms a 4-element vector with a 4 &times; 4 matrix and returns
 the transformed vector.
-* [mat4transformVec3](#H3DU.MathUtil.mat4transformVec3)<br>Transforms a 3-element vector with a 4x4 matrix as though it were
+* [mat4transformVec3](#H3DU.MathUtil.mat4transformVec3)<br>Transforms a 3-element vector with a 4 &times; 4 matrix as though it were
 an affine transformation matrix (without perspective) and returns the transformed vector.
-* [mat4translate](#H3DU.MathUtil.mat4translate)<br>Multiplies a 4x4 matrix by a translation transformation.
-* [mat4translated](#H3DU.MathUtil.mat4translated)<br>Returns a 4x4 matrix representing a translation.
-* [mat4transpose](#H3DU.MathUtil.mat4transpose)<br>Returns the transpose of a 4x4 matrix.
-* [mat4transposeInPlace](#H3DU.MathUtil.mat4transposeInPlace)<br>Transposes a 4x4 matrix in place without creating
+* [mat4translate](#H3DU.MathUtil.mat4translate)<br>Multiplies a 4 &times; 4 matrix by a translation transformation.
+* [mat4translated](#H3DU.MathUtil.mat4translated)<br>Returns a 4 &times; 4 matrix representing a translation.
+* [mat4transpose](#H3DU.MathUtil.mat4transpose)<br>Returns the transpose of a 4 &times; 4 matrix.
+* [mat4transposeInPlace](#H3DU.MathUtil.mat4transposeInPlace)<br>Transposes a 4 &times; 4 matrix in place without creating
 a new matrix.
 * [planeFromNormalAndPoint](#H3DU.MathUtil.planeFromNormalAndPoint)<br>Creates a plane from a normal vector and a point on the plane.
 * [planeNormalize](#H3DU.MathUtil.planeNormalize)<br>Normalizes this plane so that its normal is a <a href="tutorial-glmath.md">unit vector</a>,
@@ -130,7 +130,7 @@ unless all the normal's components are 0, and sets this plane to the result.
 * [quatDot](#H3DU.MathUtil.quatDot)<br>Finds the dot product of two quaternions.
 * [quatFromAxisAngle](#H3DU.MathUtil.quatFromAxisAngle)<br>Generates a quaternion from a rotation transformation that rotates vectors
 by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
-* [quatFromMat4](#H3DU.MathUtil.quatFromMat4)<br>Generates a quaternion from the vector rotation described in a 4x4 matrix.
+* [quatFromMat4](#H3DU.MathUtil.quatFromMat4)<br>Generates a quaternion from the vector rotation described in a 4 &times; 4 matrix.
 * [quatFromTaitBryan](#H3DU.MathUtil.quatFromTaitBryan)<br>Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
 * [quatFromVectors](#H3DU.MathUtil.quatFromVectors)<br>Generates a quaternion describing a rotation between
 two 3-element vectors.
@@ -155,7 +155,7 @@ given two quaternion rotations, using a spherical interpolation function.
 * [quatToAxisAngle](#H3DU.MathUtil.quatToAxisAngle)<br>Calculates the vector rotation for this quaternion in the form
 of the angle to rotate the vector by and an <a href="tutorial-glmath.md">axis of rotation</a> to
 rotate that vector around.
-* [quatToMat4](#H3DU.MathUtil.quatToMat4)<br>Generates a 4x4 matrix describing the rotation
+* [quatToMat4](#H3DU.MathUtil.quatToMat4)<br>Generates a 4 &times; 4 matrix describing the rotation
 described by this quaternion.
 * [quatToTaitBryan](#H3DU.MathUtil.quatToTaitBryan)<br>Converts this quaternion to the same version of the rotation
 in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
@@ -584,11 +584,11 @@ is 0 or less, and 1 if <code>t</code> is 1 or greater. (Type: number)
 <a name='H3DU.MathUtil.mat3copy'></a>
 ### (static) H3DU.MathUtil.mat3copy(mat)
 
-Returns a copy of a 3x3 matrix.
+Returns a copy of a 3 &times; 3 matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 3x3atrix.
+* `mat` (Type: Array.&lt;number>)<br>A 3 &times; 3atrix.
 
 #### Return Value
 
@@ -597,7 +597,7 @@ Return value. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat3identity'></a>
 ### (static) H3DU.MathUtil.mat3identity()
 
-Returns the identity 3x3 matrix (a matrix that keeps
+Returns the identity 3 &times; 3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
 
 #### Return Value
@@ -607,21 +607,21 @@ Return value. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat3invert'></a>
 ### (static) H3DU.MathUtil.mat3invert(m)
 
-Finds the inverse of a 3x3 matrix, describing a transformation that undoes the given transformation.
+Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;number>)<br>A 3x3 matrix.
+* `m` (Type: Array.&lt;number>)<br>A 3 &times; 3 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix.
+The resulting 3 &times; 3 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat3multiply'></a>
 ### (static) H3DU.MathUtil.mat3multiply(a, b)
 
-Multiplies two 3x3 matrices. A new matrix is returned.
+Multiplies two 3 &times; 3 matrices. A new matrix is returned.
 The matrices are multiplied such that the transformations
 they describe happen in reverse order. For example, if the first
 matrix (input matrix) describes a translation and the second
@@ -640,12 +640,12 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;number>)
+The resulting 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat3transform'></a>
 ### (static) H3DU.MathUtil.mat3transform(mat, v, [vy], [vz])
 
-Transforms a 3-element vector with a 3x3 matrix and returns
+Transforms a 3-element vector with a 3 &times; 3 matrix and returns
 the transformed vector.
 
 Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
@@ -657,7 +657,7 @@ get the transformed vector.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 3x3 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 3 &times; 3 matrix.
 * `v` (Type: Array.&lt;number> | number)<br>X coordinate. If "vy", and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br>Y coordinate.
 * `vz` (Type: number) (optional)<br>Z coordinate. To transform a 2D point, set Z to 1, and divide the result's X and Y by the result's Z.
@@ -669,27 +669,27 @@ The transformed vector. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat3transpose'></a>
 ### (static) H3DU.MathUtil.mat3transpose(m3)
 
-Returns the transpose of a 3x3 matrix. (A transpose is a
+Returns the transpose of a 3 &times; 3 matrix. (A transpose is a
 matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
-* `m3` (Type: Array.&lt;number>)<br>A 3x3 matrix.
+* `m3` (Type: Array.&lt;number>)<br>A 3 &times; 3 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;number>)
+The resulting 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat3transposeInPlace'></a>
 ### (static) H3DU.MathUtil.mat3transposeInPlace(mat)
 
-Transposes a 3x3 matrix in place without creating
+Transposes a 3 &times; 3 matrix in place without creating
 a new matrix. (A transpose is a matrix whose rows
 are converted to columns and vice versa.)
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 3x3 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 3 &times; 3 matrix.
 
 #### Return Value
 
@@ -698,11 +698,11 @@ The parameter "mat". (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4copy'></a>
 ### (static) H3DU.MathUtil.mat4copy(mat)
 
-Returns a copy of a 4x4 matrix.
+Returns a copy of a 4 &times; 4 matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
@@ -711,7 +711,7 @@ Return value. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4frustum'></a>
 ### (static) H3DU.MathUtil.mat4frustum(l, r, b, t, near, far)
 
-Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
+Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
 in the form of a view frustum, or the limits in the "camera"'s view.
 
 When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
@@ -737,12 +737,12 @@ This value should be greater than 0, and should be set to the highest distance f
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4identity'></a>
 ### (static) H3DU.MathUtil.mat4identity()
 
-Returns the identity 4x4 matrix (a matrix that keeps
+Returns the identity 4 &times; 4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).
 
 #### Return Value
@@ -752,48 +752,48 @@ Return value. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4inverseTranspose3'></a>
 ### (static) H3DU.MathUtil.mat4inverseTranspose3(m4)
 
-Returns the transposed result of the inverted 3x3 upper left corner of
-the given 4x4 matrix.
+Returns the transposed result of the inverted 3 &times; 3 upper left corner of
+the given 4 &times; 4 matrix.
 
 This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the model-view matrix. Normals are then
 transformed by this matrix and then converted to <a href="tutorial-glmath.md">unit vectors</a>. But if the
 input matrix uses only rotations, translations, and/or uniform scaling
-(same scaling in X, Y, and Z), the 3x3 upper left of the input matrix can
+(same scaling in X, Y, and Z), the 3 &times; 3 upper left of the input matrix can
 be used instead of the inverse-transpose matrix to transform the normals.
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `m4` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. If the matrix
-can't be inverted, returns the identity 3x3 matrix. (Type: Array.&lt;number>)
+The resulting 3 &times; 3 matrix. If the matrix
+can't be inverted, returns the identity 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4invert'></a>
 ### (static) H3DU.MathUtil.mat4invert(m)
 
-Finds the inverse of a 4x4 matrix, describing a transformation that undoes the given transformation.
+Finds the inverse of a 4 &times; 4 matrix, describing a transformation that undoes the given transformation.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `m` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix.
+The resulting 4 &times; 4 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4isIdentity'></a>
 ### (static) H3DU.MathUtil.mat4isIdentity(mat)
 
-Returns whether a 4x4 matrix is the identity matrix.
+Returns whether a 4 &times; 4 matrix is the identity matrix.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
@@ -802,7 +802,7 @@ Return value. (Type: boolean)
 <a name='H3DU.MathUtil.mat4lookat'></a>
 ### (static) H3DU.MathUtil.mat4lookat(viewerPos, [lookingAt], [up])
 
-Returns a 4x4 matrix that represents a camera view,
+Returns a 4 &times; 4 matrix that represents a camera view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>). This essentially rotates a "camera"
 and moves it to somewhere in the scene. In eye space:<ul>
@@ -832,7 +832,7 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 #### Examples
 
@@ -881,7 +881,7 @@ viewer position, the viewing direction, and the up vector (a "look-to" matrix):
 <a name='H3DU.MathUtil.mat4multiply'></a>
 ### (static) H3DU.MathUtil.mat4multiply(a, b)
 
-Multiplies two 4x4 matrices. A new matrix is returned.
+Multiplies two 4 &times; 4 matrices. A new matrix is returned.
 The matrices are multiplied such that the transformations
 they describe happen in reverse order. For example, if the first
 matrix (input matrix) describes a translation and the second
@@ -900,12 +900,12 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4oblique'></a>
 ### (static) H3DU.MathUtil.mat4oblique(alpha, phi)
 
-Returns a 4x4 view matrix representing an oblique projection,
+Returns a 4 &times; 4 view matrix representing an oblique projection,
 when used in conjunction with an orthographic projection.
 
 This method works the same way in right-handed and left-handed
@@ -918,12 +918,12 @@ coordinate systems.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4ortho'></a>
 ### (static) H3DU.MathUtil.mat4ortho(l, r, b, t, n, f)
 
-Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
+Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
 In this projection, the left clipping plane is parallel to the right clipping
 plane and the top to the bottom.
 
@@ -950,12 +950,12 @@ reverse the sign of the 11th element of the result (zero-based index 10).
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4ortho2d'></a>
 ### (static) H3DU.MathUtil.mat4ortho2d(l, r, b, t)
 
-Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
+Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
 
 This is the same as mat4ortho() with the near clipping plane
 set to -1 and the far clipping plane set to 1.
@@ -973,12 +973,12 @@ when using this matrix and on adjusting the matrix for other conventions.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4ortho2dAspect'></a>
 ### (static) H3DU.MathUtil.mat4ortho2dAspect(l, r, b, t, aspect)
 
-Returns a 4x4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
+Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 
 If the view rectangle's aspect ratio doesn't match the desired aspect
@@ -1003,12 +1003,12 @@ of coordinates when using this matrix and on adjusting the matrix for other conv
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4orthoAspect'></a>
 ### (static) H3DU.MathUtil.mat4orthoAspect(l, r, b, t, n, f, aspect)
 
-Returns a 4x4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
+Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
 retaining the view rectangle's aspect ratio.
 
 If the view rectangle's aspect ratio doesn't match the desired aspect
@@ -1035,12 +1035,12 @@ when using this matrix and on adjusting the matrix for other conventions.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4perspective'></a>
 ### (static) H3DU.MathUtil.mat4perspective(fovY, aspectRatio, near, far)
 
-Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
+Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
 
 When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
@@ -1064,12 +1064,12 @@ This value should be greater than 0, and should be set to the highest distance f
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4perspectiveHorizontal'></a>
 ### (static) H3DU.MathUtil.mat4perspectiveHorizontal(fovX, aspectRatio, near, far)
 
-Returns a 4x4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
+Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
 given an X axis field of view.
 When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
@@ -1093,23 +1093,23 @@ This value should be greater than 0, and should be set to the highest distance f
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4projectVec3'></a>
 ### (static) H3DU.MathUtil.mat4projectVec3(mat, v, [vy], [vz])
 
-Transforms a 3-element vector with a 4x4 matrix and returns
+Transforms a 3-element vector with a 4 &times; 4 matrix and returns
 a perspective-correct version of the vector as a 3D point.
 
 The transformation involves transforming a 4-element vector with the same X,
-Y, and Z coordinates, but with a W coordinate equal to 1, with the 4x4 matrix, and
+Y, and Z coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
 then dividing X, Y, and Z of the transformed 4-element
 vector by that vector's W (a <i>perspective divide</i>),
 then returning that vector's new X, Y, and Z.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by MathUtil.mat4ortho, MathUtil.mat4perspective, or similar Math methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods' documentation.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by MathUtil.mat4ortho, MathUtil.mat4perspective, or similar Math methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods' documentation.
 * `v` (Type: Array.&lt;number> | number)<br>X coordinate of a 3D point to transform. If "vy" and "vz" are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br>Y coordinate.
 * `vz` (Type: number) (optional)<br>Z coordinate. To transform a 2D point, set Z to 0.
@@ -1123,7 +1123,7 @@ the transformed vector's X, Y, and Z coordinates. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4rotate'></a>
 ### (static) H3DU.MathUtil.mat4rotate(mat, angle, v, vy, vz)
 
-Multiplies a 4x4 matrix by a rotation transformation that rotates vectors
+Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
 by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>,
 and returns a new matrix.
 The effect will be that the rotation transformation will
@@ -1132,7 +1132,7 @@ when applied in the global coordinate frame.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix to multiply.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix to multiply.
 * `angle` (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the <a href="tutorial-glmath.md">axis of rotation</a> as the first three elements, followed by the angle in degrees as the fourth element.
 * `v` (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.
 * `vy` (Type: number)<br>Y-component of the point lying on the axis of rotation.
@@ -1140,12 +1140,12 @@ when applied in the global coordinate frame.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4rotated'></a>
 ### (static) H3DU.MathUtil.mat4rotated(angle, v, vy, vz)
 
-Returns a 4x4 matrix representing a rotation transformation that rotates vectors
+Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
 by the given rotation angle and around the given <a href="tutorial-glmath.md">axis of rotation</a>.
 
 #### Parameters
@@ -1157,7 +1157,7 @@ by the given rotation angle and around the given <a href="tutorial-glmath.md">ax
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 #### Examples
 
@@ -1170,28 +1170,28 @@ The following example rotates a vector,
 <a name='H3DU.MathUtil.mat4scale'></a>
 ### (static) H3DU.MathUtil.mat4scale(mat, v3, v3y, v3z)
 
-Multiplies a 4x4 matrix by a scaling transformation.
+Multiplies a 4 &times; 4 matrix by a scaling transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>4x4 matrix to multiply.
+* `mat` (Type: Array.&lt;number>)<br>4 &times; 4 matrix to multiply.
 * `v3` (Type: Array.&lt;number> | number)<br>Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: number)<br>Scale factor along the Y axis.
 * `v3z` (Type: number)<br>Scale factor along the Z axis.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4scaleInPlace'></a>
 ### (static) H3DU.MathUtil.mat4scaleInPlace(mat, v3, [v3y], [v3z])
 
-Modifies a 4x4 matrix by multiplying it by a
+Modifies a 4 &times; 4 matrix by multiplying it by a
 scaling transformation.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 * `v3` (Type: Array.&lt;number> | number)<br>Scale factor along the X axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the X, Y, and Z axes.
 * `v3y` (Type: number) (optional)<br>Scale factor along the Y axis.
 * `v3z` (Type: number) (optional)<br>Scale factor along the Z axis.
@@ -1203,7 +1203,7 @@ The same parameter as "mat". (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4scaled'></a>
 ### (static) H3DU.MathUtil.mat4scaled(v3, v3y, v3z)
 
-Returns a 4x4 matrix representing a scaling transformation.
+Returns a 4 &times; 4 matrix representing a scaling transformation.
 
 #### Parameters
 
@@ -1213,13 +1213,13 @@ Returns a 4x4 matrix representing a scaling transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4toFrustumPlanes'></a>
 ### (static) H3DU.MathUtil.mat4toFrustumPlanes(matrix)
 
 Finds the six clipping planes of a view frustum defined
-by a 4x4 matrix. These six planes together form the
+by a 4 &times; 4 matrix. These six planes together form the
 shape of a "chopped-off" pyramid (or frustum).
 
 In this model, the eye, or camera, is placed at the top
@@ -1230,7 +1230,7 @@ off top.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix, in that order).
+* `matrix` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix. This will usually be a projection-view matrix (projection matrix multiplied by view matrix, in that order).
 
 #### Return Value
 
@@ -1243,21 +1243,21 @@ will be normalized (see MathUtil.planeNormalizeInPlace). (Type: Array.&lt;Array.
 <a name='H3DU.MathUtil.mat4toMat3'></a>
 ### (static) H3DU.MathUtil.mat4toMat3(m4)
 
-Returns the upper-left part of a 4x4 matrix as a new
-3x3 matrix.
+Returns the upper-left part of a 4 &times; 4 matrix as a new
+3 &times; 3 matrix.
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `m4` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
-The resulting 3x3 matrix. (Type: Array.&lt;number>)
+The resulting 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4transform'></a>
 ### (static) H3DU.MathUtil.mat4transform(mat, v, [vy], [vz], [vw])
 
-Transforms a 4-element vector with a 4x4 matrix and returns
+Transforms a 4-element vector with a 4 &times; 4 matrix and returns
 the transformed vector.
 
 Transforming a vector (<code>v</code>) with a matrix (<code>mat</code>)
@@ -1269,7 +1269,7 @@ get the transformed vector.
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 * `v` (Type: Array.&lt;number> | number)<br>X coordinate. If "vy", "vz", and "vw" are omitted, this value can instead be a 4-element array giving the X, Y, Z, and W coordinates.
 * `vy` (Type: number) (optional)<br>Y coordinate.
 * `vz` (Type: number) (optional)<br>Z coordinate.
@@ -1282,7 +1282,7 @@ The transformed vector. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4transformVec3'></a>
 ### (static) H3DU.MathUtil.mat4transformVec3(mat, v, [vy], [vz])
 
-Transforms a 3-element vector with a 4x4 matrix as though it were
+Transforms a 3-element vector with a 4 &times; 4 matrix as though it were
 an affine transformation matrix (without perspective) and returns the transformed vector.
 The effect is as though elements
 3, 7, 11, and 15 (counting from 0) of the matrix
@@ -1291,12 +1291,12 @@ vector had a fourth element valued at 1.
 
 For most purposes, use
 the MathUtil.mat4projectVec3 method instead, which supports
-4x4 matrices that may be in a perspective
+4 &times; 4 matrices that may be in a perspective
 projection (whose last row is not necessarily (0, 0, 0, 1)).
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 * `v` (Type: Array.&lt;number> | number)<br>X coordinate. If "vy" and "vz" are omitted, this value can instead be a 4-element array giving the X, Y, and Z coordinates.
 * `vy` (Type: number) (optional)<br>Y coordinate.
 * `vz` (Type: number) (optional)<br>Z coordinate. To transform a 2D point, set Z to 0.
@@ -1308,7 +1308,7 @@ The transformed 3-element vector. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.mat4translate'></a>
 ### (static) H3DU.MathUtil.mat4translate(mat, v3, v3y, v3z)
 
-Multiplies a 4x4 matrix by a translation transformation.
+Multiplies a 4 &times; 4 matrix by a translation transformation.
 
 #### Parameters
 
@@ -1319,12 +1319,12 @@ Multiplies a 4x4 matrix by a translation transformation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4translated'></a>
 ### (static) H3DU.MathUtil.mat4translated(v3, v3y, v3z)
 
-Returns a 4x4 matrix representing a translation.
+Returns a 4 &times; 4 matrix representing a translation.
 
 #### Parameters
 
@@ -1334,32 +1334,32 @@ Returns a 4x4 matrix representing a translation.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4transpose'></a>
 ### (static) H3DU.MathUtil.mat4transpose(m4)
 
-Returns the transpose of a 4x4 matrix. (A transpose is a
+Returns the transpose of a 4 &times; 4 matrix. (A transpose is a
 matrix whose rows are converted to columns and vice versa.)
 
 #### Parameters
 
-* `m4` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `m4` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
-The resulting 4x4 matrix. (Type: Array.&lt;number>)
+The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.mat4transposeInPlace'></a>
 ### (static) H3DU.MathUtil.mat4transposeInPlace(mat)
 
-Transposes a 4x4 matrix in place without creating
+Transposes a 4 &times; 4 matrix in place without creating
 a new matrix. (A transpose is a matrix whose rows
 are converted to columns and vice versa.)
 
 #### Parameters
 
-* `mat` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `mat` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
@@ -1486,14 +1486,14 @@ and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;nu
 <a name='H3DU.MathUtil.quatFromMat4'></a>
 ### (static) H3DU.MathUtil.quatFromMat4(m)
 
-Generates a quaternion from the vector rotation described in a 4x4 matrix.
-The upper 3x3 portion of the matrix is used for this calculation.
+Generates a quaternion from the vector rotation described in a 4 &times; 4 matrix.
+The upper 3 &times; 3 portion of the matrix is used for this calculation.
 The results are undefined if the matrix includes any transformation
 other than rotation.
 
 #### Parameters
 
-* `m` (Type: Array.&lt;number>)<br>A 4x4 matrix.
+* `m` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix.
 
 #### Return Value
 
@@ -1807,7 +1807,7 @@ of rotation will be a unit vector. (Type: Array.&lt;number>)
 <a name='H3DU.MathUtil.quatToMat4'></a>
 ### (static) H3DU.MathUtil.quatToMat4(quat)
 
-Generates a 4x4 matrix describing the rotation
+Generates a 4 &times; 4 matrix describing the rotation
 described by this quaternion.
 
 #### Parameters
@@ -1816,7 +1816,7 @@ described by this quaternion.
 
 #### Return Value
 
-The generated 4x4 matrix. (Type: Array.&lt;number>)
+The generated 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='H3DU.MathUtil.quatToTaitBryan'></a>
 ### (static) H3DU.MathUtil.quatToTaitBryan(a, [mode])
@@ -2591,7 +2591,7 @@ increase from front to back.
 #### Parameters
 
 * `vector` (Type: Array.&lt;number>)<br>A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform, in window coordinates.
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the MathUtil.mat4projectVec3 method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See MathUtil.vec3toWindowPoint for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
+* `matrix` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix. After undoing the transformation to window coordinates, the vector will be transformed by the inverse of this matrix according to the MathUtil.mat4projectVec3 method.<br> To convert to world space, this parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order). To convert to object (model) space, this parameter will generally be a model-view-projection matrix (projection-view matrix multiplied by the world [model] matrix, in that order). See MathUtil.vec3toWindowPoint for the meaning of window coordinates with respect to the "matrix" and "yUp" parameters.
 * `viewport` (Type: Array.&lt;number>)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: boolean) (optional)<br>If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the MathUtil.mat4projectVec3 method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
 
@@ -2912,7 +2912,7 @@ using the given transformation matrix and viewport rectangle.
 #### Parameters
 
 * `vector` (Type: Array.&lt;number>)<br>A 3-element vector giving the X, Y, and Z coordinates of the 3D point to transform.
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix to use to transform the vector according to the MathUtil.mat4projectVec3 method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br>If the matrix includes a projection transform returned by MathUtil.mat4ortho, MathUtil.mat4perspective, or similar MathUtil methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward instead of upward or vice versa.
+* `matrix` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix to use to transform the vector according to the MathUtil.mat4projectVec3 method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>. <br>If the matrix includes a projection transform returned by MathUtil.mat4ortho, MathUtil.mat4perspective, or similar MathUtil methods, then in the <i>window coordinate</i> space, X coordinates increase rightward, Y coordinates increase upward, and Z coordinates within the view volume range from 0 to 1 and increase from front to back, unless otherwise specified in those methods' documentation. If "yUp" is omitted or is a "falsy" value, the Y coordinates increase downward instead of upward or vice versa.
 * `viewport` (Type: Array.&lt;number>)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's X coordinate, its Y coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.
 * `yUp` (Type: boolean) (optional)<br>If omitted or a "falsy" value, reverses the sign of the Y coordinate returned by the MathUtil.mat4projectVec3 method before converting it to window coordinates. If true, the Y coordinate will remain unchanged. If window Y coordinates increase upward, the viewport's starting position is at the lower left corner. If those coordinates increase downward, the viewport's starting position is at the upper left corner.
 
@@ -2940,7 +2940,7 @@ where three of its sides having a vertex in common are
 defined by A, B, and C, in any order.
 <li>If the triple product is 0, all three vectors lie on the same plane (are <i>coplanar</i>).
 <li>The triple product is the same as the <i>determinant</i> (overall scaling factor)
-of a 3x3 matrix whose rows or columns are the vectors A, B, and C, in that order.
+of a 3 &times; 3 matrix whose rows or columns are the vectors A, B, and C, in that order.
 <li>Assume A is perpendicular to vectors B and C. If the triple product is positive,
 then A points in the same direction as the cross product of
 B and C -- which will be perpendicular -- and the angle from B to C, when rotated

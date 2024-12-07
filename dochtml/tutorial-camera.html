@@ -67,7 +67,7 @@ and others would be.</p>
 <p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>. However, this is not the whole story, since in general, lines that are parallel in world space will not appear parallel in a perspective projection, so additional math is needed to achieve the perspective effect. This will be [<strong>explained later</strong>](#Vertex Coordinates in the Graphics System).</p>
 <p>The following methods define a perspective projection.</p>
 <p><strong><a href="MathUtil.html#MathUtil.mat4perspective"><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
-<p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
+<p>This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
 and sets the scene's projection matrix accordingly.</p>
 <ul>
@@ -76,7 +76,7 @@ and sets the scene's projection matrix accordingly.</p>
 <li><code>near</code>, <code>far</code> - Distance from the &quot;camera&quot; to the near and far clipping planes.</li>
 </ul>
 <p><strong><a href="http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum"><strong><code>MathUtil.mat4frustum(left, right, bottom, top, near, far)</code></strong></a></strong></p>
-<p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
+<p>This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a perspective
 projection based on the location of the six clipping planes that
 bound the view volume. Their positions are chosen so that the result is a perspective projection.</p>
 <ul>
@@ -92,7 +92,7 @@ planes having the same size, unlike in a perspective projection, and
 objects with the same size not varying in size with their distance from the &quot;camera&quot;.</p>
 <p>The following methods generate an orthographic projection.</p>
 <p><strong><code>MathUtil.mat4ortho(left, right, bottom, top, near, far)</code></strong></p>
-<p>This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection.</p>
+<p>This method returns a 4 &times; 4 matrix that adjusts the coordinate system for an orthographic projection.</p>
 <ul>
 <li><code>left</code> - Leftmost coordinate of the 3D view.</li>
 <li><code>right</code> - Rightmost coordinate of the 3D view.</li>
@@ -102,12 +102,12 @@ objects with the same size not varying in size with their distance from the &quo
 can be negative.</li>
 </ul>
 <p><strong><code>MathUtil.mat4ortho2d(left, right, bottom, top)</code></strong></p>
-<p>This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.</p>
+<p>This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The <code>mat4ortho2d</code> method calls <code>mat4ortho</code> and sets <code>near</code> and <code>far</code> to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.</p>
 <ul>
 <li><code>left</code>, <code>right</code>, <code>bottom</code>, <code>top</code> - Same as in <code>mat4ortho</code>.</li>
 </ul>
 <p><strong><code>MathUtil.mat4orthoAspect(left, right, bottom, top, near, far, aspect)</code></strong></p>
-<p>This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection,
+<p>This method returns a 4 &times; 4 matrix that adjusts the coordinate system for an orthographic projection,
 such that the resulting view isn't stretched
 or squished in case the view volume's aspect ratio and the scene's aspect ratio are different.</p>
 <ul>
@@ -121,10 +121,10 @@ or squished in case the view volume's aspect ratio and the scene's aspect ratio 
 A view matrix essentially rotates the &quot;camera&quot; and moves it to a given position in world space. Specifically:</p>
 <ul>
 <li>The &quot;camera&quot; is rotated to point at a certain object or location on the scene. This is represented by
-the <code>lookingAt</code> parameter in the <code>mat4lookat()</code> method, below.</li>
+the <code>lookingAt</code> parameter in the <code>mat4lookat()</code> method, later.</li>
 <li>The &quot;camera&quot; is placed somewhere on the scene. This is represented by
 the <code>eye</code> parameter in the <code>mat4lookat()</code> method.  It also represents the &quot;eye position&quot; in the perspective
-projection, above.</li>
+projection, earlier.</li>
 <li>The &quot;camera&quot; rolls itself, possibly turning it sideways or upside down. This is guided by
 the <code>up</code> parameter in the <code>mat4lookat()</code> method. Turning the &quot;camera&quot; upside down, for example, will swap
 the placement of the top and bottom clipping planes, thus inverting the view of the scene.</li>

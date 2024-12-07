@@ -360,7 +360,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * // leave out the "indices" argument.)
  * var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
  * @example <caption>The following example generates a mesh buffer
- * consisting of a 10x10x10 grid of points. This mesh buffer can serve, for
+ * consisting of a 10 &times; 10 &times; x grid of points. This mesh buffer can serve, for
  * example, as instance data to draw multiple instances
  * of a 3-D cube in different positions.</caption>
  * var vertices=[]
@@ -1148,12 +1148,12 @@ MeshBuffer.prototype.merge = function(other) {
 
 /**
  * Transforms the positions and normals of all the vertices currently
- * in this mesh, with the help of a [4x4 matrix]{@tutorial glmath}. Only values with the attribute semantic <code>POSITION_0</code>
+ * in this mesh, with the help of a [4 &times; 4 matrix]{@tutorial glmath}. Only values with the attribute semantic <code>POSITION_0</code>
  * or <code>NORMAL_0</code> will be affected by this method; values of
  * other attributes will be unaffected.
- * @param {Array<number>} matrix A 4x4 matrix described in
+ * @param {Array<number>} matrix A 4 &times; 4 matrix described in
  * the {@link MathUtil.mat4projectVec3} method. The normals will be transformed using the
- * 3x3 inverse transpose of this matrix (see {@link MathUtil.mat4inverseTranspose3}).
+ * 3 &times; 3 inverse transpose of this matrix (see {@link MathUtil.mat4inverseTranspose3}).
  * (Normals need to be transformed specially because they describe directions, not points.)
  * @returns {MeshBuffer} This object.
  * @example <caption>The following example transforms positions

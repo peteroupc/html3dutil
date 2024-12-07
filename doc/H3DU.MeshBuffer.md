@@ -103,7 +103,7 @@ to the given color.
 * [setIndices](#H3DU.MeshBuffer_setIndices)<br>Sets the vertex indices used by this mesh buffer.
 * [setType](#H3DU.MeshBuffer_setType)<br>Sets the type of graphics primitives stored in this mesh buffer.
 * [transform](#H3DU.MeshBuffer_transform)<br>Transforms the positions and normals of all the vertices currently
-in this mesh, with the help of a <a href="tutorial-glmath.md">4x4 matrix</a>.
+in this mesh, with the help of a <a href="tutorial-glmath.md">4 &times; 4 matrix</a>.
 * [triangleFanIndices](#H3DU.MeshBuffer.triangleFanIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.
 * [triangleStripIndices](#H3DU.MeshBuffer.triangleStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle strip.
 * [vertexCount](#H3DU.MeshBuffer_vertexCount)<br>Gets the number of vertices in this mesh buffer, that
@@ -706,13 +706,13 @@ This object. (Type: MeshBuffer)
 ### H3DU.MeshBuffer#transform(matrix)
 
 Transforms the positions and normals of all the vertices currently
-in this mesh, with the help of a <a href="tutorial-glmath.md">4x4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
+in this mesh, with the help of a <a href="tutorial-glmath.md">4 &times; 4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
 or <code>NORMAL_0</code> will be affected by this method; values of
 other attributes will be unaffected.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the MathUtil.mat4projectVec3 method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see MathUtil.mat4inverseTranspose3). (Normals need to be transformed specially because they describe directions, not points.)
+* `matrix` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix described in the MathUtil.mat4projectVec3 method. The normals will be transformed using the 3 &times; 3 inverse transpose of this matrix (see MathUtil.mat4inverseTranspose3). (Normals need to be transformed specially because they describe directions, not points.)
 
 #### Return Value
 

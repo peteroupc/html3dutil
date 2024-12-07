@@ -200,7 +200,7 @@ buffer from a predefined array of vertex positions.
     var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
 
 The following example generates a mesh buffer
-consisting of a 10x10x10 grid of points. This mesh buffer can serve, for
+consisting of a 10 &times; 10 &times; x grid of points. This mesh buffer can serve, for
 example, as instance data to draw multiple instances
 of a 3-D cube in different positions.
 
@@ -757,7 +757,7 @@ other attributes will be unaffected.
 
 #### Parameters
 
-* `matrix` (Type: Array.&lt;number>)<br>A 4x4 matrix described in the <a href="MathUtil.md#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="MathUtil.md#MathUtil.mat4inverseTranspose3">MathUtil.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)
+* `matrix` (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix described in the <a href="MathUtil.md#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method. The normals will be transformed using the 3 &times; 3 inverse transpose of this matrix (see <a href="MathUtil.md#MathUtil.mat4inverseTranspose3">MathUtil.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)
 
 #### Return Value
 

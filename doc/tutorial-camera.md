@@ -86,7 +86,7 @@ The following methods define a perspective projection.
 
 **<a href="MathUtil.md#MathUtil.mat4perspective">`MathUtil.mat4perspective(fov, aspect, near, far)`</a>**
 
-This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
+This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
 and sets the scene's projection matrix accordingly.
 
@@ -96,7 +96,7 @@ and sets the scene's projection matrix accordingly.
 
 **[**`MathUtil.mat4frustum(left, right, bottom, top, near, far)`**](http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum)**
 
-This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
+This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a perspective
 projection based on the location of the six clipping planes that
 bound the view volume. Their positions are chosen so that the result is a perspective projection.
 
@@ -117,7 +117,7 @@ The following methods generate an orthographic projection.
 
 **`MathUtil.mat4ortho(left, right, bottom, top, near, far)`**
 
-This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection.
+This method returns a 4 &times; 4 matrix that adjusts the coordinate system for an orthographic projection.
 
 * `left` - Leftmost coordinate of the 3D view.
 * `right` - Rightmost coordinate of the 3D view.
@@ -128,13 +128,13 @@ can be negative.
 
 **`MathUtil.mat4ortho2d(left, right, bottom, top)`**
 
-This method returns a 4x4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.
+This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.
 
 * `left`, `right`, `bottom`, `top` - Same as in `mat4ortho`.
 
 **`MathUtil.mat4orthoAspect(left, right, bottom, top, near, far, aspect)`**
 
-This method returns a 4x4 matrix that adjusts the coordinate system for an orthographic projection,
+This method returns a 4 &times; 4 matrix that adjusts the coordinate system for an orthographic projection,
 such that the resulting view isn't stretched
 or squished in case the view volume's aspect ratio and the scene's aspect ratio are different.
 
@@ -150,10 +150,10 @@ The view matrix transforms _world space_ coordinates, shared by every object in 
 A view matrix essentially rotates the "camera" and moves it to a given position in world space. Specifically:
 
 * The "camera" is rotated to point at a certain object or location on the scene. This is represented by
-the `lookingAt` parameter in the `mat4lookat()` method, below.
+the `lookingAt` parameter in the `mat4lookat()` method, later.
 * The "camera" is placed somewhere on the scene. This is represented by
 the `eye` parameter in the `mat4lookat()` method.  It also represents the "eye position" in the perspective
-projection, above.
+projection, earlier.
 * The "camera" rolls itself, possibly turning it sideways or upside down. This is guided by
 the `up` parameter in the `mat4lookat()` method. Turning the "camera" upside down, for example, will swap
 the placement of the top and bottom clipping planes, thus inverting the view of the scene.

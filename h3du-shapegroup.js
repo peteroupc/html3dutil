@@ -111,7 +111,7 @@ ShapeGroup.prototype.getTransform = function() {
 /**
  * Gets a copy of the transformation needed to transform
  * this shape group's coordinates to world coordinates.
- * @returns {Transform} A 4x4 matrix.
+ * @returns {Transform} A 4 &times; 4 matrix.
  */
 ShapeGroup.prototype.getMatrix = function() {
   const xform = this.getTransform();

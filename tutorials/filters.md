@@ -122,7 +122,7 @@ the scene needs to be rendered.
     scene.render(renders);
 
 When the `render()` method is called each frame using the rendering
-passes mentioned above, the following happens.
+passes mentioned earlier, the following happens.
 
 * The 3D library renders the first pass.
     * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then uses the usual shaders for drawing the 3D scene.
@@ -166,7 +166,7 @@ Here is sample code for using a graphics filter.
 
 ![**Mirror filtered image**](filters7.png)
 
-This filter does a horizontal flip of its pixels. Note that the filter, given below, reads not from
+This filter does a horizontal flip of its pixels. Note that the filter, given later, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).
 

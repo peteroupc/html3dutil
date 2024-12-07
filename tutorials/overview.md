@@ -76,7 +76,7 @@ The following sections detail how an application that renders 3-D graphics can u
 ### The "Camera"
 
 The `MathUtil` class contains methods that support the concepts of a "projection transform" and a "view transform", as are common in many 3D rendering libraries. If we
-use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `MathUtil` has methods for generating 4x4 matrices that represent some kinds of projection and view transformations, including `MathUtil.mat4perspective` (a perspective projection) and `MathUtil.mat4lookat` (a look-at view transform). For more information, see [**_The "Camera" and Geometric Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms).
+use the concept of a "camera", the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. `MathUtil` has methods for generating 4 &times; 4 matrices that represent some kinds of projection and view transformations, including `MathUtil.mat4perspective` (a perspective projection) and `MathUtil.mat4lookat` (a look-at view transform). For more information, see [**_The "Camera" and Geometric Transforms_**](http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms).
 
 <a id=3D_Models></a>
 

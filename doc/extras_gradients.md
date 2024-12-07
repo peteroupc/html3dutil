@@ -14,14 +14,14 @@ To import all symbols in this module, either of the following can be used:
 
 ### Methods
 
-* [horizontalGradient](#extras_gradients.horizontalGradient)<br>Generates a 32x32 bitmap of a linear gradient in the horizontal direction.
+* [horizontalGradient](#extras_gradients.horizontalGradient)<br>Generates a 32 &times; 32 bitmap of a linear gradient in the horizontal direction.
 * [loadTga](#extras_gradients.loadTga)<br>Loads an image from data in TGA format.
-* [radialGradient](#extras_gradients.radialGradient)<br>Generates a 32x32 bitmap of a radial gradient.
+* [radialGradient](#extras_gradients.radialGradient)<br>Generates a 32 &times; 32 bitmap of a radial gradient.
 
 <a name='extras_gradients.horizontalGradient'></a>
 ### (static) module:extras/gradients.horizontalGradient(color1, color2)
 
-Generates a 32x32 bitmap of a linear gradient in the horizontal direction. This function demonstrates generating a custom texture.
+Generates a 32 &times; 32 bitmap of a linear gradient in the horizontal direction. This function demonstrates generating a custom texture.
 
 #### Parameters
 
@@ -30,7 +30,7 @@ Generates a 32x32 bitmap of a linear gradient in the horizontal direction. This 
 
 #### Return Value
 
-An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
 of 4 bytes each. For each pixel, the four bytes are color components
 in the following order: red, green, blue, alpha. (Type: UInt8Array)
 
@@ -45,14 +45,14 @@ Loads an image from data in TGA format.
 
 #### Return Value
 
-An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
 of 4 bytes each. For each pixel, the four bytes are color components
 in the following order: red, green, blue, alpha. (Type: UInt8Array)
 
 <a name='extras_gradients.radialGradient'></a>
 ### (static) module:extras/gradients.radialGradient(colorCenter, colorEdges)
 
-Generates a 32x32 bitmap of a radial gradient. This function demonstrates generating a custom texture.
+Generates a 32 &times; 32 bitmap of a radial gradient. This function demonstrates generating a custom texture.
 
 #### Parameters
 
@@ -61,7 +61,7 @@ Generates a 32x32 bitmap of a radial gradient. This function demonstrates genera
 
 #### Return Value
 
-An array with 32x32x4 bytes, arranged in 32 rows of 32 pixels
+An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
 of 4 bytes each. For each pixel, the four bytes are color components
 in the following order: red, green, blue, alpha. (Type: UInt8Array)
 

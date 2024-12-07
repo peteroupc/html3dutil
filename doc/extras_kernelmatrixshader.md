@@ -19,7 +19,7 @@ edge detection, and embossing, that process each pixel and its neighbors.
 
 ### Methods
 
-* [getKernelMatrix](#extras_kernelmatrixshader.getKernelMatrix)<br>Creates a 3x3 (9-element) kernel matrix for using
+* [getKernelMatrix](#extras_kernelmatrixshader.getKernelMatrix)<br>Creates a 3 &times; 3 (9-element) kernel matrix for using
 as the "matrix" uniform of the kernel matrix shader.
 * [normalizeKernelInPlace](#extras_kernelmatrixshader.normalizeKernelInPlace)<br>TODO: Not documented yet.
 
@@ -28,7 +28,7 @@ as the "matrix" uniform of the kernel matrix shader.
 
 GLSL shader code for a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors. This filter takes
-a 3x3 matrix called a _convolution kernel_, which gives the contribution of each pixel's color to the final color. All the numbers in the matrix usually add up to 1. An example of a convolution kernel:
+a 3 &times; 3 matrix called a _convolution kernel_, which gives the contribution of each pixel's color to the final color. All the numbers in the matrix usually add up to 1. An example of a convolution kernel:
 
     [ 0, 1/8, 0,
     1/8, 1/2, 1/8,
@@ -40,17 +40,17 @@ colors of its 4 adjacent pixels. Note that this example adds up to 1.
 ![\*\*Edge detect filtered image\*\*](filters8.png)
 This shader program takes three uniforms: "sample", the source texture;
 "textureSize", the width and height of the texture in pixels;
-"matrix", the 3x3 convolution kernel.
+"matrix", the 3 &times; 3 convolution kernel.
 
 <a name='extras_kernelmatrixshader.getKernelMatrix'></a>
 ### (static) module:extras/kernelmatrixshader.getKernelMatrix(kind)
 
-Creates a 3x3 (9-element) kernel matrix for using
+Creates a 3 &times; 3 (9-element) kernel matrix for using
 as the "matrix" uniform of the kernel matrix shader.
 
 #### Parameters
 
-* `kind` (Type: string)<br>One of the following: "blur" for a 3x3 Gaussian blr matrix, or "edge-detect" for an edge detection matrix.
+* `kind` (Type: string)<br>One of the following: "blur" for a 3 &times; 3 Gaussian blr matrix, or "edge-detect" for an edge detection matrix.
 
 #### Return Value
 

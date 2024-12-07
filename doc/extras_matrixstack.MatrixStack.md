@@ -6,7 +6,7 @@
 ### new module:extras/matrixstack.MatrixStack()
 
 This class implements a stack
-of 4x4 transformation matrices.
+of 4 &times; 4 transformation matrices.
 
 When the constructor is called, it will create a stack whose
 only element is the identity matrix.

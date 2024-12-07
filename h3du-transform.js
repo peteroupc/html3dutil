@@ -80,7 +80,7 @@ Transform.prototype.reset = function() {
  * Sets this transform's transformation matrix. This method
  * will set the position, rotation, and scale properties
  * accordingly to the matrix given.
- * @param {Array<number>} value A 4x4 matrix.
+ * @param {Array<number>} value A 4 &times; 4 matrix.
  * This method will copy the value of this parameter.
  * @returns {Transform} This object.
  */
@@ -336,7 +336,7 @@ Transform.prototype.multRotation = function(angle, v, vy, vz) {
 /**
  * Gets the transformation matrix used by an object. Depending
  * on the state of this transform, will return either:<ul>
- * <li>The 4x4 matrix passed to {@link Transform#setMatrix}, if the
+ * <li>The 4 &times; 4 matrix passed to {@link Transform#setMatrix}, if the
  * matrix was defined with that method
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
  * <li>The matrix resulting from the position, rotation, and scale properties,

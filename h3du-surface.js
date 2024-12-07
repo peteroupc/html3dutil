@@ -122,7 +122,7 @@ Surface.prototype.normal = function(u, v) {
  * elements as the number of dimensions of the underlying surface.
  * @example <caption>The following example is a surface evaluator
  * object for a parametric surface with a gradient method. To illustrate how the gradient method is derived
- * from the vector calculation method, that method is also given below. To
+ * from the vector calculation method, that method is also given later. To
  * derive the normal calculation, first look at the vector function:<p>
  * <b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))<p>
  * Then, find the partial derivatives with respect to <i>u</i> and to <i>v</i>:<p>

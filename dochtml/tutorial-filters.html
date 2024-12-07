@@ -101,7 +101,7 @@ the scene needs to be rendered.</p>
 scene.render(renders);
 </code></pre>
 <p>When the <code>render()</code> method is called each frame using the rendering
-passes mentioned above, the following happens.</p>
+passes mentioned earlier, the following happens.</p>
 <ul>
 <li>The 3D library renders the first pass.
 <ul>
@@ -145,7 +145,7 @@ scene.render(renders);
 <p><a id=Mirror_Filter></a></p>
 <h3>Mirror Filter</h3>
 <p><img src="filters7.png" alt="Mirror filtered image"></p>
-<p>This filter does a horizontal flip of its pixels. Note that the filter, given below, reads not from
+<p>This filter does a horizontal flip of its pixels. Note that the filter, given later, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).</p>
 <pre><code>function makeMirror(){

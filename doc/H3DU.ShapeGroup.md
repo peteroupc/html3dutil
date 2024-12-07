@@ -110,7 +110,7 @@ this shape group's coordinates to world coordinates.
 
 #### Return Value
 
-A 4x4 matrix. (Type: Transform)
+A 4 &times; 4 matrix. (Type: Transform)
 
 <a name='H3DU.ShapeGroup_getShape'></a>
 ### H3DU.ShapeGroup#getShape(index)

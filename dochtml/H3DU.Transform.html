@@ -17,7 +17,7 @@ will have its own version of the rotation, scale,
 position, and matrix data.<h4> Return Value</h4>A copy of this transform. (Type: Transform)<a name='H3DU.Transform_getMatrix'></a>
 <h3> H3DU.Transform#getMatrix()</h3>Gets the transformation matrix used by an object. Depending
 on the state of this transform, will return either:<ul>
-<li>The 4x4 matrix passed to Transform#setMatrix, if the
+<li>The 4 &times; 4 matrix passed to Transform#setMatrix, if the
 matrix was defined with that method
 and the transform wasn't reset yet with Transform#resetTransform.
 <li>The matrix resulting from the position, rotation, and scale properties,
@@ -54,7 +54,7 @@ and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters
 <h3> H3DU.Transform#reset()</h3>Resets this transform to the untransformed state.<h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_setMatrix'></a>
 <h3> H3DU.Transform#setMatrix(value)</h3>Sets this transform's transformation matrix. This method
 will set the position, rotation, and scale properties
-accordingly to the matrix given.<h4> Parameters</h4><ul><li><code>value</code> (Type: Array.&lt;number>)<br>A 4x4 matrix. This method will copy the value of this parameter.</ul><h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_setPosition'></a>
+accordingly to the matrix given.<h4> Parameters</h4><ul><li><code>value</code> (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix. This method will copy the value of this parameter.</ul><h4> Return Value</h4>This object. (Type: Transform)<a name='H3DU.Transform_setPosition'></a>
 <h3> H3DU.Transform#setPosition(x, [y], [z])</h3>Sets the relative position of an object from its original
 position. Has no effect if a matrix was defined with Transform#setMatrix
 and the transform wasn't reset yet with Transform#resetTransform.<h4> Parameters</h4><ul><li><code>x</code> (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If "x" is an array, this parameter may be omitted.</ul><h4> Return Value</h4>This object. (Type: Transform)<h4> Examples</h4><pre>// Set the relative position to 2 units along X axis, 4 units along Y axis,
