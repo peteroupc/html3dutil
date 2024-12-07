@@ -20,7 +20,7 @@ import {MathUtil, toGLColor} from "../h3du_module";
  * the color at the left edge of the gradient.
  * @param {Array<number>|number|string} color2 A [color vector or string]{@link toGLColor} identifying
  * the color at the right edge of the gradient.
- * @returns {UInt8Array} An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
+ * @returns {UInt8Array} An array with 32 &times; 32 &times; 4 bytes, arranged in 32 rows of 32 pixels
  * of 4 bytes each. For each pixel, the four bytes are color components
  * in the following order: red, green, blue, alpha.
  * @function
@@ -56,7 +56,7 @@ export function horizontalGradient(color1, color2) {
  * the color at the center of the gradient.
  * @param {Array<number>|number|string} colorEdges A [color vector or string]{@link toGLColor} identifying
  * the color at the edges of the gradient.
- * @returns {UInt8Array} An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
+ * @returns {UInt8Array} An array with 32 &times; 32 &times; 4 bytes, arranged in 32 rows of 32 pixels
  * of 4 bytes each. For each pixel, the four bytes are color components
  * in the following order: red, green, blue, alpha.
  * @function
@@ -95,7 +95,7 @@ export function radialGradient(colorCenter, colorEdges) {
 /**
  * Loads an image from data in TGA format.
  * @param {UInt8Array} data Image data in TGA format
- * @returns {UInt8Array} An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
+ * @returns {UInt8Array} An array with 32 &times; 32 &times; 4 bytes, arranged in 32 rows of 32 pixels
  * of 4 bytes each. For each pixel, the four bytes are color components
  * in the following order: red, green, blue, alpha.
  * @function

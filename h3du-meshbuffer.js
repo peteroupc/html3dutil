@@ -360,7 +360,7 @@ MeshBuffer.prototype.vertexIndices = function(primitiveIndex, ret) {
  * // leave out the "indices" argument.)
  * var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
  * @example <caption>The following example generates a mesh buffer
- * consisting of a 10 &times; 10 &times; x grid of points. This mesh buffer can serve, for
+ * consisting of a 10 &times; 10 &times; 3 grid of points. This mesh buffer can serve, for
  * example, as instance data to draw multiple instances
  * of a 3-D cube in different positions.</caption>
  * var vertices=[]
