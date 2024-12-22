@@ -12,23 +12,6 @@
  * @namespace H3DU
  * @license Unlicense
  */
-/** @suppress {checkTypes}
- * @ignore */
-function objectKeysPolyfill() {
-  if(typeof Object.keys === "undefined" || Object.keys === null) {
-    Object.keys = function(o) {
-      const ret = [];
-      for(const i in o) {
-        if(Object.prototype.hasOwnProperty.call(o, i)) {
-          ret[ret.length] = i;
-        }
-      }
-      return ret;
-    };
-  }
-}
-objectKeysPolyfill();
-
 /**
  * Utility function that returns a promise that
  * resolves after the given list of promises finishes

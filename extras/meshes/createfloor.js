@@ -11,17 +11,19 @@
  * import * as CustomModuleName from "extras/createfloor.js";</pre>
  * @module extras/createfloor */
 
-function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
-  var geom=new THREE.BufferGeometry()
+function threejsGeometryFromPositionsNormalsUV(three, vertices, indices) {
+  if(!three.BufferGeometry)return null;
+  var geom=new three.BufferGeometry()
   var attr;
-  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),8)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
-  geom.addAttribute("position",attr)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
-  geom.addAttribute("normal",attr)
-  attr=new THREE.InterleavedBufferAttribute(buffer,2,6)
-  geom.addAttribute("uv",attr)
-  geom.index=new THREE.BufferAttribute(ind,1)
+  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),8)
+  attr=new three.InterleavedBufferAttribute(buffer,3,0)
+  geom.setAttribute("position",attr)
+  attr=new three.InterleavedBufferAttribute(buffer,3,3)
+  geom.setAttribute("normal",attr)
+  attr=new three.InterleavedBufferAttribute(buffer,2,6)
+  geom.setAttribute("uv",attr)
+  geom.index=new three.BufferAttribute(new Uint32Array(indices),1)
+  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
   return geom
 }
 
@@ -39,7 +41,7 @@ function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
  * @returns {MeshBuffer} The resulting mesh buffer.
  * @function
  */
-export const createFloor = function(xStart, yStart, width, height, tileSize, z) {
+export const createFloor = function(three,xStart, yStart, width, height, tileSize, z) {
   if(typeof z === "undefined" || z === null)z = 0.0;
   const vertices = [];
   const indices = [];
@@ -67,5 +69,5 @@ export const createFloor = function(xStart, yStart, width, height, tileSize, z) 
       index += 4;
     }
   }
-  return MesthreejsGeometryFromPositionsNormalsUV(vertices, indices);
+  return MesthreejsGeometryFromPositionsNormalsUV(three,vertices, indices);
 };

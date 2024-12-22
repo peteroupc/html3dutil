@@ -121,7 +121,7 @@ The `Shape` constructor method assigns a linear or perspective transformation (i
     // Move it 1 unit along the X axis
     shape.setPosition(1,0,0);
 
-> **Note:** The appearance of a 3D shape's surface is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library, not least because there are many ways to describe a material's parameters, as well as many ways to implement the rendering behavior of materials associated with shapes, such as physically-based rendering, cartoon styling, constant-color shading, the Blinn&ndash;Phong model, and so on.
+> **Note:** The appearance of a 3D shape's surface is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library, not least because there are many ways to describe a material's parameters, as well as many ways to implement the rendering behavior of materials associated with shapes, such as physically-based rendering, cartoon styling, constant-color shading, and the Blinn&ndash;Phong model.
 
 Here are details on some of the `Shape` class&#39;s methods.
 

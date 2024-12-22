@@ -182,6 +182,11 @@ const TriangleFan = function(indices) {
   };
 };
 
+function normNormals(buffer) {
+  buffer.normalizeNormals();
+  return buffer;
+}
+
 function recalcNormals(buffer, inside) {
  buffer.computeVectorNormals();
  if(inside){
@@ -197,23 +202,23 @@ function recalcNormals(buffer, inside) {
  return buffer;
 }
 
-function threejsGeometryFromPositionsNormalsUV(vertices, indices) {
-  if(!THREE.BufferGeometry)return null;
-  var geom=new THREE.BufferGeometry()
+function threejsGeometryFromPositionsNormalsUV(three, vertices, indices) {
+  if(!three.BufferGeometry)return null;
+  var geom=new three.BufferGeometry()
   var attr;
-  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),8)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
-  geom.addAttribute("position",attr)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
-  geom.addAttribute("normal",attr)
-  attr=new THREE.InterleavedBufferAttribute(buffer,2,6)
-  geom.addAttribute("uv",attr)
-  geom.index=new THREE.BufferAttribute(indices,1)
+  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),8)
+  attr=new three.InterleavedBufferAttribute(buffer,3,0)
+  geom.setAttribute("position",attr)
+  attr=new three.InterleavedBufferAttribute(buffer,3,3)
+  geom.setAttribute("normal",attr)
+  attr=new three.InterleavedBufferAttribute(buffer,2,6)
+  geom.setAttribute("uv",attr)
+  geom.index=new three.BufferAttribute(new Uint32Array(indices),1)
   // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
   return geom
 }
 
-function meshBufferFromVertexGrid(vertices, width, height) {
+function meshBufferFromVertexGrid(three, vertices, width, height) {
   const indices = [];
   let y;
   for (y = 0; y < height - 1; y++) {
@@ -227,10 +232,10 @@ function meshBufferFromVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(three, vertices, indices);
 }
 
-function meshBufferFromUWrapVertexGrid(vertices, width, height) {
+function meshBufferFromUWrapVertexGrid(three, vertices, width, height) {
   const indices = [];
   let y;
   for (y = 0; y < height - 1; y++) {
@@ -244,7 +249,7 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(three, vertices, indices);
 }
 
 /**
@@ -267,11 +272,11 @@ function meshBufferFromUWrapVertexGrid(vertices, width, height) {
  * unless the box will be viewed from the inside.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createBox = function(xSize, ySize, zSize, inward) {
+Meshes.createBox = function(three,xSize, ySize, zSize, inward) {
   const x = 0.5 * xSize;
   const y = 0.5 * ySize;
   const z = 0.5 * zSize;
-  return Meshes.createBoxEx([-x, -y, -z, x, y, z], inward);
+  return Meshes.createBoxEx(three,[-x, -y, -z, x, y, z], inward);
 };
 
 /**
@@ -298,7 +303,7 @@ Meshes.createBox = function(xSize, ySize, zSize, inward) {
  * var boxMesh=Meshes.createBoxEx(box)
  * .setColor(color).wireFrame()
  */
-Meshes.createBoxEx = function(box, inward) {
+Meshes.createBoxEx = function(three,box, inward) {
   if(!box)throw new Error();
   const dims = MathUtil.boxDimensions(box);
   if(dims[0] < 0 || dims[1] < 0 || dims[2] < 0)throw new Error();
@@ -332,7 +337,7 @@ Meshes.createBoxEx = function(box, inward) {
     box[0], box[1], box[5], 0.0, 0.0, posNormal, 0.0, 0.0];
   const indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
-  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(three,vertices, indices);
 };
 
 /**
@@ -383,7 +388,7 @@ Meshes.createBoxEx = function(box, inward) {
  * unless the cylinder will be viewed from the inside.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
+Meshes.createCylinder = function(three,baseRad, topRad, height, slices, stacks, flat, inside) {
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(typeof stacks === "undefined" || stacks === null)stacks = 1;
   if(slices <= 2)throw new Error("too few slices");
@@ -392,7 +397,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
   if(baseRad <= 0 && topRad <= 0 || height === 0) {
   // both baseRad and topRad are zero or negative,
   // or height is zero
-    return new THREE.BufferGeometry();
+    return new three.BufferGeometry();
   }
   const normDir = inside ? -1 : 1;
   const sc = [];
@@ -450,10 +455,10 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
           1 - tc[j], zStart);
       }
     }
-    const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
-    return flat ? recalcNormals(mesh.toNonIndexed(),inside) : mesh;
+    const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, stacks + 1);
+    return flat ? recalcNormals(three,mesh.toNonIndexed(),inside) : mesh;
   } else {
-    return threejsGeometryFromPositionsNormalsUV([], []);
+    return threejsGeometryFromPositionsNormalsUV(three,[], []);
   }
 };
 /**
@@ -485,7 +490,7 @@ Meshes.createCylinder = function(baseRad, topRad, height, slices, stacks, flat, 
  * unless the figure will be viewed from the inside.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createLathe = function(points, slices, flat, inside) {
+Meshes.createLathe = function(three,points, slices, flat, inside) {
   // NOTE: Y coordinate should not be the same from one point to the next
   if(points.length < 4)throw new Error("too few points");
   if(typeof slices === "undefined" || slices === null)slices = 32;
@@ -529,8 +534,8 @@ Meshes.createLathe = function(points, slices, flat, inside) {
         1 - tc[j], zStart);
     }
   }
-  const mesh = meshBufferFromVertexGrid(vertices, slices + 1, stacks + 1);
-  return recalcNormals((flat ? mesh.toNonIndexed() : mesh),inside);
+  const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, stacks + 1);
+  return recalcNormals(three,(flat ? mesh.toNonIndexed() : mesh),inside);
 };
 
 /**
@@ -569,14 +574,14 @@ Meshes.createLathe = function(points, slices, flat, inside) {
  * return Meshes.createClosedCylinder(radius,0,height,slices,1);
  * }
  */
-Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, flat, inside) {
-  const cylinder = Meshes.createCylinder(baseRad, topRad, height, slices, stacks, flat, inside);
-  const base = Meshes.createDisk(0.0, baseRad, slices, 2, !inside).reverseWinding();
-  const top = Meshes.createDisk(0.0, topRad, slices, 2, inside);
+Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, stacks, flat, inside) {
+  const cylinder = Meshes.createCylinder(three,baseRad, topRad, height, slices, stacks, flat, inside);
+  const base = Meshes.createDisk(three,0.0, baseRad, slices, 2, !inside).reverseWinding();
+  const top = Meshes.createDisk(three,0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
   top.transform(MathUtil.mat4translated(0, 0, height));
   // merge the base and the top
-  return THREE.BufferGeometryUtils.mergeGeometries([cylinder,base,top],false);
+  return three.BufferGeometryUtils.mergeGeometries([cylinder,base,top],false);
 };
 
 /**
@@ -603,8 +608,8 @@ Meshes.createClosedCylinder = function(baseRad, topRad, height, slices, stacks, 
  * in the same direction of the positive Z axis. Default is false.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createDisk = function(inner, outer, slices, loops, inward) {
-  return Meshes.createPartialDisk(inner, outer, slices, loops, 0, 360, inward);
+Meshes.createDisk = function(three,inner, outer, slices, loops, inward) {
+  return Meshes.createPartialDisk(three,inner, outer, slices, loops, 0, 360, inward);
 };
 
 /**
@@ -657,7 +662,7 @@ Meshes.createDisk = function(inner, outer, slices, loops, inward) {
  * return ret;
  * }
  */
-Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, inward) {
+Meshes.createPartialDisk = function(three,inner, outer, slices, loops, start, sweep, inward) {
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(typeof loops === "undefined" || loops === null)loops = 1;
   if(typeof start === "undefined" || start === null)start = 0;
@@ -667,7 +672,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
   if(inner > outer)throw new Error("inner greater than outer");
   if(inner < 0)inner = 0;
   if(outer < 0)outer = 0;
-  if(outer === 0 || sweep === 0)return new THREE.BufferGeometry();
+  if(outer === 0 || sweep === 0)return new three.BufferGeometry();
   const fullCircle = sweep === 360 && start === 0;
   const sweepDir = sweep < 0 ? -1 : 1;
   if(sweep < 0)sweep = -sweep;
@@ -736,7 +741,7 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
       fan.addIndex(k);
     }
     fan.addIndex(0);
-    return threejsGeometryFromPositionsNormalsUV(vertices, indices);
+    return threejsGeometryFromPositionsNormalsUV(three,vertices, indices);
   } else {
     height = outer - inner;
     const invouter = 1.0 / outer;
@@ -753,8 +758,8 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
       }
     }
     return sweep === 360 ?
-      meshBufferFromUWrapVertexGrid(vertices, slp1, loops + 1) :
-      meshBufferFromVertexGrid(vertices, slp1, loops + 1);
+      meshBufferFromUWrapVertexGrid(three,vertices, slp1, loops + 1) :
+      meshBufferFromVertexGrid(three,vertices, slp1, loops + 1);
   }
 };
 
@@ -778,13 +783,13 @@ Meshes.createPartialDisk = function(inner, outer, slices, loops, start, sweep, i
  * method will point inward; otherwise, outward. Default is false.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward) {
+Meshes.createTorus = function(three,inner, outer, lengthwise, crosswise, flat, inward) {
   if(typeof crosswise === "undefined" || crosswise === null)crosswise = 16;
   if(typeof lengthwise === "undefined" || lengthwise === null)lengthwise = 16;
   if(crosswise < 3)throw new Error("crosswise is less than 3");
   if(lengthwise < 3)throw new Error("lengthwise is less than 3");
   if(inner < 0 || outer < 0)throw new Error("inner or outer is less than 0");
-  if(outer === 0 || inner === 0)return new THREE.BufferGeometry();
+  if(outer === 0 || inner === 0)return new three.BufferGeometry();
   const tubeRadius = inner;
   const circleRad = outer;
   const sci = [];
@@ -844,8 +849,8 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
       vertices.push(x, y, z, nx, ny, nz, u, v0);
     }
   }
-  const mesh = meshBufferFromVertexGrid(vertices, crosswise + 1, lengthwise + 1);
-  return flat ? recalcNormals(mesh.toNonIndexed(),inward) : mesh;
+  const mesh = meshBufferFromVertexGrid(three,vertices, crosswise + 1, lengthwise + 1);
+  return flat ? recalcNormals(three,mesh.toNonIndexed(),inward) : mesh;
 };
 
 /**
@@ -870,7 +875,7 @@ Meshes.createTorus = function(inner, outer, lengthwise, crosswise, flat, inward)
  * in the same direction of the positive Z axis. Default is false.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
+Meshes.createPlane = function(three,width, height, widthDiv, heightDiv, inward) {
   if(typeof width === "undefined" || width === null)width = 1;
   if(typeof height === "undefined" || height === null)height = 1;
   if(typeof widthDiv === "undefined" || widthDiv === null)widthDiv = 1;
@@ -878,7 +883,7 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
   if(width < 0 || height < 0)throw new Error("width or height is less than 0");
   if(heightDiv <= 0 || widthDiv <= 0)
     throw new Error("widthDiv or heightDiv is 0 or less");
-  if(width === 0 || height === 0)return new THREE.BufferGeometry();
+  if(width === 0 || height === 0)return new three.BufferGeometry();
   const xStart = -width * 0.5;
   const yStart = -height * 0.5;
   const normalZ = inward ? -1 : 1;
@@ -894,7 +899,7 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
       vertices.push(x, y, 0, 0, 0, normalZ, jx, iStart);
     }
   }
-  return meshBufferFromVertexGrid(vertices, widthDiv + 1, heightDiv + 1);
+  return meshBufferFromVertexGrid(three,vertices, widthDiv + 1, heightDiv + 1);
 };
 
 /**
@@ -931,8 +936,8 @@ Meshes.createPlane = function(width, height, widthDiv, heightDiv, inward) {
  * unless the sphere will be viewed from the inside.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
-  return Meshes._createCapsule(radius, 0, slices, stacks, 1, flat, inside);
+Meshes.createSphere = function(three,radius, slices, stacks, flat, inside) {
+  return Meshes._createCapsule(three,radius, 0, slices, stacks, 1, flat, inside);
 };
 
 /**
@@ -990,14 +995,14 @@ Meshes.createSphere = function(radius, slices, stacks, flat, inside) {
  * return line.transform(matrix);
  * }
  */
-Meshes.createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
+Meshes.createCapsule = function(three,radius, length, slices, stacks, middleStacks, flat, inside) {
   if(typeof stacks === "undefined" || stacks === null)stacks = 8;
   if(stacks < 1)throw new Error("too few stacks");
-  return Meshes._createCapsule(radius, length, slices, stacks * 2, middleStacks, flat, inside);
+  return Meshes._createCapsule(three,radius, length, slices, stacks * 2, middleStacks, flat, inside);
 };
 
 /** @ignore */
-Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, flat, inside) {
+Meshes._createCapsule = function(three,radius, length, slices, stacks, middleStacks, flat, inside) {
   if(typeof slices === "undefined" || slices === null)slices = 16;
   if(typeof stacks === "undefined" || stacks === null)stacks = 16;
   if(typeof middleStacks === "undefined" || middleStacks === null)middleStacks = 1;
@@ -1010,7 +1015,7 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
   if(radius < 0)throw new Error("negative radius");
   if(radius === 0) {
   // radius is zero
-    return new THREE.BufferGeometry();
+    return new three.BufferGeometry();
   }
   let cangle;
   let sangle;
@@ -1111,8 +1116,8 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
       }
     }
   }
-  const mesh = meshBufferFromVertexGrid(vertices, slices + 1, gridHeight);
-  return flat ? recalcNormals(mesh.toNonIndexed(),inside) : mesh.normalizeNormals();
+  const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, gridHeight);
+  return flat ? recalcNormals(three,mesh.toNonIndexed(),inside) : normNormals(mesh);
 };
 
 /**
@@ -1133,11 +1138,11 @@ Meshes._createCapsule = function(radius, length, slices, stacks, middleStacks, f
  * in the same direction of the positive Z axis. Default is false.
  * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
-  if(points < 2 || firstRadius < 0 || secondRadius < 0)return new THREE.BufferGeometry();
-  if(firstRadius <= 0 && secondRadius <= 0)return new THREE.BufferGeometry();
+Meshes.createPointedStar = function(three,points, firstRadius, secondRadius, inward) {
+  if(points < 2 || firstRadius < 0 || secondRadius < 0)return new three.BufferGeometry();
+  if(firstRadius <= 0 && secondRadius <= 0)return new three.BufferGeometry();
   if(firstRadius === secondRadius) {
-    return Meshes.createDisk(firstRadius, firstRadius, points, 1, inward);
+    return Meshes.createDisk(three,firstRadius, firstRadius, points, 1, inward);
   }
   const vertices = [];
   const indices = [];
@@ -1169,5 +1174,5 @@ Meshes.createPointedStar = function(points, firstRadius, secondRadius, inward) {
   }
   // Re-add the second index to close the pointed star
   triangleFan.addIndex(1);
-  return threejsGeometryFromPositionsNormalsUV(vertices, indices);
+  return threejsGeometryFromPositionsNormalsUV(three,vertices, indices);
 };
