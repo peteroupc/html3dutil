@@ -648,7 +648,7 @@ testfunctions.push(function() {
 testfunctions.push(function() {
   let pathtest = new H3DU.GraphicsPath()
     .moveTo(0.4713967368259978, 0.8819212643483549 )
-    // top left
+    // upper left
     .lineTo(-1, 1 )
     // bottom middle
     .lineTo( 0.19134171618254492, 0.46193976625564337 )
@@ -662,7 +662,7 @@ testfunctions.push(function() {
     .lineTo( 0.4409606321741775, 0.23569836841299877 )
     .lineTo( 0.46193976625564337, 0.19134171618254492 )
     .lineTo( 0.4784701678661044, 0.14514233862723122 )
-    // top right
+    // upper right
     .closePath();
   pathtest.getTriangles();
   pathtest = new H3DU.GraphicsPath().moveTo(-1, 1 )
@@ -678,7 +678,7 @@ testfunctions.push(function() {
     .lineTo( 0.4409606321741775, 0.23569836841299877 )
     .lineTo( 0.46193976625564337, 0.19134171618254492 )
     .lineTo( 0.4784701678661044, 0.14514233862723122 )
-    // top right
+    // upper right
     .closePath();
   pathtest.getTriangles();
 });

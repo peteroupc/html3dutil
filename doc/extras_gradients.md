@@ -30,7 +30,7 @@ Generates a 32 &times; 32 bitmap of a linear gradient in the horizontal directio
 
 #### Return Value
 
-An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
+An array with 32 &times; 32 &times; 4 bytes, arranged in 32 rows of 32 pixels
 of 4 bytes each. For each pixel, the four bytes are color components
 in the following order: red, green, blue, alpha. (Type: UInt8Array)
 
@@ -45,7 +45,7 @@ Loads an image from data in TGA format.
 
 #### Return Value
 
-An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
+An array with 32 &times; 32 &times; 4 bytes, arranged in 32 rows of 32 pixels
 of 4 bytes each. For each pixel, the four bytes are color components
 in the following order: red, green, blue, alpha. (Type: UInt8Array)
 
@@ -61,7 +61,7 @@ Generates a 32 &times; 32 bitmap of a radial gradient. This function demonstrate
 
 #### Return Value
 
-An array with 32 &times; 32 &times; x bytes, arranged in 32 rows of 32 pixels
+An array with 32 &times; 32 &times; 4 bytes, arranged in 32 rows of 32 pixels
 of 4 bytes each. For each pixel, the four bytes are color components
 in the following order: red, green, blue, alpha. (Type: UInt8Array)
 

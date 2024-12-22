@@ -117,7 +117,7 @@ The following code is a very simple surface evaluator object.
       }
     };
 
-That evaluator simply generates a square at the top-right quadrant:
+That evaluator simply generates a square at the upper-right quadrant:
 
 ![**The parametric surface.**](surfaces2.png)
 

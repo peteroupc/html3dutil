@@ -48,6 +48,8 @@ of 4 &times; 4 transformation matrices.
 * <a href="extras_moresurfaces.md">module:extras/moresurfaces</a><br>The <code>extras/moresurfaces.js</code> module.
 * <a href="extras_moresurfaces.KleinBottle.md">module:extras/moresurfaces.KleinBottle</a><br>Surface evaluator object for the Klein surface, also known as the "Klein bottle".
 * <a href="extras_moresurfaces.MoebiusStrip.md">module:extras/moresurfaces.MoebiusStrip</a><br>Surface evaluator object for a M&ouml;bius strip.
+* <a href="extras_pathtomesh.md">module:extras/pathtomesh</a><br>The <code>extras/pathtomesh.js</code> module.
+* <a href="extras_pathutil.md">module:extras/pathutil</a><br>The <code>extras/pathutil.js</code> module.
 * <a href="extras_randompolygon.md">module:extras/randompolygon</a><br>Contains a method to generate a simple polygon at random.
 * <a href="extras_starpolygon.md">module:extras/starpolygon</a><br>The <code>extras/starpolygon.js</code> module.
 * <a href="extras_superellipsoid.md">module:extras/superellipsoid</a><br>The <code>extras/superellipsoid.js</code> module.
@@ -92,6 +94,7 @@ the library's source code into files called <code>h3du_min.js</code> and <code>h
 <h2>Overview and Demos</h2>
 <p>For detailed instructions on using this library and a summary of the library's features, visit:</p>
 <p><a href="https://peteroupc.github.io/html3dutil/tutorial-overview.html">https://peteroupc.github.io/html3dutil/tutorial-overview.html</a></p>
+<p>Currently, the demos are not expected to work, since a project is in progress to convert the creation of meshes by this library to three.js.</p>
 <h2>History</h2>
 <p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html">the history page</a> to find
 information about what has changed in this library.</p>

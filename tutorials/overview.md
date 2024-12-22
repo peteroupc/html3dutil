@@ -4,7 +4,7 @@
 
 This page will introduce the [**Geometry Utilities Library**](https://github.com/peteroupc/html3dutil), an open-source JavaScript library that I wrote.
 
-This library contains classes and utility methods to represent 3-D geometries, including curves and surfaces, in JavaScript, and methods that support the development of 3D applications, including HTML applications that use the 3-D canvas.
+This library contains classes and auxiliary methods to represent 3-D geometries, including curves and surfaces, in JavaScript, and methods that support the development of 3D applications, including HTML applications that use the 3-D canvas.
 
 The library differs from many others because this one is in the public domain, so no permission is required to use it.
 
@@ -56,7 +56,7 @@ The following is a screen shot of a scene generated with the help of the former 
 ### List of Classes
 This is an overview of most of the JavaScript classes available in this library:
 
-* [**`H3DU`**](https://peteroupc.github.io/html3dutil/html) - Contains various utility methods in the Geometry Utilities Library.
+* [**`H3DU`**](https://peteroupc.github.io/html3dutil/html) - Contains various auxiliary methods in the Geometry Utilities Library.
 * [**`MathUtil`**](https://peteroupc.github.io/html3dutil/MathUtil.html) - Contains math methods useful in 3D applications, such as matrices and vectors.
 * [**`MeshBuffer`**](https://peteroupc.github.io/html3dutil/MeshBuffer.html) - Represents a 3D model.
 * [**`Meshes`**](https://peteroupc.github.io/html3dutil/Meshes.html) - Contains methods for generating common 3D models.

@@ -1225,7 +1225,7 @@ const MathUtil = {
     return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   },
   /**
-   * Returns the transposed result of the inverted 3 &times; 3 upper left corner of
+   * Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
    * the given 4 &times; 4 matrix.<p>
    * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
    * for transforming surface normals in order to keep them perpendicular
@@ -1451,8 +1451,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
    * @example <caption>The following example creates an
    * isometric projection for a right-handed coordinate system. The Y
-   * axis will point up, the Z axis toward the bottom left, and the X axis toward
-   * the bottom right.</caption>
+   * axis will point up, the Z axis toward the lower left, and the X axis toward
+   * the lower right.</caption>
    * // Assumes an orthographic projection matrix is used. Example:
    * // var projectionMatrix=MathUtil.mat4ortho(-10,10,-10,10,-50,50);
    * // "Camera" will be at (1,1,1) -- actually (sqrt(1/3),sqrt(1/3),sqrt(1/3)) --
@@ -1800,7 +1800,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of the current viewport's origin followed by the width and height
    * of a rectangle indicating the current viewport. If the return value of this method will be multiplied by another matrix (such as that returned
    * by {@link MathUtil.mat4ortho}, {@link MathUtil.mat4perspective}, or
-   * similar {@link MathUtil} methods), the viewport's origin is the lower left corner if X and Y coordinates within the view volume increase rightward and upward, respectively, or the upper left corner if X and Y coordinates within the view volume increase rightward and downward, respectively.
+   * similar {@link MathUtil} methods), the viewport's origin is the lower-left corner if X and Y coordinates within the view volume increase rightward and upward, respectively, or the upper-left corner if X and Y coordinates within the view volume increase rightward and downward, respectively.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4pickMatrix":function(wx, wy, ww, wh, vp) {
@@ -3635,9 +3635,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the Y coordinate returned by the {@link MathUtil.mat4projectVec3} method
    * before converting it to window coordinates. If true, the Y
    * coordinate will remain unchanged. If window Y coordinates increase
-   * upward, the viewport's starting position is at the lower left corner. If those
+   * upward, the viewport's starting position is at the lower-left corner. If those
    * coordinates increase downward, the viewport's starting position is
-   * at the upper left corner.
+   * at the upper-left corner.
    * @returns {Array<number>} A 3-element array giving the coordinates
    * of the unprojected point, in that order.
    */
@@ -3994,9 +3994,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * the Y coordinate returned by the {@link MathUtil.mat4projectVec3} method
    * before converting it to window coordinates. If true, the Y
    * coordinate will remain unchanged. If window Y coordinates increase
-   * upward, the viewport's starting position is at the lower left corner. If those
+   * upward, the viewport's starting position is at the lower-left corner. If those
    * coordinates increase downward, the viewport's starting position is
-   * at the upper left corner.
+   * at the upper-left corner.
    * @returns {Array<number>} A 3-element array giving the window
    * coordinates, in that order.
    */

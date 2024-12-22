@@ -76,7 +76,7 @@ Each graphics filter must have a GLSL function called `textureEffect()`, like in
 The `textureEffect` function takes these parameters:
 
 * `sampler2D sampler`: Points to a texture representing a screenshot of the current frame. To read from the texture, use the `texture2D` function, as shown in the example above.
-* `vec2 uvCoord`: Texture coordinates of the current pixel.  `uvCoord.x` ranges from 0 on the left side to 1 on the right side.  `uvCoord.y` ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the bottom-left corner, not the top left, that is, textures are "bottom up",
+* `vec2 uvCoord`: Texture coordinates of the current pixel.  `uvCoord.x` ranges from 0 on the left side to 1 on the right side.  `uvCoord.y` ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the lower-left corner, not the upper left, that is, textures are "bottom up",
   not "top down").
 * `vec2 textureSize`: Size of the screenshot, pointed to by `sampler`, in pixels. `textureSize.x` is the
   width, and `textureSize.y` is the height.

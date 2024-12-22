@@ -1,28 +1,9 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><title>Global</title></head><body><h3> Members</h3><ul><li><a href='#toExtrudedMeshBuffer'>toExtrudedMeshBuffer</a><br>Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and top.<li><a href='#toLineMeshBuffer'>toLineMeshBuffer</a><br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.<li><a href='#toMeshBuffer'>toMeshBuffer</a><br>Decomposes this path into triangles and generates a mesh
-buffer with those triangles.</ul><h3> Methods</h3><ul><li><a href='#getPromiseResults'>getPromiseResults</a><br>Utility function that returns a promise that
+<!DOCTYPE html><html><head><meta charset=utf-8><title>Global</title></head><body><h3> Methods</h3><ul><li><a href='#getPromiseResults'>getPromiseResults</a><br>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.<li><a href='#getPromiseResultsAll'>getPromiseResultsAll</a><br>Utility function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.<li><a href='#getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame's length is 1/60 of a second.<li><a href='#toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='toExtrudedMeshBuffer'></a>
-<h3> toExtrudedMeshBuffer (constant)
-
-</h3>Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and top.
-
-<a name='toLineMeshBuffer'></a>
-<h3> toLineMeshBuffer (constant)
-
-</h3>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
-
-<a name='toMeshBuffer'></a>
-<h3> toMeshBuffer (constant)
-
-</h3>Decomposes this path into triangles and generates a mesh
-buffer with those triangles. Each triangle's normal will point
-toward the Z axis, and each triangle vertex's texture coordinates will
-be the same as that vertex's position.
-
-<a name='getPromiseResults'></a>
+the last known time, where a frame's length is 1/60 of a second.<li><a href='#toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='getPromiseResults'></a>
 <h3> getPromiseResults(promises, [progressResolve], [progressReject])</h3>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.<h4> Parameters</h4><ul><li><code>promises</code> (Type: Array.&lt;Promise>)<br>an array containing promise objects<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</ul><h4> Return Value</h4>A promise that is never rejected and resolves when
@@ -71,14 +52,14 @@ This method also converts HTML and CSS color strings to 4-element RGB
 colors.
 - **What colors can I use?** You can use values like the following as color strings.
 * CSS color names (from the CSS3 Color Module): `red`, `blue`, `silver`, `fuchsia`, `darkslateblue`.
-* HTML &#8220;hex colors&#8221;: `#223344`, `#234`, `#234F`, or `#223344FF`. (See _What is the syntax for HTML colors?_)
+* HTML hexadecimal (base-16) colors: `#223344`, `#234`, `#234F`, or `#223344FF`. (See _What is the syntax for HTML colors?_)
 * RGB notation: `rgb(20,30,40)` or `rgba(20,30,40,50%)`. (See _What is RGB notation?_, later.)
 * HSL notation: `hsl(200,100%,50%)` or `hsla(200,100%,50%,80%`. (See _What is HSL notation?_, later.)
 * The newly-added color name `rebeccapurple`.
 * The word `transparent`, meaning a fully-transparent color.
 - **What do some colors look like?** Consult a [list of useful colors sorted by hue or color tone](https://peteroupc.github.io/html3dutil/websafe.svg). This particular list was historically called the "Web safe" colors or the "safety palette", and consists of 216 colors that are uniformly spaced in the red&ndash;green&ndash;blue color cube. Robert Hess's article "[The Safety Palette](https://learn.microsoft.com/en-us/previous-versions/ms976419(v=msdn.10))", 1996, described the advantage that images that use only colors in this palette won't dither when displayed by Web browsers on displays that can show up to 256 colors at once. (See also [**Wikipedia**](http://en.wikipedia.org/wiki/Web_colors). Dithering is the scattering of colors in a limited set to simulate colors outside that set.) Each entry in the list consists of a color swatch and the corresponding HTML name (see next question).
 A [second list](https://peteroupc.github.io/html3dutil/colornames.svg) shows the colors defined in the [**CSS3 Color Module section 4**](http://www.w3.org/TR/css3-color/#colorunits), as well as the newly-added name `rebeccapurple`. Where `gray` is part of a name, it can be replaced with `grey`. Next to the name of each color in the list, the color's HTML notation is shown.
-- **What is the syntax for HTML colors?** The notation employed in the "safety palette" in the preceding section is HTML's way to define colors. It&#8217;s also known as &#8220;hex colors&#8221;. Take `#ff80cc` as an example. The color defined is a carnation pink. There are four parts to this example:
+- **What is the syntax for HTML colors?** The notation employed in the "safety palette" in the preceding section is HTML's way to define colors. It&#8217;s also known as hexadecimal (base-16) colors. Take `#ff80cc` as an example. The color defined is a carnation pink. There are four parts to this example:
 * The `#` identifies this code as a color.
 * The `ff` is two letters and/or digits that show the red component of the color. This is a so-called hexadecimal number, or base-16 number. Each digit of this number can range from 0-9 and from A-F, with 0 being the lowest digit, and F being the highest digit. The highest two-digit value is 00, and the lowest two-digit value is FF (256). (The digits A-F may appear in upper or lower case.)
 * The `80` is a base-16 number showing the color&#8217;s green component.
@@ -99,7 +80,7 @@ After you choose the three values, combine them by writing the `#`, then the red
 - **What is HSL notation?** A color in HSL notation is made of the following three components:
 * _Hue_ ranges from 0 to 360 degrees. Each angle on the color wheel (which looks more like a hexagon than like a circle in HSL) stands for a different hue: red, yellow, green, cyan (sky-blue), blue, and magenta correspond roughly to hue 0 (say, 12 o&#8217;clock), 60, 120, 180, 240, and 300, respectively.
  * "Saturation" and "lightness" range from 0% to 100%. "Saturation" is the distance of the color from gray (0% means gray; 100% means most distant from gray). "Lightness" is roughly the amount of black or white mixed with the color (0% means black; 100% means white; closer to 0% means closer to black; closer to 100% means closer to white).
- > **Example:** The value `hsl(240,100%,50%)` has a hue of 240 (blue), a "saturation" of 100% (fully saturated), and a "lightness" of 50% (neither black or white). It represents a vivid blue. If we lower "lightness" to 20%, we get a "darker" blue. If we also change the hue to 0, we get a "dark" red.
+ > **Example:** The value `hsl(240,100%,50%)` has a hue of 240 (blue), a "saturation" of 100% (fully saturated), and a "lightness" of 50% (as far from "black" as from "white"). It represents a vivid blue. If we lower "lightness" to 20%, we get a "darker" blue. If we also change the hue to 0, we get a "dark" red.
 An alternate syntax for HSL colors supports the alpha component (see next question): in the example `hsla(240,100%,50%,80%)`, the `80%` is the alpha component.
 - **What is an alpha component?** An alpha component shows how much the color is transparent (see-through) or opaque. The alpha component can range from `00`/`0.0`, or "fully transparent" (completely invisible), to `FF`/`1.0`, or "fully opaque" (letting nothing through it). If a color notation doesn't provide for an alpha component, the color is fully opaque.<h4> Parameters</h4><ul><li><code>r</code> (Type: Array.&lt;number> | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.<li><code>g</code> (Type: number) (optional)<br>Green color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.<li><code>b</code> (Type: number) (optional)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the "r" parameter.<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the "r" parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.</ul><h4> Return Value</h4>The color as a 4-element array; if the color is
 invalid, returns [0,0,0,0], or transparent black. Numbers less

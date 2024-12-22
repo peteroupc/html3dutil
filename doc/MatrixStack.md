@@ -223,7 +223,7 @@ a matrix that transforms the view to a portion of the viewport.
 * `wy` (Type: number)<br>Y coordinate of the center of the desired viewport portion.
 * `ww` (Type: number)<br>Width of the desired viewport portion.
 * `wh` (Type: number)<br>Height of the desired viewport portion.
-* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.
+* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the lower-left corner followed by the width and height of a rectangle indicating the current viewport.
 
 #### Return Value
 

@@ -24,11 +24,11 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `batch` (Type: H3DU.Batch3D)<br>A 3D batch to associate with this camera object. <i>Using a H3DU.Scene3D here is deprecated.</i>
+* `batch` (Type: H3DU.Batch3D)<br>A 3D batch to associate with this camera object. <i>Using a H3DU.Scene3D here is obsolete.</i>
 * `fov` (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective</a>.
 * `nearZ` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. See <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective</a>. This should be slightly greater than 0.
 * `farZ` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="H3DU.MathUtil.md#H3DU.MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective</a>.
-* `canvas` (Type: HTMLCanvasElement) (optional)<br>A canvas to associate with this camera object. <i>This argument is deprecated.</i>
+* `canvas` (Type: HTMLCanvasElement) (optional)<br>A canvas to associate with this camera object. <i>This argument is obsolete.</i>
 
 ### Methods
 
