@@ -257,7 +257,7 @@ CurveBuilder.prototype.position = function(curve, size) {
  * Sets the parametric curve used to generate vertex attribute values.
  * @param {Object} curve A [curve evaluator object]{@link Curve} that
  * describes the parametric curve used to generate attribute values.
- * u-coordinates for the given curve correspond to u-coordinates for
+ * U coordinates for the given curve correspond to U coordinates for
  * the curve used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as {@link Semantic.POSITION}, "POSITION", or "TEXCOORD_0".
@@ -396,7 +396,7 @@ SurfaceBuilder.prototype.position = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate texture coordinates.
- * u- and v-coordinates for the given surface correspond to U and V
+ * u- and V coordinates for the given surface correspond to U and V
  * coordinates, respectively, for
  * the surface used to generate vertex positions.
  * @param {number} [size] The number of elements in each value of the attribute. For
@@ -442,7 +442,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * describes the parametric surface
  * used to generate positions.
  * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
- * correspond to u- and v-coordinates, respectively, for
+ * correspond to u- and V coordinates, respectively, for
  * the given surface.
  * @param {number} [size] The number of elements in each position. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
@@ -462,7 +462,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * describes the parametric surface
  * used to generate positions.
  * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
- * correspond to u- and v-coordinates, respectively, for
+ * correspond to u- and V coordinates, respectively, for
  * the given surface.
  * @param {number} [size] The number of elements in each position and normal. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
@@ -480,7 +480,7 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate attribute values.
- * u- and v-coordinates for the given surface correspond to U and V
+ * u- and V coordinates for the given surface correspond to U and V
  * coordinates, respectively, for
  * the surface used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
@@ -569,25 +569,25 @@ SurfaceBuilder.prototype.constantColor = function(color, semanticIndex) {
  * describes the parametric surface
  * used to generate positions.
  * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
- * correspond to u- and v-coordinates, respectively, for
+ * correspond to u- and V coordinates, respectively, for
  * the given surface.
  * @param {number} [mode] If this value is {@link MeshBuffer.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link MeshBuffer.LINES}, generates
  * a series of lines defining the surface. If this value is {@link MeshBuffer.POINTS},
  * generates a series of points along the surface. For any other value,
  * this method has no effect.
- * @param {number} [un] Number of subdivisions along the u-axis.
+ * @param {number} [un] Number of subdivisions along the U axis.
  * Default is 24.
- * @param {number} [vn] Number of subdivisions along the v-axis.
+ * @param {number} [vn] Number of subdivisions along the V axis.
  * Default is 24.
- * @param {number} [u1] Starting u-coordinate of the surface to evaluate.
- * Default is the starting u-coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
- * @param {number} [u2] Ending u-coordinate of the surface to evaluate.
- * Default is the ending u-coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
- * @param {number} [v1] Starting v-coordinate of the surface to evaluate.
- * Default is the starting v-coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
- * @param {number} [v2] Ending v-coordinate of the surface to evaluate.
- * Default is the ending v-coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
+ * @param {number} [u1] Starting U coordinate of the surface to evaluate.
+ * Default is the starting U coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
+ * @param {number} [u2] Ending U coordinate of the surface to evaluate.
+ * Default is the ending U coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
+ * @param {number} [v1] Starting V coordinate of the surface to evaluate.
+ * Default is the starting V coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
+ * @param {number} [v2] Ending V coordinate of the surface to evaluate.
+ * Default is the ending V coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
  * @returns {MeshBuffer} The generated mesh buffer.
  */
 SurfaceBuilder.surfaceToBuffer = function(three, surface, mode, un, vn, u1, u2, v1, v2) {
@@ -657,18 +657,18 @@ CurveBuilder.prototype.evalCurve = function(mode, n, u1, u2) {
  * a series of lines defining the surface. If this value is {@link MeshBuffer.POINTS},
  * generates a series of points along the surface. For any other value,
  * this method has no effect.
- * @param {number} [un] Number of subdivisions along the u-axis.
+ * @param {number} [un] Number of subdivisions along the U axis.
  * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
- * @param {number} [vn] Number of subdivisions along the v-axis.
+ * @param {number} [vn] Number of subdivisions along the V axis.
  * Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.
- * @param {number} [u1] Starting u-coordinate of the surface to evaluate.
- * Default is the starting u-coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
- * @param {number} [u2] Ending u-coordinate of the surface to evaluate.
- * Default is the ending u-coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
- * @param {number} [v1] Starting v-coordinate of the surface to evaluate.
- * Default is the starting v-coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
- * @param {number} [v2] Ending v-coordinate of the surface to evaluate.
- * Default is the ending v-coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
+ * @param {number} [u1] Starting U coordinate of the surface to evaluate.
+ * Default is the starting U coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
+ * @param {number} [u2] Ending U coordinate of the surface to evaluate.
+ * Default is the ending U coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
+ * @param {number} [v1] Starting V coordinate of the surface to evaluate.
+ * Default is the starting V coordinate given by the [surface evaluator object]{@link Surface}, or 0 if not given.
+ * @param {number} [v2] Ending V coordinate of the surface to evaluate.
+ * Default is the ending V coordinate given by the [surface evaluator object]{@link Surface}, or 1 if not given.
  * @returns {SurfaceBuilder} This object.
  */
 SurfaceBuilder.prototype.evalSurface = function(mode, un, vn, u1, u2, v1, v2) {

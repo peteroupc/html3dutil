@@ -36,7 +36,7 @@ export const MeshBuffer = function() {};
  * @returns {Array<Array<number>>} An array of primitives,
  * each of which holds the vertices that make up that primitive.
  * If this mesh holds triangles, each primitive will contain three
- * vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex's-coordinates (for example, if the attribute holds 3 elements per value, the coordinates are x-, y-, and z-coordinates, in that order).
+ * vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex's-coordinates (for example, if the attribute holds 3 elements per value, the coordinates are x-, y-, and Z coordinates, in that order).
  */
 /*
 MeshBuffer.prototype.getPositions = function() {

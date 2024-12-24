@@ -100,21 +100,21 @@
  * <mfenced open="[" close="]">
  * <mtable>
  * <mtr>
- * <mtd><mi>[0] x-axis X</mi></mtd>
- * <mtd><mi>[4] y-axis X</mi></mtd>
- * <mtd><mi>[8] z-axis X</mi></mtd>
+ * <mtd><mi>[0] X axis X</mi></mtd>
+ * <mtd><mi>[4] Y axis X</mi></mtd>
+ * <mtd><mi>[8] Z axis X</mi></mtd>
  * <mtd><mi>[12] Center X</mi></mtd>
  * </mtr>
  * <mtr>
- * <mtd><mi>[1] x-axis Y</mi></mtd>
- * <mtd><mi>[5] y-axis Y</mi></mtd>
- * <mtd><mi>[9] z-axis Y</mi></mtd>
+ * <mtd><mi>[1] X axis Y</mi></mtd>
+ * <mtd><mi>[5] Y axis Y</mi></mtd>
+ * <mtd><mi>[9] Z axis Y</mi></mtd>
  * <mtd><mi>[13] Center Y</mi></mtd>
  * </mtr>
  * <mtr>
- * <mtd><mi>[2] x-axis Z</mi></mtd>
- * <mtd><mi>[6] y-axis Z</mi></mtd>
- * <mtd><mi>[10] z-axis Z</mi></mtd>
+ * <mtd><mi>[2] X axis Z</mi></mtd>
+ * <mtd><mi>[6] Y axis Z</mi></mtd>
+ * <mtd><mi>[10] Z axis Z</mi></mtd>
  * <mtd><mi>[14] Center Z</mi></mtd>
  * </mtr>
  * <mtr>
@@ -157,9 +157,9 @@
  * </mtable>
  * </mfenced>
  * </math>
- * Here, the first column shows an x-axis vector at (1, 0, 0),
- * the second column shows a y-axis vector at (0, 0.5, 0.866025),
- * the third column shows a z-axis vector at (0, -0.866025, 0.5),
+ * Here, the first column shows an X axis vector at (1, 0, 0),
+ * the second column shows a Y axis vector at (0, 0.5, 0.866025),
+ * the third column shows a Z axis vector at (0, -0.866025, 0.5),
  * and the fourth column centers the coordinate system at (2, 3, 4).
  * Provided the matrix can be inverted (see the documentation for mat4invert), the three axis vectors are
  * _basis vectors_ of the coordinate system.
@@ -227,8 +227,8 @@
  * </mtable>
  * </mfenced>
  * </math>
- * where the x-coordinate is multiplied by `sx`, the y-coordinate is multiplied by `sy`, and
- * the z-coordinate is multiplied by `sz`.
+ * where the X coordinate is multiplied by `sx`, the Y coordinate is multiplied by `sy`, and
+ * the Z coordinate is multiplied by `sz`.
  * The scaling formula would look like:
  * **a&prime;**<sub>_x_</sub> = sx &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
  * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + sy &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
@@ -239,10 +239,10 @@
  * If `sx`, `sy`, or `sz` is -1, that coordinate is _reflected_ along the corresponding axis.
  * If `sx`, `sy`, and `sz` are all 1, we have an _identity matrix_, where the input vector
  * is equal to the output vector.
- * When the transformed X, Y, or z-axis has a length other than 1, the coordinate
+ * When the transformed X, Y, or Z axis has a length other than 1, the coordinate
  * system will be scaled up or down along that axis. The scalings given
  * here will scale the lengths of the corresponding axes. For example,
- * if `sx` is 2, the x-axis will be (2, 0, 0) and thus have a length of 2.
+ * if `sx` is 2, the X axis will be (2, 0, 0) and thus have a length of 2.
  * **Translation.** A translation is a shifting of an object's position.
  * To create a translation matrix, use [MathUtil.mat4translated()]{@link MathUtil.mat4translated},
  * and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
@@ -282,8 +282,8 @@
  * </mtable>
  * </mfenced>
  * </math>
- * where `tx` is added to the x-coordinate, `ty` is added to the y-coordinate, and
- * `tz` is added to the z-coordinate. The transformation formulas would look like:
+ * where `tx` is added to the X coordinate, `ty` is added to the Y coordinate, and
+ * `tz` is added to the Z coordinate. The transformation formulas would look like:
  * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + tx
  * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 1 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + ty
  * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 1 &#x22c5; **a**<sub>_z_</sub> + tz
@@ -293,11 +293,11 @@
  * *Rotation.** Rotation changes an object's orientation.
  * To create a rotation matrix, use [MathUtil.mat4rotated()]{@link MathUtil.mat4rotated},
  * and specify the angle (in degrees) to rotate, and the [**axis of rotation**](#Axis_of_Rotation). For example:
- * Specifying `(45, [1, 0, 0])` means a 45-degree rotation of the point around the x-axis.
+ * Specifying `(45, [1, 0, 0])` means a 45-degree rotation of the point around the X axis.
  * Specifying `(80, [0, 2, 3])` means a 45-degree rotation of the point around the axis that
  * starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).
- * When describing an axis of rotation, <code>[1, 0, 0]</code> is the x-axis,
- * <code>[0, 1, 0]</code> is the y-axis, and <code>[0, 0, 1]</code> is the z-axis.
+ * When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
+ * <code>[0, 1, 0]</code> is the Y axis, and <code>[0, 0, 1]</code> is the Z axis.
  * To multiply an existing matrix by a rotation, use
  * [MathUtil.mat4rotate()]{@link MathUtil.mat4rotate}. This will put the rotation
  * before the other transformations.
@@ -335,7 +335,7 @@
  * </mtable>
  * </mfenced>
  * </math>
- * <figcaption>Rotation about the x-axis.</figcaption></figure>
+ * <figcaption>Rotation about the X axis.</figcaption></figure>
  * <figure>
  * <math>
  * <mfenced open="[" close="]">
@@ -367,7 +367,7 @@
  * </mtable>
  * </mfenced>
  * </math>
- * <figcaption>Rotation about the y-axis.</figcaption></figure>
+ * <figcaption>Rotation about the Y axis.</figcaption></figure>
  * <figure>
  * <math>
  * <mfenced open="[" close="]">
@@ -399,19 +399,19 @@
  * </mtable>
  * </mfenced>
  * </math>
- * <figcaption>Rotation about the z-axis.</figcaption></figure>
+ * <figcaption>Rotation about the Z axis.</figcaption></figure>
  * Note that:
- * When we rotate a point about the x-axis, the x-coordinate is unchanged
- * and the y- and z-coordinates are adjusted in the rotation. For rotations about the
- * y-axis or the z-axis, the Y or z-coordinate, respectively, is likewise unchanged.
+ * When we rotate a point about the X axis, the X coordinate is unchanged
+ * and the y- and Z coordinates are adjusted in the rotation. For rotations about the
+ * Y axis or the Z axis, the Y or Z coordinate, respectively, is likewise unchanged.
  * If the axis of rotation points backward from the "eye", positive rotations mean
  * counterclockwise rotation in right-handed coordinate systems. For example,
  * 60 degrees about the axis means
  * 60 degrees counterclockwise, and negative 60 degrees means 60 degrees
  * clockwise.
  * Rotating a point around an arbitrary axis of rotation is more complicated to describe.
- * When describing an axis of rotation, <code>[1, 0, 0]</code> is the x-axis,
- * <code>[0, 1, 0]</code> is the y-axis, and <code>[0, 0, 1]</code> is the z-axis.
+ * When describing an axis of rotation, <code>[1, 0, 0]</code> is the X axis,
+ * <code>[0, 1, 0]</code> is the Y axis, and <code>[0, 0, 1]</code> is the Z axis.
  * See [**"Rotation example"**](#Rotation_Example) for an illustration of a rotation
  * transformation.
  * Related functions:
@@ -478,7 +478,7 @@
  * [**"Why a 4 &times; 4 Matrix?"**](#Why_a_4x4_Matrix)). For a 3D projective transformation, the last row
  * in the matrix is not necessarily (0, 0, 0, 1).
  * One example of a projective transformation is found in a _perspective projection_ matrix,
- * as returned by {@link MathUtil.mat4perspective} or {@link MathUtil.mat4frustum}. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative z-coordinate in _eye space_, or more specifically, as follows:
+ * as returned by {@link MathUtil.mat4perspective} or {@link MathUtil.mat4frustum}. When a 4-element vector is transformed with this matrix, its W component is generated by setting it to the negative Z coordinate in _eye space_, or more specifically, as follows:
  * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + -1 &#x22c5; **a**<sub>_z_</sub> + 0
  * For more on perspective projections, see [_The "Camera" and Geometric Transforms_]{@tutorial camera}.
  * Related functions:
@@ -487,15 +487,15 @@
  * [MathUtil.mat4perspective()]{@link MathUtil.mat4perspective} -
  * Returns a field-of-view perspective matrix
  * ## Rotation Example
- * As an example, say we rotate 60 degrees about the x-axis (`mat4rotated(60, 1, 0, 0)`,
- * &theta; = 60&deg;). First, we find the rotation formula for the x-axis:
+ * As an example, say we rotate 60 degrees about the X axis (`mat4rotated(60, 1, 0, 0)`,
+ * &theta; = 60&deg;). First, we find the rotation formula for the X axis:
  * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0
  * **a&prime;**<sub>_y_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (cos &theta;) &#x22c5; **a**<sub>_y_</sub> + -(sin &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
  * **a&prime;**<sub>_z_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + (sin &theta;) &#x22c5; **a**<sub>_y_</sub> + (cos &theta;) &#x22c5; **a**<sub>_z_</sub> + 0
  * **a&prime;**<sub>_w_</sub> = 0 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 1 = 1
  * We calculate <i>cos &theta;</i> as 0.5 and <i>sin &theta;</i> as about 0.866025.
  * We plug those numbers into the rotation formula to get a formula for rotating a
- * point 60 degrees about the x-axis.
+ * point 60 degrees about the X axis.
  * **a&prime;**<sub>_x_</sub> = 1 &#x22c5; **a**<sub>_x_</sub> + 0 &#x22c5; **a**<sub>_y_</sub> + 0 &#x22c5; **a**<sub>_z_</sub> + 0 = **a**<sub>_x_</sub>
  * **a&prime;**<sub>_y_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.5 &#x22c5; **a**<sub>_y_</sub> + -0.866025 &#x22c5; **a**<sub>_z_</sub> + 0
  * **a&prime;**<sub>_z_</sub> ~= 0 &#x22c5; **a**<sub>_x_</sub> + 0.866025 &#x22c5; **a**<sub>_y_</sub> + 0.5 &#x22c5; **a**<sub>_z_</sub> + 0
@@ -527,9 +527,9 @@
  * on the same plane as the previous point. The axis of rotation describes
  * a vector that is perpendicular to that plane's surface (the plane's _normal_).
  * Here are examples of an axis of rotation.
- * The x-axis of rotation (upward or downward turn) is (1, 0, 0).
- * The y-axis of rotation (leftward or rightward turn) is (0, 1, 0).
- * The z-axis of rotation (side-by-side sway) is (0, 0, 1).
+ * The X axis of rotation (upward or downward turn) is (1, 0, 0).
+ * The Y axis of rotation (leftward or rightward turn) is (0, 1, 0).
+ * The Z axis of rotation (side-by-side sway) is (0, 0, 1).
  * While the axis of rotation points backward from the "eye", if the angle's value
  * is positive and the [**coordinate system**](#Coordinate_Systems) is...
  * ...right handed, then the angle runs counterclockwise.
@@ -603,8 +603,8 @@
  * <a id=Boxes></a>
  * ## Boxes
  * An array of six numbers can describe an axis-aligned bounding box (AABB).
- * If it does, the first three numbers are the box's minimum x-, y-, and z-coordinates,
- * and the last three numbers are the box's maximum x-, y-, and z-coordinates.
+ * If it does, the first three numbers are the box's minimum x-, y-, and Z coordinates,
+ * and the last three numbers are the box's maximum x-, y-, and Z coordinates.
  * If a minimum coordinate is greater than a maximum coordinate, then the
  * box is considered empty.
  * Methods that deal with boxes include:
@@ -615,18 +615,18 @@
  * ## Coordinate Systems
  * There are two conventions of 3D coordinate systems, left-handed and
  * right-handed:
- * In a _left-handed_ coordinate system, the positive z-axis points _forward from the "eye"_ whenever the positive x-axis points to the right and the positive y-axis points up.
- * In a _right-handed_ coordinate system, the positive z-axis points _backward from the "eye"_ whenever the positive x-axis points to the right and the positive y-axis points up.
+ * In a _left-handed_ coordinate system, the positive Z axis points _forward from the "eye"_ whenever the positive X axis points to the right and the positive Y axis points up.
+ * In a _right-handed_ coordinate system, the positive Z axis points _backward from the "eye"_ whenever the positive X axis points to the right and the positive Y axis points up.
  * To show this more visually, point one hand's thumb to your right and
  * its index finger up, and bend the other three fingers halfway down. In a
  * coordinate system named after that hand (left-handed or
- * right-handed), if the positive x-axis points in the thumb's
- * direction and the positive y-axis points in the index finger's direction, the z-axis will
+ * right-handed), if the positive X axis points in the thumb's
+ * direction and the positive Y axis points in the index finger's direction, the Z axis will
  * point in the direction the other three fingers point.
- * As used here, the z-axis is the [cross product]{@link MathUtil.vec3cross}
- * of two perpendicular axes, namely the x-axis and the y-axis, in that order.
+ * As used here, the Z axis is the [cross product]{@link MathUtil.vec3cross}
+ * of two perpendicular axes, namely the X axis and the Y axis, in that order.
  * Which of the X, Y, or z-axes is the right, up, or forward axis is
- * arbitrary; for example, some conventions may have the z-axis, rather than Y,
+ * arbitrary; for example, some conventions may have the Z axis, rather than Y,
  * be the up axis. Therefore, these three axes are defined here to avoid
  * confusion.
  * <a id=Differences_in_Behavior></a>
@@ -666,7 +666,7 @@
  * #### Finding a triangle's winding
  * To find a triangle's winding, do the following calculation (X1, X2, X3 and Y1, Y2, Y3 are the window coordinates of its vertices). Note that half of the result will be the triangle's signed area.
  * (X3 - X1) * (Y3 - Y2) - (X3 - X2) * (Y3 - Y1)
- * If the result is positive, and the window space x-axis points right and the positive y-axis points...
+ * If the result is positive, and the window space X axis points right and the positive Y axis points...
  * ...up (which is the case in WebGL), then the triangle
  * has counterclockwise winding.
  * ...down, then the triangle has clockwise winding.
@@ -824,11 +824,11 @@ const MathUtil = {
    * Finds the center of a 3D bounding box.
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
-   * The first three values are the smallest x-, y-, and z-coordinates,
+   * The first three values are the smallest x-, y-, and Z coordinates,
    * and the last three values are the largest X, Y, and Z
    * coordinates.
    * @returns {Array<number>} A 3-element array containing the
-   * x-, y-, and z-coordinates, respectively, of the bounding box's
+   * x-, y-, and Z coordinates, respectively, of the bounding box's
    * center.
    */
   "boxCenter":function(box) {
@@ -841,7 +841,7 @@ const MathUtil = {
    * the first three values of the given array with its last three values.
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
-   * The first three values are the smallest x-, y-, and z-coordinates,
+   * The first three values are the smallest x-, y-, and Z coordinates,
    * and the last three values are the largest X, Y, and Z
    * coordinates.
    * @returns {Array<number>} A 3-element array containing the
@@ -859,7 +859,7 @@ const MathUtil = {
    * is larger than the corresponding maximum coordinate.
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
-   * The first three values are the smallest x-, y-, and z-coordinates,
+   * The first three values are the smallest x-, y-, and Z coordinates,
    * and the last three values are the largest X, Y, and Z
    * coordinates.
    * @returns {boolean} <code>true</code> if at least one
@@ -918,7 +918,7 @@ const MathUtil = {
    * bottom, near, and far clipping planes.
    * @param {Array<number>} box An axis-aligned bounding
    * box in world space, which is an array of six values.
-   * The first three values are the smallest x-, y-, and z-coordinates,
+   * The first three values are the smallest x-, y-, and Z coordinates,
    * and the last three values are the largest X, Y, and Z
    * coordinates.
    * @returns {boolean} <code>true</code> if the box
@@ -1104,9 +1104,9 @@ const MathUtil = {
    * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
    * get the transformed vector.
    * @param {Array<number>} mat A 3 &times; 3 matrix.
-   * @param {Array<number>|number} v x-coordinate.
+   * @param {Array<number>|number} v X coordinate.
    * If "vy", and "vz" are omitted, this value can instead
-   * be a 4-element array giving the x-, y-, and z-coordinates.
+   * be a 4-element array giving the x-, y-, and Z coordinates.
    * @param {number} [vy] The Ycoordinate.
    * @param {number} [vz] The Zcoordinate. To transform a 2D
    * point, set Z to 1, and divide the result's X and Y by
@@ -1166,25 +1166,25 @@ const MathUtil = {
    * Returns a 4 &times; 4 matrix representing a [perspective projection]{@tutorial camera}
    * in the form of a view frustum, or the limits in the "eye"'s view.<p>
    * When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
-   * <li>x-coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from "l" to "r".</li>
-   * <li>y-coordinates range from -W to W and increase from "b" to "t" (or from "t" to "b" by default in Vulkan).</li>
-   * <li>z-coordinates range from -W to W and increase from "near" to "far". (For view volume z-coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
-   * The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and z-coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a [right-handed coordinate system]{@tutorial glmath}). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
-   * <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which x-coordinates increase, or
-   * <li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
-   * <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which z-coordinates increase.</ul>
+   * <li>X coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from "l" to "r".</li>
+   * <li>Y coordinates range from -W to W and increase from "b" to "t" (or from "t" to "b" by default in Vulkan).</li>
+   * <li>Z coordinates range from -W to W and increase from "near" to "far". (For view volume Z coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
+   * The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and Z coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a [right-handed coordinate system]{@tutorial glmath}). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
+   * <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which X coordinates increase, or
+   * <li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+   * <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which Z coordinates increase.</ul>
    * @param {number} l The Xcoordinate of the point in eye space where the left
    * clipping plane meets the near clipping plane.
    * @param {number} r The Xcoordinate of the point in eye space where the right
    * clipping plane meets the near clipping plane.
-   * ("l" is usually less than "r", so that x-coordinates increase from left to right when just this matrix is used to transform vertices.
-   * If "l" is greater than "r", x-coordinates increase in the opposite direction.)
+   * ("l" is usually less than "r", so that X coordinates increase from left to right when just this matrix is used to transform vertices.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b The Ycoordinate of the point in eye space where the bottom
    * clipping plane meets the near clipping plane.
    * @param {number} t The Ycoordinate of the point in eye space where the top
    * clipping plane meets the near clipping plane.
-   * ("b" is usually less than "t", so that, in WebGL and OpenGL by default, y-coordinates increase upward when just this matrix is used to transform vertices.
-   * If "b" is greater than "t", y-coordinates increase in the opposite direction.)
+   * ("b" is usually less than "t", so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
    * @param {number} near The distance, in eye space, from the "eye" to
    * the near clipping plane. Objects closer than this distance won't be
    * seen.<br>This value should be greater than 0, and should be set to the highest distance
@@ -1195,8 +1195,8 @@ const MathUtil = {
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices.
-   * If "near" is greater than "far", z-coordinates increase in the opposite direction.)<br>
+   * ("near" is usually less than "far", so that, in WebGL and most other graphics pipelines by default, Z coordinates increase from the "eye" backward when just this matrix is used to transform vertices.
+   * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
    * plane than around the far plane due to the perspective
@@ -1418,11 +1418,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * and points forward to the <code>lookingAt</code>
    * position in world space. This generally
    * puts <code>lookingAt</code> at the center of the view.
-   * <li>The x-axis points rightward from the "camera"'s viewpoint.
-   * <li>The y-axis points upward from the center of the "camera" to its top. The
+   * <li>The X axis points rightward from the "camera"'s viewpoint.
+   * <li>The Y axis points upward from the center of the "camera" to its top. The
    * <code>up</code> vector guides this direction.
-   * <li>The z-axis points away from the <code>lookingAt</code> point toward the "camera", so that the eye space is a [right-handed coordinate system]{@tutorial glmath}.</ul><p>
-   * To adjust the result of this method for a left-handed coordinate system (so that the z-axis points in the opposite direction), reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th, 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8, 10, 12, and 14).<p>
+   * <li>The Z axis points away from the <code>lookingAt</code> point toward the "camera", so that the eye space is a [right-handed coordinate system]{@tutorial glmath}.</ul><p>
+   * To adjust the result of this method for a left-handed coordinate system (so that the Z axis points in the opposite direction), reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th, 13th, and 15th elements of the result (zero-based indices 0, 2, 4, 6, 8, 10, 12, and 14).<p>
    * @param {Array<number>} cameraPos A 3-element vector specifying
    * the "camera" position in world space.<br>
    * When used in conjunction with an [orthographic projection]{@link MathUtil.mat4ortho}, set this parameter to
@@ -1444,14 +1444,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @example <caption>The following example calls this method with an
    * up vector of (0, 1, 0) except if the view direction is parallel to that
    * vector or nearly so.</caption>
-   * var upVector=[0,1,0]; // y-axis
+   * var upVector=[0,1,0]; // Y axis
    * var viewdir=MathUtil.vec3sub(lookingAt, cameraPos);
    * var par=MathUtil.vec3length(MathUtil.vec3cross(viewdir,upVector));
-   * if(par<0.00001)upVector=[0,0,1]; // view is almost parallel, so use z-axis
+   * if(par<0.00001)upVector=[0,0,1]; // view is almost parallel, so use Z axis
    * var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
    * @example <caption>The following example creates an
    * isometric projection for a right-handed coordinate system. The Y
-   * axis will point up, the z-axis toward the lower left, and the x-axis toward
+   * axis will point up, the Z axis toward the lower left, and the X axis toward
    * the lower right.</caption>
    * // Assumes an orthographic projection matrix is used. Example:
    * // var projectionMatrix=MathUtil.mat4ortho(-10,10,-10,10,-50,50);
@@ -1462,11 +1462,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * cameraPoint=MathUtil.vec3add(cameraPoint,lookPoint);
    * var matrix=MathUtil.mat4lookat(cameraPoint,lookPoint);
    * @example <caption>The following example is like the previous
-   * example, but with the z-axis pointing up.</caption>
+   * example, but with the Z axis pointing up.</caption>
    * var lookPoint=[0,0,0];
    * var cameraPoint=MathUtil.vec3normalize([1,1,1]);
    * cameraPoint=MathUtil.vec3add(cameraPoint,lookPoint);
-   * // Positive z-axis is the up vector
+   * // Positive Z axis is the up vector
    * var matrix=MathUtil.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
    * @example <caption>The following example creates a "camera" view matrix using the
    * viewer position, the viewing direction, and the up vector (a "look-to" matrix):</caption>
@@ -1538,12 +1538,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * when used in conjunction with an [orthographic projection]{@link MathUtil.mat4ortho}.<p>
    * This method works the same way in right-handed and left-handed
    * coordinate systems.
-   * @param {number} alpha Controls how much the z-axis is stretched. In degrees. A value of 45
+   * @param {number} alpha Controls how much the Z axis is stretched. In degrees. A value of 45
    * (<code>arctan(1)</code>) indicates
    * a cabinet projection, and a value of 63.435 (<code>arctan(2)</code>) indicates a cavalier projection.
-   * @param {number} phi Controls the apparent angle of the negative z-axis in relation to the
-   * positive x-axis. In degrees. 0 means the negative z-axis appears to point in the same direction as
-   * the positive x-axis, and 90, in the same direction as the positive y-axis.
+   * @param {number} phi Controls the apparent angle of the negative Z axis in relation to the
+   * positive X axis. In degrees. 0 means the negative Z axis appears to point in the same direction as
+   * the positive X axis, and 90, in the same direction as the positive Y axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4oblique":function(alpha, phi) {
@@ -1568,25 +1568,25 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * The projection returned by this method only scales and/or shifts the view, so that
    * objects with the same size won't appear smaller as they get more distant from the  "camera".<p>
    * When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
-   * <li>x-coordinates range from -1 to 1 and increase from "l" to "r".</li>
-   * <li>y-coordinates range from -1 to 1 and increase from "b" to "t" (or from "t" to "b" by default in Vulkan).</li>
-   * <li>z-coordinates range from -1 to 1 and increase from "n" to "f". (For view volume z-coordinates ranging from 0 to 1, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 11th and 15th elements of the result, or zero-based indices 10 and 14, by 2, then add 0.5 to the 15th element.)</li></ul>
-   * The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and z-coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a [right-handed coordinate system]{@tutorial glmath}). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
-   * <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which x-coordinates increase, or
-   * <li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
-   * <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which z-coordinates increase.</ul>
+   * <li>X coordinates range from -1 to 1 and increase from "l" to "r".</li>
+   * <li>Y coordinates range from -1 to 1 and increase from "b" to "t" (or from "t" to "b" by default in Vulkan).</li>
+   * <li>Z coordinates range from -1 to 1 and increase from "n" to "f". (For view volume Z coordinates ranging from 0 to 1, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 11th and 15th elements of the result, or zero-based indices 10 and 14, by 2, then add 0.5 to the 15th element.)</li></ul>
+   * The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and Z coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a [right-handed coordinate system]{@tutorial glmath}). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
+   * <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which X coordinates increase, or
+   * <li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+   * <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which Z coordinates increase.</ul>
    * @param {number} l Leftmost coordinate of the orthographic view.
    * @param {number} r Rightmost coordinate of the orthographic view.
-   * ("l" is usually less than "r", so that x-coordinates increase from left to right when just this matrix is used to transform vertices.
-   * If "l" is greater than "r", x-coordinates increase in the opposite direction.)
+   * ("l" is usually less than "r", so that X coordinates increase from left to right when just this matrix is used to transform vertices.
+   * If "l" is greater than "r", X coordinates increase in the opposite direction.)
    * @param {number} b Bottommost coordinate of the orthographic view.
    * @param {number} t Topmost coordinate of the orthographic view.
-   * ("b" is usually less than "t", so that, in WebGL and OpenGL by default, y-coordinates increase upward when just this matrix is used to transform vertices.
-   * If "b" is greater than "t", y-coordinates increase in the opposite direction.)
-   * @param {number} n The Zcoordinate, in eye space, of the near clipping plane. If z-coordinates in eye space increase from the "eye" forward, a positive value for "n" means the plane is in front of the "eye".
-   * @param {number} f The Zcoordinate, in eye space, of the far clipping plane. If z-coordinates in eye space increase from the "eye" forward, a positive value for "f" means the plane is in front of the "eye".
-   *  ("n" is usually less than "f", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices.
-   * If "n" is greater than "f", z-coordinates increase in the opposite direction.)
+   * ("b" is usually less than "t", so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices.
+   * If "b" is greater than "t", Y coordinates increase in the opposite direction.)
+   * @param {number} n The Zcoordinate, in eye space, of the near clipping plane. If Z coordinates in eye space increase from the "eye" forward, a positive value for "n" means the plane is in front of the "eye".
+   * @param {number} f The Zcoordinate, in eye space, of the far clipping plane. If Z coordinates in eye space increase from the "eye" forward, a positive value for "f" means the plane is in front of the "eye".
+   *  ("n" is usually less than "f", so that, in WebGL and most other graphics pipelines by default, Z coordinates increase from the "eye" backward when just this matrix is used to transform vertices.
+   * If "n" is greater than "f", Z coordinates increase in the opposite direction.)
    * The absolute difference
    * between n and f should be as small as the application can accept.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
@@ -1703,13 +1703,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns a 4 &times; 4 matrix representing a [perspective projection]{@tutorial camera}.<p>
    * When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
-   * <li>x-coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from left to right.</li>
-   * <li>y-coordinates range from -W to W and increase upward (or downward by default in Vulkan).</li>
-   * <li>z-coordinates range from -W to W and increase from "near" to "far". (For view volume z-coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
-   * The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and z-coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a [right-handed coordinate system]{@tutorial glmath}). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
-   * <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which x-coordinates increase, or
-   * <li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which y-coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
-   * <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which z-coordinates increase.</ul>
+   * <li>X coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from left to right.</li>
+   * <li>Y coordinates range from -W to W and increase upward (or downward by default in Vulkan).</li>
+   * <li>Z coordinates range from -W to W and increase from "near" to "far". (For view volume Z coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
+   * The transformed coordinates have the meanings given earlier assuming that the eye space (untransformed) x-, y-, and Z coordinates increase rightward, upward, and from the "eye" backward, respectively (so that the eye space is a [right-handed coordinate system]{@tutorial glmath}). To adjust this method's result for the opposite "hand", reverse the sign of the result's:<ul>
+   * <li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which X coordinates increase, or
+   * <li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+   * <li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which Z coordinates increase.</ul>
    * @param {number} fovY The Yaxis field of view, in degrees, that is, the shortest angle
    * between the top and bottom clipping planes. Should be less
    * than 180 degrees. (The smaller
@@ -1727,8 +1727,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * be seen.<br>This value should be greater than 0 and should be set
    * so that the absolute ratio of "far" to "near" is as small as
    * the application can accept.
-   * ("near" is usually less than "far", so that, in WebGL and most other graphics pipelines by default, z-coordinates increase from the "eye" backward when just this matrix is used to transform vertices.
-   * If "near" is greater than "far", z-coordinates increase in the opposite direction.)<br>
+   * ("near" is usually less than "far", so that, in WebGL and most other graphics pipelines by default, Z coordinates increase from the "eye" backward when just this matrix is used to transform vertices.
+   * If "near" is greater than "far", Z coordinates increase in the opposite direction.)<br>
    * In the usual case that "far" is greater than "near", depth
    * buffer values will be more concentrated around the near
    * plane than around the far plane due to the perspective
@@ -1755,7 +1755,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Returns a 4 &times; 4 matrix representing a [perspective projection]{@tutorial camera},
-   * given an x-axis field of view.<p>
+   * given an X axis field of view.<p>
    * See [mat4perspective()]{@link MathUtil.mat4perspective} for information on the meaning of coordinates
    * when using this matrix and on adjusting the matrix for different coordinate systems.
    * @param {number} fovX The Xaxis field of view, in degrees, that is, the shortest angle
@@ -1796,11 +1796,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {number} wy The Ycoordinate of the center of the desired viewport portion, in window coordinates.
    * @param {number} ww Width of the desired viewport portion.
    * @param {number} wh Height of the desired viewport portion.
-   * @param {Array<number>} vp A 4-element array giving the x- and y-coordinates
+   * @param {Array<number>} vp A 4-element array giving the x- and Y coordinates
    * of the current viewport's origin followed by the width and height
    * of a rectangle indicating the current viewport. If the return value of this method will be multiplied by another matrix (such as that returned
    * by {@link MathUtil.mat4ortho}, {@link MathUtil.mat4perspective}, or
-   * similar {@link MathUtil} methods), the viewport's origin is the lower-left corner if x- and y-coordinates within the view volume increase rightward and upward, respectively, or the upper-left corner if x- and y-coordinates within the view volume increase rightward and downward, respectively.
+   * similar {@link MathUtil} methods), the viewport's origin is the lower-left corner if x- and Y coordinates within the view volume increase rightward and upward, respectively, or the upper-left corner if x- and Y coordinates within the view volume increase rightward and downward, respectively.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4pickMatrix":function(wx, wy, ww, wh, vp) {
@@ -1822,7 +1822,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Transforms a 3-element vector with a 4 &times; 4 matrix and returns
    * a perspective-correct version of the vector as a 3D point. <p>
    * The transformation involves transforming a 4-element vector with the same X,
-   * Y, and z-coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
+   * Y, and Z coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
    * then dividing X, Y, and Z of the transformed 4-element
    * vector by that vector's W (a <i>perspective divide</i>),
    * then returning that vector's new X, Y, and Z.<p>
@@ -1835,17 +1835,17 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * (object) space</i>.<br>
    * If the matrix includes a projection transform returned
    * by {@link MathUtil.mat4ortho}, {@link MathUtil.mat4perspective}, or
-   * similar {@link MathUtil} methods, the x-, y-, and z-coordinates within the
+   * similar {@link MathUtil} methods, the x-, y-, and Z coordinates within the
    * view volume, before the perspective divide, will have the range specified in those methods' documentation and increase in the direction given in that documentation, and those coordinates, after the perspective divide will range from -1 to 1 (or 0 to 1) if they previously ranged from -W to W (or 0 to W, respectively).
-   * @param {Array<number>|number} v x-coordinate of a 3D point to transform.
+   * @param {Array<number>|number} v X coordinate of a 3D point to transform.
    * If "vy" and "vz" are omitted, this value can instead
-   * be a 3-element array giving the x-, y-, and z-coordinates.
+   * be a 3-element array giving the x-, y-, and Z coordinates.
    * @param {number} [vy] The Ycoordinate.
    * @param {number} [vz] The Zcoordinate. To transform a 2D
    * point, set Z to 0.
    * @returns {Array<number>} The transformed 3-element vector.
    * The elements, in order, are
-   * the transformed vector's x-, y-, and z-coordinates.
+   * the transformed vector's x-, y-, and Z coordinates.
    */
   "mat4projectVec3":function(mat, v, vy, vz) {
     let x;
@@ -1986,7 +1986,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of rotation.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    * @example <caption>The following example rotates a vector,
-   * "vec", about the z-axis by the given angle, "angle".</caption>
+   * "vec", about the Z axis by the given angle, "angle".</caption>
    * var newVector = MathUtil.mat4projectVec3(
    * MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
@@ -2087,12 +2087,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Multiplies a 4 &times; 4 matrix by a scaling transformation.
    * @param {Array<number>} mat 4 &times; 4 matrix to multiply.
    * @param {Array<number>|number} v3 Scale factor along the
-   * x-axis. A scale factor can be negative, in which case the transformation
+   * X axis. A scale factor can be negative, in which case the transformation
    * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
    * be a 3-element array giving the scale factors along the X, Y, and
    * z-axes.
-   * @param {number} v3y Scale factor along the y-axis.
-   * @param {number} v3z Scale factor along the z-axis.
+   * @param {number} v3y Scale factor along the Y axis.
+   * @param {number} v3z Scale factor along the Z axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4scale":function(mat, v3, v3y, v3z) {
@@ -2120,12 +2120,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * scaling transformation.
    * @param {Array<number>} mat A 4 &times; 4 matrix.
    * @param {Array<number>|number} v3 Scale factor along the
-   * x-axis. A scale factor can be negative, in which case the transformation
+   * X axis. A scale factor can be negative, in which case the transformation
    * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
    * be a 3-element array giving the scale factors along the X, Y, and
    * z-axes.
-   * @param {number} [v3y] Scale factor along the y-axis.
-   * @param {number} [v3z] Scale factor along the z-axis.
+   * @param {number} [v3y] Scale factor along the Y axis.
+   * @param {number} [v3z] Scale factor along the Z axis.
    * @returns {Array<number>} The same parameter as "mat".
    */
   "mat4scaleInPlace":function(mat, v3, v3y, v3z) {
@@ -2159,12 +2159,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns a 4 &times; 4 matrix representing a scaling transformation.
    * @param {Array<number>|number} v3 Scale factor along the
-   * x-axis. A scale factor can be negative, in which case the transformation
+   * X axis. A scale factor can be negative, in which case the transformation
    * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
    * be a 3-element array giving the scale factors along the X, Y, and
    * z-axes.
-   * @param {number} v3y Scale factor along the y-axis.
-   * @param {number} v3z Scale factor along the z-axis.
+   * @param {number} v3y Scale factor along the Y axis.
+   * @param {number} v3z Scale factor along the Z axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4scaled":function(v3, v3y, v3z) {
@@ -2261,7 +2261,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * <code>v</code>, and adding up the resulting vectors (except <code>v</code>) to
    * get the transformed vector.
    * @param {Array<number>} mat A 4 &times; 4 matrix.
-   * @param {Array<number>|number} v x-coordinate.
+   * @param {Array<number>|number} v X coordinate.
    * If "vy", "vz", and "vw" are omitted, this value can instead
    * be a 4-element array giving the X, Y, Z, and W coordinates.
    * @param {number} [vy] The Ycoordinate.
@@ -2306,9 +2306,9 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * 4 &times; 4 matrices that may be in a perspective
    * projection (whose last row is not necessarily (0, 0, 0, 1)).
    * @param {Array<number>} mat A 4 &times; 4 matrix.
-   * @param {Array<number>|number} v x-coordinate.
+   * @param {Array<number>|number} v X coordinate.
    * If "vy" and "vz" are omitted, this value can instead
-   * be a 4-element array giving the x-, y-, and z-coordinates.
+   * be a 4-element array giving the x-, y-, and Z coordinates.
    * @param {number} [vy] The Ycoordinate.
    * @param {number} [vz] The Zcoordinate. To transform a 2D
    * point, set Z to 0.
@@ -2335,11 +2335,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Multiplies a 4 &times; 4 matrix by a translation transformation.
    * @param {Array<number>} mat The matrix to multiply.
    * @param {Array<number>|number} v3 Translation along the
-   * x-axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * X axis.  If "v3y" and "v3z" are omitted, this value can instead
    * be a 3-element array giving the translations along the X, Y, and
    * z-axes.
-   * @param {number} v3y Translation along the y-axis.
-   * @param {number} v3z Translation along the z-axis.
+   * @param {number} v3y Translation along the Y axis.
+   * @param {number} v3z Translation along the Z axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4translate":function(mat, v3, v3y, v3z) {
@@ -2368,11 +2368,11 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns a 4 &times; 4 matrix representing a translation.
    * @param {Array<number>|number} v3 Translation along the
-   * x-axis.  If "v3y" and "v3z" are omitted, this value can instead
+   * X axis.  If "v3y" and "v3z" are omitted, this value can instead
    * be a 3-element array giving the translations along the X, Y, and
    * z-axes.
-   * @param {number} v3y Translation along the y-axis.
-   * @param {number} v3z Translation along the z-axis.
+   * @param {number} v3y Translation along the Y axis.
+   * @param {number} v3z Translation along the Z axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    */
   "mat4translated":function(v3, v3y, v3z) {
@@ -2586,13 +2586,13 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /*
    * Generates a quaternion from pitch, yaw and roll angles (or <i>Tait&ndash;Bryan angles</i>).
    * See "Axis of Rotation" in "{@tutorial glmath}" for the meaning of each angle.
-   * @param {number} pitchDegrees Vector rotation about the x-axis (upward or downward turn), in degrees.
+   * @param {number} pitchDegrees Vector rotation about the X axis (upward or downward turn), in degrees.
    * This can instead be a 3-element
-   * array giving the rotation about the x-axis, y-axis, and z-axis,
+   * array giving the rotation about the X axis, Y axis, and Z axis,
    * respectively.
-   * @param {number} yawDegrees Vector rotation about the y-axis (left or right turn), in degrees.
+   * @param {number} yawDegrees Vector rotation about the Y axis (left or right turn), in degrees.
    * May be null or omitted if "pitchDegrees" is an array.
-   * @param {number} rollDegrees Vector rotation about the z-axis (swaying side by side), in degrees.
+   * @param {number} rollDegrees Vector rotation about the Z axis (swaying side by side), in degrees.
    * May be null or omitted if "pitchDegrees" is an array.
    * @param {number} [mode] Specifies the order in which the rotations will occur (in terms of their effect).
    * This is one of the {@link MathUtil} constants such as {@link MathUtil.LocalPitchYawRoll}
@@ -3606,14 +3606,14 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * 3-element vector,
    * using the given transformation matrix and viewport
    * rectangle.<p>
-   * In the window coordinate space, x-coordinates increase
-   * rightward and y-coordinates increase upward
+   * In the window coordinate space, X coordinates increase
+   * rightward and Y coordinates increase upward
    * or downward depending on the "yUp" parameter, and
-   * z-coordinates within the view volume range from 0 to 1 (assuming
-   * {@link MathUtil.mat4projectVec3} treated view volume z-coordinates as ranging from
+   * Z coordinates within the view volume range from 0 to 1 (assuming
+   * {@link MathUtil.mat4projectVec3} treated view volume Z coordinates as ranging from
    * -1 to 1) and increase from front to back.
    * @param {Array<number>} vector A 3-element vector giving
-   * the x-, y-, and z-coordinates of the 3D point to transform, in window coordinates.
+   * the x-, y-, and Z coordinates of the 3D point to transform, in window coordinates.
    * @param {Array<number>} matrix A 4 &times; 4 matrix.
    * After undoing the transformation to window coordinates, the vector will
    * be transformed by the inverse of this matrix according to the
@@ -3629,12 +3629,12 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} viewport A 4-element array specifying
    * the starting position and size of the viewport in window units
    * (such as pixels). In order, the four elements are the starting position's
-   * x-coordinate, its y-coordinate, the viewport's width, and the viewport's
+   * X coordinate, its Y coordinate, the viewport's width, and the viewport's
    * height. Throws an error if the width or height is less than 0.
    * @param {boolean} [yUp] If false, null, undefined, or omitted, reverses the sign of
-   * the y-coordinate returned by the {@link MathUtil.mat4projectVec3} method
+   * the Y coordinate returned by the {@link MathUtil.mat4projectVec3} method
    * before converting it to window coordinates. If true, the Y
-   * coordinate will remain unchanged. If window y-coordinates increase
+   * coordinate will remain unchanged. If window Y coordinates increase
    * upward, the viewport's starting position is at the lower-left corner. If those
    * coordinates increase downward, the viewport's starting position is
    * at the upper-left corner.
@@ -3971,7 +3971,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * <i>window coordinates</i>
    * using the given transformation matrix and viewport rectangle.
    * @param {Array<number>} vector A 3-element vector giving
-   * the x-, y-, and z-coordinates of the 3D point to transform.
+   * the x-, y-, and Z coordinates of the 3D point to transform.
    * @param {Array<number>} matrix A 4 &times; 4 matrix to use to transform
    * the vector according to the {@link MathUtil.mat4projectVec3} method,
    * before the transformed vector is converted to window coordinates.
@@ -3983,17 +3983,17 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * (object) space</i>.<br>
    * If the matrix includes a projection transform returned
    * by {@link MathUtil.mat4ortho}, {@link MathUtil.mat4perspective}, or
-   * similar {@link MathUtil} methods, the x-, y-, and z-coordinates within the
-   * view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, y-coordinates increase in the opposite direction), and z-coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming {@link MathUtil.mat4projectVec3} made such z-coordinates range from -1 to 1.
+   * similar {@link MathUtil} methods, the x-, y-, and Z coordinates within the
+   * view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, Y coordinates increase in the opposite direction), and Z coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming {@link MathUtil.mat4projectVec3} made such Z coordinates range from -1 to 1.
    * @param {Array<number>} viewport A 4-element array specifying
    * the starting position and size of the viewport in window units
    * (such as pixels). In order, the four elements are the starting position's
-   * x-coordinate, its y-coordinate, the viewport's width, and the viewport's
+   * X coordinate, its Y coordinate, the viewport's width, and the viewport's
    * height. Throws an error if the width or height is less than 0.
    * @param {boolean} [yUp] If false, null, undefined, or omitted, reverses the sign of
-   * the y-coordinate returned by the {@link MathUtil.mat4projectVec3} method
+   * the Y coordinate returned by the {@link MathUtil.mat4projectVec3} method
    * before converting it to window coordinates. If true, the Y
-   * coordinate will remain unchanged. If window y-coordinates increase
+   * coordinate will remain unchanged. If window Y coordinates increase
    * upward, the viewport's starting position is at the lower-left corner. If those
    * coordinates increase downward, the viewport's starting position is
    * at the upper-left corner.
@@ -4442,8 +4442,8 @@ tvar47 * tvar51 + tvar8 * tvar52;
  * An interpolation timing function based on the path of a
  * cubic B&eacute;zier
  * curve with end points (0, 0) and (1, 1) and with two
- * configurable control points. The x-coordinates of the
- * curve indicate time, and the y-coordinates of the curve
+ * configurable control points. The X coordinates of the
+ * curve indicate time, and the Y coordinates of the curve
  * indicate how far the interpolation has reached.
  * @param {number} a The Xcoordinate of the first configurable control
  * point of the curve. Should be within the range 0 through 1.
@@ -4464,7 +4464,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
 MathUtil.interpCubicBezier = function(a, b, c, d, t) {
   if(t <= 0)return 0;
   if(t >= 1)return 1;
-  // Find Bezier curve's T for given x-coordinate ("t" parameter passed to
+  // Find Bezier curve's T for given X coordinate ("t" parameter passed to
   // this method) using Newton's method
   let tx = t;
   let i;
@@ -4474,7 +4474,7 @@ MathUtil.interpCubicBezier = function(a, b, c, d, t) {
     const dfx = 3 * (((3 * tx - 4) * tx + 1) * a + (-3 * tx + 2) * tx * c + tx * tx);
     tx -= fx / dfx;
   }
-  // Get y-coordinate
+  // Get Y coordinate
   return tx * (3 * b * (tx * (tx - 2) + 1) - 3 * d * tx * (tx - 1) + tx * tx);
 };
 /**
