@@ -9,9 +9,9 @@ import {Curve} from "./h3du-curve.js";
 /**
  * A [curve evaluator object]{@link Curve} for a curve
  * made up of one or more individual curves.<p>
- * The combined curve's U coordinates range from 0 to N,
+ * The combined curve's u-coordinates range from 0 to N,
  * where N is the number of curves. In this way, the integer
- * part of a U coordinate indicates the curve the coordinate
+ * part of a u-coordinate indicates the curve the coordinate
  * refers to. For example, if there are four curves, coordinates
  * from 0, but less than 1, belong to the first curve, and coordinates
  * from 1, but less than 2, belong to the second curve. The U
@@ -53,7 +53,7 @@ const PiecewiseCurve = function(curves) {
 PiecewiseCurve.prototype = Object.create(Curve.prototype);
 PiecewiseCurve.prototype.constructor = PiecewiseCurve;
 /**
- * Returns the starting and ending U coordinates of this curve.
+ * Returns the starting and ending u-coordinates of this curve.
  * @returns A two-element array. The first element is the starting coordinate of
  * the curve, and the second is its ending coordinate.
  * Returns <code>[0, n]</code>, where <code>n</code> is the number
@@ -104,9 +104,9 @@ PiecewiseCurve.prototype._getCurveAndPoint = function(u) {
 };
 /**
  * Finds an approximate arc length (distance) between the start of this
- * curve and the point at the given U coordinate of this curve.
+ * curve and the point at the given u-coordinate of this curve.
  * @param {number} u The Ucoordinate of a point on the curve.
- * @returns {number} The approximate arc length of this curve at the given U coordinate.
+ * @returns {number} The approximate arc length of this curve at the given u-coordinate.
  */
 PiecewiseCurve.prototype.arcLength = function(u) {
   if(u <= 0) {
@@ -117,7 +117,7 @@ PiecewiseCurve.prototype.arcLength = function(u) {
     this.curves[cp[0]].arcLength(cp[1]);
 };
 /**
- * Finds the position of this curve at the given U coordinate.
+ * Finds the position of this curve at the given u-coordinate.
  * @param {number} u The Ucoordinate of a point on the curve.
  * @returns {Array<number>} An array describing a position. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
@@ -127,7 +127,7 @@ PiecewiseCurve.prototype.evaluate = function(u) {
   return this.curves[cp[0]].evaluate(cp[1]);
 };
 /**
- * Finds an approximate velocity vector at the given U coordinate of this curve.
+ * Finds an approximate velocity vector at the given u-coordinate of this curve.
  * @param {number} u The Ucoordinate of a point on the curve.
  * @returns {Array<number>} An array describing a velocity vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
@@ -400,11 +400,11 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @param {number} start Starting angle of the arc, in degrees.
- * 0 means the positive X axis, 90 means the positive Y axis,
- * 180 means the negative X axis, and 270 means the negative Y axis.
+ * 0 means the positive x-axis, 90 means the positive y-axis,
+ * 180 means the negative x-axis, and 270 means the negative y-axis.
  * @param {number} sweep Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or
  * less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming
- * the coordinate system's X axis points right and the Y axis down, positive angles run
+ * the coordinate system's x-axis points right and the y-axis down, positive angles run
  * clockwise and negative angles counterclockwise.
  * @returns {PiecewiseCurve} The resulting piecewise curve.
  */

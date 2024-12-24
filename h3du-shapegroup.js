@@ -168,8 +168,8 @@ ShapeGroup.prototype.removeShape = function(shape) {
  * @returns {Array<number>} An array of six numbers describing an
  * axis-aligned bounding box
  * that fits all vertices in the shape group. The first three numbers
- * are the smallest-valued x-, y-, and Z coordinates, and the
- * last three are the largest-valued x-, y-, and Z coordinates.
+ * are the smallest-valued x-, y-, and z-coordinates, and the
+ * last three are the largest-valued x-, y-, and z-coordinates.
  * If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
  * -Inf, -Inf].
  */
@@ -234,7 +234,7 @@ ShapeGroup.prototype.primitiveCount = function() {
  * See {@link Transform#setPosition}
  * This method will modify this shape group's transform
  * rather than the transform for each shape in the group.
- * @param {number|Array<number>} x X coordinate
+ * @param {number|Array<number>} x x-coordinate
  * or a 3-element position array, as specified in {@link Transform#setScale}.
  * @param {number} y The Ycoordinate.
  * @param {number} z The Zcoordinate.

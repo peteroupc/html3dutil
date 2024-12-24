@@ -19,7 +19,7 @@ import {MathUtil} from "./h3du-math.js";
  * and are defined for a mesh buffer only if it
  * also contains vertex positions.<p>
  * <b>What are texture coordinates?</b> If a texture (array of memory units) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.<p>
- * In most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, V coordinates start by default at the bottom of the texture (0) and increase to the top (1), whereas in others, such as WebGL, Vulkan, Metal, and Direct3D, V coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the upper-left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.<p>
+ * In most 3D graphics pipelines, u-coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, v-coordinates start by default at the bottom of the texture (0) and increase to the top (1), whereas in others, such as WebGL, Vulkan, Metal, and Direct3D, v-coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the upper-left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.<p>
  * In general, texture coordinates describe 2-dimensional points.
  * However, for such texturing tasks as mapping
  * a square to a trapezoid, trios of 3-dimensional texture coordinates (U, V, and Z)
@@ -260,8 +260,8 @@ function meshBufferFromUWrapVertexGrid(three, vertices, width, height) {
  * corner. The resulting mesh buffer
  * will use 36 vertex indices divided into 12 triangles, with each
  * face using two triangles. The faces will be ordered as follows:
- * Negative-X axis-facing face, positive-X axis-facing face, negative-Y axis-facing face,
- * positive-Y axis-facing face, negative-Z axis-facing face, positive-Z axis-facing face.
+ * Negative-x axis-facing face, positive-x axis-facing face, negative-y axis-facing face,
+ * positive-y axis-facing face, negative-z axis-facing face, positive-z axis-facing face.
  * @param {number} xSize Width of the box.
  * @param {number} ySize Height of the box.
  * @param {number} zSize Depth of the box. If xSize, ySize, and zSize are the
@@ -286,11 +286,11 @@ Meshes.createBox = function(three,xSize, ySize, zSize, inward) {
  * corner. The resulting mesh buffer
  * will use 36 vertex indices divided into 12 triangles, with each
  * face using two triangles. The faces will be ordered as follows:
- * Negative-X axis-facing face, positive-X axis-facing face, negative-Y axis-facing face,
- * positive-Y axis-facing face, negative-Z axis-facing face, positive-Z axis-facing face.
+ * Negative-x axis-facing face, positive-x axis-facing face, negative-y axis-facing face,
+ * positive-y axis-facing face, negative-z axis-facing face, positive-z axis-facing face.
  * @param {Array<number>} box An axis-aligned bounding
  * box, which is an array of six values, that bounds the box mesh.
- * The first three values are the smallest x-, y-, and Z coordinates,
+ * The first three values are the smallest x-, y-, and z-coordinates,
  * and the last three values are the largest X, Y, and Z
  * coordinates. If the dimensions along all three axes are the
  * same, the result is a cube.
@@ -342,17 +342,17 @@ Meshes.createBoxEx = function(three,box, inward) {
 /**
  * Creates a mesh of a cylinder or cone. The cylinder's base will
  * be centered at the origin and its height will run along the
- * positive Z axis. The base and top themselves will not be
+ * positive z-axis. The base and top themselves will not be
  * included in the mesh.<p>
  * Texture coordinates for the cylinder (other than the base) will
  * be generated such that the V (vertical)
  * coordinates start from the bottom of the texture and increase from the origin
- * to the positive Z axis, and the U (horizontal) coordinates start from the left of the
+ * to the positive z-axis, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * Y to positive x-axis. Texture coordinates are generated assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
  * corner. <p>
- * The x-, y-, and Z coordinates of a point on the cylinder are
+ * The x-, y-, and z-coordinates of a point on the cylinder are
  * <code>(-R*cos(&lambda;), -R*sin(&lambda;), H*&phi;)</code>,
  * where &phi; = <code>(&pi;/2 + L)/&pi;</code>, L is the latitude in radians,
  * &lambda; is the longitude in radians, H = <code>height</code>,
@@ -462,20 +462,20 @@ Meshes.createCylinder = function(three,baseRad, topRad, height, slices, stacks, 
 };
 /**
  * Creates a mesh of a figure generated by revolving a path of 2-dimensional
- * points about the Z axis.<p>
+ * points about the z-axis.<p>
  * Texture coordinates will
  * be generated such that the V (vertical)
- * coordinates start from the bottom of the texture and increase along the Z axis in the direction
+ * coordinates start from the bottom of the texture and increase along the z-axis in the direction
  * of the given path, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * Y to positive x-axis. Texture coordinates are generated assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
  * corner. <p>
- * @param {Array<number>} points Array of alternating x- and Z coordinates describing
- * a two-dimensional path that will revolve around the Z axis to generate the figure
- * (the first number is an X coordinate, the second is a Z coordinate, and so on).
- * Each Z coordinate is a Z coordinate of the point where the path lies, and
- * each X coordinate is the radius of the figure at that point. The Z coordinates
+ * @param {Array<number>} points Array of alternating x- and z-coordinates describing
+ * a two-dimensional path that will revolve around the z-axis to generate the figure
+ * (the first number is an x-coordinate, the second is a z-coordinate, and so on).
+ * Each z-coordinate is a z-coordinate of the point where the path lies, and
+ * each x-coordinate is the radius of the figure at that point. The z-coordinates
  * should be given in increasing order and should not be the same from
  * one point to the next. This parameter's
  * length must be 4 or greater and be an even number.
@@ -490,7 +490,7 @@ Meshes.createCylinder = function(three,baseRad, topRad, height, slices, stacks, 
  * @returns {three["BufferGeometry"]} The generated mesh.
  */
 Meshes.createLathe = function(three,points, slices, flat, inside) {
-  // NOTE: Y coordinate should not be the same from one point to the next
+  // NOTE: y-coordinate should not be the same from one point to the next
   if(points.length < 4)throw new Error("too few points");
   if(typeof slices === "undefined" || slices === null)slices = 32;
   if(slices <= 2)throw new Error("too few slices");
@@ -540,7 +540,7 @@ Meshes.createLathe = function(three,points, slices, flat, inside) {
 /**
  * Creates a mesh of a closed cylinder or closed cone. The cylinder's base will
  * be centered at the origin and its height will run along the
- * positive Z axis. The base and top will be included in the mesh if
+ * positive z-axis. The base and top will be included in the mesh if
  * their radius is greater than 0. Will generate texture coordinates for
  * the cylinder and for the base and top.
  * The base's and top's texture coordinates will be such that the
@@ -585,8 +585,8 @@ Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, st
 
 /**
  * Creates a mesh of a 2D circular disk or regular polygon, possibly with a hole in the middle, centered at the origin.
- * Assuming the Y axis points up, the X axis right,
- * and the Z axis backward from the "eye", the first vertex in the outer edge
+ * Assuming the y-axis points up, the x-axis right,
+ * and the z-axis backward from the "eye", the first vertex in the outer edge
  * of the 2D disk will be at the 12 o'clock position.
  * Will also generate texture coordinates, assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
@@ -603,8 +603,8 @@ Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, st
  * @param {number} [loops] Number of concentric rings the disk makes up.
  * May be null or omitted; default is 1.
  * @param {boolean} [inward] If true, the normals generated by this
- * method will point in the opposite direction of the positive Z axis; otherwise,
- * in the same direction of the positive Z axis. Default is false.
+ * method will point in the opposite direction of the positive z-axis; otherwise,
+ * in the same direction of the positive z-axis. Default is false.
  * @returns {three["BufferGeometry"]} The generated mesh.
  */
 Meshes.createDisk = function(three,inner, outer, slices, loops, inward) {
@@ -626,16 +626,16 @@ Meshes.createDisk = function(three,inner, outer, slices, loops, inward) {
  * May be null or omitted; default is 1.
  * @param {number} [start] Starting angle of the partial disk, in degrees.
  * May be null or omitted; default is 0.
- * 0 degrees is at the positive Y axis,
- * and 90 degrees at the positive X axis.
- * Assuming the Y axis points up, the X axis right,
- * and the Z axis backward from the "eye", 0 degrees is at the 12 o'clock position,
+ * 0 degrees is at the positive y-axis,
+ * and 90 degrees at the positive x-axis.
+ * Assuming the y-axis points up, the x-axis right,
+ * and the z-axis backward from the "eye", 0 degrees is at the 12 o'clock position,
  * and 90 degrees at the 3 o'clock position.
  * @param {number} [sweep] Arc length of the partial disk, in degrees.
  * May be null or omitted; default is 360. May be negative.
  * @param {boolean} [inward] If true, the normals generated by this
- * method will point in the opposite direction of the positive Z axis; otherwise,
- * in the same direction of the positive Z axis. Default is false.
+ * method will point in the opposite direction of the positive z-axis; otherwise,
+ * in the same direction of the positive z-axis. Default is false.
  * @returns {three["BufferGeometry"]} The generated mesh.
  * @example <caption>This method creates a ring or disk striped in two colors.<br/>
  * <img src='mesh2.png' alt='Image of a disk striped in red and almost-white'/></caption>
@@ -854,7 +854,7 @@ Meshes.createTorus = function(three,inner, outer, lengthwise, crosswise, flat, i
 
 /**
  * Creates a mesh of a 2D rectangle, centered at the origin.
- * The plane's Z coordinate will be 0.
+ * The plane's z-coordinate will be 0.
  * Will also generate texture coordinates that increase toward
  * the positive x- and y-axes. The texture coordinates will range
  * from 0 to 1 on each end of the 2D rectangle. Texture coordinates are generated assuming that the coordinate (0,0)
@@ -870,8 +870,8 @@ Meshes.createTorus = function(three,inner, outer, lengthwise, crosswise, flat, i
  * @param {number} [heightDiv] Number of vertical subdivisions.
  * May be null or omitted; default is 1.
  * @param {boolean} [inward] If true, the normals generated by this
- * method will point in the opposite direction of the positive Z axis; otherwise,
- * in the same direction of the positive Z axis. Default is false.
+ * method will point in the opposite direction of the positive z-axis; otherwise,
+ * in the same direction of the positive z-axis. Default is false.
  * @returns {three["BufferGeometry"]} The generated mesh.
  */
 Meshes.createPlane = function(three,width, height, widthDiv, heightDiv, inward) {
@@ -905,12 +905,12 @@ Meshes.createPlane = function(three,width, height, widthDiv, heightDiv, inward) 
  * Creates a mesh of a sphere, centered at the origin.<p>
  * Will also generate texture coordinates such that the V (vertical)
  * coordinates start from the bottom of the texture and increase from the negative
- * to positive Z axis, and the U (horizontal) coordinates start from the left of the
+ * to positive z-axis, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * Y to positive x-axis. Texture coordinates are generated assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
  * corner. <p>
- * The x-, y-, and Z coordinates of a point on the sphere are
+ * The x-, y-, and z-coordinates of a point on the sphere are
  * <code>(-R*cos(&delta;)*cos(&lambda;), -R*cos(&delta;)*sin(&lambda;), R*sin(&delta;))</code>,
  * where &delta; and &lambda; are the latitude and longitude, respectively, in radians, R is the sphere's radius,
  * and west and south latitudes and
@@ -941,17 +941,17 @@ Meshes.createSphere = function(three,radius, slices, stacks, flat, inside) {
 
 /**
  * Creates a mesh of a capsule, centered at the origin.
- * The length of the capsule will run along the Z axis. (If the capsule
+ * The length of the capsule will run along the z-axis. (If the capsule
  * has a high length and a very low radius, it will resemble a 3D line
  * with rounded corners; see the example.)<p>
  * Will also generate texture coordinates such that the V (vertical)
  * coordinates start from the bottom of the texture and increase from the negative
- * to positive Z axis, and the U (horizontal) coordinates start from the left of the
+ * to positive z-axis, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
- * Y to positive X axis. Texture coordinates are generated assuming that the coordinate (0,0)
+ * Y to positive x-axis. Texture coordinates are generated assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
  * corner. <p>
- * If the "length" parameter is 0, the x-, y-, and Z coordinates of a point on the solid
+ * If the "length" parameter is 0, the x-, y-, and z-coordinates of a point on the solid
  * are as described in {@link Meshes.createSphere}.
  * See the "{@tutorial shapes}" tutorial.
  * @param {number} [radius] Radius of each spherical
@@ -1133,8 +1133,8 @@ Meshes._createCapsule = function(three,radius, length, slices, stacks, middleSta
  * Must be 0 or greater; this parameter and firstRadius
  * can't both be 0.
  * @param {boolean} [inward] If true, the normals generated by this
- * method will point in the opposite direction of the positive Z axis; otherwise,
- * in the same direction of the positive Z axis. Default is false.
+ * method will point in the opposite direction of the positive z-axis; otherwise,
+ * in the same direction of the positive z-axis. Default is false.
  * @returns {three["BufferGeometry"]} The generated mesh.
  */
 Meshes.createPointedStar = function(three,points, firstRadius, secondRadius, inward) {

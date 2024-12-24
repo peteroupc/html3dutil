@@ -619,7 +619,7 @@ BSplineCurve.prototype.split = function(u) {
 /**
  * Returns the starting and coordinates of this curve.
  * @returns {Array<number>} A two-element array containing
- * the starting and ending U coordinates, respectively, of the curve.
+ * the starting and ending u-coordinates, respectively, of the curve.
  */
 BSplineCurve.prototype.endPoints = function() {
   const numPoints = this.controlPoints.length;
@@ -725,15 +725,15 @@ BSplineCurve._fromHomogen = function(cp) {
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter is the number of control points in each row of
- * the V axis.
+ * the v-axis.
  * <li>The length of the first control point array is the number of control points in
- * each column of the U axis.
+ * each column of the u-axis.
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Array<number>} knotsU Knot vector of the surface, along the U axis.
+ * @param {Array<number>} knotsU Knot vector of the surface, along the u-axis.
  * For more information, see {@link BSplineCurve}.
- * @param {Array<number>} knotsV Knot vector of the surface, along the V axis.
+ * @param {Array<number>} knotsV Knot vector of the surface, along the v-axis.
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>Together with 'convertToHomogen' given in the {@link BSplineCurve} documentation, the following function can be used
@@ -852,10 +852,10 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  * @param {Array<Array<Array<number>>>} controlPoints Array of
  * control point arrays as specified in the {@link BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
- * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
+ * surface along the u-axis. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
- * surface along the V axis
+ * surface along the v-axis
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
@@ -871,10 +871,10 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
  * @param {Array<Array<Array<number>>>} controlPoints Array of
  * control point arrays as specified in the {@link BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
- * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
+ * surface along the u-axis. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
- * surface along the V axis
+ * surface along the v-axis
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
@@ -1101,11 +1101,11 @@ BSplineSurface.prototype.bitangent = function(u, v) {
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
- * surface along the V axis. For example, a degree-3 (cubic) surface along the V axis
+ * surface along the v-axis. For example, a degree-3 (cubic) surface along the v-axis
  * contains 4 control points, one in each control point array. A degree of 1 on
  * both the u- and v-axes results in a flat surface.
  * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
- * surface along the U axis.
+ * surface along the u-axis.
  * <li>The number of elements in the first control point represents the number of elements in all the control points.
  * </ul>
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.

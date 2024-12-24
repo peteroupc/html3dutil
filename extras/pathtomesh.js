@@ -19,9 +19,9 @@ import {GraphicsPath} from "../h3du_path.js";
 /**
  * Decomposes this path into triangles and generates a mesh
  * buffer with those triangles. Each triangle's normal will point
- * toward the Z axis, and each triangle vertex's texture coordinates will
+ * toward the z-axis, and each triangle vertex's texture coordinates will
  * be the same as that vertex's position.
- * @param {number} [z] The Z coordinate of each triangle generated.
+ * @param {number} [z] The z-coordinate of each triangle generated.
  * If null, undefined, or omitted, default is 0.
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
@@ -70,8 +70,8 @@ export const toLineMeshBuffer = function(z, flatness) {
 };
 /**
  * Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and top.
- * @param {number} zStart Starting Z coordinate of the mesh buffer's "walls".
- * @param {number} zEnd Ending Z coordinate of the mesh buffer's "walls".
+ * @param {number} zStart Starting z-coordinate of the mesh buffer's "walls".
+ * @param {number} zEnd Ending z-coordinate of the mesh buffer's "walls".
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
