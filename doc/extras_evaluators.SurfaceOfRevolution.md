@@ -39,8 +39,8 @@ Finds the coordinates of the given point of this surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of the surface to evaluate.
-* `v` (Type: number)<br>The Vcoordinate of the surface to evaluate.
+* `u` (Type: number)<br>The u-coordinate of the surface to evaluate.
+* `v` (Type: number)<br>The v-coordinate of the surface to evaluate.
 
 #### Return Value
 

@@ -52,10 +52,10 @@ For more information on the frustum matrix and the parameters, see MathUtil.mat4
 
 #### Parameters
 
-* `l` (Type: number)<br>The Xcoordinate of the point where the left clipping plane meets the near clipping plane.
-* `r` (Type: number)<br>The Xcoordinate of the point where the right clipping plane meets the near clipping plane.
-* `b` (Type: number)<br>The Ycoordinate of the point where the bottom clipping plane meets the near clipping plane.
-* `t` (Type: number)<br>The Ycoordinate of the point where the top clipping plane meets the near clipping plane.
+* `l` (Type: number)<br>The x-coordinate of the point where the left clipping plane meets the near clipping plane.
+* `r` (Type: number)<br>The x-coordinate of the point where the right clipping plane meets the near clipping plane.
+* `b` (Type: number)<br>The y-coordinate of the point where the bottom clipping plane meets the near clipping plane.
+* `t` (Type: number)<br>The y-coordinate of the point where the top clipping plane meets the near clipping plane.
 * `n` (Type: number)<br>The distance from the camera to the near clipping plane.
 * `f` (Type: number)<br>The distance from the camera to the far clipping plane.
 
@@ -118,15 +118,15 @@ For more information on that matrix and the parameters, see MathUtil.mat4lookat.
 
 #### Parameters
 
-* `ex` (Type: number)<br>The Xcoordinate of the "camera" position in world space.
-* `ey` (Type: number)<br>The Ycoordinate of the "camera" position.
-* `ez` (Type: number)<br>The Zcoordinate of the "camera" position.
-* `cx` (Type: number)<br>The Xcoordinate of the position in world space that the "camera" is "looking at".
-* `cy` (Type: number)<br>The Ycoordinate of the position "looked at".
-* `cz` (Type: number)<br>The Zcoordinate of the position "looked at".
-* `ux` (Type: number)<br>The Xcoordinate of the up direction vector.
-* `uy` (Type: number)<br>The Ycoordinate of the up vector.
-* `uz` (Type: number)<br>The Zcoordinate of the up vector.
+* `ex` (Type: number)<br>The x-coordinate of the "camera" position in world space.
+* `ey` (Type: number)<br>The y-coordinate of the "camera" position.
+* `ez` (Type: number)<br>The z-coordinate of the "camera" position.
+* `cx` (Type: number)<br>The x-coordinate of the position in world space that the "camera" is "looking at".
+* `cy` (Type: number)<br>The y-coordinate of the position "looked at".
+* `cz` (Type: number)<br>The z-coordinate of the position "looked at".
+* `ux` (Type: number)<br>The x-coordinate of the up direction vector.
+* `uy` (Type: number)<br>The y-coordinate of the up vector.
+* `uz` (Type: number)<br>The z-coordinate of the up vector.
 
 #### Return Value
 
@@ -237,8 +237,8 @@ For more information on that matrix and the parameters, see MathUtil.mat4pickMat
 
 #### Parameters
 
-* `wx` (Type: number)<br>The Xcoordinate of the center of the desired viewport portion.
-* `wy` (Type: number)<br>The Ycoordinate of the center of the desired viewport portion.
+* `wx` (Type: number)<br>The x-coordinate of the center of the desired viewport portion.
+* `wy` (Type: number)<br>The y-coordinate of the center of the desired viewport portion.
 * `ww` (Type: number)<br>Width of the desired viewport portion.
 * `wh` (Type: number)<br>Height of the desired viewport portion.
 * `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the x- and y-coordinates of the current viewport's origin followed by the width and height of a rectangle indicating the current viewport.

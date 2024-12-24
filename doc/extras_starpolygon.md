@@ -23,8 +23,8 @@ Generates a star polygon <code>{points/jump}</code>.
 
 #### Parameters
 
-* `x` (Type: number)<br>The Xcoordinate of the star polygon's center.
-* `y` (Type: number)<br>The Ycoordinate of the star polygon's center.
+* `x` (Type: number)<br>The x-coordinate of the star polygon's center.
+* `y` (Type: number)<br>The y-coordinate of the star polygon's center.
 * `radius` (Type: number)<br>Radius of the star polygon; that is, the distance from the center to each of its points.
 * `points` (Type: number)<br>Number of points in the star polygon. Must be an integer 2 or greater.
 * `jump` (Type: number)<br>Number of points in the underlying polygon to skip when connecting points with straight line segments to generate the star polygon. Must be an integer 1 or greater.
