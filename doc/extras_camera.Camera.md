@@ -24,9 +24,9 @@ the HTML 3D Library. Example:
 
 #### Parameters
 
-* `fov` (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.
-* `nearZ` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. See <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>. This should be slightly greater than 0.
-* `farZ` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.
+* `fov` (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See MathUtil.mat4perspective.
+* `nearZ` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. See MathUtil.mat4perspective. This should be slightly greater than 0.
+* `farZ` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See MathUtil.mat4perspective.
 
 ### Methods
 
@@ -70,7 +70,7 @@ Gets the position of the camera.
 #### Return Value
 
 An array of three numbers giving
-the X, Y, and Z coordinates of the camera's position, respectively. (Type: Array.&lt;number>)
+the x-, y-, and z-coordinates of the camera's position, respectively. (Type: Array.&lt;number>)
 
 <a name='extras_camera_Camera_getVectorFromCenter'></a>
 ### module:extras/camera~Camera#getVectorFromCenter()
@@ -81,7 +81,7 @@ point to the camera's position.
 #### Return Value
 
 The return value as a unit
-vector (a <a href="MathUtil.md#MathUtil.vec3normalize">"normalized" vector</a> with a length of 1).
+vector (a "normalized" vector with a length of 1).
 Returns (0,0,0) if the reference point is the same as the camera's position. (Type: Array.&lt;number>)
 
 <a name='extras_camera_Camera_moveAngleHorizontal'></a>
@@ -186,9 +186,9 @@ Sets the position of the camera.
 
 #### Parameters
 
-* `cx` (Type: number)<br>The camera's new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, "cy" and "cz" can be omitted.
-* `cy` (Type: number) (optional)<br>The camera's new Y coordinate.
-* `cz` (Type: number) (optional)<br>The camera's new Z coordinate.
+* `cx` (Type: number)<br>The camera's new x-coordinate, or a 3-element vector containing the x-, y-, and z-coordinates. In the latter case, "cy" and "cz" can be omitted.
+* `cy` (Type: number) (optional)<br>The camera's new y-coordinate.
+* `cz` (Type: number) (optional)<br>The camera's new z-coordinate.
 
 #### Return Value
 

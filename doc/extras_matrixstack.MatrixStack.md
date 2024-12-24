@@ -48,14 +48,14 @@ translation transformation.
 Modifies the matrix at the top of this stack by multiplying it by
 a frustum matrix.
 
-For more information on the frustum matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4frustum">MathUtil.mat4frustum</a>.
+For more information on the frustum matrix and the parameters, see MathUtil.mat4frustum.
 
 #### Parameters
 
-* `l` (Type: number)<br>X coordinate of the point where the left clipping plane meets the near clipping plane.
-* `r` (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.
-* `b` (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
-* `t` (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.
+* `l` (Type: number)<br>The Xcoordinate of the point where the left clipping plane meets the near clipping plane.
+* `r` (Type: number)<br>The Xcoordinate of the point where the right clipping plane meets the near clipping plane.
+* `b` (Type: number)<br>The Ycoordinate of the point where the bottom clipping plane meets the near clipping plane.
+* `t` (Type: number)<br>The Ycoordinate of the point where the top clipping plane meets the near clipping plane.
 * `n` (Type: number)<br>The distance from the camera to the near clipping plane.
 * `f` (Type: number)<br>The distance from the camera to the far clipping plane.
 
@@ -114,19 +114,19 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a "camera" view.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4lookat">MathUtil.mat4lookat</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4lookat.
 
 #### Parameters
 
-* `ex` (Type: number)<br>X coordinate of the "camera" position in world space.
-* `ey` (Type: number)<br>Y coordinate of the "camera" position.
-* `ez` (Type: number)<br>Z coordinate of the "camera" position.
-* `cx` (Type: number)<br>X coordinate of the position in world space that the "camera" is "looking at".
-* `cy` (Type: number)<br>Y coordinate of the position "looked at".
-* `cz` (Type: number)<br>Z coordinate of the position "looked at".
-* `ux` (Type: number)<br>X coordinate of the up direction vector.
-* `uy` (Type: number)<br>Y coordinate of the up vector.
-* `uz` (Type: number)<br>Z coordinate of the up vector.
+* `ex` (Type: number)<br>The Xcoordinate of the "camera" position in world space.
+* `ey` (Type: number)<br>The Ycoordinate of the "camera" position.
+* `ez` (Type: number)<br>The Zcoordinate of the "camera" position.
+* `cx` (Type: number)<br>The Xcoordinate of the position in world space that the "camera" is "looking at".
+* `cy` (Type: number)<br>The Ycoordinate of the position "looked at".
+* `cz` (Type: number)<br>The Zcoordinate of the position "looked at".
+* `ux` (Type: number)<br>The Xcoordinate of the up direction vector.
+* `uy` (Type: number)<br>The Ycoordinate of the up vector.
+* `uz` (Type: number)<br>The Zcoordinate of the up vector.
 
 #### Return Value
 
@@ -174,7 +174,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection matrix.
 
-For more information on the projection matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4ortho">MathUtil.mat4ortho</a>.
+For more information on the projection matrix and the parameters, see MathUtil.mat4ortho.
 
 #### Parameters
 
@@ -195,7 +195,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a 2D orthographic projection matrix.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4ortho2d">MathUtil.mat4ortho2d</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4ortho2d.
 
 #### Parameters
 
@@ -214,7 +214,7 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that defines a perspective projection.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4perspective.
 
 #### Parameters
 
@@ -233,15 +233,15 @@ This object. (Type: MatrixStack)
 Modifies the matrix at the top of this stack by multiplying it by
 a matrix that transforms the view to a portion of the viewport.
 
-For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4pickMatrix">MathUtil.mat4pickMatrix</a>.
+For more information on that matrix and the parameters, see MathUtil.mat4pickMatrix.
 
 #### Parameters
 
-* `wx` (Type: number)<br>X coordinate of the center of the desired viewport portion.
-* `wy` (Type: number)<br>Y coordinate of the center of the desired viewport portion.
+* `wx` (Type: number)<br>The Xcoordinate of the center of the desired viewport portion.
+* `wy` (Type: number)<br>The Ycoordinate of the center of the desired viewport portion.
 * `ww` (Type: number)<br>Width of the desired viewport portion.
 * `wh` (Type: number)<br>Height of the desired viewport portion.
-* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the current viewport's origin followed by the width and height of a rectangle indicating the current viewport.
+* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the x- and y-coordinates of the current viewport's origin followed by the width and height of a rectangle indicating the current viewport.
 
 #### Return Value
 
@@ -271,7 +271,7 @@ This object. (Type: MatrixStack)
 <a name='extras_matrixstack_MatrixStack_rotate'></a>
 ### module:extras/matrixstack~MatrixStack#rotate(angle, x, y, z)
 
-Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate</a>.
+Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see MathUtil.mat4rotate.
 
 #### Parameters
 
@@ -292,9 +292,9 @@ scaling transformation.
 
 #### Parameters
 
-* `x` (Type: number)<br>Scale factor along the X axis.
-* `y` (Type: number)<br>Scale factor along the Y axis.
-* `z` (Type: number)<br>Scale factor along the Z axis.
+* `x` (Type: number)<br>Scale factor along the x-axis.
+* `y` (Type: number)<br>Scale factor along the y-axis.
+* `z` (Type: number)<br>Scale factor along the z-axis.
 
 #### Return Value
 
@@ -308,9 +308,9 @@ translation transformation.
 
 #### Parameters
 
-* `x` (Type: number)<br>Translation along the X axis.
-* `y` (Type: number)<br>Translation along the Y axis.
-* `z` (Type: number)<br>Translation along the Z axis.
+* `x` (Type: number)<br>Translation along the x-axis.
+* `y` (Type: number)<br>Translation along the y-axis.
+* `z` (Type: number)<br>Translation along the z-axis.
 
 #### Return Value
 

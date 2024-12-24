@@ -122,7 +122,7 @@ The `Shape` constructor method assigns a linear or perspective transformation (i
 
     // Create a shape based on the mesh
     var shape=new Shape(mesh);
-    // Move it 1 unit along the X axis
+    // Move it 1 unit along the x-axis
     shape.setPosition(1,0,0);
 
 > **Note:** The appearance of a 3D shape's surface is known in the 3D graphics world as a _material_. It includes textures (images), colors, and light reflection parameters. Materials are not directly supported by this geometry library, not least because there are many ways to describe a material's parameters, as well as many ways to implement the rendering behavior of materials associated with shapes, such as physically-based rendering, cartoon styling, constant-color shading, and the Blinn&ndash;Phong model.
@@ -132,9 +132,9 @@ Here are details on some of the `Shape` class&#39;s methods.
   * <dfn>`shape.setPosition(x, y, z)`</dfn>
   <br>Sets the shape&#39;s position to the given coordinates.
   * <dfn>`shape.setScale(x, y, z)`</dfn>
-  <br>Sets the shape&#39;s scaling along the x, y, and z axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.
+  <br>Sets the shape&#39;s scaling along the x-, y-, and z-axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.
   * <dfn>`shape.getTransform().setRotation(angle, x, y, z)`</dfn>
-  <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).
+  <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the x-axis (x is 1 in the axis of rotation).
   * <dfn>`shape.copy()`</dfn>
   <br>Creates a copy of this shape.
 

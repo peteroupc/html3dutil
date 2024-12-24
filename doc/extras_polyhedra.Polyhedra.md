@@ -52,7 +52,7 @@ Gets the vertices of a dodecahedron with maximum radius 1.
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
@@ -67,7 +67,7 @@ with maximum radius 1.
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
@@ -95,7 +95,7 @@ Gets the vertices of a hexahedron (cube) with maximum radius 1.
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
@@ -110,7 +110,7 @@ Gets a more compact representation of the vertices of a hexahedron
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
@@ -138,7 +138,7 @@ Gets the vertices of a regular icosahedron with maximum radius 1.
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
@@ -151,7 +151,7 @@ generate an approximation of a sphere.
 
 #### Parameters
 
-* `vi` (Type: Array.&lt;Array.&lt;number>>)<br>A two-element array. The first element contains an array of the vertices that make up the solid (each vertex's X, Y, and Z coordinates are stored as three elements of that array), and the second element contains an array of vertex indices (multiplying each element by 3 will get the index to the first coordinate of the corresponding vertex in the first array).
+* `vi` (Type: Array.&lt;Array.&lt;number>>)<br>A two-element array. The first element contains an array of the vertices that make up the solid (each vertex's x-, y-, and z-coordinates are stored as three elements of that array), and the second element contains an array of vertex indices (multiplying each element by 3 will get the index to the first coordinate of the corresponding vertex in the first array).
 * `radius` (Type: number)<br>Maximum radius from the center of the solid to one of its vertices.
 * `level` (Type: number)<br>If 0 or less, generates the solid as is. If 1 or greater, subdivides each triangle on the solid's surface into smaller triangles and makes them bulge out to form an approximation of a sphere (the bigger the number, the smaller the triangles).
 
@@ -167,7 +167,7 @@ array to a fixed radius.
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;number>)<br>An array of vertices, where each vertex's X, Y, and Z coordinates are stored as three elements of that array.
+* `vertices` (Type: Array.&lt;number>)<br>An array of vertices, where each vertex's x-, y-, and z-coordinates are stored as three elements of that array.
 * `radius` (Type: number)<br>Distance from the origin where each vertex will be normalized to.
 
 #### Return Value
@@ -197,7 +197,7 @@ Gets the vertices of a regular octahedron with radius 1.
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
@@ -225,7 +225,7 @@ Gets the vertices of a tetrahedron with radius 1.
 
 A two-element array. The first
 element contains an array of the vertices that make up the solid (each
-vertex's X, Y, and Z coordinates are stored as three elements of that array),
+vertex's x-, y-, and z-coordinates are stored as three elements of that array),
 and the second element contains an array of vertex indices (multiplying
 each element by 3 will get the index to the first coordinate of the corresponding
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)

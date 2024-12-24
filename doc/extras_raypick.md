@@ -25,8 +25,8 @@ corresponding to the given two-dimensional (X and Y) coordinates.
 
 #### Parameters
 
-* `x`<br>Two-dimensional X coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.
-* `y`<br>Two-dimensional Y coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.
+* `x`<br>Two-dimensional x-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.
+* `y`<br>Two-dimensional y-coordinate in window space (usually lying within the viewport rectangle). See also the first parameter of MathUtil.vec3fromWindowPoint.
 * `projView`<br>Same meaning as second parameter of MathUtil.vec3fromWindowPoint. For example, to convert to world space coordinates, pass a projection matrix (projection matrix multiplied by the view matrix, in that order) to this parameter.
 * `viewport`<br>Same meaning as third parameter of MathUtil.vec3fromWindowPoint.
 * `objects`<br>Shape objects from which this method will choose one.
@@ -37,10 +37,8 @@ An object with the following properties:<ul>
 <li><code>index</code> - Index, starting from 0, into the objects array
 of the shape object that was picked. Is -1 if no object was picked
 (and the "local" and "world" properties will be absent).
-<li><code>local</code> - 3-element array giving the X, Y, and
-Z coordinates of the picked point in object (model) space.
-<li><code>world</code> - 3-element array giving the X, Y, and
-Z coordinates of the picked point in world space.</ul>
+<li><code>local</code> - 3-element array giving the x-, y-, and z-coordinates of the picked point in object (model) space.
+<li><code>world</code> - 3-element array giving the x-, y-, and z-coordinates of the picked point in world space.</ul>
 
 #### Examples
 

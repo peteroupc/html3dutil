@@ -9,7 +9,7 @@
 
 A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).
-The rolling circle will start at the positive X axis of the fixed circle.
+The rolling circle will start at the positive x-axis of the fixed circle.
 
 The following curves can be generated with this class (in the following
 descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
@@ -38,12 +38,12 @@ the HTML 3D Library. Example:
 * `outerRadius` (Type: number)<br>Radius of the circle whose position is fixed.
 * `rollerRadius` (Type: number)<br>Radius of the rolling circle. An epicycloid results when distFromRollerCenter=rollerRadius.
 * `distFromRollerCenter` (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.
-* `rotationDegrees` (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+* `rotationDegrees` (Type: number) (optional)<br>Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. Default is 0.
 
 ### Methods
 
 * [endPoints](#Epitrochoid_endPoints)<br>Gets the endpoints of this curve.
-* [evaluate](#Epitrochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+* [evaluate](#Epitrochoid_evaluate)<br>Generates a point on the curve from the given u-coordinate.
 * [scaleTo](#Epitrochoid_scaleTo)<br>Creates a modified version of this curve so that it
 fits the given radius.
 
@@ -63,16 +63,16 @@ and the second number is the end of the curve. \* (Type: Array.&lt;number>)
 <a name='Epitrochoid_evaluate'></a>
 ### Epitrochoid#evaluate(u)
 
-Generates a point on the curve from the given U coordinate.
+Generates a point on the curve from the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate.
+* `u` (Type: number)<br>u-coordinate.
 
 #### Return Value
 
 A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0. (Type: Array.&lt;number>)
+Only the x- and y-coordinates will be other than 0. (Type: Array.&lt;number>)
 
 <a name='Epitrochoid_scaleTo'></a>
 ### Epitrochoid#scaleTo(radius)

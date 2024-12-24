@@ -13,9 +13,9 @@ for BSplineCurve.
 
 #### Parameters
 
-* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
-* `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the U axis. For more information, see BSplineCurve.
-* `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the V axis.
+* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the v-axis. <li>The length of the first control point array is the number of control points in each column of the u-axis. <li>The first control point's length represents the size of all the control points. </ul>
+* `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the u-axis. For more information, see BSplineCurve.
+* `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the v-axis.
 * `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.DIVIDE_BIT. If null, undefined, or omitted, no bits are set.
 
 #### Examples
@@ -61,8 +61,8 @@ given point on the surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>u-coordinate of the surface to evaluate.
+* `v` (Type: number)<br>v-coordinate of the surface to evaluate.
 
 #### Return Value
 
@@ -79,8 +79,8 @@ the surface's edges lie on the edges of the control point array.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the BSplineSurface constructor.
-* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
-* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.
+* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the u-axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
+* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the v-axis If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the BSplineSurface constructor.
 
 #### Return Value
@@ -96,8 +96,8 @@ in a B-spline surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>u-coordinate of the surface to evaluate.
+* `v` (Type: number)<br>v-coordinate of the surface to evaluate.
 
 #### Return Value
 
@@ -112,7 +112,7 @@ Creates a B-spline surface from the control points of a B&eacute;zier surface.
 
 #### Parameters
 
-* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul>
+* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the v-axis. For example, a degree-3 (cubic) surface along the v-axis contains 4 control points, one in each control point array. A degree of 1 on both the u- and v-axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the u-axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul>
 * `bits` (Type: number) (optional)<br>Bits as specified in the BSplineSurface constructor.
 
 #### Return Value
@@ -147,8 +147,8 @@ given point on the surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>u-coordinate of the surface to evaluate.
+* `v` (Type: number)<br>v-coordinate of the surface to evaluate.
 
 #### Return Value
 
@@ -164,8 +164,8 @@ Creates a B-spline surface with uniform knots.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the BSplineSurface constructor.
-* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
-* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.
+* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the u-axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
+* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the v-axis If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the BSplineSurface constructor.
 
 #### Return Value

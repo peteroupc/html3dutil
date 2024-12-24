@@ -15,8 +15,8 @@ dimensions, a curve function has the following form:
 
 <b>F</b>(u) = [ x(u), y(u), z(u) ]
 
-where x(u) returns an X coordinate, y(u) a Y coordinate,
-and z(u) returns a Z coordinate.
+where x(u) returns an x-coordinate, y(u) a y-coordinate,
+and z(u) returns a z-coordinate.
 
 Classes or JavaScript objects defining parametric curves should implement
 the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
@@ -24,7 +24,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 #### Parameters
 
 * `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
-* `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as Curve#endPoints and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization to a U coordinate in the new parameterization.
+* `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as Curve#endPoints and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a u-coordinate in the old parameterization to a u-coordinate in the new parameterization.
 
 #### Examples
 
@@ -90,33 +90,33 @@ with the getPoints method.
 
 ### Methods
 
-* [accel](#H3DU.Curve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
+* [accel](#H3DU.Curve_accel)<br>Finds an approximate acceleration vector at the given u-coordinate of this curve.
 * [arcLength](#H3DU.Curve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 * [changeEnds](#H3DU.Curve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
-* [endPoints](#H3DU.Curve_endPoints)<br>Returns the starting and ending U coordinates of this curve.
-* [evaluate](#H3DU.Curve_evaluate)<br>Finds the position of this curve at the given U coordinate.
+* [endPoints](#H3DU.Curve_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
+* [evaluate](#H3DU.Curve_evaluate)<br>Finds the position of this curve at the given u-coordinate.
 * [fitRange](#H3DU.Curve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the given range.
 * [getLength](#H3DU.Curve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#H3DU.Curve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.
+of u-coordinates.
 * [getPointsAsObjects](#H3DU.Curve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.
-* [jerk](#H3DU.Curve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
-* [normal](#H3DU.Curve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
-* [tangent](#H3DU.Curve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+of u-coordinates.
+* [jerk](#H3DU.Curve_jerk)<br>Finds an approximate jerk vector at the given u-coordinate of this curve.
+* [normal](#H3DU.Curve_normal)<br>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+* [tangent](#H3DU.Curve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 * [toArcLengthParam](#H3DU.Curve_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.
-* [velocity](#H3DU.Curve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
+* [velocity](#H3DU.Curve_velocity)<br>Finds an approximate velocity vector at the given u-coordinate of this curve.
 
 <a name='H3DU.Curve_accel'></a>
 ### H3DU.Curve#accel(u)
 
-Finds an approximate acceleration vector at the given U coordinate of this curve.
+Finds an approximate acceleration vector at the given u-coordinate of this curve.
 The implementation in Curve calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
@@ -125,7 +125,7 @@ The <b>acceleration</b> of a curve is a vector which is the second-order derivat
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -136,7 +136,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### H3DU.Curve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 The implementation in Curve calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
@@ -144,17 +144,17 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: number)
+The approximate arc length of this curve at the given u-coordinate. (Type: number)
 
 <a name='H3DU.Curve_changeEnds'></a>
 ### H3DU.Curve#changeEnds(ep1, ep2)
 
 Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
 from [0, &pi;] to [0, &pi;/8].
@@ -181,7 +181,7 @@ Return value. (Type: Curve)
 <a name='H3DU.Curve_endPoints'></a>
 ### H3DU.Curve#endPoints()
 
-Returns the starting and ending U coordinates of this curve.
+Returns the starting and ending u-coordinates of this curve.
 
 #### Return Value
 
@@ -193,11 +193,11 @@ method.
 <a name='H3DU.Curve_evaluate'></a>
 ### H3DU.Curve#evaluate(u)
 
-Finds the position of this curve at the given U coordinate.
+Finds the position of this curve at the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -208,8 +208,8 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### H3DU.Curve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
-For example, this method can be used to shrink the range of U coordinates
+path as this one but has its u-coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.
 
@@ -235,7 +235,7 @@ The distance from the start of the curve to its end. (Type: number)
 ### H3DU.Curve#getPoints(count)
 
 Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization.
 
@@ -253,7 +253,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Ob
 ### H3DU.Curve#getPointsAsObjects(count)
 
 Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization. The positions will be in the form of objects with
 up to four properties: x, y, z, and w retrieve the first, second, third,
@@ -280,7 +280,7 @@ The following example initializes a three.js BufferGeometry with the points retr
 <a name='H3DU.Curve_jerk'></a>
 ### H3DU.Curve#jerk(u)
 
-Finds an approximate jerk vector at the given U coordinate of this curve.
+Finds an approximate jerk vector at the given u-coordinate of this curve.
 The implementation in Curve calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
@@ -289,7 +289,7 @@ The <b>jerk</b> of a curve is a vector which is the third-order derivative of th
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -299,7 +299,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='H3DU.Curve_normal'></a>
 ### H3DU.Curve#normal(u)
 
-Finds an approximate principal normal vector at the given U coordinate of this curve.
+Finds an approximate principal normal vector at the given u-coordinate of this curve.
 The implementation in Curve calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
@@ -309,7 +309,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -319,12 +319,12 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='H3DU.Curve_tangent'></a>
 ### H3DU.Curve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -335,7 +335,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### H3DU.Curve#toArcLengthParam()
 
 Gets a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>. Arc length
 parameterization allows for moving along a curve's path at a uniform
 speed and for generating points which are spaced evenly along that
@@ -367,7 +367,7 @@ on a curve.
 <a name='H3DU.Curve_velocity'></a>
 ### H3DU.Curve#velocity(u)
 
-Finds an approximate velocity vector at the given U coordinate of this curve.
+Finds an approximate velocity vector at the given u-coordinate of this curve.
 The implementation in Curve calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).
@@ -376,7 +376,7 @@ The <b>velocity</b> of a curve is a vector which is the derivative of the curve'
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 

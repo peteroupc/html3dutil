@@ -15,8 +15,8 @@ dimensions, a surface function has the following form:
 
 <b>F</b>(u, v) = [ x(u, v), y(u, v), z(u, v) ]
 
-where x(u, v) returns an X coordinate, y(u, v) a Y coordinate,
-and z(u, v) returns a Z coordinate.
+where x(u, v) returns an x-coordinate, y(u, v) a y-coordinate,
+and z(u, v) returns a z-coordinate.
 
 Classes or JavaScript objects defining parametric surfaces should implement
 the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
@@ -27,29 +27,29 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 ### Methods
 
-* [bitangent](#Surface_bitangent)<br>Finds an approximate bitangent vector of this surface at the given U and V coordinates.
-* [endPoints](#Surface_endPoints)<br>Returns the starting and ending U and V coordinates of this surface.
-* [evaluate](#Surface_evaluate)<br>Finds the position of this surface at the given U and V coordinates.
-* [gradient](#Surface_gradient)<br>Finds an approximate gradient vector of this surface at the given U and V coordinates.
-* [normal](#Surface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
-* [tangent](#Surface_tangent)<br>Finds an approximate tangent vector of this surface at the given U and V coordinates.
+* [bitangent](#Surface_bitangent)<br>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.
+* [endPoints](#Surface_endPoints)<br>Returns the starting and ending u- and v-coordinates of this surface.
+* [evaluate](#Surface_evaluate)<br>Finds the position of this surface at the given u- and v-coordinates.
+* [gradient](#Surface_gradient)<br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
+* [normal](#Surface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+* [tangent](#Surface_tangent)<br>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
 
 <a name='Surface_bitangent'></a>
 ### Surface#bitangent(u, v)
 
-Finds an approximate bitangent vector of this surface at the given U and V coordinates.
+Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.
 
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
-with respect to the V axis using the <code>evaluate</code> method.
+with respect to the v-axis using the <code>evaluate</code> method.
 
-The <b>bitangent vector</b> is the vector pointing in the direction of the V axis, or alternatively,
+The <b>bitangent vector</b> is the vector pointing in the direction of the v-axis, or alternatively,
 the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>. The bitangent vector returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 
@@ -61,9 +61,9 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
     <caption> The following code is a very simple surface evaluator object.
     var evaluator = new Surface({
     "evaluate":function(u, v) {
-    // Take the U parameter as the X coordinate,
-    // the V parameter as the Y coordinate, and 0 as
-    // the Z coordinate.
+    // Take the U parameter as the x-coordinate,
+    // the V parameter as the y-coordinate, and 0 as
+    // the z-coordinate.
     return [u, v, 0];
     }
     });
@@ -71,27 +71,27 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='Surface_endPoints'></a>
 ### Surface#endPoints()
 
-Returns the starting and ending U and V coordinates of this surface.
+Returns the starting and ending u- and v-coordinates of this surface.
 This method calls the evaluator's <code>endPoints</code>
 method if it implements it; otherwise, returns <code>[0, 1, 0, 1]</code>
 
 #### Return Value
 
 A four-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the surface, and the third
-and fourth elements are its starting and ending V coordinates.
+elements are the starting and ending u-coordinates, respectively, of the surface, and the third
+and fourth elements are its starting and ending v-coordinates.
 Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
 method.
 
 <a name='Surface_evaluate'></a>
 ### Surface#evaluate(u, v)
 
-Finds the position of this surface at the given U and V coordinates.
+Finds the position of this surface at the given u- and v-coordinates.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 
@@ -101,7 +101,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='Surface_gradient'></a>
 ### Surface#gradient(u, v)
 
-Finds an approximate gradient vector of this surface at the given U and V coordinates.
+Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
 
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>gradient</code>
 method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
@@ -117,8 +117,8 @@ in that order. The gradient returned by this method <i>should not</i> be "normal
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 
@@ -160,13 +160,13 @@ The result is the gradient, which will point up and away from the surface.
 <a name='Surface_normal'></a>
 ### Surface#normal(u, v)
 
-Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
+Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 
@@ -176,19 +176,19 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='Surface_tangent'></a>
 ### Surface#tangent(u, v)
 
-Finds an approximate tangent vector of this surface at the given U and V coordinates.
+Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
-with respect to the U axis using the <code>evaluate</code> method.
+with respect to the u-axis using the <code>evaluate</code> method.
 
-The <b>tangent vector</b> is the vector pointing in the direction of the U axis,
+The <b>tangent vector</b> is the vector pointing in the direction of the u-axis,
 or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
 The tangent vector returned by this method <i>should not</i> be "normalized" to a glmath.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 

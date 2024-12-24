@@ -13,9 +13,9 @@ for <a href="BSplineCurve.md">BSplineCurve</a>.
 
 #### Parameters
 
-* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point's length represents the size of all the control points. </ul>
-* `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the U axis. For more information, see <a href="BSplineCurve.md">BSplineCurve</a>.
-* `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the V axis.
+* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the v-axis. <li>The length of the first control point array is the number of control points in each column of the u-axis. <li>The first control point's length represents the size of all the control points. </ul>
+* `knotsU` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the u-axis. For more information, see <a href="BSplineCurve.md">BSplineCurve</a>.
+* `knotsV` (Type: Array.&lt;number>)<br>Knot vector of the surface, along the v-axis.
 * `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="BSplineCurve.md#BSplineCurve.DIVIDE_BIT">BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.
 
 #### Examples
@@ -42,7 +42,7 @@ to create a rational B-Spline surface.
 given point on the surface.
 * [clamped](#BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
-* [endPoints](#BSplineSurface_endPoints)<br>Returns the starting and ending U and V coordinates of this surface.
+* [endPoints](#BSplineSurface_endPoints)<br>Returns the starting and ending u- and v-coordinates of this surface.
 * [evaluate](#BSplineSurface_evaluate)<br>Evaluates the surface function based on a point
 in a B-spline surface.
 * [fromBezierSurface](#BSplineSurface.fromBezierSurface)<br>Creates a B-spline surface from the control points of a B&eacute;zier surface.
@@ -50,8 +50,8 @@ in a B-spline surface.
 in this surface object.
 * [getKnots](#BSplineSurface_getKnots)<br>Gets a reference to the array of knot vectors used
 in this curve object.
-* [gradient](#BSplineSurface_gradient)<br>Finds an approximate gradient vector of this surface at the given U and V coordinates.
-* [normal](#BSplineSurface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
+* [gradient](#BSplineSurface_gradient)<br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
+* [normal](#BSplineSurface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
 * [tangent](#BSplineSurface_tangent)<br>Finds the <a href="Surface.md">tangent vector</a> at the
 given point on the surface.
 * [uniform](#BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
@@ -64,8 +64,8 @@ given point on the surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>The Ucoordinate of the surface to evaluate.
+* `v` (Type: number)<br>The Vcoordinate of the surface to evaluate.
 
 #### Return Value
 
@@ -82,8 +82,8 @@ the surface's edges lie on the edges of the control point array.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the <a href="BSplineSurface.md">BSplineSurface</a> constructor.
-* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
-* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.
+* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the u-axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
+* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the v-axis If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.md">BSplineSurface</a> constructor.
 
 #### Return Value
@@ -94,15 +94,15 @@ knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSpline
 <a name='BSplineSurface_endPoints'></a>
 ### BSplineSurface#endPoints()
 
-Returns the starting and ending U and V coordinates of this surface.
+Returns the starting and ending u- and v-coordinates of this surface.
 This method calls the evaluator's <code>endPoints</code>
 method if it implements it; otherwise, returns <code>[0, 1, 0, 1]</code>
 
 #### Return Value
 
 A four-element array. The first and second
-elements are the starting and ending U coordinates, respectively, of the surface, and the third
-and fourth elements are its starting and ending V coordinates.
+elements are the starting and ending u-coordinates, respectively, of the surface, and the third
+and fourth elements are its starting and ending v-coordinates.
 Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
 method.
 
@@ -114,8 +114,8 @@ in a B-spline surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>The Ucoordinate of the surface to evaluate.
+* `v` (Type: number)<br>The Vcoordinate of the surface to evaluate.
 
 #### Return Value
 
@@ -130,7 +130,7 @@ Creates a B-spline surface from the control points of a B&eacute;zier surface.
 
 #### Parameters
 
-* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul>
+* `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the v-axis. For example, a degree-3 (cubic) surface along the v-axis contains 4 control points, one in each control point array. A degree of 1 on both the u- and v-axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the u-axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul>
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.md">BSplineSurface</a> constructor.
 
 #### Return Value
@@ -160,7 +160,7 @@ An object described in the constructor to <a href="BSplineSurface.md">BSplineSur
 <a name='BSplineSurface_gradient'></a>
 ### BSplineSurface#gradient(u, v)
 
-Finds an approximate gradient vector of this surface at the given U and V coordinates.
+Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
 
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>gradient</code>
 method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
@@ -176,8 +176,8 @@ in that order. The gradient returned by this method <i>should not</i> be "normal
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 
@@ -219,13 +219,13 @@ The result is the gradient, which will point up and away from the surface.
 <a name='BSplineSurface_normal'></a>
 ### BSplineSurface#normal(u, v)
 
-Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
+Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the surface.
-* `v` (Type: number)<br>V coordinate of a point on the surface.
+* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
+* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
 
 #### Return Value
 
@@ -240,8 +240,8 @@ given point on the surface.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of the surface to evaluate.
-* `v` (Type: number)<br>V coordinate of the surface to evaluate.
+* `u` (Type: number)<br>The Ucoordinate of the surface to evaluate.
+* `v` (Type: number)<br>The Vcoordinate of the surface to evaluate.
 
 #### Return Value
 
@@ -257,8 +257,8 @@ Creates a B-spline surface with uniform knots.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the <a href="BSplineSurface.md">BSplineSurface</a> constructor.
-* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
-* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.
+* `degreeU` (Type: number) (optional)<br>Degree of the B-spline surface along the u-axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.
+* `degreeV` (Type: number) (optional)<br>Degree of the B-spline surface along the v-axis If null, undefined, or omitted, the default is 3.
 * `bits` (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.md">BSplineSurface</a> constructor.
 
 #### Return Value

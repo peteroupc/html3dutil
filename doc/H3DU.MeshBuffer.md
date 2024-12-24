@@ -136,7 +136,7 @@ Creates a new mesh buffer with the given array of vertex positions.
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex positions. This array's length must be divisible by 3; every 3 elements are the x-, y-, and z-coordinates, in that order, of one vertex.
 * `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
@@ -149,7 +149,7 @@ The following example shows how to define a mesh
 buffer from a predefined array of vertex positions.
 
     // First, create an array of numbers giving the X, Y, and
-    // Z coordinate for each vertex position. Here, three vertices
+    // z-coordinate for each vertex position. Here, three vertices
     // are defined.
     var vertices = [x1, y1, z1, x2, y2, z2, x3, y3, z3 ];
     // Second -- and this is optional -- create a second array of numbers
@@ -169,7 +169,7 @@ and vertex normals.
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>x-, y-, and z-coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol>
 * `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
@@ -182,7 +182,7 @@ The following example shows how to define a mesh
 buffer from a predefined array of vertex positions and normals.
 
     // First, create an array of numbers giving the X, Y, and
-    // Z coordinate for each vertex position and normal. Here, three vertices
+    // z-coordinate for each vertex position and normal. Here, three vertices
     // are defined. For each vertex, the position is given, followed by
     // the normal.
     var vertices = [
@@ -206,7 +206,7 @@ vertex normals, and texture coordinates.
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates in that order, of the vertex.</ol>
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>x-, y-, and z-coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates in that order, of the vertex.</ol>
 * `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
@@ -220,7 +220,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.
 
     // First, create an array of numbers giving the X, Y, and
-    // Z coordinate for each vertex position, normal, and associated
+    // z-coordinate for each vertex position, normal, and associated
     // texture coordinates. Here, three vertices
     // are defined. For each vertex, the position is given, followed by
     // the normal, followed by the texture coordinates.
@@ -245,7 +245,7 @@ and texture coordinates.
 
 #### Parameters
 
-* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 5; every 5 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>U and V texture coordinates in that order, of the vertex.</ol>
+* `vertices` (Type: Array.&lt;number> | Float32Array)<br>An array of vertex data. This array's length must be divisible by 5; every 5 elements describe one vertex and are in the following order:<ol> <li>x-, y-, and z-coordinates, in that order, of the vertex position. <li>U and V texture coordinates in that order, of the vertex.</ol>
 * `indices` (Type: Array.&lt;number> | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.
 
 #### Return Value
@@ -259,7 +259,7 @@ buffer from a predefined array of vertex positions, normals,
 and texture cordinates.
 
     // First, create an array of numbers giving the X, Y, and
-    // Z coordinate for each vertex position and associated
+    // z-coordinate for each vertex position and associated
     // texture coordinates. Here, three vertices
     // are defined. For each vertex, the position is given, followed by
     // the texture coordinates.
@@ -340,8 +340,8 @@ used in the bounding box calculation.
 An array of six numbers describing the tightest
 axis-aligned bounding box
 that fits all vertices in the mesh. The first three numbers
-are the smallest-valued X, Y, and Z coordinates, and the
-last three are the largest-valued X, Y, and Z coordinates.
+are the smallest-valued x-, y-, and z-coordinates, and the
+last three are the largest-valued x-, y-, and z-coordinates.
 This calculation uses the attribute with the semantic POSITION
 and set index 0. If there is no such attribute,
 or no vertices are defined in this buffer, returns the array
@@ -381,7 +381,7 @@ Only values with the attribute semantic <code>POSITION_0</code> are returned.
 An array of primitives,
 each of which holds the vertices that make up that primitive.
 If this mesh holds triangles, each primitive will contain three
-vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex's coordinates (for example, if the attribute holds 3 elements per value, the coordinates are X, Y, and Z coordinates, in that order). (Type: Array.&lt;Array.&lt;number>>)
+vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex's-coordinates (for example, if the attribute holds 3 elements per value, the coordinates are x-, y-, and z-coordinates, in that order). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='H3DU.MeshBuffer.lineLoopIndices'></a>
 ### (static) H3DU.MeshBuffer.lineLoopIndices(vertexCount)

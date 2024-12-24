@@ -74,7 +74,7 @@ Gets the position of the camera.
 #### Return Value
 
 An array of three numbers giving
-the X, Y, and Z coordinates of the camera's position, respectively. (Type: Array.&lt;number>)
+the x-, y-, and z-coordinates of the camera's position, respectively. (Type: Array.&lt;number>)
 
 <a name='H3DU.Camera_getVectorFromCenter'></a>
 ### H3DU.Camera#getVectorFromCenter()
@@ -190,9 +190,9 @@ Sets the position of the camera.
 
 #### Parameters
 
-* `cx` (Type: number)<br>The camera's new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, "cy" and "cz" can be omitted.
-* `cy` (Type: number) (optional)<br>The camera's new Y coordinate.
-* `cz` (Type: number) (optional)<br>The camera's new Z coordinate.
+* `cx` (Type: number)<br>The camera's new x-coordinate, or a 3-element vector containing the x-, y-, and z-coordinates. In the latter case, "cy" and "cz" can be omitted.
+* `cy` (Type: number) (optional)<br>The camera's new y-coordinate.
+* `cz` (Type: number) (optional)<br>The camera's new z-coordinate.
 
 #### Return Value
 

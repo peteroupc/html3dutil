@@ -10,13 +10,12 @@
 A curve evaluator object for a curve
 made up of one or more individual curves.
 
-The combined curve's U coordinates range from 0 to N,
+The combined curve's u-coordinates range from 0 to N,
 where N is the number of curves. In this way, the integer
-part of a U coordinate indicates the curve the coordinate
+part of a u-coordinate indicates the curve the coordinate
 refers to. For example, if there are four curves, coordinates
 from 0, but less than 1, belong to the first curve, and coordinates
-from 1, but less than 2, belong to the second curve. The U
-coordinate equal to N refers to the end of the last curve in
+from 1, but less than 2, belong to the second curve. The u-coordinate equal to N refers to the end of the last curve in
 the piecewise curve.
 
 #### Parameters
@@ -41,9 +40,9 @@ the piecewise curve.
 ### Methods
 
 * [arcLength](#H3DU.PiecewiseCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
-* [endPoints](#H3DU.PiecewiseCurve_endPoints)<br>Returns the starting and ending U coordinates of this curve.
-* [evaluate](#H3DU.PiecewiseCurve_evaluate)<br>Finds the position of this curve at the given U coordinate.
+curve and the point at the given u-coordinate of this curve.
+* [endPoints](#H3DU.PiecewiseCurve_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
+* [evaluate](#H3DU.PiecewiseCurve_evaluate)<br>Finds the position of this curve at the given u-coordinate.
 * [fromCatmullRomSpline](#H3DU.PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline.
 * [fromEllipseArc](#H3DU.PiecewiseCurve.fromEllipseArc)<br>TODO: Not documented yet.
@@ -52,26 +51,26 @@ Hermite spline.
 * [fromTCBSpline](#H3DU.PiecewiseCurve.fromTCBSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
 * [getCurves](#H3DU.PiecewiseCurve_getCurves)<br>Gets a reference to the curves that make up this piecewise curve.
-* [velocity](#H3DU.PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
+* [velocity](#H3DU.PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the given u-coordinate of this curve.
 
 <a name='H3DU.PiecewiseCurve_arcLength'></a>
 ### H3DU.PiecewiseCurve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: number)
+The approximate arc length of this curve at the given u-coordinate. (Type: number)
 
 <a name='H3DU.PiecewiseCurve_endPoints'></a>
 ### H3DU.PiecewiseCurve#endPoints()
 
-Returns the starting and ending U coordinates of this curve.
+Returns the starting and ending u-coordinates of this curve.
 
 #### Return Value
 
@@ -83,11 +82,11 @@ of curves that make up this piecewise curve.
 <a name='H3DU.PiecewiseCurve_evaluate'></a>
 ### H3DU.PiecewiseCurve#evaluate(u)
 
-Finds the position of this curve at the given U coordinate.
+Finds the position of this curve at the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -186,11 +185,11 @@ The curves that make up this piecewise curve. (Type: Array.&lt;Curve>)
 <a name='H3DU.PiecewiseCurve_velocity'></a>
 ### H3DU.PiecewiseCurve#velocity(u)
 
-Finds an approximate velocity vector at the given U coordinate of this curve.
+Finds an approximate velocity vector at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 

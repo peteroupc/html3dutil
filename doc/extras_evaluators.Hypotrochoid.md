@@ -29,14 +29,14 @@ and height abs(R-D)\*2.</li>
 * `outerRadius` (Type: number)<br>Radius of the circle whose position is fixed.
 * `innerRadius` (Type: number)<br>Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.
 * `distFromInnerCenter` (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.
-* `rotationDegrees` (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+* `rotationDegrees` (Type: number) (optional)<br>Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. Default is 0.
 
 ### Methods
 
 * [arcLength](#extras_evaluators_Hypotrochoid_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 * [endPoints](#extras_evaluators_Hypotrochoid_endPoints)<br>Gets the endpoints of this curve.
-* [evaluate](#extras_evaluators_Hypotrochoid_evaluate)<br>Finds the coordinates of a point on the curve from the given U coordinate.
+* [evaluate](#extras_evaluators_Hypotrochoid_evaluate)<br>Finds the coordinates of a point on the curve from the given u-coordinate.
 * [rose](#extras_evaluators_Hypotrochoid.rose)<br>Creates a curve evaluator object for a rose, a special
 form of hypotrochoid.
 * [scaleTo](#extras_evaluators_Hypotrochoid_scaleTo)<br>Creates a modified version of this curve so that it
@@ -46,15 +46,15 @@ fits the given radius.
 ### module:extras/evaluators~Hypotrochoid#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>u-coordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;number>)
+The approximate arc length of this curve at the given u-coordinate. (Type: Array.&lt;number>)
 
 <a name='extras_evaluators_Hypotrochoid_endPoints'></a>
 ### module:extras/evaluators~Hypotrochoid#endPoints()
@@ -72,16 +72,16 @@ and the second number is the end of the curve. (Type: Array.&lt;number>)
 <a name='extras_evaluators_Hypotrochoid_evaluate'></a>
 ### module:extras/evaluators~Hypotrochoid#evaluate(u)
 
-Finds the coordinates of a point on the curve from the given U coordinate.
+Finds the coordinates of a point on the curve from the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate.
+* `u` (Type: number)<br>u-coordinate.
 
 #### Return Value
 
 A 3-element array specifying a 3D point.
-Only the X and Y coordinates can be other than 0. (Type: Array.&lt;number>)
+Only the x- and y-coordinates can be other than 0. (Type: Array.&lt;number>)
 
 <a name='extras_evaluators_Hypotrochoid.rose'></a>
 ### (static) module:extras/evaluators~Hypotrochoid.rose(n, distFromInnerCenter, [rotationDegrees])
@@ -93,7 +93,7 @@ form of hypotrochoid.
 
 * `n` (Type: number)<br>Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.
 * `distFromInnerCenter` (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.
-* `rotationDegrees` (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+* `rotationDegrees` (Type: number) (optional)<br>Starting angle of the curve from the positive x-axis toward the positive y-axis, in degrees. Default is 0.
 
 #### Return Value
 

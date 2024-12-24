@@ -12,7 +12,7 @@ from one coordinate system to another.
 
 * [copy](#Transform_copy)<br>Makes a copy of this transform.
 * [getMatrix](#Transform_getMatrix)<br>Gets the transformation matrix used by an object.
-* [getPosition](#Transform_getPosition)<br>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+* [getPosition](#Transform_getPosition)<br>Returns a copy of a three-element array giving the x-, y-, and z-coordinates of the position
 of an object relative to its original position.
 * [getQuaternion](#Transform_getQuaternion)<br>Returns a copy of the rotation of an object in the form of a glmath.
 * [getScale](#Transform_getScale)<br>Returns a copy of a three-element array giving the scaling for an object's width,
@@ -67,7 +67,7 @@ Return value. (Type: Array.&lt;number>)
 <a name='Transform_getPosition'></a>
 ### Transform#getPosition()
 
-Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+Returns a copy of a three-element array giving the x-, y-, and z-coordinates of the position
 of an object relative to its original position.
 
 #### Return Value
@@ -112,9 +112,9 @@ and the transform wasn't reset yet with Transform#resetTransform.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;number> | number)<br>Number to add to the X coordinate, If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.
-* `y` (Type: number)<br>Number to add to the Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number)<br>Number to add to the Z coordinate. If "x" is an array, this parameter may be omitted.
+* `x` (Type: Array.&lt;number> | number)<br>Number to add to the x-coordinate, If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the numbers to add to the x-, y-, and z-coordinates, or a single number to add to all three coordinates.
+* `y` (Type: number)<br>Number to add to the y-coordinate. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number)<br>Number to add to the z-coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -140,7 +140,7 @@ This object. (Type: <a href="Transform.md">Transform</a>)
 
 #### Examples
 
-    // Combine an object's rotation with a rotation 20 degrees about the X axis
+    // Combine an object's rotation with a rotation 20 degrees about the x-axis
     transform.multQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
     // Combine an object's rotation with identity
     transform.multQuaternion(MathUtil.quatIdentity());
@@ -202,9 +202,9 @@ and the transform wasn't reset yet with Transform#resetTransform.
 
 #### Parameters
 
-* `x` (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number) (optional)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number) (optional)<br>The Z coordinate. If "x" is an array, this parameter may be omitted.
+* `x` (Type: Array.&lt;number> | number)<br>The x-coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the x-, y-, and z-coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number) (optional)<br>The y-coordinate. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number) (optional)<br>The z-coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -212,8 +212,8 @@ This object. (Type: <a href="Transform.md">Transform</a>)
 
 #### Examples
 
-    // Set the relative position to 2 units along X axis, 4 units along Y axis,
-    // and 5 units along Z axis
+    // Set the relative position to 2 units along x-axis, 4 units along y-axis,
+    // and 5 units along z-axis
     transform.setPosition(2,4,5);
     // same, but passing an array
     transform.setPosition([2,4,5]);
@@ -235,17 +235,17 @@ This object. (Type: <a href="Transform.md">Transform</a>)
 
 #### Examples
 
-    // Set an object's rotation to 30 degrees about the X axis
+    // Set an object's rotation to 30 degrees about the x-axis
     transform.setQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
     // Set an object's rotation to identity (the object isn't transformed)
     transform.setQuaternion(MathUtil.quatIdentity());
     // Set an object's rotation to 30 degree pitch multiplied
     // by 40 degree roll
     transform.setQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
-    // Set an object's rotation to 40 units about X axis, 20 units about Y axis,
-    // and 50 units about Z axis
+    // Set an object's rotation to 40 units about x-axis, 20 units about y-axis,
+    // and 50 units about z-axis
     transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
-    // Set an object's rotation to 20 units about Y axis
+    // Set an object's rotation to 20 units about y-axis
     transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
 
 <a name='Transform_setRotation'></a>
@@ -275,9 +275,9 @@ and the transform wasn't reset yet with Transform#resetTransform.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X axis scaling factor for this transform. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.
-* `y` (Type: number) (optional)<br>Y axis scaling factor for this transform.
-* `z` (Type: number) (optional)<br>Z axis scaling factor for this transform.
+* `x` (Type: number | Array.&lt;number>)<br>x-axis scaling factor for this transform. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.
+* `y` (Type: number) (optional)<br>The Yaxis scaling factor for this transform.
+* `z` (Type: number) (optional)<br>The Zaxis scaling factor for this transform.
 
 #### Return Value
 

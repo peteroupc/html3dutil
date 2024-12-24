@@ -168,7 +168,7 @@ Here is sample code for using a graphics filter.
 
 This filter does a horizontal flip of its pixels. Note that the filter, given later, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
-the current X coordinate).
+the current x-coordinate).
 
     function makeMirror(){
     return H3DU.ShaderInfo.makeEffect(context,[

@@ -123,12 +123,12 @@ HTML Canvas 2D Context.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the center of the circle that the arc forms a part of.
-* `y` (Type: number)<br>Y coordinate of the circle's center.
+* `x` (Type: number)<br>x-coordinate of the center of the circle that the arc forms a part of.
+* `y` (Type: number)<br>y-coordinate of the circle's center.
 * `radius` (Type: number)<br>Radius of the circle.
-* `startAngle` (Type: number)<br>Starting angle of the arc, in radians. 0 means the positive X axis, &pi;/2 means the positive Y axis, &pi; means the negative X axis, and &pi;\*1.5 means the negative Y axis.
+* `startAngle` (Type: number)<br>Starting angle of the arc, in radians. 0 means the positive x-axis, &pi;/2 means the positive y-axis, &pi; means the negative x-axis, and &pi;\*1.5 means the negative y-axis.
 * `endAngle` (Type: number)<br>Ending angle of the arc, in radians.
-* `ccw` (Type: boolean)<br>Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).
+* `ccw` (Type: boolean)<br>Whether the arc runs counterclockwise (assuming the x-axis points right and the y-axis points down under the coordinate system).
 
 #### Return Value
 
@@ -143,12 +143,12 @@ and dimensions, start angle, and sweep angle.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the ellipse's center.
-* `y` (Type: number)<br>Y coordinate of the ellipse's center.
+* `x` (Type: number)<br>x-coordinate of the ellipse's center.
+* `y` (Type: number)<br>y-coordinate of the ellipse's center.
 * `w` (Type: number)<br>Width of the ellipse's bounding box.
 * `h` (Type: number)<br>Height of the ellipse's bounding box.
-* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
-* `sweep` (Type: number)<br>Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.
+* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.
+* `sweep` (Type: number)<br>Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's x-axis points right and the y-axis down, positive angles run clockwise and negative angles counterclockwise.
 * `type` (Type: number)<br>Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will append an elliptical segment to the path (the arc and a line segment connecting its ends). If 2, will append a "pie slice" to the path (the arc and two line segments connecting each end of the arc to the ellipse's center).
 
 #### Return Value
@@ -164,12 +164,12 @@ and dimensions, start angle, and sweep angle.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
-* `y` (Type: number)<br>Y coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `x` (Type: number)<br>x-coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br>y-coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br>Width of the ellipse's bounding box.
 * `h` (Type: number)<br>Height of the ellipse's bounding box.
-* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
-* `sweep` (Type: number)<br>Length of the arc in degrees. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.
+* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.
+* `sweep` (Type: number)<br>Length of the arc in degrees. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's x-axis points right and the y-axis down, positive angles run clockwise and negative angles counterclockwise.
 * `type` (Type: number)<br>Type of arc to append to the path. If 0, will append an unclosed arc. If 1, will append an elliptical segment to the path (the arc and a line segment connecting its ends). If 2, will append a "pie slice" to the path (the arc and two line segments connecting each end of the arc to the ellipse's center).
 
 #### Return Value
@@ -184,13 +184,13 @@ using the parameterization used by the SVG specification.
 
 #### Parameters
 
-* `rx` (Type: number)<br>X axis radius of the ellipse that the arc will be formed from.
-* `ry` (Type: number)<br>Y axis radius of the ellipse that the arc will be formed from.
-* `rot` (Type: number)<br>Rotation of the ellipse in degrees (clockwise assuming the X axis points right and the Y axis points down under the coordinate system).
+* `rx` (Type: number)<br>x-axis radius of the ellipse that the arc will be formed from.
+* `ry` (Type: number)<br>y-axis radius of the ellipse that the arc will be formed from.
+* `rot` (Type: number)<br>Rotation of the ellipse in degrees (clockwise assuming the x-axis points right and the y-axis points down under the coordinate system).
 * `largeArc` (Type: boolean)<br>In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.
-* `sweep` (Type: boolean)<br>If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.
-* `x2` (Type: number)<br>X coordinate of the arc's end point.
-* `y2` (Type: number)<br>Y coordinate of the arc's end point.
+* `sweep` (Type: boolean)<br>If true, the arc solution chosen will run clockwise (assuming the x-axis points right and the y-axis points down under the coordinate system); if false, counterclockwise.
+* `x2` (Type: number)<br>x-coordinate of the arc's end point.
+* `y2` (Type: number)<br>y-coordinate of the arc's end point.
 
 #### Return Value
 
@@ -205,10 +205,10 @@ HTML Canvas 2D Context.
 
 #### Parameters
 
-* `x1` (Type: number)<br>X coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn't the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)
-* `y1` (Type: number)<br>Y coordinate of the point described under "x1".
-* `x2` (Type: number)<br>X coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.
-* `y2` (Type: number)<br>Y coordinate of the point described under "x2".
+* `x1` (Type: number)<br>x-coordinate of a point that, along with the current end point, forms a tangent line. The point where the circle touches this tangent line is the start point of the arc, and if the point isn't the same as the current end point, this method adds a line segment connecting the two points. (Note that the start point of the arc is not necessarily the same as (x1, y1) or the current end point.)
+* `y1` (Type: number)<br>y-coordinate of the point described under "x1".
+* `x2` (Type: number)<br>x-coordinate of a point that, along with the point (x1, y1), forms a tangent line. The point where the circle touches this tangent line is the end point of the arc. (Note that the end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).) When this method returns, the current end point will be set to the end point of the arc.
+* `y2` (Type: number)<br>y-coordinate of the point described under "x2".
 * `radius` (Type: number)<br>Radius of the circle the arc forms a part of.
 
 #### Return Value
@@ -222,10 +222,10 @@ Adds path segments to this path in the form of an arrow shape.
 
 #### Parameters
 
-* `x0` (Type: number)<br>X coordinate of the arrow's tail, at its very end.
-* `y0` (Type: number)<br>Y coordinate of the arrow's tail, at its very end.
-* `x1` (Type: number)<br>X coordinate of the arrow's tip.
-* `y1` (Type: number)<br>Y coordinate of the arrow's tip.
+* `x0` (Type: number)<br>x-coordinate of the arrow's tail, at its very end.
+* `y0` (Type: number)<br>y-coordinate of the arrow's tail, at its very end.
+* `x1` (Type: number)<br>x-coordinate of the arrow's tip.
+* `y1` (Type: number)<br>y-coordinate of the arrow's tip.
 * `headWidth` (Type: number)<br>Width of the arrowhead's base from side to side.
 * `headLength` (Type: number)<br>Length of the arrowhead from its tip to its base.
 * `tailWidth` (Type: number)<br>Width of the arrow's tail from side to side
@@ -242,8 +242,8 @@ Adds path segments to this path that form an axis-aligned rectangle with beveled
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
-* `y` (Type: number)<br>Y coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `x` (Type: number)<br>x-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br>y-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br>Width of the rectangle.
 * `h` (Type: number)<br>Height of the rectangle.
 * `arccx` (Type: number)<br>Horizontal extent (from end to end) of the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "w".
@@ -262,12 +262,12 @@ the curve's first control point.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the curve's second control point.
-* `y` (Type: number)<br>X coordinate of the curve's second control point.
-* `x2` (Type: number)<br>Y coordinate of the curve's third control point.
-* `y2` (Type: number)<br>Y coordinate of the curve's third control point.
-* `x3` (Type: number)<br>X coordinate of the curve's end point (fourth control point).
-* `y3` (Type: number)<br>Y coordinate of the curve's end point (fourth control point).
+* `x` (Type: number)<br>x-coordinate of the curve's second control point.
+* `y` (Type: number)<br>x-coordinate of the curve's second control point.
+* `x2` (Type: number)<br>y-coordinate of the curve's third control point.
+* `y2` (Type: number)<br>y-coordinate of the curve's third control point.
+* `x3` (Type: number)<br>x-coordinate of the curve's end point (fourth control point).
+* `y3` (Type: number)<br>y-coordinate of the curve's end point (fourth control point).
 
 #### Return Value
 
@@ -308,8 +308,8 @@ and dimensions.
 
 #### Parameters
 
-* `cx` (Type: number)<br>X coordinate of the ellipse's center.
-* `cy` (Type: number)<br>Y coordinate of the ellipse's center.
+* `cx` (Type: number)<br>x-coordinate of the ellipse's center.
+* `cy` (Type: number)<br>y-coordinate of the ellipse's center.
 * `w` (Type: number)<br>Width of the ellipse's bounding box.
 * `h` (Type: number)<br>Height of the ellipse's bounding box.
 
@@ -325,8 +325,8 @@ and dimensions.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
-* `y` (Type: number)<br>Y coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `x` (Type: number)<br>x-coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br>y-coordinate of the ellipse's bounding box's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br>Width of the ellipse's bounding box.
 * `h` (Type: number)<br>Height of the ellipse's bounding box.
 
@@ -342,7 +342,7 @@ the SVG (Scalable Vector Graphics) specification.
 
 #### Parameters
 
-* `str` (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). "largeArc" and "sweep" are flags, "0" for false and "1" for true. "rot" is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn't introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed). Examples of this parameter are "M50,50L100,100,100,150,150,200", "M50,20C230,245,233,44,22,44", and "M50,50H80V60H50V70H50"
+* `str` (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). "largeArc" and "sweep" are flags, "0" for false and "1" for true. "rot" is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lowercase letters mean any x- and y-coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn't introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed). Examples of this parameter are "M50,50L100,100,100,150,150,200", "M50,20C230,245,233,44,22,44", and "M50,50H80V60H50V70H50"
 
 #### Return Value
 
@@ -372,8 +372,8 @@ fits this graphics path.
 
 An array of four numbers
 describing the bounding box. The first two are
-the lowest X and Y coordinates, and the last two are
-the highest X and Y coordinates. If the path is empty,
+the lowest x- and y-coordinates, and the last two are
+the highest x- and y-coordinates. If the path is empty,
 returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;number>)
 
 <a name='H3DU.GraphicsPath_getCurrentPoint'></a>
@@ -383,7 +383,7 @@ Gets the current point stored in this path.
 
 #### Return Value
 
-A two-element array giving the X and Y coordinates of the current point. (Type: Array.&lt;number>)
+A two-element array giving the x- and y-coordinates of the current point. (Type: Array.&lt;number>)
 
 <a name='H3DU.GraphicsPath_getCurves'></a>
 ### H3DU.GraphicsPath#getCurves()
@@ -399,10 +399,10 @@ the following additional method:<ul>
 described by this path. The list will contain one curve evaluator object for each disconnected
 portion of the path. For example, if the path contains one polygon, the list will contain
 one curve object. And if the path is empty, the list will be empty too. Each curve
-takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
+takes u-coordinates that range from 0 to 1, depending on how far the point is from the start or
 the end of the path (similar to arc-length parameterization). Each curve
 returns a 3-element array containing
-the X, Y, and Z coordinates of the point lying on the curve at the given
+the x-, y-, and z-coordinates of the point lying on the curve at the given
 "u" position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
 </ul> (Type: Object)
@@ -427,7 +427,7 @@ line segments approximating the path. (Type: Array.&lt;Array.&lt;number>>)
 
 Gets an array of the end points of
 line segments approximating the path. The positions will be in the form of objects with
-two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+two properties: x and y retrieve the X or y-coordinate of each position, respectively.
 
 #### Parameters
 
@@ -459,9 +459,7 @@ the path.
 #### Return Value
 
 Array of line segments.
-Each line segment is an array of four numbers: the X and
-Y coordinates of the start point, respectively, then the X and
-Y coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number>>)
+Each line segment is an array of four numbers: the x- and y-coordinates of the start point, respectively, then the x- and y-coordinates of the end point, respectively. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='H3DU.GraphicsPath_getPoints'></a>
 ### H3DU.GraphicsPath#getPoints(numPoints)
@@ -487,7 +485,7 @@ is 1. (Type: Array.&lt;Array.&lt;number>>)
 
 Gets an array of points evenly spaced across the length
 of the path. The positions will be in the form of objects with
-two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+two properties: x and y retrieve the X or y-coordinate of each position, respectively.
 
 #### Parameters
 
@@ -541,7 +539,7 @@ differs from the first subpath's winding order can be holes.
 Array of six-element
 arrays each describing a single triangle. For each six-element
 array, the first two, next two, and last two numbers each
-describe a vertex position of that triangle (X and Y coordinates
+describe a vertex position of that triangle (x- and y-coordinates
 in that order). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='H3DU.GraphicsPath_interpolate'></a>
@@ -597,10 +595,10 @@ Adds a line segment to this path.
 
 #### Parameters
 
-* `x0` (Type: number)<br>X coordinate of the line segment's starting point. The <code>moveTo</code> method will be called on the starting point.
-* `y0` (Type: number)<br>Y coordinate of the line segment's starting point.
-* `x1` (Type: number)<br>X coordinate of the line segment's ending point. The <code>lineTo</code> method will be called on the ending point.
-* `y1` (Type: number)<br>X coordinate of the line segment's ending point.
+* `x0` (Type: number)<br>x-coordinate of the line segment's starting point. The <code>moveTo</code> method will be called on the starting point.
+* `y0` (Type: number)<br>y-coordinate of the line segment's starting point.
+* `x1` (Type: number)<br>x-coordinate of the line segment's ending point. The <code>lineTo</code> method will be called on the ending point.
+* `y1` (Type: number)<br>x-coordinate of the line segment's ending point.
 
 #### Return Value
 
@@ -615,8 +613,8 @@ sets the end position to the end of the segment.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the end of the line segment.
-* `y` (Type: number)<br>Y coordinate of the end of the line segment.
+* `x` (Type: number)<br>x-coordinate of the end of the line segment.
+* `y` (Type: number)<br>y-coordinate of the end of the line segment.
 
 #### Return Value
 
@@ -642,8 +640,8 @@ Moves the current start position and end position to the given position.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the position.
-* `y` (Type: number)<br>Y coordinate of the position.
+* `x` (Type: number)<br>x-coordinate of the position.
+* `y` (Type: number)<br>y-coordinate of the position.
 
 #### Return Value
 
@@ -670,7 +668,7 @@ Adds path segments to this path that form a polygon or a connected line segment 
 
 #### Parameters
 
-* `pointCoords` (Type: Array.&lt;number>)<br>An array of numbers containing the X and Y coordinates of each point in the sequence of line segments. Each pair of numbers gives the X and Y coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.
+* `pointCoords` (Type: Array.&lt;number>)<br>An array of numbers containing the x- and y-coordinates of each point in the sequence of line segments. Each pair of numbers gives the x- and y-coordinates, in that order, of one of the points in the sequence. The number of elements in the array must be even. If two or more pairs of numbers are given, line segments will connect each point given (except the last) to the next point given.
 * `closed` (Type: number)<br>If "true", the sequence of points describes a closed polygon and a command to close the path will be added to the path (even if only one pair of numbers is given in "pointCoords").
 
 #### Return Value
@@ -687,10 +685,10 @@ the curve's first control point.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the curve's second control point.
-* `y` (Type: number)<br>Y coordinate of the curve's second control point.
-* `x2` (Type: number)<br>X coordinate of the curve's end point (third control point).
-* `y2` (Type: number)<br>Y coordinate of the curve's end point (third control point).
+* `x` (Type: number)<br>x-coordinate of the curve's second control point.
+* `y` (Type: number)<br>y-coordinate of the curve's second control point.
+* `x2` (Type: number)<br>x-coordinate of the curve's end point (third control point).
+* `y2` (Type: number)<br>y-coordinate of the curve's end point (third control point).
 
 #### Return Value
 
@@ -703,8 +701,8 @@ Adds path segments to this path that form an axis-aligned rectangle.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
-* `y` (Type: number)<br>Y coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `x` (Type: number)<br>x-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br>y-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br>Width of the rectangle.
 * `h` (Type: number)<br>Height of the rectangle.
 
@@ -719,11 +717,11 @@ Adds path segments to this path that form a regular polygon.
 
 #### Parameters
 
-* `cx` (Type: number)<br>X coordinate of the center of the polygon.
-* `cy` (Type: number)<br>Y coordinate of the center of the polygon.
+* `cx` (Type: number)<br>x-coordinate of the center of the polygon.
+* `cy` (Type: number)<br>y-coordinate of the center of the polygon.
 * `sides` (Type: number)<br>Number of sides the polygon has. Nothing will be added to the path if this value is 2 or less.
 * `radius` (Type: number)<br>Radius from the center to each vertex of the polygon.
-* `phaseInDegrees` (Type: number) (optional)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis. If null, undefined, or omitted, the default is 0.
+* `phaseInDegrees` (Type: number) (optional)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis. If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 
@@ -736,12 +734,12 @@ Adds path segments to this path that form a regular N-pointed star.
 
 #### Parameters
 
-* `cx` (Type: number)<br>X coordinate of the center of the star.
-* `cy` (Type: number)<br>Y coordinate of the center of the star.
+* `cx` (Type: number)<br>x-coordinate of the center of the star.
+* `cy` (Type: number)<br>y-coordinate of the center of the star.
 * `points` (Type: number)<br>Number of points the star has. Nothing will be added to the path if this value is 0 or less.
 * `radiusOut` (Type: number)<br>Radius from the center to each outer vertex of the star.
 * `radiusIn` (Type: number)<br>Radius from the center to each inner vertex of the star.
-* `phaseInDegrees` (Type: number)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
+* `phaseInDegrees` (Type: number)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.
 
 #### Return Value
 
@@ -764,8 +762,8 @@ Adds path segments to this path that form an axis-aligned rounded rectangle.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
-* `y` (Type: number)<br>Y coordinate of the rectangle's upper-left corner (assuming the coordinate system's X axis points right and the Y axis down).
+* `x` (Type: number)<br>x-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
+* `y` (Type: number)<br>y-coordinate of the rectangle's upper-left corner (assuming the coordinate system's x-axis points right and the y-axis down).
 * `w` (Type: number)<br>Width of the rectangle.
 * `h` (Type: number)<br>Height of the rectangle.
 * `arccx` (Type: number)<br>Horizontal extent (from end to end) of the ellipse formed by each arc that makes up the rectangle's corners. Will be adjusted to be not less than 0 and not greater than "w".
@@ -793,8 +791,8 @@ Generates a mesh buffer consisting of "walls" that follow this graphics path app
 
 #### Parameters
 
-* `zStart` (Type: number)<br>Starting Z coordinate of the mesh buffer's "walls".
-* `zEnd` (Type: number)<br>Ending Z coordinate of the mesh buffer's "walls".
+* `zStart` (Type: number)<br>Starting z-coordinate of the mesh buffer's "walls".
+* `zEnd` (Type: number)<br>Ending z-coordinate of the mesh buffer's "walls".
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 * `closed` (Type: boolean) (optional)<br>If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
 
@@ -809,7 +807,7 @@ Generates a mesh buffer consisting of the approximate line segments that make up
 
 #### Parameters
 
-* `z` (Type: number) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.
+* `z` (Type: number) (optional)<br>z-coordinate for each line segment. If null, undefined, or omitted, the default is 0.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
@@ -838,7 +836,7 @@ TODO: Not documented yet.
 
 #### Parameters
 
-* `z` (Type: number) (optional)<br>The Z coordinate of each triangle generated. If null, undefined, or omitted, default is 0.
+* `z` (Type: number) (optional)<br>The z-coordinate of each triangle generated. If null, undefined, or omitted, default is 0.
 * `flatness` (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.
 
 #### Return Value
@@ -865,7 +863,7 @@ that keeps straight lines straight and parallel lines parallel).
 
 #### Parameters
 
-* `trans` (Type: Array.&lt;number>)<br>An array of six numbers describing a 2-dimensional affine transformation. For each point in the current path, its new X coordinate is `trans[0] \* X + trans[2] \* Y + trans[4]`, and its new Y coordinate is `trans[1] \* X + trans[3] \* Y + trans[5]`.
+* `trans` (Type: Array.&lt;number>)<br>An array of six numbers describing a 2-dimensional affine transformation. For each point in the current path, its new x-coordinate is `trans[0] \* X + trans[2] \* Y + trans[4]`, and its new y-coordinate is `trans[1] \* X + trans[3] \* Y + trans[5]`.
 
 #### Return Value
 

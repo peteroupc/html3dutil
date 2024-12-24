@@ -8,11 +8,11 @@
 
 This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-[**Geometry Utilities Library**](http://peteroupc.github.io/html3dutil),
+[**Geometry Helper Library**](http://peteroupc.github.io/html3dutil),
 and explains how a commonly used graphics pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.
 
-**Source code for the latest version of the library is available at the** [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil)**.**
+**Source code for the latest version of the library is available at the** [**Geometry Helper Library's project page**](https://github.com/peteroupc/html3dutil)**.**
 
 <a id=Contents></a>
 
@@ -84,7 +84,7 @@ The perspective projection converts 3D coordinates to 4-element vectors in _clip
 
 The following methods define a perspective projection.
 
-**<a href="MathUtil.md#MathUtil.mat4perspective">`MathUtil.mat4perspective(fov, aspect, near, far)`</a>**
+**`MathUtil.mat4perspective(fov, aspect, near, far)`**
 
 This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -128,7 +128,7 @@ can be negative.
 
 **`MathUtil.mat4ortho2d(left, right, bottom, top)`**
 
-This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively. This choice of values makes Z coordinates at or near 0 especially appropriate for this projection.
+This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a two-dimensional orthographic projection. This is a convenience method that is useful for showing a two-dimensional view.  The `mat4ortho2d` method calls `mat4ortho` and sets `near` and `far` to -1 and 1, respectively. This choice of values makes z-coordinates at or near 0 especially appropriate for this projection.
 
 * `left`, `right`, `bottom`, `top` - Same as in `mat4ortho`.
 
@@ -177,7 +177,7 @@ the use of matrices related to them, such as _projection_, _view_, _model-view_,
 and _world_ matrices, are merely conventions,
 which exist for convenience in many 3D graphics libraries.
 
-When a commonly used graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line, or point,
+When a commonly used graphics pipeline (outside the 3D graphics library concerned) draws a triangle, line, or point,
 all it really expects is the location of that primitive's vertices in _clip space_. A
 so-called _vertex shader_ communicates those locations to the graphics pipeline using
 the data accessible to it. Although the vertex shader can use projection, view, and world
@@ -189,20 +189,20 @@ without transforming them.
 As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in _homogeneous coordinates_, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
-transforms W to the negative Z coordinate in eye space, that is, it will increase with
+perspective matrix returned by MathUtil.mat4perspective, for example,
+transforms W to the negative z-coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the "eye" or "camera".
 
-To take perspective into account, the clip space X, Y, and Z coordinates are
+To take perspective into account, the clip space x-, y-, and z-coordinates are
 divided by the clip space W, and then converted to _window coordinates_,
 which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels.
 
-For the perspective matrix returned by <a href="MathUtil.md#MathUtil.mat4perspective">`mat4perspective`</a>, dividing
-the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
+For the perspective matrix returned by `mat4perspective`, dividing
+the x-, y-, and z-coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the "eye" or "camera"),
-the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
+the x-, y-, and z-coordinates are brought closer and closer to the center of the view.  This
 is the _perspective_ effect mentioned earlier: objects will appear smaller and smaller
 as they are more and more distant from the "camera".
 
@@ -210,7 +210,7 @@ as they are more and more distant from the "camera".
 
 ## Other Pages
 
-The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:
+The following pages of mine on CodeProject also discuss the Geometry Helper Library, formerly the Public-Domain HTML 3D Library:
 
 * [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
 * [**_Creating shapes using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)

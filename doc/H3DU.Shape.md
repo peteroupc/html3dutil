@@ -58,8 +58,8 @@ using this object's transform.
 An array of six numbers describing an
 axis-aligned bounding box
 that fits all vertices in the shape. The first three numbers
-are the smallest-valued X, Y, and Z coordinates, and the
-last three are the largest-valued X, Y, and Z coordinates.
+are the smallest-valued x-, y-, and z-coordinates, and the
+last three are the largest-valued x-, y-, and z-coordinates.
 If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;number>)
 
@@ -119,9 +119,9 @@ position. See Transform#setPosition
 
 #### Parameters
 
-* `x` (Type: Array.&lt;number> | number)<br>The X coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.
-* `y` (Type: number) (optional)<br>The Y coordinate. If "x" is an array, this parameter may be omitted.
-* `z` (Type: number) (optional)<br>The Z coordinate. If "x" is an array, this parameter may be omitted.
+* `x` (Type: Array.&lt;number> | number)<br>The x-coordinate. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the x-, y-, and z-coordinates, or a single number giving the coordinate for all three dimensions.
+* `y` (Type: number) (optional)<br>The y-coordinate. If "x" is an array, this parameter may be omitted.
+* `z` (Type: number) (optional)<br>The z-coordinate. If "x" is an array, this parameter may be omitted.
 
 #### Return Value
 
@@ -129,8 +129,8 @@ This object. (Type: Shape)
 
 #### Examples
 
-    // Set the relative position to 2 units along X axis, 4 units along Y axis,
-    // and 5 units along Z axis
+    // Set the relative position to 2 units along x-axis, 4 units along y-axis,
+    // and 5 units along z-axis
     shape.setPosition(2,4,5);
     // same, but passing an array
     shape.setPosition([2,4,5]);
@@ -151,10 +151,10 @@ This object. (Type: Shape)
 
 #### Examples
 
-    // rotate the shape 40 units about X axis, 20 units about Y axis,
-    // and 50 units about Z axis
+    // rotate the shape 40 units about x-axis, 20 units about y-axis,
+    // and 50 units about z-axis
     shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
-    // rotate the shape 20 units about Y axis
+    // rotate the shape 20 units about y-axis
     shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
 
 <a name='H3DU.Shape_setScale'></a>
@@ -165,9 +165,9 @@ size. See Transform#setScale
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X axis scaling factor for this shape object. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for the X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.
-* `y` (Type: number) (optional)<br>Y axis scaling factor for this shape object.
-* `z` (Type: number) (optional)<br>Z axis scaling factor for this shape object.
+* `x` (Type: number | Array.&lt;number>)<br>x-axis scaling factor for this shape object. If "y" and "z" are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for the X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.
+* `y` (Type: number) (optional)<br>y-axis scaling factor for this shape object.
+* `z` (Type: number) (optional)<br>z-axis scaling factor for this shape object.
 
 #### Return Value
 

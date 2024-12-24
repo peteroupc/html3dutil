@@ -10,13 +10,12 @@
 A <a href="Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
 
-The combined curve's U coordinates range from 0 to N,
+The combined curve's u-coordinates range from 0 to N,
 where N is the number of curves. In this way, the integer
-part of a U coordinate indicates the curve the coordinate
+part of a u-coordinate indicates the curve the coordinate
 refers to. For example, if there are four curves, coordinates
 from 0, but less than 1, belong to the first curve, and coordinates
-from 1, but less than 2, belong to the second curve. The U
-coordinate equal to N refers to the end of the last curve in
+from 1, but less than 2, belong to the second curve. The u-coordinate equal to N refers to the end of the last curve in
 the piecewise curve.
 
 #### Parameters
@@ -40,16 +39,16 @@ the piecewise curve.
 
 ### Methods
 
-* [accel](#PiecewiseCurve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
+* [accel](#PiecewiseCurve_accel)<br>Finds an approximate acceleration vector at the given u-coordinate of this curve.
 * [arcLength](#PiecewiseCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 * [changeEnds](#PiecewiseCurve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
-* [endPoints](#PiecewiseCurve_endPoints)<br>Returns the starting and ending U coordinates of this curve.
-* [evaluate](#PiecewiseCurve_evaluate)<br>Finds the position of this curve at the given U coordinate.
+* [endPoints](#PiecewiseCurve_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
+* [evaluate](#PiecewiseCurve_evaluate)<br>Finds the position of this curve at the given u-coordinate.
 * [fitRange](#PiecewiseCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the given range.
 * [fromCatmullRomSpline](#PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline.
 * [fromEllipseArc](#PiecewiseCurve.fromEllipseArc)<br>Creates a piecewise curve that describes an arc running along an axis-aligned
@@ -62,21 +61,21 @@ cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;B
 * [getCurves](#PiecewiseCurve_getCurves)<br>Gets a reference to the curves that make up this piecewise curve.
 * [getLength](#PiecewiseCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#PiecewiseCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.
+of u-coordinates.
 * [getPointsAsObjects](#PiecewiseCurve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.
-* [jerk](#PiecewiseCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
-* [normal](#PiecewiseCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
-* [tangent](#PiecewiseCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+of u-coordinates.
+* [jerk](#PiecewiseCurve_jerk)<br>Finds an approximate jerk vector at the given u-coordinate of this curve.
+* [normal](#PiecewiseCurve_normal)<br>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+* [tangent](#PiecewiseCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 * [toArcLengthParam](#PiecewiseCurve_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.
-* [velocity](#PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the given U coordinate of this curve.
+* [velocity](#PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the given u-coordinate of this curve.
 
 <a name='PiecewiseCurve_accel'></a>
 ### PiecewiseCurve#accel(u)
 
-Finds an approximate acceleration vector at the given U coordinate of this curve.
+Finds an approximate acceleration vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
@@ -85,7 +84,7 @@ The <b>acceleration</b> of a curve is a vector which is the second-order derivat
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -96,21 +95,21 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: number)
+The approximate arc length of this curve at the given u-coordinate. (Type: number)
 
 <a name='PiecewiseCurve_changeEnds'></a>
 ### PiecewiseCurve#changeEnds(ep1, ep2)
 
 Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
 from [0, &pi;] to [0, &pi;/8].
@@ -137,7 +136,7 @@ Return value. (Type: <a href="Curve.md">Curve</a>)
 <a name='PiecewiseCurve_endPoints'></a>
 ### PiecewiseCurve#endPoints()
 
-Returns the starting and ending U coordinates of this curve.
+Returns the starting and ending u-coordinates of this curve.
 
 #### Return Value
 
@@ -149,11 +148,11 @@ of curves that make up this piecewise curve.
 <a name='PiecewiseCurve_evaluate'></a>
 ### PiecewiseCurve#evaluate(u)
 
-Finds the position of this curve at the given U coordinate.
+Finds the position of this curve at the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -164,8 +163,8 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
-For example, this method can be used to shrink the range of U coordinates
+path as this one but has its u-coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.
 
@@ -207,12 +206,12 @@ cubic rational B-spline curves.
 
 #### Parameters
 
-* `x` (Type: number)<br>X coordinate of the ellipse's center.
-* `y` (Type: number)<br>Y coordinate of the ellipse's center.
+* `x` (Type: number)<br>The Xcoordinate of the ellipse's center.
+* `y` (Type: number)<br>The Ycoordinate of the ellipse's center.
 * `w` (Type: number)<br>Width of the ellipse's bounding box.
 * `h` (Type: number)<br>Height of the ellipse's bounding box.
-* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.
-* `sweep` (Type: number)<br>Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's X axis points right and the Y axis down, positive angles run clockwise and negative angles counterclockwise.
+* `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.
+* `sweep` (Type: number)<br>Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's x-axis points right and the y-axis down, positive angles run clockwise and negative angles counterclockwise.
 
 #### Return Value
 
@@ -283,7 +282,7 @@ The distance from the start of the curve to its end. (Type: number)
 ### PiecewiseCurve#getPoints(count)
 
 Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization.
 
@@ -301,7 +300,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Ob
 ### PiecewiseCurve#getPointsAsObjects(count)
 
 Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization. The positions will be in the form of objects with
 up to four properties: x, y, z, and w retrieve the first, second, third,
@@ -328,7 +327,7 @@ The following example initializes a three.js BufferGeometry with the points retr
 <a name='PiecewiseCurve_jerk'></a>
 ### PiecewiseCurve#jerk(u)
 
-Finds an approximate jerk vector at the given U coordinate of this curve.
+Finds an approximate jerk vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
@@ -337,7 +336,7 @@ The <b>jerk</b> of a curve is a vector which is the third-order derivative of th
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -347,7 +346,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='PiecewiseCurve_normal'></a>
 ### PiecewiseCurve#normal(u)
 
-Finds an approximate principal normal vector at the given U coordinate of this curve.
+Finds an approximate principal normal vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
@@ -357,7 +356,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -367,12 +366,12 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='PiecewiseCurve_tangent'></a>
 ### PiecewiseCurve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -383,7 +382,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#toArcLengthParam()
 
 Gets a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>. Arc length
 parameterization allows for moving along a curve's path at a uniform
 speed and for generating points which are spaced evenly along that
@@ -415,11 +414,11 @@ on a curve.
 <a name='PiecewiseCurve_velocity'></a>
 ### PiecewiseCurve#velocity(u)
 
-Finds an approximate velocity vector at the given U coordinate of this curve.
+Finds an approximate velocity vector at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 

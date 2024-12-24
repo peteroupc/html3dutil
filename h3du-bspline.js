@@ -94,7 +94,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * B&eacute;zier curve contains four control points and the following knot vector:
  * <code>[0, 0, 0, 0, 1, 1, 1, 1]</code>.
  * <p><b>Non-Uniform Curves</b><p>
- * A non-uniform B-spline curve is one whose knot vector is not evenly spaced,
+ * A nonuniform B-spline curve is one whose knot vector is not evenly spaced,
  * that is, the difference between one knot and the next isn't the same.
  * <p><b>Rational Curves</b><p>
  * A rational B-spline curve is an N-dimensional curve with N plus one coordinates
@@ -103,13 +103,13 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * coordinates, but if N-dimensional points are wanted, use the {@link BSplineCurve.DIVIDE_BIT}
  * flag to divide each coordinate by the last (and omit the last coordinate)
  * to convert to N-dimensional points.<p>
- * Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.<p>
+ * Rational B-spline curves can describe circles and ellipses, which nonrational B-spline curves can't.<p>
  * Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
  * N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
  * for each control point. To convert such a control point to homogeneous coordinates, multiply each of its
  * conventional coordinates by its weight, then append the weight as the control point's last coordinate.
  * <p><b>NURBS Curves</b><p>
- * <i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
+ * <i>NURBS</i> is an acronym for nonuniform rational B-spline curves.
  * <p><b>Polynomial Basis</b></p>
  * <p>Any kind of polynomial curve can be converted to a different kind
  * of polynomial curve, having the same degree and describing the same path,
@@ -160,7 +160,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * more than N+1 times at the beginning and end of the vector, or more than
  * N times elsewhere, where N is the curve's degree.
  * If the difference between one knot and the next isn't the same,
- * the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first
+ * the curve is considered a <i>nonuniform</i> B-spline curve. Usually the first
  * knot will be 0 or less and the last knot will be 1 or greater.  (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene's definition by repeating the first knot at the beginning and repeating the last knot at the end.)
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
@@ -619,7 +619,7 @@ BSplineCurve.prototype.split = function(u) {
 /**
  * Returns the starting and coordinates of this curve.
  * @returns {Array<number>} A two-element array containing
- * the starting and ending U coordinates, respectively, of the curve.
+ * the starting and ending u-coordinates, respectively, of the curve.
  */
 BSplineCurve.prototype.endPoints = function() {
   const numPoints = this.controlPoints.length;
@@ -725,15 +725,15 @@ BSplineCurve._fromHomogen = function(cp) {
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter is the number of control points in each row of
- * the V axis.
+ * the v-axis.
  * <li>The length of the first control point array is the number of control points in
- * each column of the U axis.
+ * each column of the u-axis.
  * <li>The first control point's length represents the size of all the control
  * points.
  * </ul>
- * @param {Array<number>} knotsU Knot vector of the surface, along the U axis.
+ * @param {Array<number>} knotsU Knot vector of the surface, along the u-axis.
  * For more information, see {@link BSplineCurve}.
- * @param {Array<number>} knotsV Knot vector of the surface, along the V axis.
+ * @param {Array<number>} knotsV Knot vector of the surface, along the v-axis.
  * @param {number} [bits] Bits for defining input
  * and controlling output. Zero or more of {@link BSplineCurve.DIVIDE_BIT}. If null, undefined, or omitted, no bits are set.
  * @example <caption>Together with 'convertToHomogen' given in the {@link BSplineCurve} documentation, the following function can be used
@@ -852,10 +852,10 @@ BSplineCurve.uniform = function(controlPoints, degree, bits) {
  * @param {Array<Array<Array<number>>>} controlPoints Array of
  * control point arrays as specified in the {@link BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
- * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
+ * surface along the u-axis. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
- * surface along the V axis
+ * surface along the v-axis
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
@@ -871,10 +871,10 @@ BSplineSurface.clamped = function(controlPoints, degreeU, degreeV, bits) {
  * @param {Array<Array<Array<number>>>} controlPoints Array of
  * control point arrays as specified in the {@link BSplineSurface} constructor.
  * @param {number} [degreeU] Degree of the B-spline
- * surface along the U axis. For example, 3 means a degree-3 (cubic) curve.
+ * surface along the u-axis. For example, 3 means a degree-3 (cubic) curve.
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [degreeV] Degree of the B-spline
- * surface along the V axis
+ * surface along the v-axis
  * If null, undefined, or omitted, the default is 3.
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.
  * @returns {BSplineSurface} Return value. The first
@@ -953,8 +953,8 @@ BSplineCurve.clampedKnots = function(controlPoints, degree) {
 /**
  * Evaluates the surface function based on a point
  * in a B-spline surface.
- * @param {number} u U coordinate of the surface to evaluate.
- * @param {number} v V coordinate of the surface to evaluate.
+ * @param {number} u The Ucoordinate of the surface to evaluate.
+ * @param {number} v The Vcoordinate of the surface to evaluate.
  * @returns {Array<number>} An array of the result of
  * the evaluation. It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
@@ -1006,8 +1006,8 @@ BSplineSurface.prototype.getKnots = function() {
 /**
  * Finds the [tangent vector]{@link Surface} at the
  * given point on the surface.
- * @param {number} u U coordinate of the surface to evaluate.
- * @param {number} v V coordinate of the surface to evaluate.
+ * @param {number} u The Ucoordinate of the surface to evaluate.
+ * @param {number} v The Vcoordinate of the surface to evaluate.
  * @returns {Array<number>} An array giving the tangent vector.
  * It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
@@ -1051,8 +1051,8 @@ BSplineSurface.prototype.tangent = function(u, v) {
 /**
  * Finds the [bitangent vector]{@link Surface} at the
  * given point on the surface.
- * @param {number} u U coordinate of the surface to evaluate.
- * @param {number} v V coordinate of the surface to evaluate.
+ * @param {number} u The Ucoordinate of the surface to evaluate.
+ * @param {number} v The Vcoordinate of the surface to evaluate.
  * @returns {Array<number>} An array giving the bitangent vector.
  * It will have as many elements as a control point (or one fewer
  * if DIVIDE_BIT is set), as specified in the constructor.
@@ -1101,11 +1101,11 @@ BSplineSurface.prototype.bitangent = function(u, v) {
  * control point is an array with the same length as the other control points.
  * It is assumed that:<ul>
  * <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier
- * surface along the V axis. For example, a degree-3 (cubic) surface along the V axis
+ * surface along the v-axis. For example, a degree-3 (cubic) surface along the v-axis
  * contains 4 control points, one in each control point array. A degree of 1 on
- * both the U and V axes results in a flat surface.
+ * both the u- and v-axes results in a flat surface.
  * <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier
- * surface along the U axis.
+ * surface along the u-axis.
  * <li>The number of elements in the first control point represents the number of elements in all the control points.
  * </ul>
  * @param {number} [bits] Bits as specified in the {@link BSplineSurface} constructor.

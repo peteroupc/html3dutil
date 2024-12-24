@@ -7,9 +7,9 @@
 ## Introduction
 
 This page describes parametric curves and surfaces and how to generate them using my
-public-domain [**Geometry Utilities Library**](http://peteroupc.github.io/html3dutil).
+public-domain [**Geometry Helper Library**](http://peteroupc.github.io/html3dutil).
 
-**Source code for the latest version of the library is available at the** [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil)**.**
+**Source code for the latest version of the library is available at the** [**Geometry Helper Library's project page**](https://github.com/peteroupc/html3dutil)**.**
 
 <a id=Contents></a>
 
@@ -19,11 +19,11 @@ public-domain [**Geometry Utilities Library**](http://peteroupc.github.io/html3d
 - [**Contents**](#Contents)
 - [**What Is a Parametric Surface?**](#What_Is_a_Parametric_Surface)
     - [**Why two variables?**](#Why_two_variables)
-- [**Parametric Surfaces in the Geometry Utilities Library**](#Parametric_Surfaces_in_the_Geometry_Utilities_Library)
+- [**Parametric Surfaces in the Geometry Helper Library**](#Parametric_Surfaces_in_the_Geometry_Utilities_Library)
 - [**Chaining Surface Functions**](#Chaining_Surface_Functions)
 - [**Parametric Curves**](#Parametric_Curves)
     - [**Generating Parametric Curves**](#Generating_Parametric_Curves)
-- [**Curve and Surface Evaluators in the Geometry Utilities Library**](#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library)
+- [**Curve and Surface Evaluators in the Geometry Helper Library**](#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library)
 - [**Other Pages**](#Other_Pages)
 
 <a id=What_Is_a_Parametric_Surface></a>
@@ -37,8 +37,8 @@ A _vector function_ in 3D is a combination of three functions, one for each dime
 
 * **F**(u, v) = [ _x_(u, v), _y_(u, v), _z_(u, v) ];
 
-The _x_ function returns an X coordinate given u and v, and likewise for _y_ and _z_.
-Since the _z_ function returns a Z coordinate, the surface will be in 2D if _z_ always returns
+The _x_ function returns an x-coordinate given u and v, and likewise for _y_ and _z_.
+Since the _z_ function returns a z-coordinate, the surface will be in 2D if _z_ always returns
 the same value.
 
 For example, if we have a parametric surface defined by the following functions:
@@ -66,9 +66,9 @@ function "warps" this grid into a three-dimensional surface.
 
 <a id=Parametric_Surfaces_in_the_Geometry_Utilities_Library></a>
 
-## Parametric Surfaces in the Geometry Utilities Library
+## Parametric Surfaces in the Geometry Helper Library
 
-The Geometry Utilities Library supports parametric surfaces using a class named
+The Geometry Helper Library supports parametric surfaces using a class named
 [**`SurfaceBuilder`**](http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html). It helps
 generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, `makeMesh`, generates a parametric surface mesh.
@@ -93,8 +93,8 @@ The comments explain how `makeMesh` works in detail.
           .positionNormal(func)
           .attribute(colorGradient, H3DU.Semantic.COLOR)
          // Evaluate the surface and generate a triangle
-         // mesh, using resolution+1 different U coordinates,
-         // and resolution+1 different V coordinates.
+         // mesh, using resolution+1 different u-coordinates,
+         // and resolution+1 different v-coordinates.
          // Instead of H3DU.Mesh.TRIANGLES, we could use
          // H3DU.Mesh.LINES to create a wireframe mesh,
          // or H3DU.Mesh.POINTS to create a point mesh.
@@ -102,7 +102,7 @@ The comments explain how `makeMesh` works in detail.
           .toMeshBuffer();
     }
 
-In the Geometry Utilities Library, surface evaluator objects define a method, `evaluate`,
+In the Geometry Helper Library, surface evaluator objects define a method, `evaluate`,
 which returns a 3D point given a U parameter and a V parameter. (By default, U and
 V each range from 0 through 1.)
 
@@ -110,9 +110,9 @@ The following code is a very simple surface evaluator object.
 
     var evaluator = {
       "evaluate":function(u, v){
-        // Take the U parameter as the X coordinate,
-        // the V parameter as the Y coordinate, and 0 as
-        // the Z coordinate.
+        // Take the U parameter as the x-coordinate,
+        // the V parameter as the y-coordinate, and 0 as
+        // the z-coordinate.
         return [u, v, 0];
       }
     };
@@ -135,19 +135,19 @@ And the following evaluator generates a circular disc:
 ![**The parametric surface.**](surfaces3.png)
 
 Now here's the interesting part: This evaluator returns not a disc,
-but a _cone_, whose length runs along the negative Z axis:
+but a _cone_, whose length runs along the negative z-axis:
 
     var evaluator = {
       "evaluate":function(u, v){
          // Return cone coordinates, using the u
-         // parameter as the Z axis.
+         // parameter as the z-axis.
          return [u*Math.cos(v),u*Math.sin(v),-u];
       },
       // Declare the usual range of the coordinates
       "endPoints":function(){ return [0,1,0,Math.PI*2]; }
     };
 
-The following shape was rotated to show the Z axis; the rotation isn't perfect.
+The following shape was rotated to show the z-axis; the rotation isn't perfect.
 
 ![**The parametric surface.**](surfaces4.png)
 
@@ -218,9 +218,9 @@ and vertically (by default, the disc will be centered at the origin (0, 0, 0)).
 
 ## Parametric Curves
 
-The Geometry Utilities Library also includes support for generating parametric curves.
+The Geometry Helper Library also includes support for generating parametric curves.
 A _parametric curve_ is a curve generated by a vector function, like a parametric
-surface, except now, the function only uses a single variable, as shown below:
+surface, except now, the function only uses a single variable, as shown next:
 
 * **C**(u) = [ _x_(u), _y_(u), _z_(u) ];
 
@@ -232,7 +232,7 @@ The curve function takes a single _u_ variable because a parametric
 curve can be a seen as a "warped" version of a line.
 
 One simple example of a parametric curve is a circle. In fact, the same source
-code for the disc surface given above can also serve as the parametric curve
+code for the disc surface given earlier can also serve as the parametric curve
 function for the circle, since it only uses the variable _u_, not _v_.
 
 Note that any surface evaluator that only uses _u_ can easily serve as a
@@ -243,7 +243,7 @@ kept to the same value, such as 0, 1, or any other constant number.
 
 ### Generating Parametric Curves
 
-The Geometry Utilities Library's `CurveBuilder` class generates vertices for
+The Geometry Helper Library's `CurveBuilder` class generates vertices for
 a parametric curve.
 
 Use code like the following to generate a mesh describing a parametric
@@ -254,9 +254,9 @@ the circle example above.
 
 <a id=Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library></a>
 
-## Curve and Surface Evaluators in the Geometry Utilities Library
+## Curve and Surface Evaluators in the Geometry Helper Library
 
-The Geometry Utilities Library distribution includes the following evaluators of
+The Geometry Helper Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an `evaluate`
 method that returns 3D points lying on the curve or surface.
 
@@ -266,37 +266,37 @@ General-purpose curves include:
 the shape of the curve but don't necessarily lie on the curve), and a
 _knot vector_, which controls the behavior of the control points. B-spline
 curves include **NURBS** curves (nonuniform and rational B-spline curves,
-with weights and non-uniform knots), making them a powerful way of setting the
+with weights and nonuniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
- <a href="BSplineCurve.md">BSplineCurve</a> class.
+ BSplineCurve class.
 * **B&eacute;zier curves.** These are curves in which the first and last
 control point are the curve's end points. B&eacute;zier curves are a subset of B-spline
-curves and are created using the <a href="BSplineCurve.md#BSplineCurve.fromBezierCurve">BSplineCurve.fromBezierCurve</a>
+curves and are created using the BSplineCurve.fromBezierCurve
 method.
 * **Piecewise curves.** These are curves made up of one or more other curves.
-Piecewise curves are created using the <a href="PiecewiseCurve.md">PiecewiseCurve</a> class.
+Piecewise curves are created using the PiecewiseCurve class.
 
 General-purpose surfaces include:
 
 * **B&eacute;zier surfaces.** 3D surfaces where each grid line is a B&eacute;zier
-curve. B&eacute;zier surfaces are created using the <a href="BSplineSurface.md#BSplineSurface.fromBezierSurface">BSplineSurface.fromBezierSurface</a> method.
+curve. B&eacute;zier surfaces are created using the BSplineSurface.fromBezierSurface method.
 * **B-Spline surfaces.** 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the <a href="BSplineSurface.md">BSplineSurface</a> class.
+curve. B-Spline surfaces are created using the BSplineSurface class.
 
 Special surfaces include:
 
 * **Tubes.** 3D surfaces in the form of a "thickened" 3D curve.
 Tubes are created using the CurveTube class,
-a supplemental extra in the Geometry Utilities Library.
+a supplemental extra in the Geometry Helper Library.
 * **Surfaces of revolution.** Surfaces generated by rotating a 2D curve.
 Surfaces of revolution are created using the SurfaceOfRevolution class,
-a supplemental extra in the Geometry Utilities Library.
+a supplemental extra in the Geometry Helper Library.
 
 <a id=Other_Pages></a>
 
 ## Other Pages
 
-The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:
+The following pages of mine on CodeProject also discuss the Geometry Helper Library, formerly the Public-Domain HTML 3D Library:
 
 * [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
 * [**_Creating shapes using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)

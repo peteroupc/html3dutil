@@ -33,8 +33,8 @@ A _vector function_ in 3D is a combination of three functions, one for each dime
 
 * **F**(u, v) = [ _x_(u, v), _y_(u, v), _z_(u, v) ];
 
-The _x_ function returns an X coordinate given u and v, and likewise for _y_ and _z_.
-Since the _z_ function returns a Z coordinate, the surface will be in 2D if _z_ always returns
+The _x_ function returns an x-coordinate given u and v, and likewise for _y_ and _z_.
+Since the _z_ function returns a z-coordinate, the surface will be in 2D if _z_ always returns
 the same value.
 
 For example, if we have a parametric surface defined by the following functions:
@@ -89,8 +89,8 @@ The comments explain how `makeMesh` works in detail.
           .positionNormal(func)
           .attribute(colorGradient, H3DU.Semantic.COLOR)
          // Evaluate the surface and generate a triangle
-         // mesh, using resolution+1 different U coordinates,
-         // and resolution+1 different V coordinates.
+         // mesh, using resolution+1 different u-coordinates,
+         // and resolution+1 different v-coordinates.
          // Instead of H3DU.Mesh.TRIANGLES, we could use
          // H3DU.Mesh.LINES to create a wireframe mesh,
          // or H3DU.Mesh.POINTS to create a point mesh.
@@ -106,9 +106,9 @@ The following code is a very simple surface evaluator object.
 
     var evaluator = {
       "evaluate":function(u, v){
-        // Take the U parameter as the X coordinate,
-        // the V parameter as the Y coordinate, and 0 as
-        // the Z coordinate.
+        // Take the U parameter as the x-coordinate,
+        // the V parameter as the y-coordinate, and 0 as
+        // the z-coordinate.
         return [u, v, 0];
       }
     };
@@ -131,19 +131,19 @@ And the following evaluator generates a circular disc:
 ![**The parametric surface.**](surfaces3.png)
 
 Now here's the interesting part: This evaluator returns not a disc,
-but a _cone_, whose length runs along the negative Z axis:
+but a _cone_, whose length runs along the negative z-axis:
 
     var evaluator = {
       "evaluate":function(u, v){
          // Return cone coordinates, using the u
-         // parameter as the Z axis.
+         // parameter as the z-axis.
          return [u*Math.cos(v),u*Math.sin(v),-u];
       },
       // Declare the usual range of the coordinates
       "endPoints":function(){ return [0,1,0,Math.PI*2]; }
     };
 
-The following shape was rotated to show the Z axis; the rotation isn't perfect.
+The following shape was rotated to show the z-axis; the rotation isn't perfect.
 
 ![**The parametric surface.**](surfaces4.png)
 

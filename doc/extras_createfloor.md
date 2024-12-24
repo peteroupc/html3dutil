@@ -26,12 +26,12 @@ entirely be of a square tile.
 
 #### Parameters
 
-* `xStart` (Type: number)<br>X coordinate of the start of the floor.
-* `yStart` (Type: number)<br>Y coordinate of the start of the floor.
+* `xStart` (Type: number)<br>x-coordinate of the start of the floor.
+* `yStart` (Type: number)<br>y-coordinate of the start of the floor.
 * `width` (Type: number)<br>Total width of the floor.
 * `height` (Type: number)<br>Total height of the floor.
 * `tileSize` (Type: number)<br>Width and height of each floor tile.
-* `z` (Type: number) (optional)<br>Z coordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
+* `z` (Type: number) (optional)<br>z-coordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
 
 #### Return Value
 

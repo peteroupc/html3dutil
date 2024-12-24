@@ -268,9 +268,9 @@ position (see the "update" method).
 #### Return Value
 
 An object containing the following keys:<ul>
-<li><code>cx</code> - X coordinate of the current mouse
+<li><code>cx</code> - x-coordinate of the current mouse
 position.
-<li><code>cx</code> - Y coordinate of the current mouse
+<li><code>cx</code> - y-coordinate of the current mouse
 position.
 <li><code>x</code> - X component of the delta mouse position.
 <li><code>y</code> - Y component of the delta mouse position.

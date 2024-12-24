@@ -12,8 +12,7 @@ A B-spline curve is a parametric curve based on polynomial functions.
 Each polynomial is generated using one or more
 <i>control points</i>, which more or less follow the path of the curve,
 and a <i>knot vector</i>, which determines, more or less, where each control
-point is spaced along the curve. Together with rational B-spline curves (see
-below), this makes B-spline curves very powerful,
+point is spaced along the curve. Together with rational B-spline curves (see later), this makes B-spline curves very powerful,
 since they can describe nearly all curves commonly used in computer
 graphics, including line segments, circles, ellipses, parabolas, and
 irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve's control points leads to the same transformation of the resulting curve.
@@ -42,7 +41,7 @@ B&eacute;zier curve contains four control points and the following knot vector:
 
 <b>Non-Uniform Curves</b>
 
-A non-uniform B-spline curve is one whose knot vector is not evenly spaced,
+A nonuniform B-spline curve is one whose knot vector is not evenly spaced,
 that is, the difference between one knot and the next isn't the same.
 
 <b>Rational Curves</b>
@@ -54,7 +53,7 @@ coordinates, but if N-dimensional points are wanted, use the <a href="BSplineCur
 flag to divide each coordinate by the last (and omit the last coordinate)
 to convert to N-dimensional points.
 
-Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can't.
+Rational B-spline curves can describe circles and ellipses, which nonrational B-spline curves can't.
 
 Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
 N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
@@ -63,7 +62,7 @@ conventional coordinates by its weight, then append the weight as the control po
 
 <b>NURBS Curves</b>
 
-<i>NURBS</i> is an acronym for non-uniform rational B-spline curves.
+<i>NURBS</i> is an acronym for nonuniform rational B-spline curves.
 
 <b>Polynomial Basis</b>
 
@@ -107,7 +106,7 @@ another, see the example.
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;number>>)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point's length represents the size of all the control points.
-* `knots` (Type: Array.&lt;number>)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br> The knot vector must be a nowhere increasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.md">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene's definition by repeating the first knot at the beginning and repeating the last knot at the end.)
+* `knots` (Type: Array.&lt;number>)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br> The knot vector must be a nowhere increasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve's degree. If the difference between one knot and the next isn't the same, the curve is considered a <i>nonuniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.md">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene's definition by repeating the first knot at the beginning and repeating the last knot at the end.)
 * `bits` (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="BSplineCurve.md#BSplineCurve.DIVIDE_BIT">BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.
 
 #### Examples
@@ -182,11 +181,11 @@ coordinate.
 
 ### Methods
 
-* [accel](#BSplineCurve_accel)<br>Finds an approximate acceleration vector at the given U coordinate of this curve.
+* [accel](#BSplineCurve_accel)<br>Finds an approximate acceleration vector at the given u-coordinate of this curve.
 * [arcLength](#BSplineCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 * [changeEnds](#BSplineCurve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 * [clamped](#BSplineCurve.clamped)<br>Creates a B-spline curve with uniform knots, except that
 the curve will start and end at the first and last control points and will
@@ -201,7 +200,7 @@ and to the line between the next-to-last and last control points.
 * [evaluate](#BSplineCurve_evaluate)<br>Evaluates the curve function based on a point
 in a B-spline curve.
 * [fitRange](#BSplineCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the given range.
 * [fromBezierCurve](#BSplineCurve.fromBezierCurve)<br>Creates a B-spline curve from the control points of a B&eacute;zier curve.
 * [getControlPoints](#BSplineCurve_getControlPoints)<br>Gets a reference to the array of control points used
 in this curve object.
@@ -209,15 +208,15 @@ in this curve object.
 in this curve object.
 * [getLength](#BSplineCurve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#BSplineCurve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.
+of u-coordinates.
 * [getPointsAsObjects](#BSplineCurve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
-of U coordinates.
-* [jerk](#BSplineCurve_jerk)<br>Finds an approximate jerk vector at the given U coordinate of this curve.
-* [normal](#BSplineCurve_normal)<br>Finds an approximate principal normal vector at the given U coordinate of this curve.
+of u-coordinates.
+* [jerk](#BSplineCurve_jerk)<br>Finds an approximate jerk vector at the given u-coordinate of this curve.
+* [normal](#BSplineCurve_normal)<br>Finds an approximate principal normal vector at the given u-coordinate of this curve.
 * [split](#BSplineCurve_split)<br>Splits this B-spline curve into two at the given point.
-* [tangent](#BSplineCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+* [tangent](#BSplineCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 * [toArcLengthParam](#BSplineCurve_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.
 * [uniform](#BSplineCurve.uniform)<br>Creates a B-spline curve with uniform knots.
 * [uniformKnots](#BSplineCurve.uniformKnots)<br>Generates a knot vector with uniform knots, to be
@@ -242,7 +241,7 @@ Default Value: `2`
 <a name='BSplineCurve_accel'></a>
 ### BSplineCurve#accel(u)
 
-Finds an approximate acceleration vector at the given U coordinate of this curve.
+Finds an approximate acceleration vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
@@ -251,7 +250,7 @@ The <b>acceleration</b> of a curve is a vector which is the second-order derivat
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -262,7 +261,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### BSplineCurve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given U coordinate of this curve.
+curve and the point at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
@@ -270,17 +269,17 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given U coordinate. (Type: number)
+The approximate arc length of this curve at the given u-coordinate. (Type: number)
 
 <a name='BSplineCurve_changeEnds'></a>
 ### BSplineCurve#changeEnds(ep1, ep2)
 
 Creates a curve evaluator object for a curve that is generated using
-the same formula as this one (and uses the same U coordinates),
+the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 For example, this method can be used to shrink the path of a curve
 from [0, &pi;] to [0, &pi;/8].
@@ -350,7 +349,7 @@ Returns the starting and coordinates of this curve.
 #### Return Value
 
 A two-element array containing
-the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;number>)
+the starting and ending u-coordinates, respectively, of the curve. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_evaluate'></a>
 ### BSplineCurve#evaluate(u)
@@ -380,8 +379,8 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
 ### BSplineCurve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to fit the given range.
-For example, this method can be used to shrink the range of U coordinates
+path as this one but has its u-coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.
 
@@ -456,7 +455,7 @@ The distance from the start of the curve to its end. (Type: number)
 ### BSplineCurve#getPoints(count)
 
 Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization.
 
@@ -474,7 +473,7 @@ will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Ob
 ### BSplineCurve#getPointsAsObjects(count)
 
 Gets an array of positions on the curve at fixed intervals
-of U coordinates. Note that these positions will not generally be
+of u-coordinates. Note that these positions will not generally be
 evenly spaced along the curve unless the curve uses
 an arc-length parameterization. The positions will be in the form of objects with
 up to four properties: x, y, z, and w retrieve the first, second, third,
@@ -501,7 +500,7 @@ The following example initializes a three.js BufferGeometry with the points retr
 <a name='BSplineCurve_jerk'></a>
 ### BSplineCurve#jerk(u)
 
-Finds an approximate jerk vector at the given U coordinate of this curve.
+Finds an approximate jerk vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
@@ -510,7 +509,7 @@ The <b>jerk</b> of a curve is a vector which is the third-order derivative of th
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -520,7 +519,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='BSplineCurve_normal'></a>
 ### BSplineCurve#normal(u)
 
-Finds an approximate principal normal vector at the given U coordinate of this curve.
+Finds an approximate principal normal vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
@@ -530,7 +529,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -558,12 +557,12 @@ will be null if <code>u</code> is at or after the end of the curve. (Type: Array
 <a name='BSplineCurve_tangent'></a>
 ### BSplineCurve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate of a point on the curve.
+* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
 
 #### Return Value
 
@@ -574,7 +573,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### BSplineCurve#toArcLengthParam()
 
 Gets a curve evaluator object for a curve that follows the same
-path as this one but has its U coordinates remapped to
+path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>. Arc length
 parameterization allows for moving along a curve's path at a uniform
 speed and for generating points which are spaced evenly along that

@@ -54,10 +54,10 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `l` (Type: number)<br>X coordinate of the point where the left clipping plane meets the near clipping plane.
-* `r` (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.
-* `b` (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.
-* `t` (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.
+* `l` (Type: number)<br>x-coordinate of the point where the left clipping plane meets the near clipping plane.
+* `r` (Type: number)<br>x-coordinate of the point where the right clipping plane meets the near clipping plane.
+* `b` (Type: number)<br>y-coordinate of the point where the bottom clipping plane meets the near clipping plane.
+* `t` (Type: number)<br>y-coordinate of the point where the top clipping plane meets the near clipping plane.
 * `n` (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won't be seen. This should be slightly greater than 0.
 * `f` (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.
 
@@ -119,15 +119,15 @@ This method is designed for enabling a <a href="tutorial-glmath.md">right-handed
 
 #### Parameters
 
-* `ex` (Type: number)<br>X coordinate of the camera position in world space.
-* `ey` (Type: number)<br>Y coordinate of the camera position.
-* `ez` (Type: number)<br>Z coordinate of the camera position.
-* `cx` (Type: number)<br>X coordinate of the position in world space that the camera is looking at.
-* `cy` (Type: number)<br>Y coordinate of the position looked at.
-* `cz` (Type: number)<br>Z coordinate of the position looked at.
-* `ux` (Type: number)<br>X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera's view direction.
-* `uy` (Type: number)<br>Y coordinate of the up vector.
-* `uz` (Type: number)<br>Z coordinate of the up vector.
+* `ex` (Type: number)<br>x-coordinate of the camera position in world space.
+* `ey` (Type: number)<br>y-coordinate of the camera position.
+* `ez` (Type: number)<br>z-coordinate of the camera position.
+* `cx` (Type: number)<br>x-coordinate of the position in world space that the camera is looking at.
+* `cy` (Type: number)<br>y-coordinate of the position looked at.
+* `cz` (Type: number)<br>z-coordinate of the position looked at.
+* `ux` (Type: number)<br>x-coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera's view direction.
+* `uy` (Type: number)<br>y-coordinate of the up vector.
+* `uz` (Type: number)<br>z-coordinate of the up vector.
 
 #### Return Value
 
@@ -219,11 +219,11 @@ a matrix that transforms the view to a portion of the viewport.
 
 #### Parameters
 
-* `wx` (Type: number)<br>X coordinate of the center of the desired viewport portion.
-* `wy` (Type: number)<br>Y coordinate of the center of the desired viewport portion.
+* `wx` (Type: number)<br>x-coordinate of the center of the desired viewport portion.
+* `wy` (Type: number)<br>y-coordinate of the center of the desired viewport portion.
 * `ww` (Type: number)<br>Width of the desired viewport portion.
 * `wh` (Type: number)<br>Height of the desired viewport portion.
-* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the X and Y coordinates of the lower-left corner followed by the width and height of a rectangle indicating the current viewport.
+* `vp` (Type: Array.&lt;number>)<br>A 4-element array giving the x- and y-coordinates of the lower-left corner followed by the width and height of a rectangle indicating the current viewport.
 
 #### Return Value
 
@@ -274,9 +274,9 @@ scaling transformation.
 
 #### Parameters
 
-* `x` (Type: number)<br>Scale factor along the X axis.
-* `y` (Type: number)<br>Scale factor along the Y axis.
-* `z` (Type: number)<br>Scale factor along the Z axis.
+* `x` (Type: number)<br>Scale factor along the x-axis.
+* `y` (Type: number)<br>Scale factor along the y-axis.
+* `z` (Type: number)<br>Scale factor along the z-axis.
 
 #### Return Value
 
@@ -290,9 +290,9 @@ translation transformation.
 
 #### Parameters
 
-* `x` (Type: number)<br>Translation along the X axis.
-* `y` (Type: number)<br>Translation along the Y axis.
-* `z` (Type: number)<br>Translation along the Z axis.
+* `x` (Type: number)<br>Translation along the x-axis.
+* `y` (Type: number)<br>Translation along the y-axis.
+* `z` (Type: number)<br>Translation along the z-axis.
 
 #### Return Value
 

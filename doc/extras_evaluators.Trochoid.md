@@ -7,14 +7,14 @@
 
 **Augments:** Curve
 
-A curve evaluator object for a curve drawn by a circle that rolls along the X axis.
+A curve evaluator object for a curve drawn by a circle that rolls along the x-axis.
 
 The following curves can be generated with this class (in the following
 descriptions, R = <code>radius</code>
 and D = <code>distFromCenter</code>).<ul>
-<li>Cycloid: D = R (trochoid touching the X axis).</li>
-<li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
-<li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
+<li>Cycloid: D = R (trochoid touching the x-axis).</li>
+<li>Curtate cycloid: D < R (trochoid not touching the x-axis).</li>
+<li>Prolate cycloid: D > R (trochoid crossing the x-axis).</li></ul>
 
 #### Parameters
 
@@ -24,7 +24,7 @@ and D = <code>distFromCenter</code>).<ul>
 ### Methods
 
 * [endPoints](#extras_evaluators_Trochoid_endPoints)<br>Gets the endpoints of this curve.
-* [evaluate](#extras_evaluators_Trochoid_evaluate)<br>Generates a point on the curve from the given U coordinate.
+* [evaluate](#extras_evaluators_Trochoid_evaluate)<br>Generates a point on the curve from the given u-coordinate.
 * [velocity](#extras_evaluators_Trochoid_velocity)<br>Finds the velocity (derivative) of this curve at the given point.
 
 <a name='extras_evaluators_Trochoid_endPoints'></a>
@@ -43,16 +43,16 @@ and the second number is the end of the curve. (Type: Array.&lt;number>)
 <a name='extras_evaluators_Trochoid_evaluate'></a>
 ### module:extras/evaluators~Trochoid#evaluate(u)
 
-Generates a point on the curve from the given U coordinate.
+Generates a point on the curve from the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>U coordinate.
+* `u` (Type: number)<br>u-coordinate.
 
 #### Return Value
 
 A 3-element array specifying a 3D point.
-Only the X and Y coordinates will be other than 0. (Type: Array.&lt;number>)
+Only the x- and y-coordinates will be other than 0. (Type: Array.&lt;number>)
 
 <a name='extras_evaluators_Trochoid_velocity'></a>
 ### module:extras/evaluators~Trochoid#velocity(u)

@@ -6,7 +6,7 @@ ShapeGroup#getShape, and
 ShapeGroup#setShape methods instead.</b></ul><h3> Methods</h3><ul><li><a href='#H3DU.ShapeGroup_addShape'>addShape</a><br>Adds a 3D shape to this shape group, at the end of the list
 of shapes.<li><a href='#H3DU.ShapeGroup_copy'>copy</a><br>Makes a copy of this shape group and the objects contained
 in it.<li><a href='#H3DU.ShapeGroup_getBounds'>getBounds</a><br>Finds a bounding box that holds all vertices in this shape group.<li><a href='#H3DU.ShapeGroup_getMatrix'>getMatrix</a><br>Gets a copy of the transformation needed to transform
-this shape group's coordinates to world coordinates.<li><a href='#H3DU.ShapeGroup_getShape'>getShape</a><br>Gets the shape or shape group located
+this shape group's-coordinates to world coordinates.<li><a href='#H3DU.ShapeGroup_getShape'>getShape</a><br>Gets the shape or shape group located
 in this shape group at the given index.<li><a href='#H3DU.ShapeGroup_getTransform'>getTransform</a><br>Gets a reference to the transform used by this shape group object.<li><a href='#H3DU.ShapeGroup_getVisible'>getVisible</a><br>Gets whether this shape group will be drawn on rendering.<li><a href='#H3DU.ShapeGroup_primitiveCount'>primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this shape group.<li><a href='#H3DU.ShapeGroup_removeShape'>removeShape</a><br>Removes all instances of a 3D shape from this shape group<li><a href='#H3DU.ShapeGroup_setPosition'>setPosition</a><br>Sets the relative position of the shapes in this group
 from their original position.<li><a href='#H3DU.ShapeGroup_setQuaternion'>setQuaternion</a><br>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.<li><a href='#H3DU.ShapeGroup_setScale'>setScale</a><br>Sets the scale of this shape group relative to its original
@@ -37,12 +37,12 @@ The bounding box is not guaranteed to be the
 tightest, and the box will be in world space coordinates.<h4> Return Value</h4>An array of six numbers describing an
 axis-aligned bounding box
 that fits all vertices in the shape group. The first three numbers
-are the smallest-valued X, Y, and Z coordinates, and the
-last three are the largest-valued X, Y, and Z coordinates.
+are the smallest-valued x-, y-, and z-coordinates, and the
+last three are the largest-valued x-, y-, and z-coordinates.
 If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;number>)<a name='H3DU.ShapeGroup_getMatrix'></a>
 <h3> H3DU.ShapeGroup#getMatrix()</h3>Gets a copy of the transformation needed to transform
-this shape group's coordinates to world coordinates.<h4> Return Value</h4>A 4 &times; 4 matrix. (Type: Transform)<a name='H3DU.ShapeGroup_getShape'></a>
+this shape group's-coordinates to world coordinates.<h4> Return Value</h4>A 4 &times; 4 matrix. (Type: Transform)<a name='H3DU.ShapeGroup_getShape'></a>
 <h3> H3DU.ShapeGroup#getShape(index)</h3>Gets the shape or shape group located
 in this shape group at the given index.<h4> Parameters</h4><ul><li><code>index</code> (Type: number)<br>Integer index, starting from 0, of the shape or shape group to set.</ul><h4> Return Value</h4>The shape or shape group located
 in this shape group at the given index, or null if none is found there. (Type: Shape | ShapeGroup)<a name='H3DU.ShapeGroup_getTransform'></a>
@@ -55,7 +55,7 @@ and points) composed by all shapes in this shape group.<h4> Return Value</h4>Ret
 from their original position.
 See Transform#setPosition
 This method will modify this shape group's transform
-rather than the transform for each shape in the group.<h4> Parameters</h4><ul><li><code>x</code> (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in Transform#setScale.<li><code>y</code> (Type: number)<br>Y coordinate.<li><code>z</code> (Type: number)<br>Z coordinate.</ul><h4> Return Value</h4>This object. (Type: ShapeGroup)<a name='H3DU.ShapeGroup_setQuaternion'></a>
+rather than the transform for each shape in the group.<h4> Parameters</h4><ul><li><code>x</code> (Type: number | Array.&lt;number>)<br>x-coordinate or a 3-element position array, as specified in Transform#setScale.<li><code>y</code> (Type: number)<br>y-coordinate.<li><code>z</code> (Type: number)<br>z-coordinate.</ul><h4> Return Value</h4>This object. (Type: ShapeGroup)<a name='H3DU.ShapeGroup_setQuaternion'></a>
 <h3> H3DU.ShapeGroup#setQuaternion(quat)</h3>Sets this shape group's rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
 See Transform#setQuaternion.
 This method will modify this shape group's transform

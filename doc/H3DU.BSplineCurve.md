@@ -266,7 +266,7 @@ Returns the starting and coordinates of this curve.
 #### Return Value
 
 A two-element array containing
-the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;number>)
+the starting and ending u-coordinates, respectively, of the curve. (Type: Array.&lt;number>)
 
 <a name='H3DU.BSplineCurve_evaluate'></a>
 ### H3DU.BSplineCurve#evaluate(u)

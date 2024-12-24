@@ -37,7 +37,7 @@ The changes in beta 3 from beta 2 include:
 - Default diffuse/albedo in Material and PbrMaterial is now (1,1,1,1).
 - New H3DU.BufferAccessor class represents a single vertex buffer.
 - Many methods outside H3DU.Mesh now return H3DU.MeshBuffer instead of H3DU.Mesh.
-- Bug fixes.
+- Issue fixes.
 
 Version 2.0.0-beta2:
 
@@ -68,7 +68,7 @@ The changes in beta 2 from beta 1 include:
 - Several new demos were added.
 - Some methods were removed: setMaterialParams methods from both H3DU.Shape and H3DU.ShapeGroup; mapTexture and mapTexturesAll methods from TextureLoader; forShader method from H3DU.Material.
 - Renamed setOrientation and multOrientation in H3DU.Transform to setRotation and multRotation, and deprecated the old names.
-- Bug fixes.
+- Issue fixes.
 
 Version 2.0.0-beta1:
 
@@ -80,12 +80,12 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The `Scene3D` Scene3D#useProgram method was deprecated and now does nothing.
 - New RenderPass3D class holds information about how a batch of 3D models is to be rendered. It replaces the `Scene3D` Scene3D#useFilter method, which now does nothing.
 - New FrameBufferInfo class holds information about a frame buffer; it replaces FrameBuffer.
-- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="MeshBuffer.md">MeshBuffer</a>, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.
+- The `BufferedMesh`, `FrameBuffer`, and `ShaderProgram` classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use MeshBuffer, FrameBufferInfo, and ShaderInfo, respectively, which are not coupled to WebGL contexts.
 - Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.
 - The Shape object is no longer coupled to vertex buffers.
 - The LightSource class now supports a radius of the light.
 - The TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike `BufferedMesh`, `FrameBuffer`, and `ShaderProgram`, which are tied to the WebGL context.
-- `GLMath`, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="MathUtil.md#MathUtil.vec3perp">MathUtil.vec3perp</a>, <a href="MathUtil.md#MathUtil.vec3toWindowPoint">MathUtil.vec3toWindowPoint</a>, and <a href="MathUtil.md#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a>.
+- `GLMath`, now Math, was expanded with many new methods. The documentation for it is now very detailed. New methods include MathUtil.vec3perp, MathUtil.vec3toWindowPoint, and MathUtil.mat4projectVec3.
 - Two new classes in the "extras" folder support 2D text rendering and texture atlases (as sprite sheets), namely, TextFont and TextureAtlas.
 - The "doc" folder contains the documentation to the library in the form of Markdown text files.
 - The Camera class, now Camera, was rewritten.
@@ -97,14 +97,14 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The experimental 2D canvas renderer in _surfaces2d.html_, was abandoned.
 - Added `dispose` method to `H3DU.Scene3D`.
 - Added `createPointedStar` and `createLathe` methods to `H3DU.Meshes`.
-- Added `getBounds` and `toLinePath` methods to <a href="GraphicsPath.md">GraphicsPath</a>, an extra, as well
+- Added `getBounds` and `toLinePath` methods to GraphicsPath, an extra, as well
  as an extra that adds methods that compute the intersection, difference, union, and XOR of two
  polygons. Path triangulation now supports polygons with holes.
 - The default light configuration is no lights when creating a LightSource. The exception, for compatibility purposes, is when using a Scene3D without rendering a custom `Batch3D`, in which case the default is one light source with its default values.
 - The default value for specular materials (Material) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.
 - The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
 - Many of the tutorials were edited heavily to accommodate the new version. The `GraphicsPath` tutorial was added.
-- There were also numerous bug fixes.
+- There were also numerous issue fixes.
 - A known issue: When using the Camera in conjunction with the compatibility behavior of Scene3D, only one side of the scene will appear lighted by default.
 
 Version 1.5.1:
@@ -218,7 +218,7 @@ and middle mouse button
 - Support loading custom textures from byte arrays
 - Add method to create capsule shapes in Meshes class
 - Mesh builder (vector3 method) avoids adding degenerate triangles
-- Optimizations and bug fixes
+- Optimizations and issue fixes
 
 Version 1.1:
 
@@ -229,7 +229,7 @@ Version 1.1:
 - Optimize setUniforms method of the ShaderProgram class
 - Add movePosition method of the Transform class
 - New methods in the ShapeGroup and Scene3D classes
-- Bug fixes
+- Issue fixes
 
 Version 1.0:
 
@@ -244,7 +244,7 @@ Version 1.0:
 - New classes: Transform and ShapeGroup
 - Most methods that affect transforms removed, and their functionality
   now uses a new getTransform method and the Transform class
-- Bug fixes
+- Issue fixes
 
 Version 0.2:
 

@@ -168,7 +168,7 @@ be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</ul><h4> Return Value</h4>A clamped uniform knot vector.
 The first knot will be 0 and the last knot will be 1. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_endPoints'></a>
 <h3> H3DU.BSplineCurve#endPoints()</h3>Returns the starting and coordinates of this curve.<h4> Return Value</h4>A two-element array containing
-the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_evaluate'></a>
+the starting and ending u-coordinates, respectively, of the curve. (Type: Array.&lt;number>)<a name='H3DU.BSplineCurve_evaluate'></a>
 <h3> H3DU.BSplineCurve#evaluate(u)</h3>Evaluates the curve function based on a point
 in a B-spline curve.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>Point on the curve to evaluate. This parameter is not scaled according to the curve's knot vector. To get the curve's extents, call this object's <code>endPoints</code> method.</ul><h4> Return Value</h4>An array of the result of
 the evaluation. Its length will be equal to the

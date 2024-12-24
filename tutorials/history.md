@@ -33,7 +33,7 @@ The changes in beta 3 from beta 2 include:
 - Default diffuse/albedo in Material and PbrMaterial is now (1,1,1,1).
 - New H3DU.BufferAccessor class represents a single vertex buffer.
 - Many methods outside H3DU.Mesh now return H3DU.MeshBuffer instead of H3DU.Mesh.
-- Bug fixes.
+- Issue fixes.
 
 Version 2.0.0-beta2:
 
@@ -64,7 +64,7 @@ The changes in beta 2 from beta 1 include:
 - Several new demos were added.
 - Some methods were removed: setMaterialParams methods from both H3DU.Shape and H3DU.ShapeGroup; mapTexture and mapTexturesAll methods from TextureLoader; forShader method from H3DU.Material.
 - Renamed setOrientation and multOrientation in H3DU.Transform to setRotation and multRotation, and deprecated the old names.
-- Bug fixes.
+- Issue fixes.
 
 Version 2.0.0-beta1:
 
@@ -100,7 +100,7 @@ There are many, many changes to version 2.0.0-beta1 from version 1.5.1. Here are
 - The default value for specular materials ({@link Material}) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.
 - The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, TRIANGLE_FAN and QUAD_STRIP) in the same mesh is still supported.
 - Many of the tutorials were edited heavily to accommodate the new version. The `GraphicsPath` tutorial was added.
-- There were also numerous bug fixes.
+- There were also numerous issue fixes.
 - A known issue: When using the {@link Camera} in conjunction with the compatibility behavior of {@link Scene3D}, only one side of the scene will appear lighted by default.
 
 Version 1.5.1:
@@ -214,7 +214,7 @@ and middle mouse button
 - Support loading custom textures from byte arrays
 - Add method to create capsule shapes in Meshes class
 - Mesh builder (vector3 method) avoids adding degenerate triangles
-- Optimizations and bug fixes
+- Optimizations and issue fixes
 
 Version 1.1:
 
@@ -225,7 +225,7 @@ Version 1.1:
 - Optimize setUniforms method of the ShaderProgram class
 - Add movePosition method of the Transform class
 - New methods in the ShapeGroup and Scene3D classes
-- Bug fixes
+- Issue fixes
 
 Version 1.0:
 
@@ -240,7 +240,7 @@ Version 1.0:
 - New classes: Transform and ShapeGroup
 - Most methods that affect transforms removed, and their functionality
   now uses a new getTransform method and the Transform class
-- Bug fixes
+- Issue fixes
 
 Version 0.2:
 

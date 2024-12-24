@@ -91,8 +91,8 @@ equation but raising all sines and cosines to a power of n).
 #### Parameters
 
 * `n` (Type: number)<br>Exponent for the sines and cosines in the superellipse equation. A value of 1 forms a circle, values approaching 0 have the circle approach a square, and values approaching infinity have the circle approach a plus sign.
-* `rx` (Type: number)<br>Radius along the X axis of the figure.
-* `ry` (Type: number)<br>Radius along the Y axis of the figure.
+* `rx` (Type: number)<br>Radius along the x-axis of the figure.
+* `ry` (Type: number)<br>Radius along the y-axis of the figure.
 
 #### Return Value
 
@@ -126,11 +126,11 @@ equation but raising all sines and cosines to a power of n1 or n2).
 
 #### Parameters
 
-* `n1` (Type: number)<br>Exponent for the sines and cosines along the V axis.
-* `n2` (Type: number)<br>Exponent for the sines and cosines along the U axis.
-* `rx` (Type: number)<br>Radius along the X axis of the figure.
-* `ry` (Type: number)<br>Radius along the Y axis of the figure.
-* `rz` (Type: number)<br>Radius along the Z axis of the figure.
+* `n1` (Type: number)<br>Exponent for the sines and cosines along the v-axis.
+* `n2` (Type: number)<br>Exponent for the sines and cosines along the u-axis.
+* `rx` (Type: number)<br>Radius along the x-axis of the figure.
+* `ry` (Type: number)<br>Radius along the y-axis of the figure.
+* `rz` (Type: number)<br>Radius along the z-axis of the figure.
 
 #### Return Value
 

@@ -23,7 +23,7 @@ of shapes.
 in it.
 * [getBounds](#H3DU.ShapeGroup_getBounds)<br>Finds a bounding box that holds all vertices in this shape group.
 * [getMatrix](#H3DU.ShapeGroup_getMatrix)<br>Gets a copy of the transformation needed to transform
-this shape group's coordinates to world coordinates.
+this shape group's-coordinates to world coordinates.
 * [getShape](#H3DU.ShapeGroup_getShape)<br>Gets the shape or shape group located
 in this shape group at the given index.
 * [getTransform](#H3DU.ShapeGroup_getTransform)<br>Gets a reference to the transform used by this shape group object.
@@ -97,8 +97,8 @@ tightest, and the box will be in world space coordinates.
 An array of six numbers describing an
 axis-aligned bounding box
 that fits all vertices in the shape group. The first three numbers
-are the smallest-valued X, Y, and Z coordinates, and the
-last three are the largest-valued X, Y, and Z coordinates.
+are the smallest-valued x-, y-, and z-coordinates, and the
+last three are the largest-valued x-, y-, and z-coordinates.
 If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 -Inf, -Inf]. (Type: Array.&lt;number>)
 
@@ -106,7 +106,7 @@ If the shape group has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 ### H3DU.ShapeGroup#getMatrix()
 
 Gets a copy of the transformation needed to transform
-this shape group's coordinates to world coordinates.
+this shape group's-coordinates to world coordinates.
 
 #### Return Value
 
@@ -179,9 +179,9 @@ rather than the transform for each shape in the group.
 
 #### Parameters
 
-* `x` (Type: number | Array.&lt;number>)<br>X coordinate or a 3-element position array, as specified in Transform#setScale.
-* `y` (Type: number)<br>Y coordinate.
-* `z` (Type: number)<br>Z coordinate.
+* `x` (Type: number | Array.&lt;number>)<br>x-coordinate or a 3-element position array, as specified in Transform#setScale.
+* `y` (Type: number)<br>y-coordinate.
+* `z` (Type: number)<br>z-coordinate.
 
 #### Return Value
 
