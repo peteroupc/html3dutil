@@ -13,8 +13,8 @@ import {MathUtil} from "./h3du-math.js";
  * usually 2 or 3) that lies on the curve. For example, in 3
  * dimensions, a curve function has the following form:<p>
  * <b>F</b>(u) = [ x(u), y(u), z(u) ]<p>
- * where x(u) returns an X coordinate, y(u) a Y coordinate,
- * and z(u) returns a Z coordinate.<p>
+ * where x(u) returns an x-coordinate, y(u) a y-coordinate,
+ * and z(u) returns a z-coordinate.<p>
  * Classes or JavaScript objects defining parametric curves should implement
  * the <code>evaluate</code> method and, optionally, the other methods mentioned in the "curve" parameter below.
  * @constructor
@@ -22,8 +22,8 @@ import {MathUtil} from "./h3du-math.js";
  * @param {Object} [curveParam] An object for reparameterizing a curve object. It implements a method
  * named <code>endPoints</code>, which has the same meaning as {@link Curve#endPoints} and whose
  * return value takes precedence over the given curve's <code>endPoints</code> method. It also implements
- * a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization
- * to a U coordinate in the new parameterization.
+ * a method named <code>getCoordinate(u)</code>, which converts a u-coordinate in the old parameterization
+ * to a u-coordinate in the new parameterization.
  * @example <caption>The following is a simple example of a parametric curve.</caption>
  * var simpleCurve = new Curve({
  * "evaluate":function(u) {
@@ -87,7 +87,7 @@ function Curve(curve, curveParam) {
   this.curveParam = curveParam;
 }
 /**
- * Returns the starting and ending U coordinates of this curve.
+ * Returns the starting and ending u-coordinates of this curve.
  * @returns A two-element array. The first element is the starting coordinate of
  * the curve, and the second is its ending coordinate.
  * Returns <code>[0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
@@ -114,8 +114,8 @@ Curve.prototype._getCoord = function(u) {
 /** @ignore */
 Curve._EPSILON = 0.00001;
 /**
- * Finds the position of this curve at the given U coordinate.
- * @param {number} u The Ucoordinate of a point on the curve.
+ * Finds the position of this curve at the given u-coordinate.
+ * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a position. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
@@ -127,12 +127,12 @@ Curve.prototype.evaluate = function(u) {
   }
 };
 /**
- * Finds an approximate velocity vector at the given U coordinate of this curve.
+ * Finds an approximate velocity vector at the given u-coordinate of this curve.
  * The implementation in {@link Curve} calls the evaluator's <code>velocity</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the position (from the <code>evaluate</code> method).<p>
  * The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * @param {number} u The Ucoordinate of a point on the curve.
+ * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a velocity vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
@@ -151,12 +151,12 @@ Curve.prototype.velocity = function(u) {
   }
 };
 /**
- * Finds an approximate acceleration vector at the given U coordinate of this curve.
+ * Finds an approximate acceleration vector at the given u-coordinate of this curve.
  * The implementation in {@link Curve} calls the evaluator's <code>accel</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the velocity vector.<p>
  * The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * @param {number} u The Ucoordinate of a point on the curve.
+ * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing an acceleration vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
@@ -175,12 +175,12 @@ Curve.prototype.accel = function(u) {
   }
 };
 /**
- * Finds an approximate jerk vector at the given U coordinate of this curve.
+ * Finds an approximate jerk vector at the given u-coordinate of this curve.
  * The implementation in {@link Curve} calls the evaluator's <code>jerk</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the acceleration vector.<p>
  * The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
- * @param {number} u The Ucoordinate of a point on the curve.
+ * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a jerk vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
@@ -199,13 +199,13 @@ Curve.prototype.jerk = function(u) {
   }
 };
 /**
- * Finds an approximate principal normal vector at the given U coordinate of this curve.
+ * Finds an approximate principal normal vector at the given u-coordinate of this curve.
  * The implementation in {@link Curve} calls the evaluator's <code>normal</code>
  * method if it implements it; otherwise, does a numerical differentiation using the velocity vector.<p>
  * The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
  * vector divided by that derivative's length. The normal returned by this method
  * <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with {@link Surface#gradient}.)
- * @param {number} u The Ucoordinate of a point on the curve.
+ * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a normal vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
@@ -226,9 +226,9 @@ Curve.prototype.normal = function(u) {
 };
 
 /**
- * Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+ * Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
  * The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
- * @param {number} u The Ucoordinate of a point on the curve.
+ * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a normal vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
  */
@@ -293,12 +293,12 @@ function gaussKronrod(func, mn, mx, dir, depth) {
 
 /**
  * Finds an approximate arc length (distance) between the start of this
- * curve and the point at the given U coordinate of this curve.
+ * curve and the point at the given u-coordinate of this curve.
  * The implementation in {@link Curve} calls the evaluator's <code>arcLength</code>
  * method if it implements it; otherwise, calculates a numerical integral using the velocity vector.<p>
  * The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.
- * @param {number} u The Ucoordinate of a point on the curve.
- * @returns {number} The approximate arc length of this curve at the given U coordinate.
+ * @param {number} u The u-coordinate of a point on the curve.
+ * @returns {number} The approximate arc length of this curve at the given u-coordinate.
  */
 Curve.prototype.arcLength = function(u) {
   if(typeof this.curveParam !== "undefined" && this.curveParam !== null && this.curveParam instanceof Curve._ArcLengthParam) {
@@ -347,7 +347,7 @@ function _pointToObject(p) {
 
 /**
  * Gets an array of positions on the curve at fixed intervals
- * of U coordinates. Note that these positions will not generally be
+ * of u-coordinates. Note that these positions will not generally be
  * evenly spaced along the curve unless the curve uses
  * an arc-length parameterization.
  * @param {number} count Number of positions to generate. Throws
@@ -373,7 +373,7 @@ Curve.prototype.getPoints = function(count) {
 
 /**
  * Gets an array of positions on the curve at fixed intervals
- * of U coordinates. Note that these positions will not generally be
+ * of u-coordinates. Note that these positions will not generally be
  * evenly spaced along the curve unless the curve uses
  * an arc-length parameterization. The positions will be in the form of objects with
  * up to four properties: x, y, z, and w retrieve the first, second, third,
@@ -566,7 +566,7 @@ Curve._ArcLengthParam.prototype.endPoints = function() {
 };
 /**
  * Creates a curve evaluator object for a curve that is generated using
- * the same formula as this one (and uses the same U coordinates),
+ * the same formula as this one (and uses the same u-coordinates),
  * but has a different set of end points.
  * For example, this method can be used to shrink the path of a curve
  * from [0, &pi;] to [0, &pi;/8].<p>
@@ -587,8 +587,8 @@ Curve.prototype.changeEnds = function(ep1, ep2) {
 
 /**
  * Creates a curve evaluator object for a curve that follows the same
- * path as this one but has its U coordinates remapped to fit the given range.
- * For example, this method can be used to shrink the range of U coordinates
+ * path as this one but has its u-coordinates remapped to fit the given range.
+ * For example, this method can be used to shrink the range of u-coordinates
  * from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
  * Here, -&pi; now maps to 0, and &pi; now maps to 1.
  * @param {number} ep1 New value to use as the start point of the curve.
@@ -600,7 +600,7 @@ Curve.prototype.fitRange = function(ep1, ep2) {
 };
 /**
  * Gets a curve evaluator object for a curve that follows the same
- * path as this one but has its U coordinates remapped to
+ * path as this one but has its u-coordinates remapped to
  * an <i>arc length parameterization</i>. Arc length
  * parameterization allows for moving along a curve's path at a uniform
  * speed and for generating points which are spaced evenly along that

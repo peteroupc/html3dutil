@@ -39,7 +39,7 @@ Transform.prototype.getScale = function() {
   }
 };
 /**
- * Returns a copy of a three-element array giving the x-, y-, and Z coordinates of the position
+ * Returns a copy of a three-element array giving the x-, y-, and z-coordinates of the position
  * of an object relative to its original position.
  * @returns {Array<number>} Return value.
  */
@@ -121,13 +121,13 @@ Transform.prototype.isIdentity = function() {
  * Sets the scale of an object relative to its original
  * size. Has no effect if a matrix was defined with {@link Transform#setMatrix}
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @param {number|Array<number>} x X axis scaling factor for this transform.
+ * @param {number|Array<number>} x x-axis scaling factor for this transform.
  *   If "y" and "z" are null, undefined, or omitted, this is instead
  * a 3-element array giving the scaling factors
  * for X, Y, and Z dimensions, respectively, or a single number
  * giving the scaling factor for all three dimensions.
- * @param {number} [y] The Yaxis scaling factor for this transform.
- * @param {number} [z] The Zaxis scaling factor for this transform.
+ * @param {number} [y] The y-axis scaling factor for this transform.
+ * @param {number} [z] The z-axis scaling factor for this transform.
  * @returns {Transform} This object.
  * @example
  * // scale coordinates by 2x in all axes
@@ -156,18 +156,18 @@ Transform.prototype.setScale = function(x, y, z) {
  * Sets the relative position of an object from its original
  * position. Has no effect if a matrix was defined with {@link Transform#setMatrix}
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @param {Array<number>|number} x The X coordinate.
+ * @param {Array<number>|number} x The x-coordinate.
  *   If "y" and "z" are null, undefined, or omitted, this is instead
- * a 3-element array giving the x-, y-, and Z coordinates, or a single number
+ * a 3-element array giving the x-, y-, and z-coordinates, or a single number
  * giving the coordinate for all three dimensions.
- * @param {number} [y] The Y coordinate.
+ * @param {number} [y] The y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} [z] The Z coordinate.
+ * @param {number} [z] The z-coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {Transform} This object.
  * @example
- * // Set the relative position to 2 units along X axis, 4 units along Y axis,
- * // and 5 units along Z axis
+ * // Set the relative position to 2 units along x-axis, 4 units along y-axis,
+ * // and 5 units along z-axis
  * transform.setPosition(2,4,5);
  * // same, but passing an array
  * transform.setPosition([2,4,5]);
@@ -194,13 +194,13 @@ Transform.prototype.setPosition = function(x, y, z) {
  * Moves the relative position of an object from its original
  * position. Has no effect if a matrix was defined with {@link Transform#setMatrix}
  * and the transform wasn't reset yet with {@link Transform#resetTransform}.
- * @param {Array<number>|number} x Number to add to the X coordinate,
+ * @param {Array<number>|number} x Number to add to the x-coordinate,
  *   If "y" and "z" are null, undefined, or omitted, this is instead
- * a 3-element array giving the numbers to add to the x-, y-, and Z coordinates, or a single number
+ * a 3-element array giving the numbers to add to the x-, y-, and z-coordinates, or a single number
  * to add to all three coordinates.
- * @param {number} y Number to add to the Y coordinate.
+ * @param {number} y Number to add to the y-coordinate.
  * If "x" is an array, this parameter may be omitted.
- * @param {number} z Number to add to the Z coordinate.
+ * @param {number} z Number to add to the z-coordinate.
  * If "x" is an array, this parameter may be omitted.
  * @returns {Transform} This object.
  */
@@ -237,17 +237,17 @@ Transform.prototype.movePosition = function(x, y, z) {
  * and {@link MathUtil.quatFromTaitBryan}, among others.
  * @returns {Transform} This object.
  * @example
- * // Set an object's rotation to 30 degrees about the X axis
+ * // Set an object's rotation to 30 degrees about the x-axis
  * transform.setQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
  * // Set an object's rotation to identity (the object isn't transformed)
  * transform.setQuaternion(MathUtil.quatIdentity());
  * // Set an object's rotation to 30 degree pitch multiplied
  * // by 40 degree roll
  * transform.setQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
- * // Set an object's rotation to 40 units about X axis, 20 units about Y axis,
- * // and 50 units about Z axis
+ * // Set an object's rotation to 40 units about x-axis, 20 units about y-axis,
+ * // and 50 units about z-axis
  * transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
- * // Set an object's rotation to 20 units about Y axis
+ * // Set an object's rotation to 20 units about y-axis
  * transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
  */
 Transform.prototype.setQuaternion = function(quat) {
@@ -295,7 +295,7 @@ Transform.prototype.setRotation = function(angle, v, vy, vz) {
  * or {@link MathUtil.quatFromTaitBryan}.
  * @returns {Transform} This object.
  * @example
- * // Combine an object's rotation with a rotation 20 degrees about the X axis
+ * // Combine an object's rotation with a rotation 20 degrees about the x-axis
  * transform.multQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
  * // Combine an object's rotation with identity
  * transform.multQuaternion(MathUtil.quatIdentity());

@@ -623,8 +623,8 @@ GraphicsPath.prototype.pathLength = function(flatness) {
  * value, given in units. If null, undefined, or omitted, default is 1.
  * @returns {Array<Array<number>>} Array of line segments.
  * Each line segment is an array of four numbers: the X and
- * Y coordinates of the start point, respectively, then the X and
- * Y coordinates of the end point, respectively.
+ * y-coordinates of the start point, respectively, then the X and
+ * y-coordinates of the end point, respectively.
  */
 GraphicsPath.prototype.getLines = function(flatness) {
   const ret = [];
@@ -811,8 +811,8 @@ GraphicsPath._angleInRange = function(angle, startAngle, endAngle) {
  * fits this graphics path.
  * @returns {Array<number>} An array of four numbers
  * describing the bounding box. The first two are
- * the lowest x- and Y coordinates, and the last two are
- * the highest x- and Y coordinates. If the path is empty,
+ * the lowest x- and y-coordinates, and the last two are
+ * the highest x- and y-coordinates. If the path is empty,
  * returns the array (Infinity, Infinity, -Infinity, -Infinity).
  */
 GraphicsPath.prototype.getBounds = function() {
@@ -1223,10 +1223,10 @@ GraphicsPath._addSegment = function(a, c) {
  * described by this path. The list will contain one curve evaluator object for each disconnected
  * portion of the path. For example, if the path contains one polygon, the list will contain
  * one curve object. And if the path is empty, the list will be empty too. Each curve
- * takes U coordinates that range from 0 to 1, depending on how far the point is from the start or
+ * takes u-coordinates that range from 0 to 1, depending on how far the point is from the start or
  * the end of the path (similar to arc-length parameterization). Each curve
  * returns a 3-element array containing
- * the x-, y-, and Z coordinates of the point lying on the curve at the given
+ * the x-, y-, and z-coordinates of the point lying on the curve at the given
  * "u" position (however, the z will always be 0 since paths can currently
  * only be 2-dimensional).
  * </ul>
@@ -1337,7 +1337,7 @@ GraphicsPath.prototype.getLinePoints = function(flatness) {
 /**
  * Gets an array of the end points of
  * line segments approximating the path. The positions will be in the form of objects with
- * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+ * two properties: x and y retrieve the X or y-coordinate of each position, respectively.
  * @param {number} [flatness] When curves and arcs
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
@@ -1406,7 +1406,7 @@ GraphicsPath.prototype.getPoints = function(numPoints) {
 /**
  * Gets an array of points evenly spaced across the length
  * of the path. The positions will be in the form of objects with
- * two properties: x and y retrieve the X or Y coordinate of each position, respectively.
+ * two properties: x and y retrieve the X or y-coordinate of each position, respectively.
  * @param {number} numPoints Number of points to return.
  * @returns {Array<Array<number>>} Array of points lying on
  * the path and evenly spaced across the length of the path,
@@ -1474,8 +1474,8 @@ GraphicsPath.prototype.closePath = function() {
 
 /**
  * Moves the current start position and end position to the given position.
- * @param {number} x The Xcoordinate of the position.
- * @param {number} y The Ycoordinate of the position.
+ * @param {number} x The x-coordinate of the position.
+ * @param {number} y The y-coordinate of the position.
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.moveTo = function(x, y) {
@@ -1490,8 +1490,8 @@ GraphicsPath.prototype.moveTo = function(x, y) {
  * Adds a line segment to the path, starting
  * at the path's end position, then
  * sets the end position to the end of the segment.
- * @param {number} x The Xcoordinate of the end of the line segment.
- * @param {number} y The Ycoordinate of the end of the line segment.
+ * @param {number} x The x-coordinate of the end of the line segment.
+ * @param {number} y The y-coordinate of the end of the line segment.
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.lineTo = function(x, y) {
@@ -1513,7 +1513,7 @@ GraphicsPath.prototype.setEndPos = function(x, y) {
 
 /**
  * Gets the current point stored in this path.
- * @returns {Array<number>} A two-element array giving the x- and Y coordinates of the current point.
+ * @returns {Array<number>} A two-element array giving the x- and y-coordinates of the current point.
  */
 GraphicsPath.prototype.getCurrentPoint = function() {
   return [this.endPos[0], this.endPos[1]];
@@ -1537,20 +1537,20 @@ GraphicsPath._areCollinear = function(x0, y0, x1, y1, x2, y2) {
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arcTo" method of the
  * HTML Canvas 2D Context.
- * @param {number} x1 The Xcoordinate of a point that, along with the
+ * @param {number} x1 The x-coordinate of a point that, along with the
  * current end point, forms a tangent line. The point where the
  * circle touches this tangent line is the start point of the arc, and if the
  * point isn't the same as the current end point, this method adds
  * a line segment connecting the two points. (Note that the start point
  * of the arc is not necessarily the same as (x1, y1) or the current end point.)
- * @param {number} y1 The Ycoordinate of the point described under "x1".
- * @param {number} x2 The Xcoordinate of a point that, along with the
+ * @param {number} y1 The y-coordinate of the point described under "x1".
+ * @param {number} x2 The x-coordinate of a point that, along with the
  * point (x1, y1), forms a tangent line. The point where the
  * circle touches this tangent line is the end point of the arc. (Note that the
  * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
  * When this method returns, the current end point will be set to the end
  * point of the arc.
- * @param {number} y2 The Ycoordinate of the point described under "x2".
+ * @param {number} y2 The y-coordinate of the point described under "x2".
  * @param {number} radius Radius of the circle the arc forms a part of.
  * @returns {GraphicsPath} This object.
  */
@@ -1584,15 +1584,15 @@ GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
  * Adds path segments in the form of a circular arc to this path,
  * using the parameterization specified in the "arc" method of the
  * HTML Canvas 2D Context.
- * @param {number} x The Xcoordinate of the center of the circle that the arc forms a part of.
- * @param {number} y The Ycoordinate of the circle's center.
+ * @param {number} x The x-coordinate of the center of the circle that the arc forms a part of.
+ * @param {number} y The y-coordinate of the circle's center.
  * @param {number} radius Radius of the circle.
  * @param {number} startAngle Starting angle of the arc, in radians.
- * 0 means the positive X axis, &pi;/2 means the positive Y axis,
- * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
+ * 0 means the positive x-axis, &pi;/2 means the positive y-axis,
+ * &pi; means the negative x-axis, and &pi;*1.5 means the negative y-axis.
  * @param {number} endAngle Ending angle of the arc, in radians.
  * @param {boolean} ccw Whether the arc runs counterclockwise
- * (assuming the X axis points right and the Y axis points
+ * (assuming the x-axis points right and the y-axis points
  * down under the coordinate system).
  * @returns {GraphicsPath} This object.
  */
@@ -1650,10 +1650,10 @@ GraphicsPath.prototype._arcInternal = function(x, y, radius, startAngle, endAngl
  * Adds a quadratic B&eacute;zier curve to this path starting
  * at this path's current position. The current position will be
  * the curve's first control point.
- * @param {number} x The Xcoordinate of the curve's second control point.
- * @param {number} y The Ycoordinate of the curve's second control point.
- * @param {number} x2 The Xcoordinate of the curve's end point (third control point).
- * @param {number} y2 The Ycoordinate of the curve's end point (third control point).
+ * @param {number} x The x-coordinate of the curve's second control point.
+ * @param {number} y The y-coordinate of the curve's second control point.
+ * @param {number} x2 The x-coordinate of the curve's end point (third control point).
+ * @param {number} y2 The y-coordinate of the curve's end point (third control point).
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
@@ -1668,12 +1668,12 @@ GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
  * Adds a cubic B&eacute;zier curve to this path starting
  * at this path's current position. The current position will be
  * the curve's first control point.
- * @param {number} x The Xcoordinate of the curve's second control point.
- * @param {number} y The Xcoordinate of the curve's second control point.
- * @param {number} x2 The Ycoordinate of the curve's third control point.
- * @param {number} y2 The Ycoordinate of the curve's third control point.
- * @param {number} x3 The Xcoordinate of the curve's end point (fourth control point).
- * @param {number} y3 The Ycoordinate of the curve's end point (fourth control point).
+ * @param {number} x The x-coordinate of the curve's second control point.
+ * @param {number} y The x-coordinate of the curve's second control point.
+ * @param {number} x2 The y-coordinate of the curve's third control point.
+ * @param {number} y2 The y-coordinate of the curve's third control point.
+ * @param {number} x3 The x-coordinate of the curve's end point (fourth control point).
+ * @param {number} y3 The y-coordinate of the curve's end point (fourth control point).
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
@@ -1796,21 +1796,21 @@ GraphicsPath._arcToBezierCurves = function(cx, cy, rx, ry, rot, angle1, angle2) 
 /**
  * Adds path segments in the form of an elliptical arc to this path,
  * using the parameterization used by the SVG specification.
- * @param {number} rx The Xaxis radius of the ellipse that the arc will
+ * @param {number} rx The x-axis radius of the ellipse that the arc will
  * be formed from.
- * @param {number} ry The Yaxis radius of the ellipse that the arc will
+ * @param {number} ry The y-axis radius of the ellipse that the arc will
  * be formed from.
  * @param {number} rot Rotation of the ellipse in degrees (clockwise
- * assuming the X axis points right and the Y axis points
+ * assuming the x-axis points right and the y-axis points
  * down under the coordinate system).
  * @param {boolean} largeArc In general, there are four possible solutions
  * for arcs given the start and end points, rotation, and x- and y-radii. If true,
  * chooses an arc solution with the larger arc length; if false, smaller.
  * @param {boolean} sweep If true, the arc solution chosen will run
- * clockwise (assuming the X axis points right and the Y axis points
+ * clockwise (assuming the x-axis points right and the y-axis points
  * down under the coordinate system); if false, counterclockwise.
- * @param {number} x2 The Xcoordinate of the arc's end point.
- * @param {number} y2 The Ycoordinate of the arc's end point.
+ * @param {number} x2 The x-coordinate of the arc's end point.
+ * @param {number} y2 The y-coordinate of the arc's end point.
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
@@ -2018,8 +2018,8 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
  * that keeps straight lines straight and parallel lines parallel).
  * @param {Array<number>} trans An array of six numbers
  * describing a 2-dimensional affine transformation. For each
- * point in the current path, its new X coordinate is `trans[0] * X +
- * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
+ * point in the current path, its new x-coordinate is `trans[0] * X +
+ * trans[2] * Y + trans[4]`, and its new y-coordinate is `trans[1] * X +
  * trans[3] * Y + trans[5]`.
  * @returns {GraphicsPath} The transformed version of this path.
  */
@@ -2117,10 +2117,10 @@ GraphicsPath.prototype.transform = function(trans) {
 
 /**
  * Adds path segments to this path that form an axis-aligned rectangle.
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
  * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
@@ -2136,12 +2136,12 @@ GraphicsPath.prototype.rect = function(x, y, w, h) {
 
 /**
  * Adds a line segment to this path.
- * @param {number} x0 The Xcoordinate of the line segment's starting point.
+ * @param {number} x0 The x-coordinate of the line segment's starting point.
  * The <code>moveTo</code> method will be called on the starting point.
- * @param {number} y0 The Ycoordinate of the line segment's starting point.
- * @param {number} x1 The Xcoordinate of the line segment's ending point.
+ * @param {number} y0 The y-coordinate of the line segment's starting point.
+ * @param {number} x1 The x-coordinate of the line segment's ending point.
  * The <code>lineTo</code> method will be called on the ending point.
- * @param {number} y1 The Xcoordinate of the line segment's ending point.
+ * @param {number} y1 The x-coordinate of the line segment's ending point.
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
@@ -2149,7 +2149,7 @@ GraphicsPath.prototype.line = function(x0, y0, x1, y1) {
 };
 /**
  * Adds path segments to this path that form a polygon or a connected line segment strand.
- * @param {Array<number>} pointCoords An array of numbers containing the x- and Y coordinates
+ * @param {Array<number>} pointCoords An array of numbers containing the x- and y-coordinates
  * of each point in the sequence of line segments. Each pair of numbers gives the X and Y
  * coordinates, in that order, of one of the points in the sequence.
  * The number of elements in the array must be even. If two or more pairs of numbers are given, line
@@ -2174,10 +2174,10 @@ GraphicsPath.prototype.polyline = function(pointCoords, closed) {
 
 /**
  * Adds path segments to this path that form an axis-aligned rounded rectangle.
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
  * @param {number} arccx Horizontal extent (from end to end) of the ellipse formed by each arc that makes
@@ -2225,10 +2225,10 @@ GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
 
 /**
  * Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
- * @param {number} x The Xcoordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {number} y The Ycoordinate of the rectangle's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
+ * @param {number} x The x-coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
+ * @param {number} y The y-coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the rectangle.
  * @param {number} h Height of the rectangle.
  * @param {number} arccx Horizontal extent (from end to end) of the rectangle's corners.
@@ -2274,8 +2274,8 @@ GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
 /**
  * Adds path segments to this path that form an axis-aligned ellipse given its center
  * and dimensions.
- * @param {number} cx The Xcoordinate of the ellipse's center.
- * @param {number} cy The Ycoordinate of the ellipse's center.
+ * @param {number} cx The x-coordinate of the ellipse's center.
+ * @param {number} cy The y-coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
@@ -2293,10 +2293,10 @@ GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
 /**
  * Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point
  * and dimensions.
- * @param {number} x The Xcoordinate of the ellipse's bounding box's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {number} y The Ycoordinate of the ellipse's bounding box's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
+ * @param {number} x The x-coordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
+ * @param {number} y The y-coordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @returns {GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
@@ -2308,16 +2308,16 @@ GraphicsPath.prototype.ellipseForBox = function(x, y, w, h) {
  * Adds path segments to this path that form an arc running along an axis-aligned
  * ellipse, or a shape based on that arc and ellipse, given the ellipse's center
  * and dimensions, start angle, and sweep angle.
- * @param {number} x The Xcoordinate of the ellipse's center.
- * @param {number} y The Ycoordinate of the ellipse's center.
+ * @param {number} x The x-coordinate of the ellipse's center.
+ * @param {number} y The y-coordinate of the ellipse's center.
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @param {number} start Starting angle of the arc, in degrees.
- * 0 means the positive X axis, 90 means the positive Y axis,
- * 180 means the negative X axis, and 270 means the negative Y axis.
+ * 0 means the positive x-axis, 90 means the positive y-axis,
+ * 180 means the negative x-axis, and 270 means the negative y-axis.
  * @param {number} sweep Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or
  * less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming
- * the coordinate system's X axis points right and the Y axis down, positive angles run
+ * the coordinate system's x-axis points right and the y-axis down, positive angles run
  * clockwise and negative angles counterclockwise.
  * @param {number} type Type of arc to append to the path. If 0,
  * will append an unclosed arc. If 1, will append an elliptical segment to the path
@@ -2370,18 +2370,18 @@ GraphicsPath.prototype.arcShape = function(x, y, w, h, start, sweep, type) {
  * Adds path segments to this path that form an arc running along an axis-aligned
  * ellipse, or a shape based on that arc and ellipse, given the ellipse's corner point
  * and dimensions, start angle, and sweep angle.
- * @param {number} x The Xcoordinate of the ellipse's bounding box's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
- * @param {number} y The Ycoordinate of the ellipse's bounding box's upper-left corner (assuming the
- * coordinate system's X axis points right and the Y axis down).
+ * @param {number} x The x-coordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
+ * @param {number} y The y-coordinate of the ellipse's bounding box's upper-left corner (assuming the
+ * coordinate system's x-axis points right and the y-axis down).
  * @param {number} w Width of the ellipse's bounding box.
  * @param {number} h Height of the ellipse's bounding box.
  * @param {number} start Starting angle of the arc, in degrees.
- * 0 means the positive X axis, 90 means the positive Y axis,
- * 180 means the negative X axis, and 270 means the negative Y axis.
+ * 0 means the positive x-axis, 90 means the positive y-axis,
+ * 180 means the negative x-axis, and 270 means the negative y-axis.
  * @param {number} sweep Length of the arc in degrees. Can be greater than 360 or
  * less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming
- * the coordinate system's X axis points right and the Y axis down, positive angles run
+ * the coordinate system's x-axis points right and the y-axis down, positive angles run
  * clockwise and negative angles counterclockwise.
  * @param {number} type Type of arc to append to the path. If 0,
  * will append an unclosed arc. If 1, will append an elliptical segment to the path
@@ -2395,10 +2395,10 @@ GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type)
 };
 /**
  * Adds path segments to this path in the form of an arrow shape.
- * @param {number} x0 The Xcoordinate of the arrow's tail, at its end.
- * @param {number} y0 The Ycoordinate of the arrow's tail, at its end.
- * @param {number} x1 The Xcoordinate of the arrow's tip.
- * @param {number} y1 The Ycoordinate of the arrow's tip.
+ * @param {number} x0 The x-coordinate of the arrow's tail, at its end.
+ * @param {number} y0 The y-coordinate of the arrow's tail, at its end.
+ * @param {number} x1 The x-coordinate of the arrow's tip.
+ * @param {number} y1 The y-coordinate of the arrow's tip.
  * @param {number} headWidth Width of the arrowhead's base from side to side.
  * @param {number} headLength Length of the arrowhead from its tip to its base.
  * @param {number} tailWidth Width of the arrow's tail from side to side
@@ -2443,14 +2443,14 @@ GraphicsPath.prototype.arrow = function(x0, y0, x1, y1, headWidth, headLength, t
 };
 /**
  * Adds path segments to this path that form a regular polygon.
- * @param {number} cx The Xcoordinate of the center of the polygon.
- * @param {number} cy The Ycoordinate of the center of the polygon.
+ * @param {number} cx The x-coordinate of the center of the polygon.
+ * @param {number} cy The y-coordinate of the center of the polygon.
  * @param {number} sides Number of sides the polygon has. Nothing will be added to the path if this
  * value is 2 or less.
  * @param {number} radius Radius from the center to each vertex of the polygon.
  * @param {number} [phaseInDegrees] Starting angle of the first vertex of the polygon, in degrees.
- * 0 means the positive X axis, 90 means the positive Y axis,
- * 180 means the negative X axis, and 270 means the negative Y axis.
+ * 0 means the positive x-axis, 90 means the positive y-axis,
+ * 180 means the negative x-axis, and 270 means the negative y-axis.
  * If null, undefined, or omitted, the default is 0.
  * @returns {GraphicsPath} This object.
  */
@@ -2483,15 +2483,15 @@ GraphicsPath.prototype.regularPolygon = function(cx, cy, sides, radius, phaseInD
 };
 /**
  * Adds path segments to this path that form a regular N-pointed star.
- * @param {number} cx The Xcoordinate of the center of the star.
- * @param {number} cy The Ycoordinate of the center of the star.
+ * @param {number} cx The x-coordinate of the center of the star.
+ * @param {number} cy The y-coordinate of the center of the star.
  * @param {number} points Number of points the star has. Nothing will be added to the path if this
  * value is 0 or less.
  * @param {number} radiusOut Radius from the center to each outer vertex of the star.
  * @param {number} radiusIn Radius from the center to each inner vertex of the star.
  * @param {number} phaseInDegrees Starting angle of the first vertex of the polygon, in degrees.
- * 0 means the positive X axis, 90 means the positive Y axis,
- * 180 means the negative X axis, and 270 means the negative Y axis.
+ * 0 means the positive x-axis, 90 means the positive y-axis,
+ * 180 means the negative x-axis, and 270 means the negative y-axis.
  * @returns {GraphicsPath} This object.
  */
 GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusIn, phaseInDegrees) {
@@ -2549,7 +2549,7 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
  * <li>Z/z - Closes the current path; similar to adding a line segment
  * to the first XY point given in the last M/m command.
  * </ul>
- * Lowercase letters mean any x- and Y coordinates are relative
+ * Lowercase letters mean any x- and y-coordinates are relative
  * to the current position of the path. Each group of parameters
  * can be repeated in the same path segment. Each parameter after
  * the starting letter is separated by whitespace and/or a single comma,
@@ -3021,7 +3021,7 @@ Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
     // no visible vertices
     return null;
   } else if(closeVertices.length > 1) {
-    // sort by X coordinate
+    // sort by x-coordinate
     closeVertices = closeVertices.sort(function(a, b) {
       if(a[0] === b[0])return 0;
       return a[0] < b[0] ? -1 : 1;
@@ -3169,7 +3169,7 @@ function decomposeTriangles(points, tris, isConvex) {
  * @returns {Array<Array<number>>} Array of six-element
  * arrays each describing a single triangle. For each six-element
  * array, the first two, next two, and last two numbers each
- * describe a vertex position of that triangle (x- and Y coordinates
+ * describe a vertex position of that triangle (x- and y-coordinates
  * in that order).
  */
 GraphicsPath.prototype.getTriangles = function(flatness) {
@@ -3897,11 +3897,11 @@ Clipper._ptEq = function(a, b) {
 // Compare two sweep events
 // Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
 Clipper.sweepEventComp = function(e1, e2) {
-  if(e1.p[0] > e2.p[0]) // Different X coordinate
+  if(e1.p[0] > e2.p[0]) // Different x-coordinate
     return true;
-  if(e2.p[0] > e1.p[0]) // Different X coordinate
+  if(e2.p[0] > e1.p[0]) // Different x-coordinate
     return false;
-  if(!Clipper._ptEq(e1.p, e2.p)) // Different points, but same X coordinate. The event with lower Y coordinate is processed first
+  if(!Clipper._ptEq(e1.p, e2.p)) // Different points, but same x-coordinate. The event with lower y-coordinate is processed first
     return e1.p[1] > e2.p[1];
   if(e1.left !== e2.left) // Same point, but one is a left endpoint and the other a right endpoint. The right endpoint is processed first
     return e1.left;
