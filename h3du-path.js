@@ -2395,8 +2395,8 @@ GraphicsPath.prototype.arcShapeForBox = function(x, y, w, h, start, sweep, type)
 };
 /**
  * Adds path segments to this path in the form of an arrow shape.
- * @param {number} x0 The Xcoordinate of the arrow's tail, at its very end.
- * @param {number} y0 The Ycoordinate of the arrow's tail, at its very end.
+ * @param {number} x0 The Xcoordinate of the arrow's tail, at its end.
+ * @param {number} y0 The Ycoordinate of the arrow's tail, at its end.
  * @param {number} x1 The Xcoordinate of the arrow's tip.
  * @param {number} y1 The Ycoordinate of the arrow's tip.
  * @param {number} headWidth Width of the arrowhead's base from side to side.
