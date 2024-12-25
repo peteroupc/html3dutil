@@ -222,8 +222,8 @@ Adds path segments to this path in the form of an arrow shape.
 
 #### Parameters
 
-* `x0` (Type: number)<br>x-coordinate of the arrow's tail, at its very end.
-* `y0` (Type: number)<br>y-coordinate of the arrow's tail, at its very end.
+* `x0` (Type: number)<br>x-coordinate of the arrow's tail, at its end.
+* `y0` (Type: number)<br>y-coordinate of the arrow's tail, at its end.
 * `x1` (Type: number)<br>x-coordinate of the arrow's tip.
 * `y1` (Type: number)<br>y-coordinate of the arrow's tip.
 * `headWidth` (Type: number)<br>Width of the arrowhead's base from side to side.

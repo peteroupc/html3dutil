@@ -718,7 +718,7 @@ const clampRgba = function(x) {
  * * The `80` is a base-16 number showing the color&#8217;s green component.
  * * The `cc` is a base-16 number showing the color&#8217;s blue component.
  * The notation may also include an additional base-16 number, as in this example: `#ac80ccff`. Here, the last `ff` shows the color's alpha component (see _What is an alpha component?_, later). Two shortened notations are supported: colors with only three or four base-16 digits are the same as their expanded six-digit or eight-digit form, respectively. For example, `#f8c` is the same as `#ff88cc`; and `#f8ce`, `#ff88ccee`.
- * - **How do I make HTML colors?** Look at the table below that shows some of the values possible for the red, green, and blue components of some colors.
+ * - **How do I make HTML colors?** Look at the following table that shows some of the values possible for the red, green, and blue components of some colors.
  * Red.. 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
  * Green 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF
  * Blue. 00 10 20 30 40 50 60 70 80 90 A0 B0 C0 D0 E0 F0 FF

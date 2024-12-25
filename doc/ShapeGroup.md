@@ -162,8 +162,8 @@ rather than the transform for each shape in the group.
 #### Parameters
 
 * `x` (Type: number | Array.&lt;number>)<br>x-coordinate or a 3-element position array, as specified in <a href="Transform.md#Transform_setScale">Transform#setScale</a>.
-* `y` (Type: number)<br>The Ycoordinate.
-* `z` (Type: number)<br>The Zcoordinate.
+* `y` (Type: number)<br>The y-coordinate.
+* `z` (Type: number)<br>The z-coordinate.
 
 #### Return Value
 

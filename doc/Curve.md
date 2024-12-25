@@ -125,7 +125,7 @@ The <b>acceleration</b> of a curve is a vector which is the second-order derivat
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -144,7 +144,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -197,7 +197,7 @@ Finds the position of this curve at the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -289,7 +289,7 @@ The <b>jerk</b> of a curve is a vector which is the third-order derivative of th
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -309,7 +309,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -324,7 +324,7 @@ The <b>tangent vector</b> is the same as the velocity vector, but "normalized" t
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -376,7 +376,7 @@ The <b>velocity</b> of a curve is a vector which is the derivative of the curve'
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 

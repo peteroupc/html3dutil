@@ -64,8 +64,8 @@ Creates a curve evaluator object for a curve with reciprocal (inverted) polar co
 #### Parameters
 
 * `evaluator` (Type: Curve | Object)<br>A curve evaluator object for a curve from which an inverse curve is to be evaluated.
-* `ox` (Type: number) (optional)<br>The Xcoordinate of the curve's polar coordinate origin (the inversion center) for the purpose of evaluating its inverse curve. If null, undefined, or omitted, the default is 0.
-* `oy` (Type: number) (optional)<br>The Ycoordinate of the inversion center. If null, undefined, or omitted, the default is 0.
+* `ox` (Type: number) (optional)<br>The x-coordinate of the curve's polar coordinate origin (the inversion center) for the purpose of evaluating its inverse curve. If null, undefined, or omitted, the default is 0.
+* `oy` (Type: number) (optional)<br>The y-coordinate of the inversion center. If null, undefined, or omitted, the default is 0.
 * `radius` (Type: number) (optional)<br>If null, undefined, or omitted, the default is 1. TODO: Not documented fully yet.
 
 #### Return Value

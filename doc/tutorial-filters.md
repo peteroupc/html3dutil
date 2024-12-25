@@ -71,11 +71,11 @@ The following is an example of a graphics filter.
     " return vec4(gray,gray,gray,color.a);",
     "}"].join("\n"));
 
-Each graphics filter must have a GLSL function called `textureEffect()`, like in the example above.
+Each graphics filter must have a GLSL function called `textureEffect()`, like in the preceding example.
 
 The `textureEffect` function takes these parameters:
 
-* `sampler2D sampler`: Points to a texture representing a screenshot of the current frame. To read from the texture, use the `texture2D` function, as shown in the example above.
+* `sampler2D sampler`: Points to a texture representing a screenshot of the current frame. To read from the texture, use the `texture2D` function, as shown in the preceding example.
 * `vec2 uvCoord`: Texture coordinates of the current pixel.  `uvCoord.x` ranges from 0 on the left side to 1 on the right side.  `uvCoord.y` ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the lower-left corner, not the upper left, that is, textures are "bottom up",
   not "top down").
 * `vec2 textureSize`: Size of the screenshot, pointed to by `sampler`, in pixels. `textureSize.x` is the
@@ -86,7 +86,7 @@ The `textureEffect` function returns a `vec4` (4-element vector) giving the colo
 The shader can also define custom parameters called "uniforms", so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like `uniform [type] [name];` at the top of the shader. Example: `uniform float time;` Uniforms, once declared, can be used in the `textureEffect` function.
 
 A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
-be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.
+be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see later for more examples of graphics filters.
 
 <a id=Using_Graphics_Filters></a>
 

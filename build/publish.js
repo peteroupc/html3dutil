@@ -593,7 +593,7 @@ function fillCollection(docCollection, nodes, parentlong, writer) {
           if(pi.nullable) {
             listitem += " (nullable)";
           } else if(pi.nullable === false) {
-            listitem += " (non-null)";
+            listitem += " (nonnull)";
           }
           if(Object.prototype.hasOwnProperty.call(pi, "defaultvalue")) {
             listitem += " (Default Value: " + writer.jsval(pi.defaultvalue);

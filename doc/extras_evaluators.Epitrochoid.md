@@ -7,8 +7,7 @@
 
 **Augments:** Curve
 
-A curve evaluator object for a curve drawn by a circle that rolls along the outside
-of another circle, whose position is fixed, with a center of (0,0).
+A curve evaluator object for a curve drawn by a circle that rolls along the outside another circle, whose position is fixed, with a center of (0,0).
 The rolling circle will start at the positive x-axis of the fixed circle.
 
 The following curves can be generated with this class (in the following

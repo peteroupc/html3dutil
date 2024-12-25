@@ -84,7 +84,7 @@ The <b>acceleration</b> of a curve is a vector which is the second-order derivat
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -99,7 +99,7 @@ curve and the point at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -152,7 +152,7 @@ Finds the position of this curve at the given u-coordinate.
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -206,8 +206,8 @@ cubic rational B-spline curves.
 
 #### Parameters
 
-* `x` (Type: number)<br>The Xcoordinate of the ellipse's center.
-* `y` (Type: number)<br>The Ycoordinate of the ellipse's center.
+* `x` (Type: number)<br>The x-coordinate of the ellipse's center.
+* `y` (Type: number)<br>The y-coordinate of the ellipse's center.
 * `w` (Type: number)<br>Width of the ellipse's bounding box.
 * `h` (Type: number)<br>Height of the ellipse's bounding box.
 * `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.
@@ -336,7 +336,7 @@ The <b>jerk</b> of a curve is a vector which is the third-order derivative of th
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -356,7 +356,7 @@ vector divided by that derivative's length. The normal returned by this method
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -371,7 +371,7 @@ The <b>tangent vector</b> is the same as the velocity vector, but "normalized" t
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 
@@ -418,7 +418,7 @@ Finds an approximate velocity vector at the given u-coordinate of this curve.
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the curve.
+* `u` (Type: number)<br>The u-coordinate of a point on the curve.
 
 #### Return Value
 

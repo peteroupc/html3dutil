@@ -25,8 +25,8 @@ Inspired by [a _Stack Overflow_ question](http://stackoverflow.com/questions/899
 
 #### Parameters
 
-* `cx` (Type: number)<br>The Xcoordinate of the polygon's approximate center.
-* `cy` (Type: number)<br>The Ycoordinate of the polygon's approximate center.
+* `cx` (Type: number)<br>The x-coordinate of the polygon's approximate center.
+* `cy` (Type: number)<br>The y-coordinate of the polygon's approximate center.
 * `avgRadius` (Type: number)<br>Average distance of the polygon's vertices from the center.
 * `sides` (Type: number)<br>Number of sides in the polygon.
 * `irregular` (Type: number) (optional)<br>Degree to which the angular distance from one vertex to the next is uneven. If 0, the vertices will be evenly spaced in terms of angular distance. Usually no more than half pi. If null, undefined, or omitted, the default is 0.

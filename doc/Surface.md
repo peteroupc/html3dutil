@@ -48,8 +48,8 @@ the partial derivative of the <code>evaluate</code> method with respect to <code
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
-* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
+* `u` (Type: number)<br>The u-coordinate of a point on the surface.
+* `v` (Type: number)<br>The v-coordinate of a point on the surface.
 
 #### Return Value
 
@@ -90,8 +90,8 @@ Finds the position of this surface at the given u- and v-coordinates.
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
-* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
+* `u` (Type: number)<br>The u-coordinate of a point on the surface.
+* `v` (Type: number)<br>The v-coordinate of a point on the surface.
 
 #### Return Value
 
@@ -117,8 +117,8 @@ in that order. The gradient returned by this method <i>should not</i> be "normal
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
-* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
+* `u` (Type: number)<br>The u-coordinate of a point on the surface.
+* `v` (Type: number)<br>The v-coordinate of a point on the surface.
 
 #### Return Value
 
@@ -165,8 +165,8 @@ The <b>normal vector</b> is the same as the gradient vector, but "normalized" to
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
-* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
+* `u` (Type: number)<br>The u-coordinate of a point on the surface.
+* `v` (Type: number)<br>The v-coordinate of a point on the surface.
 
 #### Return Value
 
@@ -187,8 +187,8 @@ The tangent vector returned by this method <i>should not</i> be "normalized" to 
 
 #### Parameters
 
-* `u` (Type: number)<br>The Ucoordinate of a point on the surface.
-* `v` (Type: number)<br>The Vcoordinate of a point on the surface.
+* `u` (Type: number)<br>The u-coordinate of a point on the surface.
+* `v` (Type: number)<br>The v-coordinate of a point on the surface.
 
 #### Return Value
 

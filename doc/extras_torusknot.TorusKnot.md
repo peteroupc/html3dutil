@@ -12,9 +12,9 @@ by L. D. Taylor, 2011.
 #### Parameters
 
 * `revolutions` (Type: number)<br>Integer greater than 0. Labeled 'p' by Taylor.
-* `r` (Type: Array.&lt;number>)<br>Array of integers and/or non-integers.
+* `r` (Type: Array.&lt;number>)<br>Array of integers and/or nonintegers.
 * `q` (Type: Array.&lt;number>)<br>Array of integers. Lowest 'q' is the number of equal "parts" of the torus knot.
-* `s1` (Type: number)<br>Integer or non-integer parameter.
+* `s1` (Type: number)<br>Integer or noninteger parameter.
 * `m1` (Type: number)<br>Integer parameter.
 
 ### Methods

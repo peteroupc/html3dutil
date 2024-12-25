@@ -16,15 +16,17 @@
 
 import {MathUtil} from "../h3du_module.js";
 
-function threejsGeometryFromPositionsNormals(vertices, indices) {
-  var geom=new THREE.BufferGeometry()
+function threejsGeometryFromPositionsNormals(three, vertices, indices) {
+  if(!three["BufferGeometry"])return null;
+  var geom=new three["BufferGeometry"]()
   var attr;
-  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),6)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
-  geom.addAttribute("position",attr)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
-  geom.addAttribute("normal",attr)
-  geom.index=new THREE.BufferAttribute(ind,1)
+  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),8)
+  attr=new three["InterleavedBufferAttribute"](buffer,3,0)
+  geom["setAttribute"]("position",attr)
+  attr=new three["InterleavedBufferAttribute"](buffer,3,3)
+  geom["setAttribute"]("normal",attr)
+  geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
+  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
   return geom
 }
 
@@ -66,9 +68,9 @@ function QuadStrips() {
       this.primitiveIndex -= 2;
     }
   };
-  this.toMeshBuffer = function() {
+  this.toMeshBuffer = function(three) {
     return threejsGeometryFromPositionsNormals(
-      this.vertices, this.indices);
+      three, this.vertices, this.indices);
   };
 }
 /**
@@ -81,7 +83,7 @@ function QuadStrips() {
  * @returns {MeshBuffer} Return value.
  * @function
  */
-export const createGear = function(innerRadius, outerRadius, thickness, teeth, toothDepth) {
+export const createGear = function(three, innerRadius, outerRadius, thickness, teeth, toothDepth) {
   let i;
   let angle;
   let da;
@@ -202,5 +204,5 @@ export const createGear = function(innerRadius, outerRadius, thickness, teeth, t
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -thickness * 0.5 );
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, thickness * 0.5 );
   }
-  return mesh.toMeshBuffer();
+  return mesh.toMeshBuffer(three);
 };

@@ -29,37 +29,6 @@ import {toGLColor} from "./h3du-misc.js";
  */
 export const MeshBuffer = function() {};
 
-/**
- * Gets an array of vertex positions held by this mesh buffer,
- * arranged by primitive.
- * Only values with the attribute semantic <code>POSITION_0</code> are returned.
- * @returns {Array<Array<number>>} An array of primitives,
- * each of which holds the vertices that make up that primitive.
- * If this mesh holds triangles, each primitive will contain three
- * vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex's-coordinates (for example, if the attribute holds 3 elements per value, the coordinates are x-, y-, and z-coordinates, in that order).
- */
-/*
-MeshBuffer.prototype.getPositions = function() {
-  const posattr = this.getAttribute(Semantic.POSITION, 0);
-  if(!posattr) {
-    return [];
-  }
-  const ret = [];
-  const indices = [];
-  const primcount = this.primitiveCount();
-  let j;
-  for (j = 0; j < primcount; j++) {
-    this.vertexIndices(j, indices);
-    const primitive = [];
-    let k;
-    for (k = 0; k < indices.length; k++) {
-      primitive.push(posattr.getVec(indices[k], [0, 0, 0]));
-    }
-    ret.push(primitive);
-  }
-  return ret;
-};*/
-
 /** Indicates that a mesh buffer contains line segments; the mesh
  * buffer stores each line segment using two consecutive vertices.
  * @constant

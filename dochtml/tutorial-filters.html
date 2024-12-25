@@ -57,10 +57,10 @@ filter as part of the program's fragment shader. Since shader programs must also
 &quot; return vec4(gray,gray,gray,color.a);&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
 </code></pre>
-<p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the example above.</p>
+<p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the preceding example.</p>
 <p>The <code>textureEffect</code> function takes these parameters:</p>
 <ul>
-<li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the example above.</li>
+<li><code>sampler2D sampler</code>: Points to a texture representing a screenshot of the current frame. To read from the texture, use the <code>texture2D</code> function, as shown in the preceding example.</li>
 <li><code>vec2 uvCoord</code>: Texture coordinates of the current pixel.  <code>uvCoord.x</code> ranges from 0 on the left side to 1 on the right side.  <code>uvCoord.y</code> ranges from 0 on the bottom side to 1 on the top side. (Note that texture coordinates start from the lower-left corner, not the upper left, that is, textures are &quot;bottom up&quot;,
 not &quot;top down&quot;).</li>
 <li><code>vec2 textureSize</code>: Size of the screenshot, pointed to by <code>sampler</code>, in pixels. <code>textureSize.x</code> is the
@@ -69,7 +69,7 @@ width, and <code>textureSize.y</code> is the height.</li>
 <p>The <code>textureEffect</code> function returns a <code>vec4</code> (4-element vector) giving the color that the current pixel should be. The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color with that shade of gray. Thus, the filter will convert the screen to grayscale tones.</p>
 <p>The shader can also define custom parameters called &quot;uniforms&quot;, so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like <code>uniform [type] [name];</code> at the top of the shader. Example: <code>uniform float time;</code> Uniforms, once declared, can be used in the <code>textureEffect</code> function.</p>
 <p>A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
-be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
+be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see later for more examples of graphics filters.</p>
 <p><a id=Using_Graphics_Filters></a></p>
 <h2>Using Graphics Filters</h2>
 <p>To use a graphics filter, the application needs to prepare for its use by following these steps.</p>

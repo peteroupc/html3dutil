@@ -539,7 +539,7 @@ ensures its values are each at least 3 elements long.
 For normal calculation to properly affect shading:<ul>
 <li>Each triangle's vertices in the mesh buffer (as they appear when the triangle's front side is seen) must be ordered in the same winding (counterclockwise or clockwise) throughout. If the vertices have the wrong order, use the <a href="H3DU.MeshBuffer.md#H3DU.MeshBuffer_reverseWinding">`reverseWinding()`</a>
 method to change their order.
-<li>If the mesh describes a closed convex surface (such as a sphere or cube) and is being rendered in a right-handed coordinate system (e.g., X-right, Y-up, Z-backward), each of its triangles must have counterclockwise winding for the shape to be shaded from the outside.</ul>
+<li>If the mesh describes a closed convex surface (such as a sphere or cube) and is being rendered in a right-handed coordinate system (for example, X-right, Y-up, Z-backward), each of its triangles must have counterclockwise winding for the shape to be shaded from the outside.</ul>
 
 #### Parameters
 

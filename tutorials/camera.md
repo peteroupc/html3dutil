@@ -4,11 +4,11 @@
 
 This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-[**Geometry Utilities Library**](http://peteroupc.github.io/html3dutil),
+[**Geometry Helper Library**](http://peteroupc.github.io/html3dutil),
 and explains how a commonly used graphics pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.
 
-**Source code for the latest version of the library is available at the** [**Geometry Utilities Library's project page**](https://github.com/peteroupc/html3dutil)**.**
+**Source code for the latest version of the library is available at the** [**Geometry Helper Library's project page**](https://github.com/peteroupc/html3dutil)**.**
 
 <a id=Contents></a>
 
@@ -173,12 +173,11 @@ the use of matrices related to them, such as _projection_, _view_, _model-view_,
 and _world_ matrices, are merely conventions,
 which exist for convenience in many 3D graphics libraries.
 
-When a commonly used graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line, or point,
-all it really expects is the location of that primitive's vertices in _clip space_. A
+When a commonly used graphics pipeline (outside the 3D graphics library concerned) draws a triangle, line, or point,
+it expects the location of that primitive's vertices in _clip space_. A
 so-called _vertex shader_ communicates those locations to the graphics pipeline using
 the data accessible to it. Although the vertex shader can use projection, view, and world
-matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to,
-and can use a different paradigm for this purpose. For example, the vertex shader can
+matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to. For example, the vertex shader can
 be passed vertex coordinates that are already in clip space and just output those coordinates
 without transforming them.
 
@@ -206,7 +205,7 @@ as they are more and more distant from the "camera".
 
 ## Other Pages
 
-The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:
+The following pages of mine on CodeProject also discuss the Geometry Helper Library, formerly the Public-Domain HTML 3D Library:
 
 * [**_Public-Domain HTML 3D Library_**](http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library)
 * [**_Creating shapes using the Public Domain HTML 3D Library_**](http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib)

@@ -73,13 +73,13 @@ an <i>arc length parameterization</i>.<li><a href='#Curve_velocity'>velocity</a>
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.<p>
-The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing an acceleration vector. It should have at least as many
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing an acceleration vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='Curve_arcLength'></a>
 <h3> Curve#arcLength(u)</h3>Finds an approximate arc length (distance) between the start of this
 curve and the point at the given u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.<p>
-The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>The approximate arc length of this curve at the given u-coordinate. (Type: number)<a name='Curve_changeEnds'></a>
+The <b>arc length</b> function returns a number; if the curve is "smooth", this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>The approximate arc length of this curve at the given u-coordinate. (Type: number)<a name='Curve_changeEnds'></a>
 <h3> Curve#changeEnds(ep1, ep2)</h3>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
@@ -96,7 +96,7 @@ also be used to grow the path of the curve.<h4> Parameters</h4><ul><li><code>ep1
 the curve, and the second is its ending coordinate.
 Returns <code>[0, 1]</code> if the evaluator doesn't implement an <code>endPoints</code>
 method.<a name='Curve_evaluate'></a>
-<h3> Curve#evaluate(u)</h3>Finds the position of this curve at the given u-coordinate.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a position. It should have at least as many
+<h3> Curve#evaluate(u)</h3>Finds the position of this curve at the given u-coordinate.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='Curve_fitRange'></a>
 <h3> Curve#fitRange(ep1, ep2)</h3>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the given range.
@@ -125,17 +125,17 @@ var buffer=new THREE.BufferGeometry()
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.<p>
-The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a jerk vector. It should have at least as many
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='Curve_normal'></a>
 <h3> Curve#normal(u)</h3>Finds an approximate principal normal vector at the given u-coordinate of this curve.
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.<p>
 The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
 vector divided by that derivative's length. The normal returned by this method
-<i>should</i> be "normalized" to a glmath. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
+<i>should</i> be "normalized" to a glmath. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='Curve_tangent'></a>
 <h3> Curve#tangent(u)</h3>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
-The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
+The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<a name='Curve_toArcLengthParam'></a>
 <h3> Curve#toArcLengthParam()</h3>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
@@ -159,5 +159,5 @@ var point = arclen.evaluate(Math.random()*arclen.getLength())</pre><a name='Curv
 The implementation in <a href="Curve.html">Curve</a> calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).<p>
-The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The Ucoordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a velocity vector. It should have at least as many
+The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a glmath.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the curve.</ul><h4> Return Value</h4>An array describing a velocity vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

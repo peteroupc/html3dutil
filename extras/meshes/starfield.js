@@ -49,7 +49,7 @@ export function StarField(range) {
   this._initialPos = function() {
     let i;
     const vec = [0, 0, 0];
-    const ba = this.instances.getAttribute("POSITION");
+    const ba = this.instances.getAttribute("position");
     const count = ba.count();
     for (i = 0; i < count; i++) {
       this._starPos(this.range, vec);
@@ -59,7 +59,7 @@ export function StarField(range) {
   this._move = function(frames) {
     let i;
     let vec = [0, 0, 0];
-    const ba = this.instances.getAttribute("POSITION");
+    const ba = this.instances.getAttribute("position");
     const count = ba.count();
     for (i = 0; i < count; i++) {
       vec = ba.getVec(i, vec);
