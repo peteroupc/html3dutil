@@ -19,11 +19,11 @@ public-domain [**Geometry Helper Library**](http://peteroupc.github.io/html3duti
 - [**Contents**](#Contents)
 - [**What Is a Parametric Surface?**](#What_Is_a_Parametric_Surface)
     - [**Why two variables?**](#Why_two_variables)
-- [**Parametric Surfaces in the Geometry Helper Library**](#Parametric_Surfaces_in_the_Geometry_Utilities_Library)
+- [**Parametric Surfaces in the Geometry Helper Library**](#Parametric_Surfaces_in_the_Geometry_Helper_Library)
 - [**Chaining Surface Functions**](#Chaining_Surface_Functions)
 - [**Parametric Curves**](#Parametric_Curves)
     - [**Generating Parametric Curves**](#Generating_Parametric_Curves)
-- [**Curve and Surface Evaluators in the Geometry Helper Library**](#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library)
+- [**Curve and Surface Evaluators in the Geometry Helper Library**](#Curve_and_Surface_Evaluators_in_the_Geometry_Helper_Library)
 - [**Other Pages**](#Other_Pages)
 
 <a id=What_Is_a_Parametric_Surface></a>
@@ -64,7 +64,7 @@ The surface functions take two variables, _u_, and _v_, because a parametric
 surface can be a seen as a "warped" version of a rectangular grid. The vector
 function "warps" this grid into a three-dimensional surface.
 
-<a id=Parametric_Surfaces_in_the_Geometry_Utilities_Library></a>
+<a id=Parametric_Surfaces_in_the_Geometry_Helper_Library></a>
 
 ## Parametric Surfaces in the Geometry Helper Library
 
@@ -252,7 +252,7 @@ the circle example above.
 
     var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 
-<a id=Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library></a>
+<a id=Curve_and_Surface_Evaluators_in_the_Geometry_Helper_Library></a>
 
 ## Curve and Surface Evaluators in the Geometry Helper Library
 
@@ -268,20 +268,20 @@ _knot vector_, which controls the behavior of the control points. B-spline
 curves include **NURBS** curves (nonuniform and rational B-spline curves,
 with weights and nonuniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
- BSplineCurve class.
+ <a href="BSplineCurve.md">BSplineCurve</a> class.
 * **B&eacute;zier curves.** These are curves in which the first and last
 control point are the curve's end points. B&eacute;zier curves are a subset of B-spline
-curves and are created using the BSplineCurve.fromBezierCurve
+curves and are created using the <a href="BSplineCurve.md#BSplineCurve.fromBezierCurve">BSplineCurve.fromBezierCurve</a>
 method.
 * **Piecewise curves.** These are curves made up of one or more other curves.
-Piecewise curves are created using the PiecewiseCurve class.
+Piecewise curves are created using the <a href="PiecewiseCurve.md">PiecewiseCurve</a> class.
 
 General-purpose surfaces include:
 
 * **B&eacute;zier surfaces.** 3D surfaces where each grid line is a B&eacute;zier
-curve. B&eacute;zier surfaces are created using the BSplineSurface.fromBezierSurface method.
+curve. B&eacute;zier surfaces are created using the <a href="BSplineSurface.md#BSplineSurface.fromBezierSurface">BSplineSurface.fromBezierSurface</a> method.
 * **B-Spline surfaces.** 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the BSplineSurface class.
+curve. B-Spline surfaces are created using the <a href="BSplineSurface.md">BSplineSurface</a> class.
 
 Special surfaces include:
 

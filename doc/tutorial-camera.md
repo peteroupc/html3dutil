@@ -84,7 +84,7 @@ The perspective projection converts 3D coordinates to 4-element vectors in _clip
 
 The following methods define a perspective projection.
 
-**`MathUtil.mat4perspective(fov, aspect, near, far)`**
+**<a href="MathUtil.md#MathUtil.mat4perspective">`MathUtil.mat4perspective(fov, aspect, near, far)`</a>**
 
 This method returns a 4 &times; 4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -178,18 +178,17 @@ and _world_ matrices, are merely conventions,
 which exist for convenience in many 3D graphics libraries.
 
 When a commonly used graphics pipeline (outside the 3D graphics library concerned) draws a triangle, line, or point,
-all it really expects is the location of that primitive's vertices in _clip space_. A
+it expects the location of that primitive's vertices in _clip space_. A
 so-called _vertex shader_ communicates those locations to the graphics pipeline using
 the data accessible to it. Although the vertex shader can use projection, view, and world
-matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to,
-and can use a different paradigm for this purpose. For example, the vertex shader can
+matrices to help the pipeline find a vertex's clip space coordinates, it doesn't have to. For example, the vertex shader can
 be passed vertex coordinates that are already in clip space and just output those coordinates
 without transforming them.
 
 As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in _homogeneous coordinates_, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by MathUtil.mat4perspective, for example,
+perspective matrix returned by <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, for example,
 transforms W to the negative z-coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the "eye" or "camera".
 
@@ -199,7 +198,7 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current _viewport_. A viewport is a rectangle
 whose size and position are generally expressed in pixels.
 
-For the perspective matrix returned by `mat4perspective`, dividing
+For the perspective matrix returned by <a href="MathUtil.md#MathUtil.mat4perspective">`mat4perspective`</a>, dividing
 the x-, y-, and z-coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the "eye" or "camera"),
 the x-, y-, and z-coordinates are brought closer and closer to the center of the view.  This

@@ -2,7 +2,7 @@
 
 [Back to documentation index.](index.md)
 
-<a id=Public_Domain_Geometry_Utilities_Library></a>
+<a id=Public_Domain_Geometry_Helper_Library></a>
 
 ## Public-Domain Geometry Helper Library
 
@@ -28,7 +28,7 @@ The following is a screenshot of a scene generated with the help of the former P
 
 ## Contents
 
-- [**Public-Domain Geometry Helper Library**](#Public_Domain_Geometry_Utilities_Library)
+- [**Public-Domain Geometry Helper Library**](#Public_Domain_Geometry_Helper_Library)
 - [**Example**](#Example)
 - [**Contents**](#Contents)
 - [**How to Use**](#How_to_Use)

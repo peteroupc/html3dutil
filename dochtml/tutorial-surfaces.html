@@ -13,14 +13,14 @@ public-domain <a href="http://peteroupc.github.io/html3dutil"><strong>Geometry H
 <li><a href="#Why_two_variables"><strong>Why two variables?</strong></a></li>
 </ul>
 </li>
-<li><a href="#Parametric_Surfaces_in_the_Geometry_Utilities_Library"><strong>Parametric Surfaces in the Geometry Helper Library</strong></a></li>
+<li><a href="#Parametric_Surfaces_in_the_Geometry_Helper_Library"><strong>Parametric Surfaces in the Geometry Helper Library</strong></a></li>
 <li><a href="#Chaining_Surface_Functions"><strong>Chaining Surface Functions</strong></a></li>
 <li><a href="#Parametric_Curves"><strong>Parametric Curves</strong></a>
 <ul>
 <li><a href="#Generating_Parametric_Curves"><strong>Generating Parametric Curves</strong></a></li>
 </ul>
 </li>
-<li><a href="#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library"><strong>Curve and Surface Evaluators in the Geometry Helper Library</strong></a></li>
+<li><a href="#Curve_and_Surface_Evaluators_in_the_Geometry_Helper_Library"><strong>Curve and Surface Evaluators in the Geometry Helper Library</strong></a></li>
 <li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 <p><a id=What_Is_a_Parametric_Surface></a></p>
@@ -52,7 +52,7 @@ the same value.</p>
 <p>The surface functions take two variables, <em>u</em>, and <em>v</em>, because a parametric
 surface can be a seen as a &quot;warped&quot; version of a rectangular grid. The vector
 function &quot;warps&quot; this grid into a three-dimensional surface.</p>
-<p><a id=Parametric_Surfaces_in_the_Geometry_Utilities_Library></a></p>
+<p><a id=Parametric_Surfaces_in_the_Geometry_Helper_Library></a></p>
 <h2>Parametric Surfaces in the Geometry Helper Library</h2>
 <p>The Geometry Helper Library supports parametric surfaces using a class named
 <a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html"><strong><code>SurfaceBuilder</code></strong></a>. It helps
@@ -211,7 +211,7 @@ curve. It assumes that <code>evaluator</code> is a parametric curve object, just
 the circle example above.</p>
 <pre><code>var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 </code></pre>
-<p><a id=Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library></a></p>
+<p><a id=Curve_and_Surface_Evaluators_in_the_Geometry_Helper_Library></a></p>
 <h2>Curve and Surface Evaluators in the Geometry Helper Library</h2>
 <p>The Geometry Helper Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an <code>evaluate</code>
@@ -224,20 +224,20 @@ the shape of the curve but don't necessarily lie on the curve), and a
 curves include <strong>NURBS</strong> curves (nonuniform and rational B-spline curves,
 with weights and nonuniform knots), making them a powerful way of setting the
 behavior of a curve. B-Spline curves are created using the
-BSplineCurve class.</li>
+<a href="BSplineCurve.html">BSplineCurve</a> class.</li>
 <li><strong>Bézier curves.</strong> These are curves in which the first and last
 control point are the curve's end points. Bézier curves are a subset of B-spline
-curves and are created using the BSplineCurve.fromBezierCurve
+curves and are created using the <a href="BSplineCurve.html#BSplineCurve.fromBezierCurve">BSplineCurve.fromBezierCurve</a>
 method.</li>
 <li><strong>Piecewise curves.</strong> These are curves made up of one or more other curves.
-Piecewise curves are created using the PiecewiseCurve class.</li>
+Piecewise curves are created using the <a href="PiecewiseCurve.html">PiecewiseCurve</a> class.</li>
 </ul>
 <p>General-purpose surfaces include:</p>
 <ul>
 <li><strong>Bézier surfaces.</strong> 3D surfaces where each grid line is a Bézier
-curve. Bézier surfaces are created using the BSplineSurface.fromBezierSurface method.</li>
+curve. Bézier surfaces are created using the <a href="BSplineSurface.html#BSplineSurface.fromBezierSurface">BSplineSurface.fromBezierSurface</a> method.</li>
 <li><strong>B-Spline surfaces.</strong> 3D surfaces where each grid line is a B-Spline or NURBS
-curve. B-Spline surfaces are created using the BSplineSurface class.</li>
+curve. B-Spline surfaces are created using the <a href="BSplineSurface.html">BSplineSurface</a> class.</li>
 </ul>
 <p>Special surfaces include:</p>
 <ul>

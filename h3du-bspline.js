@@ -72,7 +72,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * <i>control points</i>, which more or less follow the path of the curve,
  * and a <i>knot vector</i>, which determines, more or less, where each control
  * point is spaced along the curve. Together with rational B-spline curves (see
- * below), this makes B-spline curves very powerful,
+ * later), this makes B-spline curves very powerful,
  * since they can describe nearly all curves commonly used in computer
  * graphics, including line segments, circles, ellipses, parabolas, and
  * irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve's control points leads to the same transformation of the resulting curve.
