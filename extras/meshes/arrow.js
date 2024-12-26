@@ -13,21 +13,30 @@
 
 import {MathUtil, Meshes} from "../h3du_module.js";
 
+function matTo4D(three, mat){
+var r=new three.Matrix4()
+r.set(mat[0],mat[4],mat[8],mat[12],
+      mat[1],mat[5],mat[9],mat[13],
+      mat[2],mat[6],mat[10],mat[14],
+      mat[3],mat[7],mat[11],mat[15])
+return r
+}
+
 // Generate a composite mesh representing an arrow
-export const createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {
+export const createArrow = function(three, shaftLength, pointerLength, shaftRadius, pointerRadius) {
   const slices = 32;
   // generate the four parts of the arrow
-  const shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
+  const shaft = Meshes.createCylinder(three, shaftRadius, shaftRadius,
     shaftLength, slices);
-  const pointer = Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
-  const base = Meshes.createDisk(0, shaftRadius, slices, 1, true);
-  const pointerBase = Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
+  const pointer = Meshes.createCylinder(three, pointerRadius, 0, pointerLength, slices);
+  const base = Meshes.createDisk(three, 0, shaftRadius, slices, 1, true);
+  const pointerBase = Meshes.createDisk(three, shaftRadius, pointerRadius, slices, 1, true);
   // move the pointer base to the top of the shaft
-  pointerBase.transform(MathUtil.mat4translated(0, 0, shaftLength));
+  pointerBase.applyMatrix4(matTo4D(three,MathUtil.mat4translated(0, 0, shaftLength)));
   // move the pointer to the top of the shaft
-  pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
+  pointer.applyMatrix4(matTo4D(three,MathUtil.mat4translated(0, 0, shaftLength)));
   // merge the four parts of the arrow
-  return THREE.BufferGeometryUtils.mergeGeometries([base,pointer,pointerBase],false)
+  return three.BufferGeometryUtils.mergeGeometries([shaft,base,pointer,pointerBase],false)
 }
 /**
  * TODO: Not documented yet.
@@ -40,22 +49,22 @@ export const createArrow = function(shaftLength, pointerLength, shaftRadius, poi
  * @returns {MeshBuffer} A mesh buffer of the resulting shape.
  * @function
  */
-export const createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
+export const createMultiColoredArrow = function(three,shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
   const slices = 32;
   // generate the four parts of the arrow
-  const shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
+  const shaft = Meshes.createCylinder(three,shaftRadius, shaftRadius,
     shaftLength, slices);
-  const pointer = Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
-  const base = Meshes.createDisk(0, shaftRadius, slices, 1, true);
-  const pointerBase = Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
+  const pointer = Meshes.createCylinder(three,pointerRadius, 0, pointerLength, slices);
+  const base = Meshes.createDisk(three,0, shaftRadius, slices, 1, true);
+  const pointerBase = Meshes.createDisk(three,shaftRadius, pointerRadius, slices, 1, true);
   shaft.setColor(shaftColor);
   pointer.setColor(pointerColor);
   base.setColor(shaftColor);
   pointerBase.setColor(pointerColor);
   // move the pointer base to the top of the shaft
-  pointerBase.transform(MathUtil.mat4translated(0, 0, shaftLength));
+  pointerBase.applyMatrix4(matTo4D(three,MathUtil.mat4translated(0, 0, shaftLength)));
   // move the pointer to the top of the shaft
-  pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
+  pointer.applyMatrix4(matTo4D(three,MathUtil.mat4translated(0, 0, shaftLength)));
   // merge the four parts of the arrow
-  return THREE.BufferGeometryUtils.mergeGeometries([base,pointer,pointerBase],false)
+  return three.BufferGeometryUtils.mergeGeometries([shaft,base,pointer,pointerBase],false)
 };

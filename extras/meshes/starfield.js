@@ -41,8 +41,8 @@ export function StarField(range) {
     vec[2] = z;
   };
   // use a crude white sphere to represent a star
-  this.star = Meshes.createSphere(range / 1000).setColor("white").deindex();
-  this.instances = MeshBuffer.fromPositions(
+  this.star = Meshes.createSphere(range / 1000).setColor("white");
+  this.instances = Meshes.fromPositions(three,
     new Float32Array(NUM_OF_STARS * 3));
   this.timer = {};
   this.range = range;
@@ -50,27 +50,27 @@ export function StarField(range) {
     let i;
     const vec = [0, 0, 0];
     const ba = this.instances.getAttribute("position");
-    const count = ba.count();
+    const count = ba.count;
     for (i = 0; i < count; i++) {
       this._starPos(this.range, vec);
-      ba.setVec(i, vec);
+      ba.setXYZ(i, vec[0],vec[1],vec[2]);
     }
   };
   this._move = function(frames) {
     let i;
     let vec = [0, 0, 0];
     const ba = this.instances.getAttribute("position");
-    const count = ba.count();
+    const count = ba.count;
     for (i = 0; i < count; i++) {
-      vec = ba.getVec(i, vec);
-      if(vec[2] > this.range / 2) {
+      z = ba.getZ(i);
+      if(z > this.range / 2) {
         // once the star is too close, move it elsewhere
         this._starPos(this.range, vec);
-        vec[2] -= this.range;
-        ba.setVec(i, vec);
+        z -= this.range;
+        ba.setZ(i,z);
       } else {
-        vec[2] += this.range / 250 * frames;
-        ba.setVec(i, vec);
+        z += this.range / 250 * frames;
+        ba.setZ(i,z);
       }
     }
   };

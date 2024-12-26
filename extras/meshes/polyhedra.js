@@ -11,7 +11,7 @@
  * import * as CustomModuleName from "extras/polyhedra.js";</pre>
  * @module extras/polyhedra */
 
-import {MathUtil, MeshBuffer} from "../h3du_module.js";
+import {MathUtil, Meshes} from "../h3du_module.js";
 /**
  * Contains helper methods for generating the five platonic solids
  * and other polyhedra.<p>
@@ -116,16 +116,13 @@ Polyhedra.makeSphere = function(vi, radius, level) {
  * and the second element contains an array of vertex indices (multiplying
  * each element by 3 will get the index to the first coordinate of the corresponding
  * vertex in the first array).
- * @returns {MeshBuffer} The generated mesh.
+ * @returns {THREE.BufferGeometry} The generated mesh.
  */
-Polyhedra.makeMesh = function(vi) {
+Polyhedra.makeMesh = function(three, vi) {
   // Create the mesh and generate normals
   // for a flat-shaded appearance
 
-  return new MeshBuffer()
-    .setAttribute("POSITION", vi[0], 3)
-    .setIndices(vi[1])
-    .recalcNormals(true);
+  return Meshes.fromPositionsAutoNormals(three,vi[0],vi[1])
 };
 /**
  * Generates a mesh of a regular octahedron or a sphere based on that solid.
@@ -133,12 +130,12 @@ Polyhedra.makeMesh = function(vi) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {MeshBuffer} The generated solid.
+ * @returns {THREE.BufferGeometry} The generated solid.
  */
-Polyhedra.octahedron = function(radius, level) {
+Polyhedra.octahedron = function(three,radius, level) {
   const vi = Polyhedra.octahedronFaces();
   Polyhedra.makeSphere(vi, radius, level);
-  return Polyhedra.makeMesh(vi);
+  return Polyhedra.makeMesh(three,vi);
 };
 /**
  * Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
@@ -146,12 +143,12 @@ Polyhedra.octahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {MeshBuffer} The generated solid.
+ * @returns {THREE.BufferGeometry} The generated solid.
  */
-Polyhedra.hexahedron = function(radius, level) {
+Polyhedra.hexahedron = function(three,radius, level) {
   const vi = Polyhedra.hexahedronFaces();
   Polyhedra.makeSphere(vi, radius, level);
-  return Polyhedra.makeMesh(vi);
+  return Polyhedra.makeMesh(three,vi);
 };
 /**
  * Generates a mesh of a regular icosahedron or a sphere based on that solid.
@@ -159,12 +156,12 @@ Polyhedra.hexahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {MeshBuffer} The generated solid.
+ * @returns {THREE.BufferGeometry} The generated solid.
  */
-Polyhedra.icosahedron = function(radius, level) {
+Polyhedra.icosahedron = function(three,radius, level) {
   const vi = Polyhedra.icosahedronFaces();
   Polyhedra.makeSphere(vi, radius, level);
-  return Polyhedra.makeMesh(vi);
+  return Polyhedra.makeMesh(three,vi);
 };
 /**
  * Generates a mesh of a regular dodecahedron or a sphere based on that solid.
@@ -172,12 +169,12 @@ Polyhedra.icosahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {MeshBuffer} The generated solid.
+ * @returns {THREE.BufferGeometry} The generated solid.
  */
-Polyhedra.dodecahedron = function(radius, level) {
+Polyhedra.dodecahedron = function(three,radius, level) {
   const vi = Polyhedra.dodecahedronFaces();
   Polyhedra.makeSphere(vi, radius, level);
-  return Polyhedra.makeMesh(vi);
+  return Polyhedra.makeMesh(three,vi);
 };
 /**
  * Generates a mesh of a regular tetrahedron or a sphere based on that solid.
@@ -185,12 +182,12 @@ Polyhedra.dodecahedron = function(radius, level) {
  * @param {number} level If 0 or less, generates the solid as is. If 1 or greater, subdivides each
  * triangle on the solid's surface into smaller triangles and makes them bulge out to
  * form an approximation of a sphere (the bigger the number, the smaller the triangles).
- * @returns {MeshBuffer} The generated solid.
+ * @returns {THREE.BufferGeometry} The generated solid.
  */
-Polyhedra.tetrahedron = function(radius, level) {
+Polyhedra.tetrahedron = function(three,radius, level) {
   const vi = Polyhedra.tetrahedronFaces();
   Polyhedra.makeSphere(vi, radius, level);
-  return Polyhedra.makeMesh(vi);
+  return Polyhedra.makeMesh(three,vi);
 };
 /**
  * Gets the vertices of a regular octahedron with radius 1.

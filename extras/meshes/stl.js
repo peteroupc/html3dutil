@@ -11,18 +11,6 @@
  * import * as CustomModuleName from "extras/stl.js";</pre>
  * @module extras/stl */
 
-function threejsGeometryFromPositionsNormals(vertices, indices) {
-  var geom=new THREE.BufferGeometry()
-  var attr;
-  var buffer=new THREE.InterleavedBuffer(new Float32Array(vertices),6)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,0)
-  geom.addAttribute("position",attr)
-  attr=new THREE.InterleavedBufferAttribute(buffer,3,3)
-  geom.addAttribute("normal",attr)
-  geom.index=new THREE.BufferAttribute(ind,1)
-  return geom
-}
-
 /**
  * Primitive mode for rendering a triangle fan. The first 3
  * vertices make up the first triangle, and each additional
@@ -68,7 +56,7 @@ const AFTER_SOLID = 3;
  * @returns {*} Return value.
  * @function
  */
-export const fromStlString = function(str) {
+export const fromStlString = function(three, str) {
   const number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   const facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
    "\\s+" + number + "\\s*");
@@ -137,5 +125,5 @@ export const fromStlString = function(str) {
     console.error("unsupported line: " + line);
     return null;
   }
-  return threejsGeometryFromPositionsNormals(vertices, indices);
+  return Meshes.fromPositionsNormals(three,vertices, indices);
 };

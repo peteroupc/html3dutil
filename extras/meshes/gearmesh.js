@@ -16,20 +16,6 @@
 
 import {MathUtil} from "../h3du_module.js";
 
-function threejsGeometryFromPositionsNormals(three, vertices, indices) {
-  if(!three["BufferGeometry"])return null;
-  var geom=new three["BufferGeometry"]()
-  var attr;
-  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),8)
-  attr=new three["InterleavedBufferAttribute"](buffer,3,0)
-  geom["setAttribute"]("position",attr)
-  attr=new three["InterleavedBufferAttribute"](buffer,3,3)
-  geom["setAttribute"]("normal",attr)
-  geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
-  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
-  return geom
-}
-
 function QuadStrips() {
   this.vertices = [];
   this.indices = [];
@@ -69,7 +55,7 @@ function QuadStrips() {
     }
   };
   this.toMeshBuffer = function(three) {
-    return threejsGeometryFromPositionsNormals(
+    return Meshes.fromPositionsNormals(
       three, this.vertices, this.indices);
   };
 }

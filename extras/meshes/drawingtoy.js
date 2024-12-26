@@ -167,6 +167,6 @@ DrawingToy.prototype.continuousHypo = function(
  * TODO: Not documented yet.
  * @returns {*} Return value.
  */
-DrawingToy.prototype.toMeshBuffer = function() {
-  return this.ce.toMeshBuffer();
+DrawingToy.prototype.toMeshBuffer = function(three) {
+  return this.ce.toMeshBuffer(three);
 };

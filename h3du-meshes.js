@@ -200,8 +200,75 @@ function recalcNormals(buffer, inside) {
  }
  return buffer;
 }
-
-function threejsGeometryFromPositionsNormalsUV(three, vertices, indices) {
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} vertices TODO: Not documented yet.
+ * @param {*} indices TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.fromPositions=function(three,vertices,indices) {
+  if(!three["BufferGeometry"])return null;
+  if(!indices){
+    indices=[]
+    for(var i=0;i<(len(indices)/3)|0;i++){
+       indices[i]=i
+    }
+  }
+  var geom=new three["BufferGeometry"]()
+  var attr;
+  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),3)
+  attr=new three["InterleavedBufferAttribute"](buffer,3,0)
+  geom["setAttribute"]("position",attr)
+  geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
+  return geom
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} vertices TODO: Not documented yet.
+ * @param {*} indices TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.fromPositionsAutoNormals=function(three,vertices,indices) {
+  if(!three["BufferGeometry"])return null;
+  var geom=new three["BufferGeometry"]()
+  var attr;
+  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),3)
+  attr=new three["InterleavedBufferAttribute"](buffer,3,0)
+  geom["setAttribute"]("position",attr)
+  geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
+  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
+  return recalcNormals(geom, false)
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} vertices TODO: Not documented yet.
+ * @param {*} indices TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.fromPositionsNormals=function(three,vertices,indices) {
+  if(!three["BufferGeometry"])return null;
+  var geom=new three["BufferGeometry"]()
+  var attr;
+  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),6)
+  attr=new three["InterleavedBufferAttribute"](buffer,3,0)
+  geom["setAttribute"]("position",attr)
+  attr=new three["InterleavedBufferAttribute"](buffer,3,3)
+  geom["setAttribute"]("normal",attr)
+  geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
+  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
+  return geom
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} vertices TODO: Not documented yet.
+ * @param {*} indices TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.fromPositionsNormalsUV=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
   var geom=new three["BufferGeometry"]()
   var attr;
@@ -231,7 +298,7 @@ function meshBufferFromVertexGrid(three, vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return threejsGeometryFromPositionsNormalsUV(three, vertices, indices);
+  return Meshes.fromPositionsNormalsUV(three, vertices, indices);
 }
 
 function meshBufferFromUWrapVertexGrid(three, vertices, width, height) {
@@ -248,7 +315,7 @@ function meshBufferFromUWrapVertexGrid(three, vertices, width, height) {
       indices.push(index2, index1, index3);
     }
   }
-  return threejsGeometryFromPositionsNormalsUV(three, vertices, indices);
+  return Meshes.fromPositionsNormalsUV(three, vertices, indices);
 }
 
 /**
@@ -336,7 +403,7 @@ Meshes.createBoxEx = function(three,box, inward) {
     box[0], box[1], box[5], 0.0, 0.0, posNormal, 0.0, 0.0];
   const indices = [0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7, 8, 9, 10, 8, 10, 11, 12,
     13, 14, 12, 14, 15, 16, 17, 18, 16, 18, 19, 20, 21, 22, 20, 22, 23];
-  return threejsGeometryFromPositionsNormalsUV(three,vertices, indices);
+  return Meshes.fromPositionsNormalsUV(three,vertices, indices);
 };
 
 /**
@@ -457,7 +524,7 @@ Meshes.createCylinder = function(three,baseRad, topRad, height, slices, stacks, 
     const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, stacks + 1);
     return flat ? recalcNormals(three,mesh["toNonIndexed"](),inside) : mesh;
   } else {
-    return threejsGeometryFromPositionsNormalsUV(three,[], []);
+    return Meshes.fromPositionsNormalsUV(three,[], []);
   }
 };
 /**
@@ -740,7 +807,7 @@ Meshes.createPartialDisk = function(three,inner, outer, slices, loops, start, sw
       fan.addIndex(k);
     }
     fan.addIndex(0);
-    return threejsGeometryFromPositionsNormalsUV(three,vertices, indices);
+    return Meshes.fromPositionsNormalsUV(three,vertices, indices);
   } else {
     height = outer - inner;
     const invouter = 1.0 / outer;
@@ -1173,5 +1240,5 @@ Meshes.createPointedStar = function(three,points, firstRadius, secondRadius, inw
   }
   // Re-add the second index to close the pointed star
   triangleFan.addIndex(1);
-  return threejsGeometryFromPositionsNormalsUV(three,vertices, indices);
+  return Meshes.fromPositionsNormalsUV(three,vertices, indices);
 };

@@ -11,22 +11,6 @@
  * import * as CustomModuleName from "extras/createfloor.js";</pre>
  * @module extras/createfloor */
 
-function threejsGeometryFromPositionsNormalsUV(three, vertices, indices) {
-  if(!three.BufferGeometry)return null;
-  var geom=new three.BufferGeometry()
-  var attr;
-  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),8)
-  attr=new three.InterleavedBufferAttribute(buffer,3,0)
-  geom.setAttribute("position",attr)
-  attr=new three.InterleavedBufferAttribute(buffer,3,3)
-  geom.setAttribute("normal",attr)
-  attr=new three.InterleavedBufferAttribute(buffer,2,6)
-  geom.setAttribute("uv",attr)
-  geom.index=new three.BufferAttribute(new Uint32Array(indices),1)
-  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
-  return geom
-}
-
 /**
  * Generates a mesh buffer of a tiled floor. Texture coordinates
  * of each tile will range from [0,1] across the width and height
@@ -69,5 +53,5 @@ export const createFloor = function(three,xStart, yStart, width, height, tileSiz
       index += 4;
     }
   }
-  return MesthreejsGeometryFromPositionsNormalsUV(three,vertices, indices);
+  return Meshes.fromPositionsNormalsUV(three,vertices, indices);
 };
