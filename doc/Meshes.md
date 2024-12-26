@@ -51,6 +51,10 @@ points about the z-axis.
 * [createPointedStar](#Meshes.createPointedStar)<br>Creates a mesh in the form of a two-dimensional n-pointed star.
 * [createSphere](#Meshes.createSphere)<br>Creates a mesh of a sphere, centered at the origin.
 * [createTorus](#Meshes.createTorus)<br>Creates a mesh of a torus (doughnut shape), centered at the origin.
+* [fromPositions](#Meshes.fromPositions)<br>TODO: Not documented yet.
+* [fromPositionsAutoNormals](#Meshes.fromPositionsAutoNormals)<br>TODO: Not documented yet.
+* [fromPositionsNormals](#Meshes.fromPositionsNormals)<br>TODO: Not documented yet.
+* [fromPositionsNormalsUV](#Meshes.fromPositionsNormalsUV)<br>TODO: Not documented yet.
 * [lineLoopIndices](#Meshes.lineLoopIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.
 * [lineStripIndices](#Meshes.lineStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.
 * [quadStripIndices](#Meshes.quadStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.
@@ -327,33 +331,6 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 The generated mesh. (Type: THREE.BufferGeometry)
 
-#### Examples
-
-This method creates a ring or disk striped in two colors.<br/>
-<img src='mesh2.png' alt='Image of a disk striped in red and almost-white'/>
-
-    // inner, outer - inner and outer radius of the disk
-    // color1, color2 - each a color vector or string specifying
-    // one of the two stripe colors
-    // sections - number of stripes
-    // sectionCount - number of sections per stripe
-    function stripedDisk(inner,outer,color1,color2,sections,sectionCount) {
-    if(sectionCount==null)sectionCount=4
-    var firstColor=true
-    var ret=null
-    var sweep=360.0/sections;
-    for(var i=0;i<sections;i++) {
-    var angle=360.0*(i*1.0/sections);
-    var mesh=Meshes.createPartialDisk(inner,outer,
-    sectionCount,1,angle,sweep)
-    .setColor(firstColor ? color1 : color2)
-    firstColor=!firstColor
-    ret=ret ? BufferGeometryUtils.mergeGeometries(
-    [ret,mesh],false) : mesh;
-    }
-    return ret;
-    }
-
 <a name='Meshes.createPlane'></a>
 ### (static) Meshes.createPlane([width], [height], [widthDiv], [heightDiv], [inward])
 
@@ -455,6 +432,66 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 #### Return Value
 
 The generated mesh. (Type: THREE.BufferGeometry)
+
+<a name='Meshes.fromPositions'></a>
+### (static) Meshes.fromPositions(three, vertices, [indices])
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `vertices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+* `indices` (Type: Array.&lt;number>) (optional)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: THREE.BufferGeometry)
+
+<a name='Meshes.fromPositionsAutoNormals'></a>
+### (static) Meshes.fromPositionsAutoNormals(three, vertices, indices)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `vertices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+* `indices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='Meshes.fromPositionsNormals'></a>
+### (static) Meshes.fromPositionsNormals(three, vertices, indices)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `vertices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+* `indices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='Meshes.fromPositionsNormalsUV'></a>
+### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `vertices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+* `indices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
 
 <a name='Meshes.lineLoopIndices'></a>
 ### (static) Meshes.lineLoopIndices(vertexCount)

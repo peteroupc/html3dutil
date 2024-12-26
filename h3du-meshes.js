@@ -182,12 +182,12 @@ const TriangleFan = function(indices) {
 };
 
 function normNormals(buffer) {
-  buffer.normalizeNormals();
+  buffer["normalizeNormals"]();
   return buffer;
 }
 
 function recalcNormals(buffer, inside) {
- buffer.computeVectorNormals();
+ buffer["computeVectorNormals"]();
  if(inside){
   var attr=buffer.getAttribute("normal")
   if(attr){
@@ -203,21 +203,21 @@ function recalcNormals(buffer, inside) {
 /**
  * TODO: Not documented yet.
  * @param {*} three TODO: Not documented yet.
- * @param {*} vertices TODO: Not documented yet.
- * @param {*} indices TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * @param {Array<number>} vertices TODO: Not documented yet.
+ * @param {Array<number>} [indices] TODO: Not documented yet.
+ * @returns {THREE.BufferGeometry} TODO: Not documented yet.
  */
 Meshes.fromPositions=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
   if(!indices){
     indices=[]
-    for(var i=0;i<(len(indices)/3)|0;i++){
+    for(var i=0;i<(indices.length/3)|0;i++){
        indices[i]=i
     }
   }
   var geom=new three["BufferGeometry"]()
   var attr;
-  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),3)
+  var buffer=new three["InterleavedBuffer"](new Float32Array(vertices),3)
   attr=new three["InterleavedBufferAttribute"](buffer,3,0)
   geom["setAttribute"]("position",attr)
   geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
@@ -226,15 +226,15 @@ Meshes.fromPositions=function(three,vertices,indices) {
 /**
  * TODO: Not documented yet.
  * @param {*} three TODO: Not documented yet.
- * @param {*} vertices TODO: Not documented yet.
- * @param {*} indices TODO: Not documented yet.
+ * @param {Array<number>} vertices TODO: Not documented yet.
+ * @param {Array<number>} indices TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
 Meshes.fromPositionsAutoNormals=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
   var geom=new three["BufferGeometry"]()
   var attr;
-  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),3)
+  var buffer=new three["InterleavedBuffer"](new Float32Array(vertices),3)
   attr=new three["InterleavedBufferAttribute"](buffer,3,0)
   geom["setAttribute"]("position",attr)
   geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
@@ -244,15 +244,15 @@ Meshes.fromPositionsAutoNormals=function(three,vertices,indices) {
 /**
  * TODO: Not documented yet.
  * @param {*} three TODO: Not documented yet.
- * @param {*} vertices TODO: Not documented yet.
- * @param {*} indices TODO: Not documented yet.
+ * @param {Array<number>} vertices TODO: Not documented yet.
+ * @param {Array<number>} indices TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
 Meshes.fromPositionsNormals=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
   var geom=new three["BufferGeometry"]()
   var attr;
-  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),6)
+  var buffer=new three["InterleavedBuffer"](new Float32Array(vertices),6)
   attr=new three["InterleavedBufferAttribute"](buffer,3,0)
   geom["setAttribute"]("position",attr)
   attr=new three["InterleavedBufferAttribute"](buffer,3,3)
@@ -264,15 +264,15 @@ Meshes.fromPositionsNormals=function(three,vertices,indices) {
 /**
  * TODO: Not documented yet.
  * @param {*} three TODO: Not documented yet.
- * @param {*} vertices TODO: Not documented yet.
- * @param {*} indices TODO: Not documented yet.
+ * @param {Array<number>} vertices TODO: Not documented yet.
+ * @param {Array<number>} indices TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
 Meshes.fromPositionsNormalsUV=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
   var geom=new three["BufferGeometry"]()
   var attr;
-  var buffer=new three.InterleavedBuffer(new Float32Array(vertices),8)
+  var buffer=new three["InterleavedBuffer"](new Float32Array(vertices),8)
   attr=new three["InterleavedBufferAttribute"](buffer,3,0)
   geom["setAttribute"]("position",attr)
   attr=new three["InterleavedBufferAttribute"](buffer,3,3)
@@ -647,7 +647,7 @@ Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, st
   // move the top disk to the top of the cylinder
   top.transform(MathUtil.mat4translated(0, 0, height));
   // merge the base and the top
-  return three["BufferGeometryUtils"].mergeGeometries([cylinder,base,top],false);
+  return three["BufferGeometryUtils"]["mergeGeometries"]([cylinder,base,top],false);
 };
 
 /**
@@ -704,29 +704,6 @@ Meshes.createDisk = function(three,inner, outer, slices, loops, inward) {
  * method will point in the opposite direction of the positive z-axis; otherwise,
  * in the same direction of the positive z-axis. Default is false.
  * @returns {THREE.BufferGeometry} The generated mesh.
- * @example <caption>This method creates a ring or disk striped in two colors.<br/>
- * <img src='mesh2.png' alt='Image of a disk striped in red and almost-white'/></caption>
- * // inner, outer - inner and outer radius of the disk
- * // color1, color2 - each a color vector or string specifying
- * // one of the two stripe colors
- * // sections - number of stripes
- * // sectionCount - number of sections per stripe
- * function stripedDisk(inner,outer,color1,color2,sections,sectionCount) {
- * if(sectionCount==null)sectionCount=4
- * var firstColor=true
- * var ret=null
- * var sweep=360.0/sections;
- * for(var i=0;i<sections;i++) {
- * var angle=360.0*(i*1.0/sections);
- * var mesh=Meshes.createPartialDisk(inner,outer,
- * sectionCount,1,angle,sweep)
- * .setColor(firstColor ? color1 : color2)
- * firstColor=!firstColor
- * ret=ret ? BufferGeometryUtils.mergeGeometries(
- * [ret,mesh],false) : mesh;
- * }
- * return ret;
- * }
  */
 Meshes.createPartialDisk = function(three,inner, outer, slices, loops, start, sweep, inward) {
   if(typeof slices === "undefined" || slices === null)slices = 32;

@@ -54,7 +54,6 @@ of 4 &times; 4 transformation matrices.
 * <a href="extras_superellipsoid.md">module:extras/superellipsoid</a><br>The <code>extras/superellipsoid.js</code> module.
 * <a href="extras_superellipsoid.Supershape.md">module:extras/superellipsoid.Supershape</a><br>TODO: Not documented yet.
 * <a href="extras_superellipsoid.Supertoroid.md">module:extras/superellipsoid.Supertoroid</a><br>TODO: Not documented yet.
-* <a href="extras_tga.md">module:extras/tga</a><br>The <code>extras/tga.js</code> module.
 * <a href="extras_torusknot.md">module:extras/torusknot</a><br>The <code>extras/torusknot.js</code> module.
 * <a href="extras_torusknot.TorusKnot.md">module:extras/torusknot.TorusKnot</a><br>A curve evaluator object for a torus knot or torus-knot-like curve.
 

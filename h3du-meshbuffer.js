@@ -10,18 +10,6 @@ import {MathUtil} from "./h3du-math.js";
 import {Semantic} from "./h3du-semantic.js";
 import {toGLColor} from "./h3du-misc.js";
 /**
- * A geometric mesh in the form of buffer objects.
- * A mesh buffer is made up of one or more [vertex attribute objects]{@link BufferAccessor},
- * and an optional array of vertex indices. Each vertex attribute object contains
- * the values of one attribute of the mesh, such as positions,
- * vertex normals, and texture coordinates. A mesh buffer
- * can store vertices that make up triangles, line segments, or points.<p>
- * This constructor creates an empty mesh buffer and sets the array
- * of vertex indices to null and the primitive type to {@link MeshBuffer.TRIANGLES}.<p>
- * The `MeshBuffer` class contains four methods (`fromPositions`,
- * `fromPositionsNormals`, `fromPositionsUV`, and `fromPositionsNormalsUV`) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.<p>
- * The [`Meshes`]{@link Meshes} class includes several handy methods for creating built-in shapes; those methods return a `MeshBuffer` object that describes the triangles they
- * are composed of.
  * <p><b>Instancing</b>
  * <p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.
  * @constructor

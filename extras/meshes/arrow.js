@@ -38,6 +38,21 @@ export const createArrow = function(three, shaftLength, pointerLength, shaftRadi
   // merge the four parts of the arrow
   return three.BufferGeometryUtils.mergeGeometries([shaft,base,pointer,pointerBase],false)
 }
+
+function setColorBuffer(three,buffergeom,r,g,b){
+ var color=H3DU.toGLColor(r,g,b)
+ var ret=[]
+ var pos=0
+ for(var i=0;i<buffergeom.index.count;i++,pos+=3){
+  ret[pos]=color[0]
+  ret[pos+1]=color[1]
+  ret[pos+2]=color[2]
+ }
+ buffergeom.setAttribute("color",
+    new three["BufferAttribute"](new Float32Array(ret),3))
+ return buffergeom
+}
+
 /**
  * TODO: Not documented yet.
  * @param {number} shaftLength
@@ -57,10 +72,10 @@ export const createMultiColoredArrow = function(three,shaftLength, pointerLength
   const pointer = Meshes.createCylinder(three,pointerRadius, 0, pointerLength, slices);
   const base = Meshes.createDisk(three,0, shaftRadius, slices, 1, true);
   const pointerBase = Meshes.createDisk(three,shaftRadius, pointerRadius, slices, 1, true);
-  shaft.setColor(shaftColor);
-  pointer.setColor(pointerColor);
-  base.setColor(shaftColor);
-  pointerBase.setColor(pointerColor);
+  setBufferColor(three,shaft,shaftColor);
+  setBufferColor(three,pointer,pointerColor);
+  setBufferColor(three,base,shaftColor);
+  setBufferColor(three,pointerBase,pointerColor);
   // move the pointer base to the top of the shaft
   pointerBase.applyMatrix4(matTo4D(three,MathUtil.mat4translated(0, 0, shaftLength)));
   // move the pointer to the top of the shaft

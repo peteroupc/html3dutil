@@ -16,12 +16,26 @@ import {MeshBuffer, Meshes, newFrames} from "../h3du_module.js";
 
 const NUM_OF_STARS = 200;
 
+function setColorBuffer(three,buffergeom,r,g,b){
+ var color=H3DU.toGLColor(r,g,b)
+ var ret=[]
+ var pos=0
+ for(var i=0;i<buffergeom.index.count;i++,pos+=3){
+  ret[pos]=color[0]
+  ret[pos+1]=color[1]
+  ret[pos+2]=color[2]
+ }
+ buffergeom.setAttribute("color",
+    new three["BufferAttribute"](new Float32Array(ret),3))
+ return buffergeom
+}
+
 /**
  * TODO: Not documented yet.
  * @param {*} range
  * @constructor
  */
-export function StarField(range) {
+export function StarField(three, range) {
   this._starPos = function(range, vec) {
     let x = 0,
       y = 0,
@@ -41,7 +55,7 @@ export function StarField(range) {
     vec[2] = z;
   };
   // use a crude white sphere to represent a star
-  this.star = Meshes.createSphere(range / 1000).setColor("white");
+  this.star = setColorBuffer(three,Meshes.createSphere(three,range / 1000),"white");
   this.instances = Meshes.fromPositions(three,
     new Float32Array(NUM_OF_STARS * 3));
   this.timer = {};

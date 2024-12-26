@@ -314,7 +314,7 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
 };
 
 /**
- * Creates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
+ * Creates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
  * of another circle, whose position is fixed, with a center of (0,0).
  * The rolling circle will start at the positive x-axis of the fixed circle
  * unless otherwise given in the parameter <code>rotationDegrees</code>.<p>
