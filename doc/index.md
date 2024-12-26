@@ -41,7 +41,6 @@ events.
 which results by revolving a two-dimensional curve around an axis.
 * <a href="extras_fourierknot.md">module:extras/fourierknot</a><br>The <code>extras/fourierknot.js</code> module.
 * <a href="extras_gradients.md">module:extras/gradients</a><br>The <code>extras/gradients.js</code> module.
-* <a href="extras_marbleshader2.md">module:extras/marbleshader2</a><br>The <code>extras/marbleshader2.js</code> module.
 * <a href="extras_matrixstack.md">module:extras/matrixstack</a><br>The <code>extras/matrixstack.js</code> module.
 * <a href="extras_matrixstack.MatrixStack.md">module:extras/matrixstack.MatrixStack</a><br>This class implements a stack
 of 4 &times; 4 transformation matrices.

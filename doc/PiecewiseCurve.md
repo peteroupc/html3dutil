@@ -15,7 +15,8 @@ where N is the number of curves. In this way, the integer
 part of a u-coordinate indicates the curve the coordinate
 refers to. For example, if there are four curves, coordinates
 from 0, but less than 1, belong to the first curve, and coordinates
-from 1, but less than 2, belong to the second curve. The u-coordinate equal to N refers to the end of the last curve in
+from 1, but less than 2, belong to the second curve. The
+u-coordinate equal to N refers to the end of the last curve in
 the piecewise curve.
 
 #### Parameters

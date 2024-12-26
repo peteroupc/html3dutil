@@ -12,7 +12,7 @@
  * import * as CustomModuleName from "extras/convex.js";</pre>
  * @module extras/convex */
 
-import {MathUtil, MeshBuffer} from "../h3du_module.js";
+import {MathUtil, Meshes} from "../../h3du_module.js";
 
 // Adapted by Peter O. from a public-domain
 // C++ implementation found at https://github.com/akuukka/quickhull

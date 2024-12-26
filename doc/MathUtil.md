@@ -467,8 +467,7 @@ mat4rotate involve multiplying 4 &times; 4 matrices.
 Related functions:
 <a href="MathUtil.md#MathUtil.mat4multiply">MathUtil.mat4multiply()</a> -
 Multiplies two matrices
-\\* Reading the [\*\*tutorial by Dmitry Sokolov\*\*](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
-led me to this highly useful insight.
+\\* Reading the [\*\*tutorial by Dmitry Sokolov\*\*](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection) led me to this useful insight.
 \*Projective transformations.\*\* In all the transformations described earlier, the last row in the transformation matrix is
 (0, 0, 0, 1). (Such transformations are called _affine transformations_, those that
 keep straight lines straight and parallel lines parallel.) However, this is not the case for

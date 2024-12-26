@@ -11,7 +11,7 @@
  * import * as CustomModuleName from "extras/contourlines.js";</pre>
  * @module extras/contourlines */
 
-import {MathUtil, MeshBuffer} from "../h3du_module.js";
+import {MathUtil, MeshBuffer, Meshes} from "../../h3du_module.js";
 
 /** @ignore */
 function contourOne(p1, p2, u1, v1, u2, v2, level, lines) {

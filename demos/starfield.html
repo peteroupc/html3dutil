@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head><meta charset=utf-8>
 <style>
 body { margin: 0px; }
@@ -25,7 +26,11 @@ import {StarField} from "../extras/meshes/starfield.js";
 // Helper methods
 
 function meshVertexCount(mesh){
-  return mesh.index().count
+  return mesh.index.count
+}
+
+function meshIndices(mesh){
+  return mesh.index.array
 }
 
 function accessorCountPerValue(accessor){
@@ -37,7 +42,8 @@ function accessorBuffer(accessor){
 }
 
 function accessorStride(accessor){
-  return accessor.isInterleavedBufferAttribute ? accessor.data.stride : accessor.count
+  return accessor.isInterleavedBufferAttribute ? accessor.data.stride :
+     accessorCountPerValue(accessor)
 }
 
 function accessorOffset(accessor){
@@ -57,12 +63,16 @@ function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
    context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
      context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
+   console.log([attributes[x],accessorCountPerValue(accessor),
+     accessorStride(accessor)*4,
+     accessorOffset(accessor)*4])
    context.vertexAttribPointer(attrLoc,
      accessorCountPerValue(accessor),context.FLOAT,false,
      accessorStride(accessor)*4,accessorOffset(accessor)*4)
   }
  })
- var indices=mesh.getIndices()
+ var indices=meshIndices(mesh)
+ console.log(indices)
  if(indices==null){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
  } else {
@@ -164,7 +174,7 @@ context.detachShader(sp,vs)
 context.detachShader(sp,fs)
 ////////////////////////
 var ext=context.getExtension("ANGLE_instanced_arrays");
-var sf=new StarField(100);
+var sf=new StarField(THREE,100);
 var buffers=[]
 context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
@@ -199,6 +209,7 @@ matrix=new Float32Array(matrix)
 context.uniformMatrix4fv(projUniform,false,matrix)
 // refresh instances and draw
 refreshInstanceBuffer(context,ext,sp,sf.instances,ibdata);
+//console.log(""+[meshVertexCount(sf.star),meshVertexCount(sf.instances)])
 ext.drawArraysInstancedANGLE(
   context.TRIANGLES,0,
   meshVertexCount(sf.star),

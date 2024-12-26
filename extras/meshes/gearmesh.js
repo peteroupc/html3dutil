@@ -3,18 +3,10 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/gearmesh.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/gearmesh.js";
- * // -- or --
- * import * as CustomModuleName from "extras/gearmesh.js";</pre>
- * @module extras/gearmesh */
-
 // Adapted by Peter O. from gears.c (3D Gears), a public domain program
 // written by Brian Paul.
 
-import {MathUtil} from "../h3du_module.js";
+import {MathUtil, Meshes} from "../../h3du_module.js";
 
 function QuadStrips() {
   this.vertices = [];

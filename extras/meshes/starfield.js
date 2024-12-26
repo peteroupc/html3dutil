@@ -12,12 +12,12 @@
  * import * as CustomModuleName from "extras/starfield.js";</pre>
  * @module extras/starfield */
 
-import {MeshBuffer, Meshes, newFrames} from "../h3du_module.js";
+import {MeshBuffer, Meshes, newFrames, toGLColor} from "../../h3du_module.js";
 
 const NUM_OF_STARS = 200;
 
 function setColorBuffer(three,buffergeom,r,g,b){
- var color=H3DU.toGLColor(r,g,b)
+ var color=toGLColor(r,g,b)
  var ret=[]
  var pos=0
  for(var i=0;i<buffergeom.index.count;i++,pos+=3){
@@ -36,6 +36,7 @@ function setColorBuffer(three,buffergeom,r,g,b){
  * @constructor
  */
 export function StarField(three, range) {
+  if(!three || !three["BufferGeometry"])throw new Error()
   this._starPos = function(range, vec) {
     let x = 0,
       y = 0,
@@ -76,7 +77,7 @@ export function StarField(three, range) {
     const ba = this.instances.getAttribute("position");
     const count = ba.count;
     for (i = 0; i < count; i++) {
-      z = ba.getZ(i);
+      var z = ba.getZ(i);
       if(z > this.range / 2) {
         // once the star is too close, move it elsewhere
         this._starPos(this.range, vec);

@@ -211,7 +211,7 @@ Meshes.fromPositions=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
   if(!indices){
     indices=[]
-    for(var i=0;i<(indices.length/3)|0;i++){
+    for(var i=0;i<(vertices.length/3)|0;i++){
        indices[i]=i
     }
   }
@@ -1160,6 +1160,7 @@ Meshes._createCapsule = function(three,radius, length, slices, stacks, middleSta
     }
   }
   const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, gridHeight);
+  if(!mesh)throw new Error();
   return flat ? recalcNormals(three,mesh["toNonIndexed"](),inside) : normNormals(mesh);
 };
 

@@ -6,10 +6,12 @@
 /** The <code>extras/createfloor.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/createfloor.js";
+ * import * from "extras/meshes/createfloor.js";
  * // -- or --
- * import * as CustomModuleName from "extras/createfloor.js";</pre>
+ * import * as CustomModuleName from "extras/meshes/createfloor.js";</pre>
  * @module extras/createfloor */
+
+import {Meshes} from "../../h3du_module.js";
 
 /**
  * Generates a mesh buffer of a tiled floor. Texture coordinates

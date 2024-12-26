@@ -11,7 +11,7 @@
  * import * as CustomModuleName from "extras/arrow.js";</pre>
  * @module extras/arrow */
 
-import {MathUtil, Meshes} from "../h3du_module.js";
+import {MathUtil, Meshes} from "../../h3du_module.js";
 
 function matTo4D(three, mat){
 var r=new three.Matrix4()

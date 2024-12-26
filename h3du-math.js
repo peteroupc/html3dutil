@@ -465,8 +465,7 @@
  * Related functions:
  * [MathUtil.mat4multiply()]{@link MathUtil.mat4multiply} -
  * Multiplies two matrices
- * \* Reading the [**tutorial by Dmitry Sokolov**](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection)
- * led me to this highly useful insight.
+ * \* Reading the [**tutorial by Dmitry Sokolov**](https://github.com/ssloy/tinyrenderer/wiki/Lesson-4:-Perspective-projection) led me to this useful insight.
  * *Projective transformations.** In all the transformations described earlier, the last row in the transformation matrix is
  * (0, 0, 0, 1). (Such transformations are called _affine transformations_, those that
  * keep straight lines straight and parallel lines parallel.) However, this is not the case for

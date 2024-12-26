@@ -6,10 +6,10 @@
 /** The <code>extras/text.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/text.js";
+ * import * from "extras/meshes/text.js";
  * // -- or --
- * import * as CustomModuleName from "extras/text.js";</pre>
- * @module extras/text */
+ * import * as CustomModuleName from "extras/meshes/text.js";</pre>
+ * @module extras/meshes/text */
 
 /* global DataView, H3DU, MeshBuffer, Promise, console */
 
@@ -41,7 +41,7 @@
  * other, and the mention of this link is not an endorsement or sponsorship
  * of any particular tool.)<p>
  * NOTE: The constructor should not be called directly by applications.
- * Use the {@link TextFont.load} method to get an H3DU.TextFont object. This
+ * Use the {@link TextFont.load} method to get an TextFont object. This
  * constructor's parameters are undocumented and are subject to change.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -51,9 +51,9 @@
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
  * @constructor
- * @memberof H3DU
+
  */
-H3DU.TextFont = function() {
+export const TextFont = function() {
   const fontinfo = arguments[0];
   const chars = arguments[1];
   const pages = arguments[2];
@@ -63,8 +63,8 @@ H3DU.TextFont = function() {
   this.info = fontinfo;
   this.common = common;
   if(this.info) {
-    this.info.padding = H3DU.TextFont._toArray(this.info.padding, 4);
-    this.info.spacing = H3DU.TextFont._toArray(this.info.spacing, 2);
+    this.info.padding = TextFont._toArray(this.info.padding, 4);
+    this.info.spacing = TextFont._toArray(this.info.spacing, 2);
   }
   this.fileUrl = fileUrl;
   this.chars = chars;
@@ -78,7 +78,7 @@ H3DU.TextFont = function() {
   }
 };
 /** @ignore */
-H3DU.TextFont._toArray = function(str, minLength) {
+TextFont._toArray = function(str, minLength) {
   let spl;
   let i;
   if(typeof str === "string") {
@@ -109,7 +109,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
  * height of the string (taking into account line feed characters,
  * U+000A, that break lines).
  */
-H3DU.TextFont.prototype.measure = function(str, params) {
+TextFont.prototype.measure = function(str, params) {
   const height = typeof params.lineHeight !== "undefined" && params.lineHeight !== null ? params.lineHeight :
     this.common.lineHeight;
   if(height < 0)throw new Error();
@@ -126,7 +126,7 @@ H3DU.TextFont.prototype.measure = function(str, params) {
   return [size, yPos];
 };
 /** @ignore */
-H3DU.TextFont.prototype._measureWord = function(
+TextFont.prototype._measureWord = function(
   str, startIndex, endIndex, lastChar, scale, info) {
   let xPos = 0;
   let xSize = 0;
@@ -163,7 +163,7 @@ H3DU.TextFont.prototype._measureWord = function(
   info[2] = lastChar; // last character of the word
 };
 /** @ignore */
-H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
+TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
   if(str.length === 0) {
     return [];
   }
@@ -282,7 +282,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
  */
-H3DU.TextFont.prototype.textShape = function(str, params) {
+TextFont.prototype.textShape = function(str, params) {
   const group = new H3DU.ShapeGroup();
   const msdf = typeof params.msdf !== "undefined" && params.msdf !== null ? params.msdf : false;
   let color = typeof params.color !== "undefined" && params.color !== null ? params.color : null;
@@ -294,9 +294,9 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
   let shader = null;
   const hasColor = typeof color !== "undefined" && color !== null;
   if(hasColor) {
-    shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textShader(msdf));
+    shader = new H3DU.ShaderInfo(null, TextFont._textShader(msdf));
   } else {
-    shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textureShader());
+    shader = new H3DU.ShaderInfo(null, TextFont._textureShader());
   }
   color = hasColor ? color : [0, 0, 0, 1.0];
   const meshesForPage = this.makeTextMeshes(str, params);
@@ -335,7 +335,7 @@ function Mesh() {
 }
 
 /** @ignore */
-H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
+TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   let lastChar = -1;
   let i;
   for (i = startPos; i < endPos; i++) {
@@ -410,7 +410,7 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
  * There is one mesh for each texture page of the font. If none of the
  * text uses a given page, the corresponding mesh will be null.
  */
-H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
+TextFont.prototype.makeTextMeshes = function(str, params) {
   let meshesForPage = [];
   const xPos = typeof params.x !== "undefined" && params.x !== null ? params.x : 0;
   let yPos = typeof params.y !== "undefined" && params.y !== null ? params.y : 0;
@@ -459,9 +459,9 @@ H3DU.TextFont.prototype.makeTextMeshes = function(str, params) {
   return meshesForPage;
 };
 /** @ignore */
-H3DU.TextFont._resolvePath = function(path, name) {
+TextFont._resolvePath = function(path, name) {
   // Relatively dumb for a relative path
-  // resolver, but sufficient for H3DU.TextFont's purposes
+  // resolver, but sufficient for TextFont's purposes
 
   let ret = path;
   const lastSlash = ret.lastIndexOf("/");
@@ -473,7 +473,7 @@ H3DU.TextFont._resolvePath = function(path, name) {
   return ret;
 };
 /** @ignore */
-H3DU.TextFont._elementToObject = function(element) {
+TextFont._elementToObject = function(element) {
   const attrs = element.getAttributeNames();
   const x = {};
   let i;
@@ -490,7 +490,7 @@ H3DU.TextFont._elementToObject = function(element) {
   return x;
 };
 /** @ignore */
-H3DU.TextFont._loadJsonFontInner = function(data) {
+TextFont._loadJsonFontInner = function(data) {
   const xchars = [];
   const xpages = [];
   let xkernings = [];
@@ -506,16 +506,16 @@ H3DU.TextFont._loadJsonFontInner = function(data) {
 
   for (i = 0; i < json.pages.length; i++) {
     const p = json.pages[i];
-    xpages[i] = H3DU.TextFont._resolvePath(data.url, p);
+    xpages[i] = TextFont._resolvePath(data.url, p);
   }
   if(json.kernings) {
     xkernings = json.kernings;
   }
-  return new H3DU.TextFont(json.info, xchars, xpages, xkernings,
+  return new TextFont(json.info, xchars, xpages, xkernings,
     json.common, data.url);
 };
 /** @ignore */
-H3DU.TextFont._loadXmlFontInner = function(data) {
+TextFont._loadXmlFontInner = function(data) {
   const doc = data.data;
   const commons = doc.getElementsByTagName("common");
   if(commons.length === 0)return null;
@@ -529,27 +529,27 @@ H3DU.TextFont._loadXmlFontInner = function(data) {
   const xpages = [];
   const xkernings = [];
   let p;
-  const xcommons = H3DU.TextFont._elementToObject(commons[0]);
-  const xinfos = H3DU.TextFont._elementToObject(infos[0]);
+  const xcommons = TextFont._elementToObject(commons[0]);
+  const xinfos = TextFont._elementToObject(infos[0]);
   let i;
   for (i = 0; i < pages.length; i++) {
-    p = H3DU.TextFont._elementToObject(pages[i]);
-    xpages[p.id] = H3DU.TextFont._resolvePath(data.url, p.file);
+    p = TextFont._elementToObject(pages[i]);
+    xpages[p.id] = TextFont._resolvePath(data.url, p.file);
   }
 
   for (i = 0; i < chars.length; i++) {
-    p = H3DU.TextFont._elementToObject(chars[i]);
+    p = TextFont._elementToObject(chars[i]);
     xchars[p.id] = p;
   }
 
   for (i = 0; i < kernings.length; i++) {
-    p = H3DU.TextFont._elementToObject(kernings[i]);
+    p = TextFont._elementToObject(kernings[i]);
     xkernings.push(p);
   }
-  return new H3DU.TextFont(xinfos, xchars, xpages, xkernings, xcommons, data.url);
+  return new TextFont(xinfos, xchars, xpages, xkernings, xcommons, data.url);
 };
 /** @ignore */
-H3DU.TextFont._decodeUtf8 = function(data, offset, endOffset) {
+TextFont._decodeUtf8 = function(data, offset, endOffset) {
   const ret = [];
   let cp;
   let bytesSeen;
@@ -611,7 +611,7 @@ H3DU.TextFont._decodeUtf8 = function(data, offset, endOffset) {
   }
 };
 /** @ignore */
-H3DU.TextFont._loadBinaryFontInner = function(data) {
+TextFont._loadBinaryFontInner = function(data) {
   const view = new DataView(data.data);
   let offset = 4;
   if(view.getUint8(0) !== 66 ||
@@ -639,7 +639,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
     let i;
     for (i = startIndex; i < endIndex; i++) {
       if(uview.getUint8(i) === 0) {
-        return H3DU.TextFont._decodeUtf8(uview, startIndex, i);
+        return TextFont._decodeUtf8(uview, startIndex, i);
       }
     }
     return null;
@@ -712,7 +712,7 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
         if(typeof name === "undefined" || name === null) {
           return null;
         }
-        pages.push(H3DU.TextFont._resolvePath(data.url, name));
+        pages.push(TextFont._resolvePath(data.url, name));
         offset += ss + 1;
       }
       break;
@@ -751,10 +751,10 @@ H3DU.TextFont._loadBinaryFontInner = function(data) {
   if(!havetype[1] || !havetype[2] || !havetype[3]) {
     return null;
   }
-  return new H3DU.TextFont(info, chars, pages, kernings, commons, data.url);
+  return new TextFont(info, chars, pages, kernings, commons, data.url);
 };
 /** @ignore */
-H3DU.TextFont._loadTextFontInner = function(data) {
+TextFont._loadTextFontInner = function(data) {
   const text = data.data;
   const lines = text.split(/\r?\n/);
   const pages = [];
@@ -786,7 +786,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
       rest = rest.substr(e[1].length);
     }
     if(word === "page") {
-      pages[hash.id | 0] = H3DU.TextFont._resolvePath(data.url, hash.file);
+      pages[hash.id | 0] = TextFont._resolvePath(data.url, hash.file);
     }
     if(word === "char" && hash.id !== null) {
       chars[hash.id | 0] = hash;
@@ -806,7 +806,7 @@ H3DU.TextFont._loadTextFontInner = function(data) {
   if(!fontinfo || !common || pages.length === 0) {
     return null;
   }
-  return new H3DU.TextFont(fontinfo, chars, pages, kernings, common, data.url);
+  return new TextFont(fontinfo, chars, pages, kernings, common, data.url);
 };
 /**
  * Loads a bitmap font definition from a file along with the textures
@@ -831,11 +831,11 @@ H3DU.TextFont._loadTextFontInner = function(data) {
  * in the order in which they are declared in the font data file.
  * </ul>
  */
-H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
+TextFont.loadWithTextures = function(fontFileName, textureLoader) {
   if(!textureLoader) {
     throw new Error();
   }
-  return H3DU.TextFont.load(fontFileName).then(function(font) {
+  return TextFont.load(fontFileName).then(function(font) {
     return font.loadTextures(textureLoader).then(function(r) {
       return Promise.resolve({
         "url":font.fileUrl,
@@ -859,7 +859,7 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
  * resolves, each item in the resulting array will be a loaded
  * {@link Texture} object.
  */
-H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
+TextFont.prototype.loadTextures = function(textureLoader) {
   const textures = [];
   let i;
   for (i = 0; i < this.pages.length; i++) {
@@ -883,7 +883,7 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
  * <li>All others: Text</li></ul>
  * @returns {TextFont|null} Text font data, or null if an error occurs.
  */
-H3DU.TextFont.loadData = function(data, fontFileName) {
+TextFont.loadData = function(data, fontFileName) {
   const dd = {
     "data":data,
     "url":fontFileName
@@ -891,34 +891,34 @@ H3DU.TextFont.loadData = function(data, fontFileName) {
   let view;
   if((/\.xml$/i).exec(fontFileName)) {
     // TODO: Somehow convert to XML document
-    return H3DU.TextFont._loadXmlFontInner(dd);
+    return TextFont._loadXmlFontInner(dd);
   } else if((/\.bin$/i).exec(fontFileName)) {
-    return H3DU.TextFont._loadBinaryFontInner(dd);
+    return TextFont._loadBinaryFontInner(dd);
   } else if((/\.fnt$/i).exec(fontFileName)) {
     // NOTE: Must be ArrayBuffer
     view = new DataView(dd.data);
     let ret = null;
     if(view.getUint8(0) === 66 && view.getUint8(1) === 77 && view.getUint8(2) === 70) {
-      ret = H3DU.TextFont._loadBinaryFontInner(dd);
+      ret = TextFont._loadBinaryFontInner(dd);
     } else {
       view = new DataView(dd.data);
-      ret = H3DU.TextFont._loadTextFontInner({
+      ret = TextFont._loadTextFontInner({
         "url":data.url,
-        "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
+        "data":TextFont._decodeUtf8(view, 0, view.byteLength)
       });
     }
     return ret;
   } else {
     // NOTE: Must be ArrayBuffer
     view = new DataView(dd.data);
-    const text = H3DU.TextFont._decodeUtf8(view, 0, view.byteLength);
+    const text = TextFont._decodeUtf8(view, 0, view.byteLength);
     if((/\.json$/i).exec(fontFileName)) {
-      return H3DU.TextFont._loadJsonFontInner({
+      return TextFont._loadJsonFontInner({
         "data":JSON.parse(text),
         "url":dd.url
       });
     } else {
-      return H3DU.TextFont._loadTextFontInner({
+      return TextFont._loadTextFontInner({
         "data":text,
         "url":dd.url
       });
@@ -927,7 +927,7 @@ H3DU.TextFont.loadData = function(data, fontFileName) {
 };
 
 /** @ignore */
-H3DU.TextFont._textureShader = function() {
+TextFont._textureShader = function() {
   const shader = [
     "#ifdef GL_ES",
     "#ifndef GL_FRAGMENT_PRECISION_HIGH",
@@ -945,7 +945,7 @@ H3DU.TextFont._textureShader = function() {
 };
 
 /** @ignore */
-H3DU.TextFont._textShader = function(msdf) {
+TextFont._textShader = function(msdf) {
   const shader = [
     "#ifdef GL_OES_standard_derivatives",
     "#extension GL_OES_standard_derivatives : enable",
@@ -1000,7 +1000,7 @@ H3DU.TextFont._textShader = function(msdf) {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
  * @constructor
- * @memberof H3DU
+
  */
 H3DU.TextureAtlas = function() {
   this.sprites = {};
@@ -1035,7 +1035,7 @@ H3DU.TextureAtlas.prototype.makeSprites = function(sprites) {
     if(!sprites[i])throw new Error();
     this._makeSprite(sprites[i].name, sprites[i].index, sprites[i].x, sprites[i].y, meshes);
   }
-  const shader = new H3DU.ShaderInfo(null, H3DU.TextFont._textureShader());
+  const shader = new H3DU.ShaderInfo(null, TextFont._textureShader());
   const group = new H3DU.ShapeGroup();
 
   for (i = 0; i < meshes.length; i++) {
@@ -1346,13 +1346,13 @@ H3DU.TextureAtlas.load = function(data, atlasFileName) {
   const view = new DataView(dd.data);
   const ret = H3DU.TextureAtlas._loadText({
     "url":data.url,
-    "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
+    "data":TextFont._decodeUtf8(view, 0, view.byteLength)
   });
   if(!ret)return null;
   let i;
   for (i = 0; i < ret.textures.length; i++) {
     const p = ret.textures[i];
-    ret.textures[i] = H3DU.TextFont._resolvePath(dd.url, p);
+    ret.textures[i] = TextFont._resolvePath(dd.url, p);
   }
   ret.fileUrl = dd.url;
   return ret;

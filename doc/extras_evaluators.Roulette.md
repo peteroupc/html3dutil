@@ -27,7 +27,8 @@ curve and the point at the given u-coordinate of this curve.
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 * [endPoints](#extras_evaluators.Roulette_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
-* [epitrochoid](#extras_evaluators_Roulette.epitrochoid)<br>Creates a <a href="Curve.md">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside another circle, whose position is fixed, with a center of (0,0).
+* [epitrochoid](#extras_evaluators_Roulette.epitrochoid)<br>Creates a <a href="Curve.md">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
+of another circle, whose position is fixed, with a center of (0,0).
 * [evaluate](#extras_evaluators.Roulette_evaluate)<br>Finds the position of this curve at the given u-coordinate.
 * [fitRange](#extras_evaluators.Roulette_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to fit the given range.
@@ -130,7 +131,8 @@ method.
 <a name='extras_evaluators_Roulette.epitrochoid'></a>
 ### (static) module:extras/evaluators~Roulette.epitrochoid(outerRadius, rollerRadius, distFromRollerCenter, [rotationDegrees], [revolutions])
 
-Creates a <a href="Curve.md">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside another circle, whose position is fixed, with a center of (0,0).
+Creates a <a href="Curve.md">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
+of another circle, whose position is fixed, with a center of (0,0).
 The rolling circle will start at the positive x-axis of the fixed circle
 unless otherwise given in the parameter <code>rotationDegrees</code>.
 

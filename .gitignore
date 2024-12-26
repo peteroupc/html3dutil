@@ -9,6 +9,7 @@
 *.map
 *.nupkg
 *.pyc
+*.qss
 *.sdsettings
 *.shf*
 *.suo
