@@ -47,7 +47,7 @@ will be stored in the list of shapes.
 
 #### Parameters
 
-* `shape` (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)<br>A 3D shape. Throws an error if null.
+* `shape` (Type: <a href="ShapeGroup.md">ShapeGroup</a>)<br>A 3D shape. Throws an error if null.
 
 #### Return Value
 
@@ -107,7 +107,7 @@ in this shape group at the given index.
 #### Return Value
 
 The shape or shape group located
-in this shape group at the given index, or null if none is found there. (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)
+in this shape group at the given index, or null if none is found there. (Type: <a href="ShapeGroup.md">ShapeGroup</a>)
 
 <a name='ShapeGroup_getTransform'></a>
 ### ShapeGroup#getTransform()
@@ -144,7 +144,7 @@ Removes all instances of a 3D shape from this shape group
 
 #### Parameters
 
-* `shape` (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)<br>The 3D shape to remove.
+* `shape` (Type: <a href="ShapeGroup.md">ShapeGroup</a>)<br>The 3D shape to remove.
 
 #### Return Value
 
@@ -211,7 +211,7 @@ Sets a shape or shape group at the given index in this shape group.
 #### Parameters
 
 * `index` (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.
-* `shape` (Type: Shape | <a href="ShapeGroup.md">ShapeGroup</a>)<br>Shape object to set at the given index.
+* `shape` (Type: <a href="ShapeGroup.md">ShapeGroup</a>)<br>Shape object to set at the given index.
 
 #### Return Value
 

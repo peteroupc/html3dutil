@@ -34,7 +34,7 @@ ShapeGroup.prototype.shapeCount = function() {
  * Gets the shape or shape group located
  * in this shape group at the given index.
  * @param {number} index Integer index, starting from 0, of the shape or shape group to set.
- * @returns {Shape|ShapeGroup} The shape or shape group located
+ * @returns {ShapeGroup} The shape or shape group located
  * in this shape group at the given index, or null if none is found there.
  */
 ShapeGroup.prototype.getShape = function(index) {
@@ -43,7 +43,7 @@ ShapeGroup.prototype.getShape = function(index) {
 /**
  * Sets a shape or shape group at the given index in this shape group.
  * @param {number} index Integer index, starting from 0, to set the shape or shape group at.
- * @param {Shape|ShapeGroup} shape Shape object to set at the given index.
+ * @param {ShapeGroup} shape Shape object to set at the given index.
  * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.setShape = function(index, shape) {
@@ -75,7 +75,7 @@ ShapeGroup.prototype.copy = function() {
  * Adds a 3D shape to this shape group, at the end of the list
  * of shapes. Its reference, not a copy,
  * will be stored in the list of shapes.
- * @param {Shape|ShapeGroup} shape A 3D shape.
+ * @param {ShapeGroup} shape A 3D shape.
  * Throws an error if null.
  * @returns {ShapeGroup} This object.
  */
@@ -148,7 +148,7 @@ ShapeGroup.prototype.setTransform = function(transform) {
 
 /**
  * Removes all instances of a 3D shape from this shape group
- * @param {Shape|ShapeGroup} shape The 3D shape to remove.
+ * @param {ShapeGroup} shape The 3D shape to remove.
  * @returns {ShapeGroup} This object.
  */
 ShapeGroup.prototype.removeShape = function(shape) {

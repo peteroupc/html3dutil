@@ -338,6 +338,5 @@ export function contourLines3D(mesh, planes) {
       getIntersectionPolygonPlane(polygon, plane[0], plane[1], positions);
     }
   }
-  return MeshBuffer.fromPositions(positions)
-    .setType(MeshBuffer.LINES);
+  return Meshes.fromPositions(positions);
 }

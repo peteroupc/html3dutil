@@ -11,7 +11,7 @@
  * import * as CustomModuleName from "extras/arrow.js";</pre>
  * @module extras/arrow */
 
-import {MathUtil, Meshes} from "../../h3du_module.js";
+import {MathUtil, Meshes, toGLColor} from "../../h3du_module.js";
 
 function matTo4D(three, mat){
 var r=new three.Matrix4()
@@ -40,7 +40,7 @@ export const createArrow = function(three, shaftLength, pointerLength, shaftRadi
 }
 
 function setColorBuffer(three,buffergeom,r,g,b){
- var color=H3DU.toGLColor(r,g,b)
+ var color=toGLColor(r,g,b)
  var ret=[]
  var pos=0
  for(var i=0;i<buffergeom.index.count;i++,pos+=3){

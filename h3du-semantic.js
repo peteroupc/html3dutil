@@ -13,13 +13,13 @@
  * @readonly
  */
 export const Semantic = {};
-/** Attribute semantic for a vertex position.
+/** "position": Attribute semantic for a vertex position.
  * In general, vertex positions are 2-dimensional or 3-dimensional.
  * @const
  * @static
  */
 Semantic.POSITION = 0;
-/** Attribute semantic for a vertex normal.<p>
+/** "normal": Attribute semantic for a vertex normal.<p>
  * For 3D graphics libraries to calculate a mesh buffer's lighting and shading correctly, that mesh buffer must specify normals for all its vertices.<p>
  * <b>What are normals?</b> A normal is a set of numbers (usually three numbers) describing a particular direction. Generally, a normal's direction is perpendicular to a surface's edges, and points up and
  * away from the surface.<p>
@@ -31,7 +31,7 @@ Semantic.POSITION = 0;
  * @static
  */
 Semantic.NORMAL = 1;
-/** Attribute semantic for a tuple of texture coordinates.<p>
+/** "uv": Attribute semantic for a tuple of texture coordinates.<p>
  * If a texture (array of memory units) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.<p>
  * In most 3D graphics pipelines, u-coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, v-coordinates start by default at the bottom of the texture (0) and increase to the top (1), whereas in others, such as WebGL, Vulkan, Metal, and Direct3D, v-coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the upper-left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.<p>
  * In general, texture coordinates describe 2-dimensional points.
@@ -47,7 +47,7 @@ Semantic.NORMAL = 1;
  * @static
  */
 Semantic.TEXCOORD = 2;
-/** Attribute semantic for a color.
+/** "color": Attribute semantic for a color.
  * In general, each color consists of three components.
  * @const
  * @static

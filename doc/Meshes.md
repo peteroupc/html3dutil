@@ -85,7 +85,7 @@ positive-y axis-facing face, negative-z axis-facing face, positive-z axis-facing
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createBoxEx'></a>
 ### (static) Meshes.createBoxEx(box, [inward])
@@ -107,7 +107,7 @@ positive-y axis-facing face, negative-z axis-facing face, positive-z axis-facing
 
 #### Return Value
 
-The generated mesh. Throws an error if "box" is null or contains negative dimensions along any of its axes. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. Throws an error if "box" is null or contains negative dimensions along any of its axes. (Type: *)
 
 #### Examples
 
@@ -148,7 +148,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 #### Examples
 
@@ -202,7 +202,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 #### Examples
 
@@ -256,7 +256,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createDisk'></a>
 ### (static) Meshes.createDisk(inner, outer, [slices], [loops], [inward])
@@ -280,7 +280,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createLathe'></a>
 ### (static) Meshes.createLathe(points, [slices], [flat], [inside])
@@ -306,7 +306,7 @@ corner.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createPartialDisk'></a>
 ### (static) Meshes.createPartialDisk(inner, outer, [slices], [loops], [start], [sweep], [inward])
@@ -329,7 +329,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createPlane'></a>
 ### (static) Meshes.createPlane([width], [height], [widthDiv], [heightDiv], [inward])
@@ -353,7 +353,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createPointedStar'></a>
 ### (static) Meshes.createPointedStar(points, firstRadius, secondRadius, [inward])
@@ -372,7 +372,7 @@ corner.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createSphere'></a>
 ### (static) Meshes.createSphere([radius], [slices], [stacks], [flat], [inside])
@@ -409,7 +409,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.createTorus'></a>
 ### (static) Meshes.createTorus(inner, outer, [lengthwise], [crosswise], [flat], [inward])
@@ -431,7 +431,7 @@ See the "<a href="tutorial-shapes.md">Creating Shapes</a>" tutorial.
 
 #### Return Value
 
-The generated mesh. (Type: THREE.BufferGeometry)
+A buffer geometry. The generated mesh. (Type: *)
 
 <a name='Meshes.fromPositions'></a>
 ### (static) Meshes.fromPositions(three, vertices, [indices])
@@ -446,7 +446,7 @@ TODO: Not documented yet.
 
 #### Return Value
 
-TODO: Not documented yet. (Type: THREE.BufferGeometry)
+A buffer geometry. TODO: Not documented yet. (Type: *)
 
 <a name='Meshes.fromPositionsAutoNormals'></a>
 ### (static) Meshes.fromPositionsAutoNormals(three, vertices, indices)

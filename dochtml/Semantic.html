@@ -2,7 +2,7 @@
 <h3> new Semantic()</h3><p><b>Deprecated: It is planned to render this class obsolete and rely on three.js's BufferGeometry.</b></p>Contains constants for assigning semantics
 to vertex attributes found in mesh buffers and
 to data that is uniform throughout a particular
-geometry draw call.<h3> Members</h3><ul><li><a href='#Semantic.BITANGENT'>BITANGENT</a><br>Attribute semantic for a bitangent vector.<li><a href='#Semantic.COLOR'>COLOR</a><br>Attribute semantic for a color.<li><a href='#Semantic.CUSTOM'>CUSTOM</a><br>Attribute semantic for custom attributes.<li><a href='#Semantic.JOINT'>JOINT</a><br>Attribute semantic for a skinning joint.<li><a href='#Semantic.JOINTMATRIX'>JOINTMATRIX</a><br>Uniform semantic for a joint matrix.<li><a href='#Semantic.MODEL'>MODEL</a><br>Uniform semantic for a model matrix.<li><a href='#Semantic.MODELVIEW'>MODELVIEW</a><br>Uniform semantic for a model-view matrix.<li><a href='#Semantic.MODELVIEWINVERSETRANSPOSE'>MODELVIEWINVERSETRANSPOSE</a><br>Uniform semantic for the inverse of the 3 &times; 3 transpose of the model-view matrix.<li><a href='#Semantic.MODELVIEWPROJECTION'>MODELVIEWPROJECTION</a><br>Uniform semantic for a model-view-projection matrix.<li><a href='#Semantic.NORMAL'>NORMAL</a><br>Attribute semantic for a vertex normal.<li><a href='#Semantic.POSITION'>POSITION</a><br>Attribute semantic for a vertex position.<li><a href='#Semantic.PROJECTION'>PROJECTION</a><br>Uniform semantic for a projection matrix.<li><a href='#Semantic.TANGENT'>TANGENT</a><br>Attribute semantic for a tangent vector.<li><a href='#Semantic.TEXCOORD'>TEXCOORD</a><br>Attribute semantic for a tuple of texture coordinates.<li><a href='#Semantic.VIEW'>VIEW</a><br>Uniform semantic for a view matrix.<li><a href='#Semantic.VIEWINVERSE'>VIEWINVERSE</a><br>Uniform semantic for an inverse view matrix.<li><a href='#Semantic.WEIGHT'>WEIGHT</a><br>Attribute semantic for a skinning weight.</ul><a name='Semantic.BITANGENT'></a>
+geometry draw call.<h3> Members</h3><ul><li><a href='#Semantic.BITANGENT'>BITANGENT</a><br>Attribute semantic for a bitangent vector.<li><a href='#Semantic.COLOR'>COLOR</a><br>"color": Attribute semantic for a color.<li><a href='#Semantic.CUSTOM'>CUSTOM</a><br>Attribute semantic for custom attributes.<li><a href='#Semantic.JOINT'>JOINT</a><br>Attribute semantic for a skinning joint.<li><a href='#Semantic.JOINTMATRIX'>JOINTMATRIX</a><br>Uniform semantic for a joint matrix.<li><a href='#Semantic.MODEL'>MODEL</a><br>Uniform semantic for a model matrix.<li><a href='#Semantic.MODELVIEW'>MODELVIEW</a><br>Uniform semantic for a model-view matrix.<li><a href='#Semantic.MODELVIEWINVERSETRANSPOSE'>MODELVIEWINVERSETRANSPOSE</a><br>Uniform semantic for the inverse of the 3 &times; 3 transpose of the model-view matrix.<li><a href='#Semantic.MODELVIEWPROJECTION'>MODELVIEWPROJECTION</a><br>Uniform semantic for a model-view-projection matrix.<li><a href='#Semantic.NORMAL'>NORMAL</a><br>"normal": Attribute semantic for a vertex normal.<li><a href='#Semantic.POSITION'>POSITION</a><br>"position": Attribute semantic for a vertex position.<li><a href='#Semantic.PROJECTION'>PROJECTION</a><br>Uniform semantic for a projection matrix.<li><a href='#Semantic.TANGENT'>TANGENT</a><br>Attribute semantic for a tangent vector.<li><a href='#Semantic.TEXCOORD'>TEXCOORD</a><br>"uv": Attribute semantic for a tuple of texture coordinates.<li><a href='#Semantic.VIEW'>VIEW</a><br>Uniform semantic for a view matrix.<li><a href='#Semantic.VIEWINVERSE'>VIEWINVERSE</a><br>Uniform semantic for an inverse view matrix.<li><a href='#Semantic.WEIGHT'>WEIGHT</a><br>Attribute semantic for a skinning weight.</ul><a name='Semantic.BITANGENT'></a>
 <h3> Semantic.BITANGENT (constant)
 
 </h3>Attribute semantic for a bitangent vector.
@@ -10,7 +10,7 @@ geometry draw call.<h3> Members</h3><ul><li><a href='#Semantic.BITANGENT'>BITANG
 <a name='Semantic.COLOR'></a>
 <h3> Semantic.COLOR (constant)
 
-</h3>Attribute semantic for a color.
+</h3>"color": Attribute semantic for a color.
 In general, each color consists of three components.
 
 <a name='Semantic.CUSTOM'></a>
@@ -51,7 +51,7 @@ In general, each color consists of three components.
 <a name='Semantic.NORMAL'></a>
 <h3> Semantic.NORMAL (constant)
 
-</h3>Attribute semantic for a vertex normal.<p>
+</h3>"normal": Attribute semantic for a vertex normal.<p>
 For 3D graphics libraries to calculate a mesh buffer's lighting and shading correctly, that mesh buffer must specify normals for all its vertices.<p>
 <b>What are normals?</b> A normal is a set of numbers (usually three numbers) describing a particular direction. Generally, a normal's direction is perpendicular to a surface's edges, and points up and
 away from the surface.<p>
@@ -63,7 +63,7 @@ also contains vertex positions.
 <a name='Semantic.POSITION'></a>
 <h3> Semantic.POSITION (constant)
 
-</h3>Attribute semantic for a vertex position.
+</h3>"position": Attribute semantic for a vertex position.
 In general, vertex positions are 2-dimensional or 3-dimensional.
 
 <a name='Semantic.PROJECTION'></a>
@@ -79,7 +79,7 @@ In general, vertex positions are 2-dimensional or 3-dimensional.
 <a name='Semantic.TEXCOORD'></a>
 <h3> Semantic.TEXCOORD (constant)
 
-</h3>Attribute semantic for a tuple of texture coordinates.<p>
+</h3>"uv": Attribute semantic for a tuple of texture coordinates.<p>
 If a texture (array of memory units) will be applied to a mesh buffer's geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.<p>
 In most 3D graphics pipelines, u-coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, v-coordinates start by default at the bottom of the texture (0) and increase to the top (1), whereas in others, such as WebGL, Vulkan, Metal, and Direct3D, v-coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the upper-left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.<p>
 In general, texture coordinates describe 2-dimensional points.
