@@ -188,6 +188,22 @@ function normNormals(buffer) {
 /**
  * TODO: Not documented yet.
  * @param {*} buffer TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.reverseWinding=function(buffer){
+  var arr=buffer["index"]["array"]
+  if(arr.length%3!=0)throw new Error()
+  for(var pos=0;pos<arr.length;pos+=3){
+    var t=arr[pos+1]
+    arr[pos+1]=arr[pos+2]
+    arr[pos+2]=t
+  }
+  return buffer
+}
+
+/**
+ * TODO: Not documented yet.
+ * @param {*} buffer TODO: Not documented yet.
  * @param {*} inside TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
@@ -647,7 +663,7 @@ Meshes.createLathe = function(three,points, slices, flat, inside) {
  */
 Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, stacks, flat, inside) {
   const cylinder = Meshes.createCylinder(three,baseRad, topRad, height, slices, stacks, flat, inside);
-  const base = Meshes.createDisk(three,0.0, baseRad, slices, 2, !inside).reverseWinding();
+  const base = Meshes.reverseWinding(Meshes.createDisk(three,0.0, baseRad, slices, 2, !inside));
   const top = Meshes.createDisk(three,0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
   top.transform(MathUtil.mat4translated(0, 0, height));

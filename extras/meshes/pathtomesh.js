@@ -93,7 +93,7 @@ export const toExtrudedMeshBuffer = function(three, zStart, zEnd, flatness, clos
     return three.BufferGeometryUtils.merge([
      toExtrudedMeshBuffer(three,path, zStart, zEnd, flatness, false)),
      toMeshBuffer(three,path, zEnd, flatness)),
-     toMeshBuffer(three,path, zStart, flatness).reverseWinding().reverseNormals())],0)
+     Meshes.reverseWinding(toMeshBuffer(three,path, zStart, flatness)).reverseNormals())],0)
   }
   const lines = this.getLines(flatness);
   const z1 = Math.min(zStart, zEnd);

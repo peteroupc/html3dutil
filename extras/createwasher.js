@@ -34,7 +34,7 @@ return r
 export const createWasher = function(three,inner, outer, height, slices) {
   const innerCylinder = Meshes.createCylinder(three,inner, inner, height, slices, 1, false, true);
   const outerCylinder = Meshes.createCylinder(three,outer, outer, height, slices, 1, false, false);
-  const base = Meshes.createDisk(three,inner, outer, slices, 2, true).reverseWinding();
+  const base = Meshes.reverseWinding(Meshes.createDisk(three,inner, outer, slices, 2, true));
   const top = Meshes.createDisk(three,inner, outer, slices, 2, false);
   // move the top disk to the top of the cylinder
   top.applyMatrix(matTo4D(MathUtil.mat4translated(0, 0, height)));

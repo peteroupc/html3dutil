@@ -45,7 +45,7 @@ if(typeof Math.sign === "undefined") {
 function makeMeshDoubleSided(func, resolution) {
   "use strict";
   var mesh = makeMesh(func, resolution, resolution);
-  var otherWinding = new H3DU.MeshBuffer().merge(mesh).reverseWinding().reverseNormals();
+  var otherWinding = H3DU.Meshes.reverseWinding(mesh).reverseNormals();
   return mesh.merge((otherWinding));
 }
 
