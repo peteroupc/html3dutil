@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/skysphereshader.js</code> module.
+/** The <code>extras/shaders/skysphereshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/skysphereshader.js";
+ * import * from "extras/shaders/skysphereshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/skysphereshader.js";</pre>
- * @module extras/skysphereshader */
+ * import * as CustomModuleName from "extras/shaders/skysphereshader.js";</pre>
+ * @module extras/shaders/skysphereshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

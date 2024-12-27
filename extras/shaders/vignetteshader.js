@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/vignetteshader.js</code> module.
+/** The <code>extras/shaders/vignetteshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/vignetteshader.js";
+ * import * from "extras/shaders/vignetteshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/vignetteshader.js";</pre>
- * @module extras/vignetteshader */
+ * import * as CustomModuleName from "extras/shaders/vignetteshader.js";</pre>
+ * @module extras/shaders/vignetteshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

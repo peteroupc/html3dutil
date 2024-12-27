@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/createfloor.js</code> module.
+/** The <code>extras/meshes/createfloor.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
  * import * from "extras/meshes/createfloor.js";
  * // -- or --
  * import * as CustomModuleName from "extras/meshes/createfloor.js";</pre>
- * @module extras/createfloor */
+ * @module extras/meshes/createfloor */
 
 import {Meshes} from "../../h3du_module.js";
 
@@ -18,13 +18,14 @@ import {Meshes} from "../../h3du_module.js";
  * of each tile will range from [0,1] across the width and height
  * of that tile. Thus, any texture used to render the mesh buffer should
  * entirely be of a square tile.
+ * @param {*} three Reference to THREE.js.
  * @param {number} xStart The x-coordinate of the start of the floor.
  * @param {number} yStart The y-coordinate of the start of the floor.
  * @param {number} width Total width of the floor.
  * @param {number} height Total height of the floor.
  * @param {number} tileSize Width and height of each floor tile.
  * @param {number} [z] The z-coordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
- * @returns {*} The resulting mesh buffer.
+ * @returns {*} A buffer geometry object. The resulting mesh buffer.
  * @function
  */
 export const createFloor = function(three,xStart, yStart, width, height, tileSize, z) {

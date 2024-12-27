@@ -3,19 +3,19 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/marbleshader.js</code> module.
+/** The <code>extras/shaders/marbleshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/marbleshader.js";
+ * import * from "extras/shaders/marbleshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/marbleshader.js";</pre>
- * @module extras/marbleshader */
+ * import * as CustomModuleName from "extras/shaders/marbleshader.js";</pre>
+ * @module extras/shaders/marbleshader */
 
 import {fragmentShaderLib} from "./fragmentshaderlib";
 /**
  * GLSL shader code for TODO: Not documented yet.
  * The shader program takes the following uniforms:<ul>
- * <li>"u_time" - TODO: Not documented yet.</ul>
+ * <li>"u_time" - A time-based variable, which is a <code>float</code>.</ul>
  */
 export const marbleShader = {
   "uniform":{"u_time":0},

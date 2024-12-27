@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/fragmentshaderlib.js</code> module.
+/** The <code>extras/shaders/fragmentshaderlib.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/fragmentshaderlib.js";
+ * import * from "extras/shaders/fragmentshaderlib.js";
  * // -- or --
- * import * as CustomModuleName from "extras/fragmentshaderlib.js";</pre>
- * @module extras/fragmentshaderlib */
+ * import * as CustomModuleName from "extras/shaders/fragmentshaderlib.js";</pre>
+ * @module extras/shaders/fragmentshaderlib */
 
 /**
  * Returns GLSL shader code for several useful functions

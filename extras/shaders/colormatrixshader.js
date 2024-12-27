@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/colormatrixshader.js</code> module.
+/** The <code>extras/shaders/colormatrixshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/colormatrixshader.js";
+ * import * from "extras/shaders/colormatrixshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/colormatrixshader.js";</pre>
- * @module extras/colormatrixshader */
+ * import * as CustomModuleName from "extras/shaders/colormatrixshader.js";</pre>
+ * @module extras/shaders/colormatrixshader */
 
 /**
  * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4 &times; 4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which

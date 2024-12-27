@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/sunburstbackshader.js</code> module.
+/** The <code>extras/shaders/sunburstbackshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/sunburstbackshader.js";
+ * import * from "extras/shaders/sunburstbackshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/sunburstbackshader.js";</pre>
- * @module extras/sunburstbackshader */
+ * import * as CustomModuleName from "extras/shaders/sunburstbackshader.js";</pre>
+ * @module extras/shaders/sunburstbackshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/pixelateshader.js</code> module.
+/** The <code>extras/shaders/pixelateshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/pixelateshader.js";
+ * import * from "extras/shaders/pixelateshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/pixelateshader.js";</pre>
- * @module extras/pixelateshader */
+ * import * as CustomModuleName from "extras/shaders/pixelateshader.js";</pre>
+ * @module extras/shaders/pixelateshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

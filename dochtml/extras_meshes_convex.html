@@ -1,0 +1,14 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><title>module:extras/meshes/convex</title></head><body><h1> module:extras/meshes/convex</h1><p><a href='index.html'>Back to documentation index.</a></p><a name='extras_meshes_convex'></a>
+<h3> module:extras/meshes/convex()</h3>The <code>extras/meshes/convex.js</code> module.
+To import all symbols in this module, either of the following can be used:
+<pre>
+import * from "extras/meshes/convex.js";
+// -- or --
+import * as CustomModuleName from "extras/meshes/convex.js";</pre><h3> Methods</h3><ul><li><a href='#extras_meshes_convex.createConvexHull'>createConvexHull</a><br>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
+that contains all the points given.<li><a href='#extras_meshes_convex.planePointsToConvexHull'>planePointsToConvexHull</a><br>Generates a convex hull of the half-space representation
+of several planes.<li><a href='#extras_meshes_convex.randomConvexPolyhedron'>randomConvexPolyhedron</a><br>Generates a mesh buffer of a convex polyhedron at random.</ul><a name='extras_meshes_convex.createConvexHull'></a>
+<h3> (static) module:extras/meshes/convex.createConvexHull(points)</h3>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
+that contains all the points given.<h4> Parameters</h4><ul><li><code>points</code> (Type: Array.&lt;number>)<br>An array of 3-element vectors each identifying a 3-dimensional point.</ul><h4> Return Value</h4>A buffer geometry. The generated convex hull. (Type: *)<a name='extras_meshes_convex.planePointsToConvexHull'></a>
+<h3> (static) module:extras/meshes/convex.planePointsToConvexHull(planepoints)</h3>Generates a convex hull of the half-space representation
+of several planes. Each plane is defined by the triangle it lies on.<h4> Parameters</h4><ul><li><code>planepoints</code> (Type: Array.&lt;Array.&lt;number>>)<br>An array of planes. Each plane is defined by three points that form a triangle that lies on the plane. The triangle's normal vector will point outward, meaning all points on the side pointed to by the normal vector will be "outside" the plane, and other points will be "inside" the plane.</ul><h4> Return Value</h4>A buffer geometry. The generated convex hull. (Type: *)<a name='extras_meshes_convex.randomConvexPolyhedron'></a>
+<h3> (static) module:extras/meshes/convex.randomConvexPolyhedron(avgsize, maxfaces)</h3>Generates a mesh buffer of a convex polyhedron at random.<h4> Parameters</h4><ul><li><code>avgsize</code> (Type: number)<br>Average size of the polyhedron generated.<li><code>maxfaces</code> (Type: number)<br>Maximum number of faces for the convex polyhedron.</ul><h4> Return Value</h4>A buffer geometry. The resulting polyhedron. (Type: *)<p><a href='index.html'>Back to documentation index.</a></p></body></html>

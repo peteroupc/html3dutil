@@ -3,7 +3,7 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/text.js</code> module.
+/** The <code>extras/meshes/text.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
  * import * from "extras/meshes/text.js";
@@ -46,10 +46,10 @@
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
- * To use this class, you must include the script "extras/text.js"; the
+ * To use this class, you must include the script "extras/meshes/text.js"; the
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
+ * &lt;script type="text/javascript" src="extras/meshes/text.js">&lt;/script></pre>
  * @constructor
 
  */
@@ -995,10 +995,10 @@ TextFont._textShader = function(msdf) {
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
- * To use this class, you must include the script "extras/text.js"; the
+ * To use this class, you must include the script "extras/meshes/text.js"; the
  * class is not included in the "h3du_min.js" file which makes up
  * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/text.js">&lt;/script></pre>
+ * &lt;script type="text/javascript" src="extras/meshes/text.js">&lt;/script></pre>
  * @constructor
 
  */

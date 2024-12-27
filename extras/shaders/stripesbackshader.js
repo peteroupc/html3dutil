@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/stripesbackshader.js</code> module.
+/** The <code>extras/shaders/stripesbackshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/stripesbackshader.js";
+ * import * from "extras/shaders/stripesbackshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/stripesbackshader.js";</pre>
- * @module extras/stripesbackshader */
+ * import * as CustomModuleName from "extras/shaders/stripesbackshader.js";</pre>
+ * @module extras/shaders/stripesbackshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

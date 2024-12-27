@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/stl.js</code> module.
+/** The <code>extras/meshes/stl.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/stl.js";
+ * import * from "extras/meshes/stl.js";
  * // -- or --
- * import * as CustomModuleName from "extras/stl.js";</pre>
- * @module extras/stl */
+ * import * as CustomModuleName from "extras/meshes/stl.js";</pre>
+ * @module extras/meshes/stl */
 
 /**
  * Primitive mode for rendering a triangle fan. The first 3

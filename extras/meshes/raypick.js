@@ -4,13 +4,13 @@
 */
 
 /* global px, py, pz, qx, qy, qz, v, w */
-/** The <code>extras/raypick.js</code> module.
+/** The <code>extras/meshes/raypick.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/raypick.js";
+ * import * from "extras/meshes/raypick.js";
  * // -- or --
- * import * as CustomModuleName from "extras/raypick.js";</pre>
- * @module extras/raypick */
+ * import * as CustomModuleName from "extras/meshes/raypick.js";</pre>
+ * @module extras/meshes/raypick */
 
 import {MathUtil, MeshBuffer} from "../h3du-module.js";
 

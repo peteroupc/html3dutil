@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/kernelmatrixshader.js</code> module.
+/** The <code>extras/shaders/kernelmatrixshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/kernelmatrixshader.js";
+ * import * from "extras/shaders/kernelmatrixshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/kernelmatrixshader.js";</pre>
- * @module extras/kernelmatrixshader */
+ * import * as CustomModuleName from "extras/shaders/kernelmatrixshader.js";</pre>
+ * @module extras/shaders/kernelmatrixshader */
 
 /**
  * GLSL shader code for a family of image processing filters, such as blurring, sharpening,

@@ -4,13 +4,13 @@
 */
 
 /* global Float32Array */
-/** The <code>extras/starfield.js</code> module.
+/** The <code>extras/meshes/starfield.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/starfield.js";
+ * import * from "extras/meshes/starfield.js";
  * // -- or --
- * import * as CustomModuleName from "extras/starfield.js";</pre>
- * @module extras/starfield */
+ * import * as CustomModuleName from "extras/meshes/starfield.js";</pre>
+ * @module extras/meshes/starfield */
 
 import {MeshBuffer, Meshes, newFrames, toGLColor} from "../../h3du_module.js";
 

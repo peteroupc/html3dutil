@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/horgradshader.js</code> module.
+/** Horizontal gradient shader.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/horgradshader.js";
+ * import * from "extras/shaders/horgradshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/horgradshader.js";</pre>
- * @module extras/horgradshader */
+ * import * as CustomModuleName from "extras/shaders/horgradshader.js";</pre>
+ * @module extras/shaders/horgradshader */
 
 /**
  * GLSL shader code for a screen-space horizontal gradient.

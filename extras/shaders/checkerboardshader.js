@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/checkerboardshader.js</code> module.
+/** The <code>extras/shaders/checkerboardshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/checkerboardshader.js";
+ * import * from "extras/shaders/checkerboardshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/checkerboardshader.js";</pre>
- * @module extras/checkerboardshader */
+ * import * as CustomModuleName from "extras/shaders/checkerboardshader.js";</pre>
+ * @module extras/shaders/checkerboardshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

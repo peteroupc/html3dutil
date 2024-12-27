@@ -24,70 +24,71 @@ made up of one or more individual curves.
 vertex attributes for a surface.
 * <a href="Transform.md">Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.
-* <a href="extras_arrow.md">module:extras/arrow</a><br>The <code>extras/arrow.js</code> module.
 * <a href="extras_camera.md">module:extras/camera</a><br>The <code>extras/camera.js</code> module.
 * <a href="extras_camera.Camera.md">module:extras/camera.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".
 * <a href="extras_camera.InputTracker.md">module:extras/camera.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.
-* <a href="extras_checkerboardshader.md">module:extras/checkerboardshader</a><br>The <code>extras/checkerboardshader.js</code> module.
-* <a href="extras_colormatrixshader.md">module:extras/colormatrixshader</a><br>The <code>extras/colormatrixshader.js</code> module.
-* <a href="extras_contourlines.md">module:extras/contourlines</a><br>The <code>extras/contourlines.js</code> module.
-* <a href="extras_convex.md">module:extras/convex</a><br>The <code>extras/convex.js</code> module.
-* <a href="extras_createfloor.md">module:extras/createfloor</a><br>The <code>extras/createfloor.js</code> module.
 * <a href="extras_createwasher.md">module:extras/createwasher</a><br>The <code>extras/createwasher.js</code> module.
 * <a href="extras_curvetube.md">module:extras/curvetube</a><br>The <code>extras/curvetube.js</code> module.
 * <a href="extras_curvetube.CurveTube.md">module:extras/curvetube.CurveTube</a><br>A <a href="Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
 * <a href="extras_derivedcurves.md">module:extras/derivedcurves</a><br>Additional curve evaluator and surface evaluator objects.
-* <a href="extras_drawingtoy.md">module:extras/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
-* <a href="extras_drawingtoy.DrawingToy.md">module:extras/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
 * <a href="extras_evaluators.md">module:extras/evaluators</a><br>The <code>extras/evaluators.js</code> module.
 * <a href="extras_evaluators.Roulette.md">module:extras/evaluators.Roulette</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve drawn by a curve that rolls along another curve whose position is fixed.
 * <a href="extras_evaluators.SurfaceOfRevolution.md">module:extras/evaluators.SurfaceOfRevolution</a><br>A <a href="Surface.md">surface evaluator object</a> for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.
 * <a href="extras_fourierknot.md">module:extras/fourierknot</a><br>The <code>extras/fourierknot.js</code> module.
-* <a href="extras_fragmentshaderlib.md">module:extras/fragmentshaderlib</a><br>The <code>extras/fragmentshaderlib.js</code> module.
 * <a href="extras_gradients.md">module:extras/gradients</a><br>The <code>extras/gradients.js</code> module.
-* <a href="extras_horgradshader.md">module:extras/horgradshader</a><br>The <code>extras/horgradshader.js</code> module.
-* <a href="extras_kernelmatrixshader.md">module:extras/kernelmatrixshader</a><br>The <code>extras/kernelmatrixshader.js</code> module.
-* <a href="extras_marbleshader.md">module:extras/marbleshader</a><br>The <code>extras/marbleshader.js</code> module.
-* <a href="extras_marbleshader2.md">module:extras/marbleshader2</a><br>The <code>extras/marbleshader2.js</code> module.
 * <a href="extras_matrixstack.md">module:extras/matrixstack</a><br>The <code>extras/matrixstack.js</code> module.
 * <a href="extras_matrixstack.MatrixStack.md">module:extras/matrixstack.MatrixStack</a><br>This class implements a stack
 of 4 &times; 4 transformation matrices.
-* <a href="extras_meshes_text.md">module:extras/meshes/text</a><br>The <code>extras/text.js</code> module.
+* <a href="extras_meshes_arrow.md">module:extras/meshes/arrow</a><br>The <code>extras/meshes/arrow.js</code> module.
+* <a href="extras_meshes_contourlines.md">module:extras/meshes/contourlines</a><br>The <code>extras/meshes/contourlines.js</code> module.
+* <a href="extras_meshes_convex.md">module:extras/meshes/convex</a><br>The <code>extras/meshes/convex.js</code> module.
+* <a href="extras_meshes_createfloor.md">module:extras/meshes/createfloor</a><br>The <code>extras/meshes/createfloor.js</code> module.
+* <a href="extras_meshes_drawingtoy.md">module:extras/meshes/drawingtoy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
+* <a href="extras_meshes_drawingtoy.DrawingToy.md">module:extras/meshes/drawingtoy.DrawingToy</a><br>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.
+* <a href="extras_meshes_gearmesh.md">module:extras/meshes/gearmesh</a><br>The <code>extras/meshes/gearmesh.js</code> module.
+* <a href="extras_meshes_pathtomesh.md">module:extras/meshes/pathtomesh</a><br>The <code>extras/meshes/pathtomesh.js</code> module.
+* <a href="extras_meshes_polyhedra.md">module:extras/meshes/polyhedra</a><br>The <code>extras/meshes/polyhedra.js</code> module.
+* <a href="extras_meshes_polyhedra.Polyhedra.md">module:extras/meshes/polyhedra.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
+and other polyhedra.
+* <a href="extras_meshes_raypick.md">module:extras/meshes/raypick</a><br>The <code>extras/meshes/raypick.js</code> module.
+* <a href="extras_meshes_starfield.md">module:extras/meshes/starfield</a><br>The <code>extras/meshes/starfield.js</code> module.
+* <a href="extras_meshes_starfield.StarField.md">module:extras/meshes/starfield.StarField</a><br>TODO: Not documented yet.
+* <a href="extras_meshes_stl.md">module:extras/meshes/stl</a><br>The <code>extras/meshes/stl.js</code> module.
+* <a href="extras_meshes_text.md">module:extras/meshes/text</a><br>The <code>extras/meshes/text.js</code> module.
 * <a href="extras_meshes_text.TextFont.md">module:extras/meshes/text.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.
-* <a href="extras_mirrorshader.md">module:extras/mirrorshader</a><br>The <code>extras/mirrorshader.js</code> module.
 * <a href="extras_moresurfaces.md">module:extras/moresurfaces</a><br>The <code>extras/moresurfaces.js</code> module.
 * <a href="extras_moresurfaces.KleinBottle.md">module:extras/moresurfaces.KleinBottle</a><br>Surface evaluator object for the Klein surface, also known as the "Klein bottle".
 * <a href="extras_moresurfaces.MoebiusStrip.md">module:extras/moresurfaces.MoebiusStrip</a><br>Surface evaluator object for a M&ouml;bius strip.
-* <a href="extras_pathtomesh.md">module:extras/pathtomesh</a><br>The <code>extras/pathtomesh.js</code> module.
 * <a href="extras_pathutil.md">module:extras/pathutil</a><br>The <code>extras/pathutil.js</code> module.
-* <a href="extras_pixelateshader.md">module:extras/pixelateshader</a><br>The <code>extras/pixelateshader.js</code> module.
-* <a href="extras_polyhedra.md">module:extras/polyhedra</a><br>The <code>extras/polyhedra.js</code> module.
-* <a href="extras_polyhedra.Polyhedra.md">module:extras/polyhedra.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
-and other polyhedra.
-* <a href="extras_radgradshader.md">module:extras/radgradshader</a><br>The <code>extras/radgradshader.js</code> module.
 * <a href="extras_randompolygon.md">module:extras/randompolygon</a><br>Contains a method to generate a simple polygon at random.
-* <a href="extras_raypick.md">module:extras/raypick</a><br>The <code>extras/raypick.js</code> module.
-* <a href="extras_skysphereshader.md">module:extras/skysphereshader</a><br>The <code>extras/skysphereshader.js</code> module.
-* <a href="extras_starfield.md">module:extras/starfield</a><br>The <code>extras/starfield.js</code> module.
-* <a href="extras_starfield.StarField.md">module:extras/starfield.StarField</a><br>TODO: Not documented yet.
+* <a href="extras_shaders_checkerboardshader.md">module:extras/shaders/checkerboardshader</a><br>The <code>extras/shaders/checkerboardshader.js</code> module.
+* <a href="extras_shaders_colormatrixshader.md">module:extras/shaders/colormatrixshader</a><br>The <code>extras/shaders/colormatrixshader.js</code> module.
+* <a href="extras_shaders_fragmentshaderlib.md">module:extras/shaders/fragmentshaderlib</a><br>The <code>extras/shaders/fragmentshaderlib.js</code> module.
+* <a href="extras_shaders_horgradshader.md">module:extras/shaders/horgradshader</a><br>Horizontal gradient shader.
+* <a href="extras_shaders_kernelmatrixshader.md">module:extras/shaders/kernelmatrixshader</a><br>The <code>extras/shaders/kernelmatrixshader.js</code> module.
+* <a href="extras_shaders_marbleshader.md">module:extras/shaders/marbleshader</a><br>The <code>extras/shaders/marbleshader.js</code> module.
+* <a href="extras_shaders_marbleshader2.md">module:extras/shaders/marbleshader2</a><br>The <code>extras/shaders/marbleshader2.js</code> module.
+* <a href="extras_shaders_mirrorshader.md">module:extras/shaders/mirrorshader</a><br>The <code>extras/shaders/mirrorshader.js</code> module.
+* <a href="extras_shaders_pixelateshader.md">module:extras/shaders/pixelateshader</a><br>The <code>extras/shaders/pixelateshader.js</code> module.
+* <a href="extras_shaders_radgradshader.md">module:extras/shaders/radgradshader</a><br>The <code>extras/shaders/radgradshader.js</code> module.
+* <a href="extras_shaders_skysphereshader.md">module:extras/shaders/skysphereshader</a><br>The <code>extras/shaders/skysphereshader.js</code> module.
+* <a href="extras_shaders_stripesbackshader.md">module:extras/shaders/stripesbackshader</a><br>The <code>extras/shaders/stripesbackshader.js</code> module.
+* <a href="extras_shaders_sunburstbackshader.md">module:extras/shaders/sunburstbackshader</a><br>The <code>extras/shaders/sunburstbackshader.js</code> module.
+* <a href="extras_shaders_vignetteshader.md">module:extras/shaders/vignetteshader</a><br>The <code>extras/shaders/vignetteshader.js</code> module.
+* <a href="extras_shaders_warpshader.md">module:extras/shaders/warpshader</a><br>The <code>extras/shaders/warpshader.js</code> module.
+* <a href="extras_shaders_waterpaintshader.md">module:extras/shaders/waterpaintshader</a><br>The <code>extras/shaders/waterpaintshader.js</code> module.
+* <a href="extras_shaders_waveshader.md">module:extras/shaders/waveshader</a><br>The <code>extras/shaders/waveshader.js</code> module.
+* <a href="extras_shaders_woodshader.md">module:extras/shaders/woodshader</a><br>The <code>extras/shaders/woodshader.js</code> module.
 * <a href="extras_starpolygon.md">module:extras/starpolygon</a><br>The <code>extras/starpolygon.js</code> module.
-* <a href="extras_stl.md">module:extras/stl</a><br>The <code>extras/stl.js</code> module.
-* <a href="extras_stripesbackshader.md">module:extras/stripesbackshader</a><br>The <code>extras/stripesbackshader.js</code> module.
-* <a href="extras_sunburstbackshader.md">module:extras/sunburstbackshader</a><br>The <code>extras/sunburstbackshader.js</code> module.
 * <a href="extras_superellipsoid.md">module:extras/superellipsoid</a><br>The <code>extras/superellipsoid.js</code> module.
 * <a href="extras_superellipsoid.Supershape.md">module:extras/superellipsoid.Supershape</a><br>TODO: Not documented yet.
 * <a href="extras_superellipsoid.Supertoroid.md">module:extras/superellipsoid.Supertoroid</a><br>TODO: Not documented yet.
 * <a href="extras_torusknot.md">module:extras/torusknot</a><br>The <code>extras/torusknot.js</code> module.
 * <a href="extras_torusknot.TorusKnot.md">module:extras/torusknot.TorusKnot</a><br>A curve evaluator object for a torus knot or torus-knot-like curve.
-* <a href="extras_vignetteshader.md">module:extras/vignetteshader</a><br>The <code>extras/vignetteshader.js</code> module.
-* <a href="extras_warpshader.md">module:extras/warpshader</a><br>The <code>extras/warpshader.js</code> module.
-* <a href="extras_waterpaintshader.md">module:extras/waterpaintshader</a><br>The <code>extras/waterpaintshader.js</code> module.
-* <a href="extras_waveshader.md">module:extras/waveshader</a><br>The <code>extras/waveshader.js</code> module.
-* <a href="extras_woodshader.md">module:extras/woodshader</a><br>The <code>extras/woodshader.js</code> module.
 
 ## Tutorials
 

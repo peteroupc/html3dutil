@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/pathtomesh.js</code> module.
+/** The <code>extras/meshes/pathtomesh.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/pathtomesh.js";
+ * import * from "extras/meshes/pathtomesh.js";
  * // -- or --
- * import * as CustomModuleName from "extras/pathtomesh.js";</pre>
- * @module extras/pathtomesh */
+ * import * as CustomModuleName from "extras/meshes/pathtomesh.js";</pre>
+ * @module extras/meshes/pathtomesh */
 
 import {MathUtil, Meshes} from "../h3du_module.js";
 import {GraphicsPath} from "../h3du_path.js";

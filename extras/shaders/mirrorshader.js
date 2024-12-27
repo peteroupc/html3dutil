@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/mirrorshader.js</code> module.
+/** The <code>extras/shaders/mirrorshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/mirrorshader.js";
+ * import * from "extras/shaders/mirrorshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/mirrorshader.js";</pre>
- * @module extras/mirrorshader */
+ * import * as CustomModuleName from "extras/shaders/mirrorshader.js";</pre>
+ * @module extras/shaders/mirrorshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

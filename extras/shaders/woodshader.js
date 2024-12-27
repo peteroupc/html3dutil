@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/woodshader.js</code> module.
+/** The <code>extras/shaders/woodshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/woodshader.js";
+ * import * from "extras/shaders/woodshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/woodshader.js";</pre>
- * @module extras/woodshader */
+ * import * as CustomModuleName from "extras/shaders/woodshader.js";</pre>
+ * @module extras/shaders/woodshader */
 
 import {fragmentShaderLib} from "./fragmentshaderlib";
 /**

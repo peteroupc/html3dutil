@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/marbleshader2.js</code> module.
+/** The <code>extras/shaders/marbleshader2.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/marbleshader2.js";
+ * import * from "extras/shaders/marbleshader2.js";
  * // -- or --
- * import * as CustomModuleName from "extras/marbleshader2.js";</pre>
- * @module extras/marbleshader2 */
+ * import * as CustomModuleName from "extras/shaders/marbleshader2.js";</pre>
+ * @module extras/shaders/marbleshader2 */
 
 import {fragmentShaderLib} from "./fragmentshaderlib";
 /**

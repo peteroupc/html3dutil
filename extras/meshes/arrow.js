@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/arrow.js</code> module.
+/** The <code>extras/meshes/arrow.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/arrow.js";
+ * import * from "extras/meshes/arrow.js";
  * // -- or --
- * import * as CustomModuleName from "extras/arrow.js";</pre>
- * @module extras/arrow */
+ * import * as CustomModuleName from "extras/meshes/arrow.js";</pre>
+ * @module extras/meshes/arrow */
 
 import {MathUtil, Meshes, toGLColor} from "../../h3du_module.js";
 

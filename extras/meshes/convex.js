@@ -4,13 +4,13 @@
 */
 
 /* global v, ve */
-/** The <code>extras/convex.js</code> module.
+/** The <code>extras/meshes/convex.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/convex.js";
+ * import * from "extras/meshes/convex.js";
  * // -- or --
- * import * as CustomModuleName from "extras/convex.js";</pre>
- * @module extras/convex */
+ * import * as CustomModuleName from "extras/meshes/convex.js";</pre>
+ * @module extras/meshes/convex */
 
 import {MathUtil, Meshes} from "../../h3du_module.js";
 

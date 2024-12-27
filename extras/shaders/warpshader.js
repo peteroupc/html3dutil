@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/warpshader.js</code> module.
+/** The <code>extras/shaders/warpshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/warpshader.js";
+ * import * from "extras/shaders/warpshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/warpshader.js";</pre>
- * @module extras/warpshader */
+ * import * as CustomModuleName from "extras/shaders/warpshader.js";</pre>
+ * @module extras/shaders/warpshader */
 
 /**
  * GLSL shader code for TODO: Not documented yet.

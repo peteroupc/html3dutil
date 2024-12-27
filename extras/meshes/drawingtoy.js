@@ -6,13 +6,13 @@
 /** Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels.<p>
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/drawingtoy.js";
+ * import * from "extras/meshes/drawingtoy.js";
  * // -- or --
- * import * as CustomModuleName from "extras/drawingtoy.js";</pre>
- * @module extras/drawingtoy */
+ * import * as CustomModuleName from "extras/meshes/drawingtoy.js";</pre>
+ * @module extras/meshes/drawingtoy */
 
-import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module.js";
-import {Roulette} from "./evaluators.js";
+import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../../h3du_module.js";
+import {Roulette} from "../evaluators.js";
 
 function gcd(u, v) {
   u = Math.abs(u);

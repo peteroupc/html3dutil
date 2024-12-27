@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/waterpaintshader.js</code> module.
+/** The <code>extras/shaders/waterpaintshader.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/waterpaintshader.js";
+ * import * from "extras/shaders/waterpaintshader.js";
  * // -- or --
- * import * as CustomModuleName from "extras/waterpaintshader.js";</pre>
- * @module extras/waterpaintshader */
+ * import * as CustomModuleName from "extras/shaders/waterpaintshader.js";</pre>
+ * @module extras/shaders/waterpaintshader */
 
 // Adapted from Hans-Kristian Arntzen's (Themaister's) Waterpaint shader
 /**

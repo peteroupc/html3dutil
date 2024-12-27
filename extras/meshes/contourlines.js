@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/contourlines.js</code> module.
+/** The <code>extras/meshes/contourlines.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/contourlines.js";
+ * import * from "extras/meshes/contourlines.js";
  * // -- or --
- * import * as CustomModuleName from "extras/contourlines.js";</pre>
- * @module extras/contourlines */
+ * import * as CustomModuleName from "extras/meshes/contourlines.js";</pre>
+ * @module extras/meshes/contourlines */
 
 import {MathUtil, Meshes} from "../../h3du_module.js";
 

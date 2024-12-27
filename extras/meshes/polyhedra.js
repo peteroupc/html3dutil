@@ -3,13 +3,13 @@
  In case this is not possible, this file is also licensed under the Unlicense: https://unlicense.org/
 */
 
-/** The <code>extras/polyhedra.js</code> module.
+/** The <code>extras/meshes/polyhedra.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
- * import * from "extras/polyhedra.js";
+ * import * from "extras/meshes/polyhedra.js";
  * // -- or --
- * import * as CustomModuleName from "extras/polyhedra.js";</pre>
- * @module extras/polyhedra */
+ * import * as CustomModuleName from "extras/meshes/polyhedra.js";</pre>
+ * @module extras/meshes/polyhedra */
 
 import {MathUtil, Meshes} from "../h3du_module.js";
 /**
