@@ -53,13 +53,13 @@ points about the z-axis.
 * [createTorus](#Meshes.createTorus)<br>Creates a mesh of a torus (doughnut shape), centered at the origin.
 * [fromPositions](#Meshes.fromPositions)<br>TODO: Not documented yet.
 * [fromPositionsAutoNormals](#Meshes.fromPositionsAutoNormals)<br>TODO: Not documented yet.
-* [fromPositionsNormals](#Meshes.fromPositionsNormals)<br>TODO: Not documented yet.
 * [fromPositionsNormalsUV](#Meshes.fromPositionsNormalsUV)<br>TODO: Not documented yet.
 * [lineLoopIndices](#Meshes.lineLoopIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.
 * [lineStripIndices](#Meshes.lineStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.
 * [quadStripIndices](#Meshes.quadStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.
 * [quadsIndices](#Meshes.quadsIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.
 * [recalcNormals](#Meshes.recalcNormals)<br>TODO: Not documented yet.
+* [reverseWinding](#Meshes.reverseWinding)<br>TODO: Not documented yet.
 * [triangleFanIndices](#Meshes.triangleFanIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.
 * [triangleStripIndices](#Meshes.triangleStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle strip.
 
@@ -464,21 +464,6 @@ TODO: Not documented yet.
 
 TODO: Not documented yet. (Type: *)
 
-<a name='Meshes.fromPositionsNormals'></a>
-### (static) Meshes.fromPositionsNormals(three, vertices, indices)
-
-TODO: Not documented yet.
-
-#### Parameters
-
-* `three` (Type: *)<br>TODO: Not documented yet.
-* `vertices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
-* `indices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
-
-#### Return Value
-
-TODO: Not documented yet. (Type: *)
-
 <a name='Meshes.fromPositionsNormalsUV'></a>
 ### (static) Meshes.fromPositionsNormalsUV(three, vertices, indices)
 
@@ -589,6 +574,19 @@ TODO: Not documented yet.
 
 * `buffer` (Type: *)<br>TODO: Not documented yet.
 * `inside` (Type: *)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='Meshes.reverseWinding'></a>
+### (static) Meshes.reverseWinding(buffer)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `buffer` (Type: *)<br>TODO: Not documented yet.
 
 #### Return Value
 

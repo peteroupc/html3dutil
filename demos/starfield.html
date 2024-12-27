@@ -63,9 +63,9 @@ function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
    context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
      context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
-   console.log([attributes[x],accessorCountPerValue(accessor),
-     accessorStride(accessor)*4,
-     accessorOffset(accessor)*4])
+   //console.log([attributes[x],accessorCountPerValue(accessor),
+   //  accessorStride(accessor)*4,
+   //  accessorOffset(accessor)*4])
    context.vertexAttribPointer(attrLoc,
      accessorCountPerValue(accessor),context.FLOAT,false,
      accessorStride(accessor)*4,accessorOffset(accessor)*4)

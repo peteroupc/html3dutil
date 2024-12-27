@@ -252,36 +252,49 @@ Meshes.fromPositions=function(three,vertices,indices) {
  * @returns {*} TODO: Not documented yet.
  */
 Meshes.fromPositionsAutoNormals=function(three,vertices,indices) {
-  if(!three["BufferGeometry"])return null;
-  var geom=new three["BufferGeometry"]()
-  var attr;
-  var buffer=new three["InterleavedBuffer"](new Float32Array(vertices),3)
-  attr=new three["InterleavedBufferAttribute"](buffer,3,0)
-  geom["setAttribute"]("position",attr)
-  geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
-  // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
-  return Meshes.Meshes.recalcNormals(geom, false)
+  return Meshes.recalcNormals(Meshes.fromPositions(three,vertices,indices), false)
 }
-/**
- * TODO: Not documented yet.
- * @param {*} three TODO: Not documented yet.
- * @param {Array<number>} vertices TODO: Not documented yet.
- * @param {Array<number>} indices TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
- */
-Meshes.fromPositionsNormals=function(three,vertices,indices) {
+
+function fromVertsTwoAttr(three,vertices,indices, a1, a2) {
   if(!three["BufferGeometry"])return null;
+  if(!indices){
+    indices=[]
+    for(var i=0;i<(vertices.length/6)|0;i++){
+       indices[i]=i
+    }
+  }
   var geom=new three["BufferGeometry"]()
   var attr;
   var buffer=new three["InterleavedBuffer"](new Float32Array(vertices),6)
   attr=new three["InterleavedBufferAttribute"](buffer,3,0)
-  geom["setAttribute"]("position",attr)
+  geom["setAttribute"](a1,attr)
   attr=new three["InterleavedBufferAttribute"](buffer,3,3)
-  geom["setAttribute"]("normal",attr)
+  geom["setAttribute"](a2,attr)
   geom.index=new three["BufferAttribute"](new Uint32Array(indices),1)
   // NOTE: Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the buffer geometry's primitive type.
   return geom
 }
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} vertices TODO: Not documented yet.
+ * @param {*} indices TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.fromPositionsNormals=function(three,vertices,indices) {
+  return fromVertsTwoAttr(three,vertices,indices,"position","normal")
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} vertices TODO: Not documented yet.
+ * @param {*} indices TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.fromPositionsColors=function(three,vertices,indices) {
+  return fromVertsTwoAttr(three,vertices,indices,"position","color")
+}
+
 /**
  * TODO: Not documented yet.
  * @param {*} three TODO: Not documented yet.
@@ -543,7 +556,7 @@ Meshes.createCylinder = function(three,baseRad, topRad, height, slices, stacks, 
       }
     }
     const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, stacks + 1);
-    return flat ? Meshes.Meshes.recalcNormals(three,mesh["toNonIndexed"](),inside) : mesh;
+    return flat ? Meshes.recalcNormals(mesh["toNonIndexed"](),inside) : mesh;
   } else {
     return Meshes.fromPositionsNormalsUV(three,[], []);
   }
@@ -622,7 +635,7 @@ Meshes.createLathe = function(three,points, slices, flat, inside) {
     }
   }
   const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, stacks + 1);
-  return Meshes.Meshes.recalcNormals(three,(flat ? mesh["toNonIndexed"]() : mesh),inside);
+  return Meshes.recalcNormals((flat ? mesh["toNonIndexed"]() : mesh),inside);
 };
 
 /**
@@ -914,7 +927,7 @@ Meshes.createTorus = function(three,inner, outer, lengthwise, crosswise, flat, i
     }
   }
   const mesh = meshBufferFromVertexGrid(three,vertices, crosswise + 1, lengthwise + 1);
-  return flat ? Meshes.Meshes.recalcNormals(three,mesh["toNonIndexed"](),inward) : mesh;
+  return flat ? Meshes.recalcNormals(mesh["toNonIndexed"](),inward) : mesh;
 };
 
 /**
@@ -1182,7 +1195,7 @@ Meshes._createCapsule = function(three,radius, length, slices, stacks, middleSta
   }
   const mesh = meshBufferFromVertexGrid(three,vertices, slices + 1, gridHeight);
   if(!mesh)throw new Error();
-  return flat ? Meshes.Meshes.recalcNormals(three,mesh["toNonIndexed"](),inside) : normNormals(mesh);
+  return flat ? Meshes.recalcNormals(mesh["toNonIndexed"](),inside) : normNormals(mesh);
 };
 
 /**

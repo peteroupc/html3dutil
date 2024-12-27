@@ -456,7 +456,7 @@ function descriptions(nodes, writer) {
     let desc = "";
     if(typeof node.deprecated !== "undefined" && node.deprecated !== null) {
       const dep = node.deprecated === true ? "Yes" : node.deprecated;
-      desc = writer.bold("Deprecated: " + writer.normspace(dep));
+      desc = writer.bold("Obsolete: " + writer.normspace(dep));
     } else if(node.kind === "class") {
       desc = writer.normspace(node.classdesc || "") + " ";
       desc += writer.normspace(node.description || "");

@@ -11,10 +11,8 @@
  * import * as CustomModuleName from "extras/pathtomesh.js";</pre>
  * @module extras/pathtomesh */
 
-import {MathUtil} from "../h3du_module.js";
+import {MathUtil, Meshes} from "../h3du_module.js";
 import {GraphicsPath} from "../h3du_path.js";
-
-// TODO: Adjust to use three.js
 
 /**
  * Decomposes this path into triangles and generates a mesh
@@ -65,8 +63,7 @@ export const toLineMeshBuffer = function(three, z, flatness) {
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
   }
-  return MeshBuffer.fromPositions(vertices).setType(
-    MeshBuffer.LINES);
+  return Meshes.fromPositions(vertices)
 };
 
 function recalcNormals(buffer) {

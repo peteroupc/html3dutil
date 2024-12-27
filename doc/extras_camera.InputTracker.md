@@ -39,7 +39,7 @@ library.
 * [TAB](#extras_camera_InputTracker.TAB)<br>Key code for the tab key.
 * [UP](#extras_camera_InputTracker.UP)<br>Key code for the up arrow key.
 * [ZERO](#extras_camera_InputTracker.ZERO)<br>Key code for the 0 key.
-* [deltaXY](#extras_camera_InputTracker_deltaXY)<br>**Deprecated: Yes**
+* [deltaXY](#extras_camera_InputTracker_deltaXY)<br>**Obsolete: Yes**
 * [leftButton](#extras_camera_InputTracker_leftButton)<br>True if the left mouse button was detected as being down.
 * [middleButton](#extras_camera_InputTracker_middleButton)<br>True if the middle mouse button was detected as being down.
 * [rightButton](#extras_camera_InputTracker_rightButton)<br>True if the right mouse button was detected as being down.
@@ -52,7 +52,7 @@ input tracker.
 * [mousePos](#extras_camera_InputTracker_mousePos)<br>Returns the current mouse position, delta
 mouse position, and delta mouse wheel
 position (see the "update" method).
-* [mousewheel](#extras_camera_InputTracker_mousewheel)<br>**Deprecated: Will be removed in the future. Use the
+* [mousewheel](#extras_camera_InputTracker_mousewheel)<br>**Obsolete: Will be removed in the future. Use the
 mousePos method to find out whether the user
 has rotated the mouse wheel.**
 * [update](#extras_camera_InputTracker_update)<br>Retrieves the current position of the mouse within

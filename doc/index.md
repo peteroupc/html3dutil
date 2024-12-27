@@ -12,7 +12,7 @@ vertex attributes for a curve.
 * <a href="MathUtil.md">MathUtil</a><br>A collection of math functions for working
 with vectors, matrices, quaternions, and other
 mathematical objects of interest to three-dimensional graphics programming.
-* <a href="MeshBuffer.md">MeshBuffer</a><br>**Deprecated: It is planned to render this class obsolete and rely on three.js's BufferGeometry.**
+* <a href="MeshBuffer.md">MeshBuffer</a><br>**Obsolete: It is planned to render this class obsolete and rely on three.js's BufferGeometry.**
 * <a href="Meshes.md">Meshes</a><br>Contains methods that create meshes
 of various geometric shapes and solids, such as cubes, cylinders,
 and spheres.
