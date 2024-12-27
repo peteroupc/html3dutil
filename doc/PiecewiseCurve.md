@@ -198,7 +198,7 @@ of neighboring points on the spline.
 A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: <a href="PiecewiseCurve.md">PiecewiseCurve</a>)
 
 <a name='PiecewiseCurve.fromEllipseArc'></a>
-### (static) PiecewiseCurve.fromEllipseArc(x, y, w, h, start, sweep)
+### (static) PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)
 
 Creates a piecewise curve that describes an arc running along an axis-aligned
 ellipse, or a shape based on that arc and ellipse, given the ellipse's center
@@ -209,8 +209,8 @@ cubic rational B-spline curves.
 
 * `x` (Type: number)<br>The x-coordinate of the ellipse's center.
 * `y` (Type: number)<br>The y-coordinate of the ellipse's center.
-* `w` (Type: number)<br>Width of the ellipse's bounding box.
-* `h` (Type: number)<br>Height of the ellipse's bounding box.
+* `radiusX` (Type: number)<br>Horizontal radius of the ellipse.
+* `radiusY` (Type: number)<br>Vertical radius of the ellipse.
 * `start` (Type: number)<br>Starting angle of the arc, in degrees. 0 means the positive x-axis, 90 means the positive y-axis, 180 means the negative x-axis, and 270 means the negative y-axis.
 * `sweep` (Type: number)<br>Length of the arc in degrees. Can be positive or negative. Can be greater than 360 or less than -360, in which case the arc will wrap around the ellipse multiple times. Assuming the coordinate system's x-axis points right and the y-axis down, positive angles run clockwise and negative angles counterclockwise.
 

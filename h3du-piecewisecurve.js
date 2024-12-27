@@ -397,8 +397,8 @@ PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
  * cubic rational B-spline curves.
  * @param {number} x The x-coordinate of the ellipse's center.
  * @param {number} y The y-coordinate of the ellipse's center.
- * @param {number} w Width of the ellipse's bounding box.
- * @param {number} h Height of the ellipse's bounding box.
+ * @param {number} radiusX Horizontal radius of the ellipse.
+ * @param {number} radiusY Vertical radius of the ellipse.
  * @param {number} start Starting angle of the arc, in degrees.
  * 0 means the positive x-axis, 90 means the positive y-axis,
  * 180 means the negative x-axis, and 270 means the negative y-axis.

@@ -59,6 +59,7 @@ points about the z-axis.
 * [lineStripIndices](#Meshes.lineStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.
 * [quadStripIndices](#Meshes.quadStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.
 * [quadsIndices](#Meshes.quadsIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.
+* [recalcNormals](#Meshes.recalcNormals)<br>TODO: Not documented yet.
 * [triangleFanIndices](#Meshes.triangleFanIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.
 * [triangleStripIndices](#Meshes.triangleStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle strip.
 
@@ -578,6 +579,20 @@ The following example sets appropriate indices for a mesh buffer with vertices o
     mesh.setIndices(
     Meshes.quadsIndices(mesh.vertexCount())
     .map(x=>mesh.getIndex(x)));
+
+<a name='Meshes.recalcNormals'></a>
+### (static) Meshes.recalcNormals(buffer, inside)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `buffer` (Type: *)<br>TODO: Not documented yet.
+* `inside` (Type: *)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
 
 <a name='Meshes.triangleFanIndices'></a>
 ### (static) Meshes.triangleFanIndices(vertexCount)

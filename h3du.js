@@ -15,6 +15,4 @@ export {GraphicsPath} from "./h3du-path.js";
 export {ShapeGroup} from "./h3du-shapegroup.js";
 export {Transform} from "./h3du-transform.js";
 export {Meshes} from "./h3du-meshes.js";
-export {BufferAccessor} from "./h3du-bufferaccessor.js";
 export {MeshBuffer} from "./h3du-meshbuffer.js";
-export {Semantic} from "./h3du-semantic.js";

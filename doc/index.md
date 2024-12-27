@@ -3,7 +3,6 @@
 * <a href="BSplineCurve.md">BSplineCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
 * <a href="BSplineSurface.md">BSplineSurface</a><br>A <a href="Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
 whose edges are made up of B-spline curves.
-* <a href="BufferAccessor.md">BufferAccessor</a><br>**Deprecated: It is planned to render this class obsolete and rely on three.js's BufferGeometry.**
 * <a href="Curve.md">Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="CurveBuilder.md">CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.
@@ -19,7 +18,6 @@ of various geometric shapes and solids, such as cubes, cylinders,
 and spheres.
 * <a href="PiecewiseCurve.md">PiecewiseCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
-* <a href="Semantic.md">Semantic</a><br>**Deprecated: It is planned to render this class obsolete and rely on three.js's BufferGeometry.**
 * <a href="ShapeGroup.md">ShapeGroup</a><br>Represents a grouping of shapes.
 * <a href="Surface.md">Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="SurfaceBuilder.md">SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
