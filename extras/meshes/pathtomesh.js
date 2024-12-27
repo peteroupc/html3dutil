@@ -25,7 +25,7 @@ import {GraphicsPath} from "../h3du_path.js";
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {MeshBuffer} The resulting mesh buffer.
+ * @returns {*} The resulting mesh buffer.
  * @function
  */
 export const toMeshBuffer = function(three, path, z, flatness) {
@@ -50,7 +50,7 @@ export const toMeshBuffer = function(three, path, z, flatness) {
  * are decomposed to line segments, the
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {MeshBuffer} The resulting mesh buffer.
+ * @returns {*} The resulting mesh buffer.
  * @function
  */
 export const toLineMeshBuffer = function(three, z, flatness) {
@@ -63,7 +63,7 @@ export const toLineMeshBuffer = function(three, z, flatness) {
     vertices.push(line[0], line[1], z,
       line[2], line[3], z);
   }
-  return Meshes.fromPositions(vertices)
+  return Meshes.fromPositions(three,vertices)
 };
 
 function recalcNormals(buffer) {
@@ -80,7 +80,7 @@ function recalcNormals(buffer) {
  * segments will be close to the true path of the curve by this
  * value, given in units. If null, undefined, or omitted, default is 1.
  * @param {boolean} [closed] If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.
- * @returns {MeshBuffer} The resulting mesh buffer.
+ * @returns {*} The resulting mesh buffer.
  * @function
  */
 export const toExtrudedMeshBuffer = function(three, zStart, zEnd, flatness, closed) {
@@ -88,9 +88,9 @@ export const toExtrudedMeshBuffer = function(three, zStart, zEnd, flatness, clos
   const isclosed = typeof closed === "undefined" || closed === null ? false : closed;
   if(isclosed) {
     return three.BufferGeometryUtils.merge([
-     toExtrudedMeshBuffer(three,path, zStart, zEnd, flatness, false)),
-     toMeshBuffer(three,path, zEnd, flatness)),
-     Meshes.reverseWinding(toMeshBuffer(three,path, zStart, flatness)).reverseNormals())],0)
+     toExtrudedMeshBuffer(three,path, zStart, zEnd, flatness, false),
+     toMeshBuffer(three,path, zEnd, flatness),
+     Meshes.reverseWinding(toMeshBuffer(three,path, zStart, flatness)).reverseNormals()],0)
   }
   const lines = this.getLines(flatness);
   const z1 = Math.min(zStart, zEnd);
@@ -110,5 +110,5 @@ export const toExtrudedMeshBuffer = function(three, zStart, zEnd, flatness, clos
       line[2], line[3], z2,
       line[0], line[1], z2);
   }
-  return recalcNormals(MeshBuffer.fromPositions(vertices));
+  return recalcNormals(MeshBuffer.fromPositions(three,vertices));
 };

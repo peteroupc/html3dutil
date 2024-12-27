@@ -24,7 +24,7 @@ import {Meshes} from "../../h3du_module.js";
  * @param {number} height Total height of the floor.
  * @param {number} tileSize Width and height of each floor tile.
  * @param {number} [z] The z-coordinate where the floor will be placed. If null, undefined, or omitted, the default is 0.
- * @returns {MeshBuffer} The resulting mesh buffer.
+ * @returns {*} The resulting mesh buffer.
  * @function
  */
 export const createFloor = function(three,xStart, yStart, width, height, tileSize, z) {

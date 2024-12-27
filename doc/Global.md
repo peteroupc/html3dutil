@@ -1,5 +1,6 @@
 ### Methods
 
+* [createGear](#createGear)<br>Builds a mesh buffer representing a gear centered at the origin.
 * [getPromiseResults](#getPromiseResults)<br>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.
@@ -10,6 +11,23 @@ its work.
 * [newFrames](#newFrames)<br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.
 * [toGLColor](#toGLColor)<br>Creates a 4-element array representing a color.
+
+<a name='createGear'></a>
+### createGear(innerRadius, outerRadius, thickness, teeth, toothDepth)
+
+Builds a mesh buffer representing a gear centered at the origin.
+
+#### Parameters
+
+* `innerRadius` (Type: number)<br>Inner radius of the gear wheel
+* `outerRadius` (Type: number)<br>Outer radius of the gear wheel, at the valleys between teeth.
+* `thickness` (Type: number)<br>Thickness of the gear
+* `teeth` (Type: number)<br>Number of teeth.
+* `toothDepth` (Type: number)<br>Depth of each gear tooth.
+
+#### Return Value
+
+Return value. (Type: *)
 
 <a name='getPromiseResults'></a>
 ### getPromiseResults(promises, [progressResolve], [progressReject])

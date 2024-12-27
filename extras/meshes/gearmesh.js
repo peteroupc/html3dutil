@@ -58,7 +58,7 @@ function QuadStrips() {
  * @param {number} thickness Thickness of the gear
  * @param {number} teeth Number of teeth.
  * @param {number} toothDepth Depth of each gear tooth.
- * @returns {MeshBuffer} Return value.
+ * @returns {*} Return value.
  * @function
  */
 export const createGear = function(three, innerRadius, outerRadius, thickness, teeth, toothDepth) {

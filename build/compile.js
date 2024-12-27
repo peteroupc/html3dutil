@@ -230,7 +230,9 @@ async function asyncMain() {
   await chdirAsync("..", async () => {
     await tmppathAsync("h3du_all.js", async (p) => {
       let filesForDoc = ["./h3du_module.js"].concat(
-        await readdirAsync("extras", /^.*?\.js$/));
+        await readdirAsync("extras", /^.*?\.js$/)).concat(
+        await readdirAsync("extras/meshes", /^.*?\.js$/)).concat(
+        await readdirAsync("extras/shaders", /^.*?\.js$/));
       filesForDoc = filesForDoc.map((f) => ffq(f)).join(" ");
       await Promise.all([mkdirAsync("doc"), mkdirAsync("dochtml")])
         .then(async () => writeFileIfNeededAsync("./h3du_module.js", normalizeLines(

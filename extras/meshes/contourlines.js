@@ -11,7 +11,7 @@
  * import * as CustomModuleName from "extras/contourlines.js";</pre>
  * @module extras/contourlines */
 
-import {MathUtil, MeshBuffer, Meshes} from "../../h3du_module.js";
+import {MathUtil, Meshes} from "../../h3du_module.js";
 
 /** @ignore */
 function contourOne(p1, p2, u1, v1, u2, v2, level, lines) {
@@ -162,8 +162,22 @@ function conrec(func, levels, u1, u2, v1, v2, usize, vsize) {
   return contours;
 }
 
+function setColorBuffer(three,buffergeom,r,g,b){
+ var color=[r,g,b]
+ var ret=[]
+ var pos=0
+ for(var i=0;i<buffergeom.index.count;i++,pos+=3){
+  ret[pos]=color[0]
+  ret[pos+1]=color[1]
+  ret[pos+2]=color[2]
+ }
+ buffergeom.setAttribute("color",
+    new three["BufferAttribute"](new Float32Array(ret),3))
+ return buffergeom
+}
+
 /** @ignore */
-function drawCurve(contours) {
+function drawCurve(three,contours) {
   const vertices = [];
   let contourIndex;
   for (contourIndex = 0; contourIndex < contours.length; contourIndex++) {
@@ -174,9 +188,7 @@ function drawCurve(contours) {
       vertices.push(contour[i + 2], contour[i + 3], 0);
     }
   }
-  return MeshBuffer.fromPositions(vertices)
-    .setType(MeshBuffer.LINES)
-    .setColor([0, 0, 0]);
+  return setColorBuffer(three,Meshes.fromPositions(three,vertices),0,0,0)
 }
 /**
  * Generates contour lines for two-dimensional data, using Paul Bourke's
@@ -195,7 +207,7 @@ function drawCurve(contours) {
  * grid points in total.
  * @param {number} vsize The number of levels between grid points
  * along the v-axis.
- * @returns {MeshBuffer} A mesh buffer of line segments for the contour lines.
+ * @returns {*} A mesh buffer of line segments for the contour lines.
  * @example <caption>This example generates contour lines for a simple
  * function. This method samples the function at integer grid points.
  * </caption>
@@ -204,9 +216,9 @@ function drawCurve(contours) {
  * 0,10,0,10,10,10);
  * @function
  */
-export const contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
+export const contourLines = function(three,func, levels, u1, u2, v1, v2, usize, vsize) {
   const contours = conrec(func, levels, u1, u2, v1, v2, usize, vsize);
-  return drawCurve(contours);
+  return drawCurve(three,contours);
 };
 
 const EPSILON = 1e-9;
@@ -296,25 +308,31 @@ function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
     }
   }
 }
+
+function _getVec(attr,i,v){
+  v[0]=attr.getX(i)
+  v[1]=attr.getY(i)
+  v[2]=attr.getZ(i)
+}
+
 /**
  * Generates a mesh buffer of
  * contour lines along the surface of a 3-dimensional triangle mesh.
- * @param {MeshBuffer} mesh A triangle mesh.  It must contain a "POSITION" buffer
+ * @param {*} mesh A triangle mesh.  It must contain a "POSITION" buffer
  * attribute with three elements per value. If the number of vertices in the mesh is not divisible by
  * 3, any excess vertices at the end are ignored.
  * @param {Array<Array<number>>} planes An array of 4-element arrays that serve as contour
  * planes. The contour lines will be drawn at the intersection of the contour
  * planes and the surface of the mesh. Each 4-element array describes a plane
  * (A, B, C, D), in that order, whose points satisfy the equation <code>Ax + By + Cz + D = 0</code>, where (x, y, z) is a point lying on the plane.
- * @returns {MeshBuffer} A mesh buffer containing the generated contour lines.
+ * @returns {*} A mesh buffer containing the generated contour lines.
  * Returns null if the input mesh's primitive type isn't triangles, or if
- * the input mesh doesn't contain a "POSITION" buffer attribute with
+ * the input mesh doesn't contain a "position" buffer attribute with
  * three elements per value.
  */
-export function contourLines3D(mesh, planes) {
-  if(mesh.primitiveType() !== MeshBuffer.TRIANGLES)return null;
-  const p = mesh.getAttribute("POSITION");
-  if(!p || p.countPerValue !== 3)return null;
+export function contourLines3D(three,mesh, planes) {
+  const p = mesh.getAttribute("position");
+  if(!p || p.itemSize !== 3)return null;
   const planeArray = [];
   let i;
   for (i = 0; i < planes.length; i++) {
@@ -322,21 +340,21 @@ export function contourLines3D(mesh, planes) {
     planeArray.push([[pl[0], pl[1], pl[2]], pl[3]]);
   }
   const positions = [];
-  let count = mesh.vertexCount();
+  let count = mesh.index.count;
   if(count % 3 !== 0)count -= count % 3;
   const v1 = [0, 0, 0];
   const v2 = [0, 0, 0];
   const v3 = [0, 0, 0];
   const polygon = [v1, v2, v3];
   for (i = 0; i < count; i += 3) {
-    p.getVec(mesh.getIndex(i), v1);
-    p.getVec(mesh.getIndex(i + 1), v2);
-    p.getVec(mesh.getIndex(i + 2), v3);
+    _getVec(p,mesh.index.getX(i), v1);
+    _getVec(p,mesh.index.getX(i + 1), v2);
+    _getVec(p,mesh.index.getX(i + 2), v3);
     let j;
     for (j = 0; j < planeArray.length; j++) {
       const plane = planeArray[j];
       getIntersectionPolygonPlane(polygon, plane[0], plane[1], positions);
     }
   }
-  return Meshes.fromPositions(positions);
+  return Meshes.fromPositions(three,positions);
 }

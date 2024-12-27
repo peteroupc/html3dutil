@@ -53,6 +53,8 @@ points about the z-axis.
 * [createTorus](#Meshes.createTorus)<br>Creates a mesh of a torus (doughnut shape), centered at the origin.
 * [fromPositions](#Meshes.fromPositions)<br>TODO: Not documented yet.
 * [fromPositionsAutoNormals](#Meshes.fromPositionsAutoNormals)<br>TODO: Not documented yet.
+* [fromPositionsColors](#Meshes.fromPositionsColors)<br>TODO: Not documented yet.
+* [fromPositionsNormals](#Meshes.fromPositionsNormals)<br>TODO: Not documented yet.
 * [fromPositionsNormalsUV](#Meshes.fromPositionsNormalsUV)<br>TODO: Not documented yet.
 * [lineLoopIndices](#Meshes.lineLoopIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.
 * [lineStripIndices](#Meshes.lineStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.
@@ -459,6 +461,36 @@ TODO: Not documented yet.
 * `three` (Type: *)<br>TODO: Not documented yet.
 * `vertices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
 * `indices` (Type: Array.&lt;number>)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='Meshes.fromPositionsColors'></a>
+### (static) Meshes.fromPositionsColors(three, vertices, indices)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `vertices` (Type: *)<br>TODO: Not documented yet.
+* `indices` (Type: *)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='Meshes.fromPositionsNormals'></a>
+### (static) Meshes.fromPositionsNormals(three, vertices, indices)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `vertices` (Type: *)<br>TODO: Not documented yet.
+* `indices` (Type: *)<br>TODO: Not documented yet.
 
 #### Return Value
 

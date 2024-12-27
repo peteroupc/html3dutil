@@ -61,7 +61,7 @@ function setColorBuffer(three,buffergeom,r,g,b){
  * @param {number} pointerRadius
  * @param {Array<number>|number|string} shaftColor A [color vector or string]{@link toGLColor} specifying the color of the shaft.
  * @param {Array<number>|number|string} pointerColor A [color vector or string]{@link toGLColor} specifying the color of the pointer.
- * @returns {MeshBuffer} A mesh buffer of the resulting shape.
+ * @returns {*} A mesh buffer of the resulting shape.
  * @function
  */
 export const createMultiColoredArrow = function(three,shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
