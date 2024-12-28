@@ -276,7 +276,9 @@ var matrix=MathUtil.mat4ortho2dAspect(
  -50,50,-50,50,window.innerWidth/Math.max(1,window.innerHeight))
 matrix=new Float32Array(matrix)
 refreshBuffer(context,sp,sf.group,bdata)
+// set up uniforms
 context.uniformMatrix4fv(projUniform,false,matrix)
+// draw call
 context.drawArrays(
   context.TRIANGLES,0,
   meshVertexCount(sf.group))
