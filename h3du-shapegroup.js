@@ -9,6 +9,7 @@ import {Transform} from "./h3du-transform.js";
  * Represents a grouping of shapes. This object
  * can hold both {@link Shape} objects and
  * other {@link ShapeGroup} objects.
+ * @deprecated It is intended to render this class obsolete and rely on three.js.
  * @constructor
  */
 export const ShapeGroup = function() {

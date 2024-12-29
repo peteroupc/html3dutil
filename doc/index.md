@@ -18,12 +18,11 @@ of various geometric shapes and solids, such as cubes, cylinders,
 and spheres.
 * <a href="PiecewiseCurve.md">PiecewiseCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a curve
 made up of one or more individual curves.
-* <a href="ShapeGroup.md">ShapeGroup</a><br>Represents a grouping of shapes.
+* <a href="ShapeGroup.md">ShapeGroup</a><br>**Obsolete: It is intended to render this class obsolete and rely on three.js.**
 * <a href="Surface.md">Surface</a><br>A surface evaluator object for a parametric surface.
 * <a href="SurfaceBuilder.md">SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
 vertex attributes for a surface.
-* <a href="Transform.md">Transform</a><br>A class offering a convenient way to set a transformation
-from one coordinate system to another.
+* <a href="Transform.md">Transform</a><br>**Obsolete: It is intended to render this class obsolete and rely on three.js.**
 * <a href="extras_camera.md">module:extras/camera</a><br>The <code>extras/camera.js</code> module.
 * <a href="extras_camera.Camera.md">module:extras/camera.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract "camera".

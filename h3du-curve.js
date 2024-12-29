@@ -131,7 +131,7 @@ Curve.prototype.evaluate = function(u) {
  * The implementation in {@link Curve} calls the evaluator's <code>velocity</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the position (from the <code>evaluate</code> method).<p>
- * The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a velocity vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
@@ -155,7 +155,7 @@ Curve.prototype.velocity = function(u) {
  * The implementation in {@link Curve} calls the evaluator's <code>accel</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the velocity vector.<p>
- * The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing an acceleration vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
@@ -179,7 +179,7 @@ Curve.prototype.accel = function(u) {
  * The implementation in {@link Curve} calls the evaluator's <code>jerk</code>
  * method if it implements it; otherwise, does a numerical differentiation using
  * the acceleration vector.<p>
- * The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate.  The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a jerk vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.
@@ -204,7 +204,7 @@ Curve.prototype.jerk = function(u) {
  * method if it implements it; otherwise, does a numerical differentiation using the velocity vector.<p>
  * The <b>principal normal</b> of a curve is the derivative of the "normalized" velocity
  * vector divided by that derivative's length. The normal returned by this method
- * <i>should</i> be "normalized" to a [unit vector]{@tutorial glmath}. (Compare with {@link Surface#gradient}.)
+ * <i>should</i> be "normalized" to a unit vector. (Compare with {@link Surface#gradient}.)
  * @param {number} u The u-coordinate of a point on the curve.
  * @returns {Array<number>} An array describing a normal vector. It should have at least as many
  * elements as the number of dimensions of the underlying curve.

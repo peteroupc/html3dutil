@@ -8,6 +8,7 @@ import {MathUtil} from "./h3du-math.js";
  * A class offering a convenient way to set a transformation
  * from one coordinate system to another.
  * @constructor
+ * @deprecated It is intended to render this class obsolete and rely on three.js.
  */
 export const Transform = function() {
   /** @ignore */

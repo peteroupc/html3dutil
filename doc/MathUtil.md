@@ -783,9 +783,9 @@ an affine transformation matrix (without perspective) and returns the transforme
 * [mat4transposeInPlace](#MathUtil.mat4transposeInPlace)<br>Transposes a 4 &times; 4 matrix in place without creating
 a new matrix.
 * [planeFromNormalAndPoint](#MathUtil.planeFromNormalAndPoint)<br>Creates a plane from a normal vector and a point on the plane.
-* [planeNormalize](#MathUtil.planeNormalize)<br>Normalizes this plane so that its normal is a glmath,
+* [planeNormalize](#MathUtil.planeNormalize)<br>Normalizes this plane so that its normal is a unit vector,
 unless all the normal's components are 0, and returns a new plane with the result.
-* [planeNormalizeInPlace](#MathUtil.planeNormalizeInPlace)<br>Normalizes this plane so that its normal is a glmath,
+* [planeNormalizeInPlace](#MathUtil.planeNormalizeInPlace)<br>Normalizes this plane so that its normal is a unit vector,
 unless all the normal's components are 0, and sets this plane to the result.
 * [quatConjugate](#MathUtil.quatConjugate)<br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath).
 * [quatCopy](#MathUtil.quatCopy)<br>Returns a copy of a quaternion.
@@ -796,15 +796,15 @@ by the given rotation angle and around the given glmath,
 * [quatFromVectors](#MathUtil.quatFromVectors)<br>Generates a quaternion describing a rotation between
 two 3-element vectors.
 * [quatIdentity](#MathUtil.quatIdentity)<br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).
-* [quatInvert](#MathUtil.quatInvert)<br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a glmath.
+* [quatInvert](#MathUtil.quatInvert)<br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector.
 * [quatIsIdentity](#MathUtil.quatIsIdentity)<br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 * [quatLength](#MathUtil.quatLength)<br>Returns the distance of this quaternion from the origin.
 * [quatMultiply](#MathUtil.quatMultiply)<br>Multiplies two quaternions, creating a composite rotation.
 * [quatNlerp](#MathUtil.quatNlerp)<br>Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a linear interpolation function, and converts
-it to a glmath.
-* [quatNormalize](#MathUtil.quatNormalize)<br>Converts a quaternion to a glmath; returns a new quaternion.
-* [quatNormalizeInPlace](#MathUtil.quatNormalizeInPlace)<br>Converts a quaternion to a glmath.
+it to a unit vector.
+* [quatNormalize](#MathUtil.quatNormalize)<br>Converts a quaternion to a unit vector; returns a new quaternion.
+* [quatNormalizeInPlace](#MathUtil.quatNormalizeInPlace)<br>Converts a quaternion to a unit vector.
 * [quatRotate](#MathUtil.quatRotate)<br>Multiplies a quaternion by a rotation transformation that rotates vectors
 by the given rotation angle and around the given glmath.
 * [quatScale](#MathUtil.quatScale)<br>Multiplies each element of a quaternion by a factor
@@ -851,8 +851,8 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec2negateInPlace](#MathUtil.vec2negateInPlace)<br>Negates a 2-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec2normalize](#MathUtil.vec2normalize)<br>Converts a 2-element vector to a glmath; returns a new vector.
-* [vec2normalizeInPlace](#MathUtil.vec2normalizeInPlace)<br>Converts a 2-element vector to a glmath.
+* [vec2normalize](#MathUtil.vec2normalize)<br>Converts a 2-element vector to a unit vector; returns a new vector.
+* [vec2normalizeInPlace](#MathUtil.vec2normalizeInPlace)<br>Converts a 2-element vector to a unit vector.
 * [vec2perp](#MathUtil.vec2perp)<br>Returns an arbitrary 2-element vector that is perpendicular
 (orthogonal) to the given 2-element vector.
 * [vec2proj](#MathUtil.vec2proj)<br>Returns the projection of a 2-element vector on the given
@@ -902,8 +902,8 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec3negateInPlace](#MathUtil.vec3negateInPlace)<br>Negates a 3-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec3normalize](#MathUtil.vec3normalize)<br>Converts a 3-element vector to a glmath; returns a new vector.
-* [vec3normalizeInPlace](#MathUtil.vec3normalizeInPlace)<br>Converts a 3-element vector to a glmath.
+* [vec3normalize](#MathUtil.vec3normalize)<br>Converts a 3-element vector to a unit vector; returns a new vector.
+* [vec3normalizeInPlace](#MathUtil.vec3normalizeInPlace)<br>Converts a 3-element vector to a unit vector.
 * [vec3perp](#MathUtil.vec3perp)<br>Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector.
 * [vec3proj](#MathUtil.vec3proj)<br>Returns the projection of a 3-element vector on the given
@@ -945,8 +945,8 @@ vector with the result, which is generally a vector with
 the same length but opposite direction.
 * [vec4negateInPlace](#MathUtil.vec4negateInPlace)<br>Negates a 4-element vector in place, generally resulting in a vector with
 the same length but opposite direction.
-* [vec4normalize](#MathUtil.vec4normalize)<br>Converts a 4-element vector to a glmath; returns a new vector.
-* [vec4normalizeInPlace](#MathUtil.vec4normalizeInPlace)<br>Converts a 4-element vector to a glmath.
+* [vec4normalize](#MathUtil.vec4normalize)<br>Converts a 4-element vector to a unit vector; returns a new vector.
+* [vec4normalizeInPlace](#MathUtil.vec4normalizeInPlace)<br>Converts a 4-element vector to a unit vector.
 * [vec4proj](#MathUtil.vec4proj)<br>Returns the projection of a 4-element vector on the given
 reference vector.
 * [vec4scale](#MathUtil.vec4scale)<br>Multiplies each element of a 4-element vector by a factor, returning
@@ -1511,7 +1511,7 @@ To adjust the result of this method for a left-handed coordinate system (so that
 
 #### Parameters
 
-* `cameraPos` (Type: Array.&lt;number>)<br>A 3-element vector specifying the "camera" position in world space.<br> When used in conjunction with an <a href="MathUtil.md#MathUtil.mat4ortho">orthographic projection</a>, set this parameter to the value of <code>lookingAt</code> plus a glmath (for example, using <a href="MathUtil.md#MathUtil.vec3add">MathUtil.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the following examples.
+* `cameraPos` (Type: Array.&lt;number>)<br>A 3-element vector specifying the "camera" position in world space.<br> When used in conjunction with an <a href="MathUtil.md#MathUtil.mat4ortho">orthographic projection</a>, set this parameter to the value of <code>lookingAt</code> plus a unit vector (for example, using <a href="MathUtil.md#MathUtil.vec3add">MathUtil.vec3add</a>) to form an <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is an <i>isometric projection</i>). See the following examples.
 * `lookingAt` (Type: Array.&lt;number>) (optional)<br>A 3-element vector specifying the point in world space that the "camera" is looking at. May be null or omitted, in which case the default is the coordinates (0,0,0).
 * `up` (Type: Array.&lt;number>) (optional)<br>A 3-element vector specifying the direction from the center of the "camera" to its top. This parameter may be null or omitted, in which case the default is the vector (0, 1, 0), the vector that results when the "camera" is held upright.<br> This vector must not be parallel to the view direction (the direction from "cameraPos" to "lookingAt"). (See the example for one way to ensure this.)<br>
 
@@ -2108,7 +2108,7 @@ A four-element array describing the plane. (Type: Array.&lt;number>)
 <a name='MathUtil.planeNormalize'></a>
 ### (static) MathUtil.planeNormalize(plane)
 
-Normalizes this plane so that its normal is a glmath,
+Normalizes this plane so that its normal is a unit vector,
 unless all the normal's components are 0, and returns a new plane with the result.
 The plane's distance will be divided by the
 normal's length. Returns a new plane.
@@ -2126,7 +2126,7 @@ Note that due to rounding error, the length of the plane's normal might not be e
 <a name='MathUtil.planeNormalizeInPlace'></a>
 ### (static) MathUtil.planeNormalizeInPlace(plane)
 
-Normalizes this plane so that its normal is a glmath,
+Normalizes this plane so that its normal is a unit vector,
 unless all the normal's components are 0, and sets this plane to the result.
 The plane's distance will be divided by the
 current normal's length.
@@ -2142,7 +2142,7 @@ The parameter "plane". (Type: Array.&lt;number>)
 <a name='MathUtil.quatConjugate'></a>
 ### (static) MathUtil.quatConjugate(quat)
 
-Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath). The return value won't necessarily be a glmath.
+Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath). The return value won't necessarily be a unit vector.
 
 #### Parameters
 
@@ -2256,7 +2256,7 @@ Return value. (Type: Array.&lt;number>)
 <a name='MathUtil.quatInvert'></a>
 ### (static) MathUtil.quatInvert(quat)
 
-Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a glmath.
+Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector.
 
 #### Parameters
 
@@ -2335,7 +2335,7 @@ The resulting quaternion. (Type: Array.&lt;number>)
 
 Returns a quaternion that lies along the shortest path between the
 given two quaternion rotations, using a linear interpolation function, and converts
-it to a glmath.
+it to a unit vector.
 This is called a normalized linear interpolation, or "nlerp".
 
 Because the shortest path is curved, not straight, this method
@@ -2358,7 +2358,7 @@ which will be a unit vector. (Type: Array.&lt;number>)
 <a name='MathUtil.quatNormalize'></a>
 ### (static) MathUtil.quatNormalize(quat)
 
-Converts a quaternion to a glmath; returns a new quaternion.
+Converts a quaternion to a unit vector; returns a new quaternion.
 When a quaternion is normalized, the distance from the origin
 to that quaternion becomes 1 (unless all its components are 0).
 A quaternion is normalized by dividing each of its components
@@ -2380,7 +2380,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 <a name='MathUtil.quatNormalizeInPlace'></a>
 ### (static) MathUtil.quatNormalizeInPlace(quat)
 
-Converts a quaternion to a glmath.
+Converts a quaternion to a unit vector.
 When a quaternion is normalized, it describes the same rotation but the distance from the origin
 to that quaternion becomes 1 (unless all its components are 0).
 A quaternion is normalized by dividing each of its components
@@ -2482,7 +2482,7 @@ than the <a href="MathUtil.md#MathUtil.quatNlerp">quatNlerp</a> method.
 
 #### Parameters
 
-* `q1` (Type: Array.&lt;number>)<br>The first quaternion. Must be a glmath.
+* `q1` (Type: Array.&lt;number>)<br>The first quaternion. Must be a unit vector.
 * `q2` (Type: Array.&lt;number>)<br>The second quaternion. Must be a unit vector.
 * `factor` (Type: number)<br>A value that usually ranges from 0 through 1. Closer to 0 means closer to q1, and closer to 1 means closer to q2.
 
@@ -2504,7 +2504,7 @@ rotate that vector around.
 
 #### Parameters
 
-* `a` (Type: Array.&lt;number>)<br>A quaternion. Must be a glmath.
+* `a` (Type: Array.&lt;number>)<br>A quaternion. Must be a unit vector.
 
 #### Return Value
 
@@ -2821,7 +2821,7 @@ The parameter "a". (Type: Array.&lt;number>)
 <a name='MathUtil.vec2normalize'></a>
 ### (static) MathUtil.vec2normalize(vec)
 
-Converts a 2-element vector to a glmath; returns a new vector.
+Converts a 2-element vector to a unit vector; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -2855,7 +2855,7 @@ length of a line segment.
 <a name='MathUtil.vec2normalizeInPlace'></a>
 ### (static) MathUtil.vec2normalizeInPlace(vec)
 
-Converts a 2-element vector to a glmath.
+Converts a 2-element vector to a unit vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -2875,7 +2875,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 Returns an arbitrary 2-element vector that is perpendicular
 (orthogonal) to the given 2-element vector. The return value
-will not be converted to a glmath.
+will not be converted to a unit vector.
 
 #### Parameters
 
@@ -2918,7 +2918,7 @@ Returns a vector that reflects off a surface.
 #### Parameters
 
 * `incident` (Type: Array.&lt;number>)<br>Incident vector, or a vector headed in the direction of the surface, as a 2-element vector.
-* `normal` (Type: Array.&lt;number>)<br>Surface normal vector, or a vector that's perpendicular to the surface, as a 2-element vector. Should be a glmath.
+* `normal` (Type: Array.&lt;number>)<br>Surface normal vector, or a vector that's perpendicular to the surface, as a 2-element vector. Should be a unit vector.
 
 #### Return Value
 
@@ -3421,7 +3421,7 @@ The parameter "a". (Type: Array.&lt;number>)
 <a name='MathUtil.vec3normalize'></a>
 ### (static) MathUtil.vec3normalize(vec)
 
-Converts a 3-element vector to a glmath; returns a new vector.
+Converts a 3-element vector to a unit vector; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -3455,7 +3455,7 @@ length of a line segment.
 <a name='MathUtil.vec3normalizeInPlace'></a>
 ### (static) MathUtil.vec3normalizeInPlace(vec)
 
-Converts a 3-element vector to a glmath.
+Converts a 3-element vector to a unit vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -3475,7 +3475,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 
 Returns an arbitrary 3-element vector that is perpendicular
 (orthogonal) to the given 3-element vector. The return value
-will not be converted to a glmath.
+will not be converted to a unit vector.
 
 #### Parameters
 
@@ -3518,7 +3518,7 @@ Returns a vector that reflects off a surface.
 #### Parameters
 
 * `incident` (Type: Array.&lt;number>)<br>Incident vector, or a vector headed in the direction of the surface, as a 3-element vector.
-* `normal` (Type: Array.&lt;number>)<br>Surface normal vector, or a vector that's perpendicular to the surface, as a 3-element vector. Should be a glmath.
+* `normal` (Type: Array.&lt;number>)<br>Surface normal vector, or a vector that's perpendicular to the surface, as a 3-element vector. Should be a unit vector.
 
 #### Return Value
 
@@ -3870,7 +3870,7 @@ The parameter "a". (Type: Array.&lt;number>)
 <a name='MathUtil.vec4normalize'></a>
 ### (static) MathUtil.vec4normalize(vec)
 
-Converts a 4-element vector to a glmath; returns a new vector.
+Converts a 4-element vector to a unit vector; returns a new vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
@@ -3888,7 +3888,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 <a name='MathUtil.vec4normalizeInPlace'></a>
 ### (static) MathUtil.vec4normalizeInPlace(vec)
 
-Converts a 4-element vector to a glmath.
+Converts a 4-element vector to a unit vector.
 When a vector is normalized, its direction remains the same but the distance from the origin
 to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components

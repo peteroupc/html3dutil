@@ -1425,7 +1425,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} cameraPos A 3-element vector specifying
    * the "camera" position in world space.<br>
    * When used in conjunction with an [orthographic projection]{@link MathUtil.mat4ortho}, set this parameter to
-   * the value of <code>lookingAt</code> plus a [unit vector]{@tutorial glmath}
+   * the value of <code>lookingAt</code> plus a unit vector
    * (for example, using {@link MathUtil.vec3add}) to form an
    * <i>axonometric projection</i> (if the unit vector is <code>[sqrt(1/3),sqrt(1/3),sqrt(1/3)]</code>, the result is
    * an <i>isometric projection</i>). See the following examples.
@@ -2425,7 +2425,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [normal[0], normal[1], normal[2], d];
   },
   /**
-   * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
+   * Normalizes this plane so that its normal is a unit vector,
    * unless all the normal's components are 0, and returns a new plane with the result.
    * The plane's distance will be divided by the
    * normal's length. Returns a new plane.
@@ -2443,7 +2443,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.planeNormalizeInPlace(MathUtil.vec4copy(plane));
   },
   /**
-   * Normalizes this plane so that its normal is a [unit vector]{@tutorial glmath},
+   * Normalizes this plane so that its normal is a unit vector,
    * unless all the normal's components are 0, and sets this plane to the result.
    * The plane's distance will be divided by the
    * current normal's length.<p>
@@ -2471,7 +2471,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return plane;
   },
   /**
-   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a [unit vector]{@tutorial glmath}.
+   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a unit vector.
    * @param {Array<number>} quat A quaternion, containing four elements.
    * @returns {Array<number>} Return value. */
   "quatConjugate":function(quat) {
@@ -2651,7 +2651,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * ----
    * Converts this quaternion to the same version of the rotation
    * in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).
-   * @param {Array<number>} a A quaternion. Should be a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} a A quaternion. Should be a unit vector.
    * @param {number} [mode] Specifies the order in which the rotations will occur
    * (in terms of their effect, not in terms of how they will be returned by this method).
    * This is one of the {@link MathUtil} constants such as {@link MathUtil.LocalPitchYawRoll}
@@ -2765,7 +2765,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [0, 0, 0, 1];
   },
   /**
-   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a [unit vector]{@tutorial glmath}.
+   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector.
    * @param {Array<number>} quat A quaternion, containing four elements.
    * @returns {Array<number>} Return value.
    * @see {@link MathUtil.quatConjugate}
@@ -2811,7 +2811,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns a quaternion that lies along the shortest path between the
    * given two quaternion rotations, using a linear interpolation function, and converts
-   * it to a [unit vector]{@tutorial glmath}.
+   * it to a unit vector.
    * This is called a normalized linear interpolation, or "nlerp".<p>
    * Because the shortest path is curved, not straight, this method
    * will generally not interpolate at constant velocity;
@@ -2885,7 +2885,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * unsuitable for blending multiple quaternion rotations,
    * and this method is generally more computationally expensive
    * than the [quatNlerp]{@link MathUtil.quatNlerp} method.
-   * @param {Array<number>} q1 The first quaternion. Must be a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} q1 The first quaternion. Must be a unit vector.
    * @param {Array<number>} q2 The second quaternion. Must be a unit vector.
    * @param {number} factor A value that usually ranges from 0 through 1. Closer to 0 means
    * closer to q1, and closer to 1 means closer to q2.
@@ -2927,7 +2927,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Calculates the vector rotation for this quaternion in the form
    * of the angle to rotate the vector by and an [axis of rotation]{@tutorial glmath} to
    * rotate that vector around.
-   * @param {Array<number>} a A quaternion. Must be a [unit vector]{@tutorial glmath}.
+   * @param {Array<number>} a A quaternion. Must be a unit vector.
    * @returns {Array<number>} A 4-element array giving the axis
    * of rotation as the first three elements, followed by the angle
    * in degrees as the fourth element. If "a" is a unit vector, the axis
@@ -3222,7 +3222,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return a;
   },
   /**
-   * Converts a 2-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+   * Converts a 2-element vector to a unit vector; returns a new vector.
    * When a vector is normalized, its direction remains the same but the distance from the origin
    * to that vector becomes 1 (unless all its components are 0).
    * A vector is normalized by dividing each of its components
@@ -3247,7 +3247,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.vec2normalizeInPlace([vec[0], vec[1]]);
   },
   /**
-   * Converts a 2-element vector to a [unit vector]{@tutorial glmath}.
+   * Converts a 2-element vector to a unit vector.
    * When a vector is normalized, its direction remains the same but the distance from the origin
    * to that vector becomes 1 (unless all its components are 0).
    * A vector is normalized by dividing each of its components
@@ -3270,7 +3270,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns an arbitrary 2-element vector that is perpendicular
    * (orthogonal) to the given 2-element vector. The return value
-   * will not be converted to a [unit vector]{@tutorial glmath}.
+   * will not be converted to a unit vector.
    * @param {Array<number>} vec A 2-element vector.
    * @returns {Array<number>} A perpendicular 2-element
    * vector.  Returns (0,0) if "vec" is (0,0).
@@ -3307,7 +3307,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * a vector headed in the direction of the surface, as a 2-element vector.
    * @param {Array<number>} normal Surface normal vector, or
    * a vector that's perpendicular to the surface, as a 2-element vector.
-   * Should be a [unit vector]{@tutorial glmath}.
+   * Should be a unit vector.
    * @returns {Array<number>} A vector that has the same length
    * as "incident" but is reflected away from the surface.
    */
@@ -3790,7 +3790,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return a;
   },
   /**
-   * Converts a 3-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+   * Converts a 3-element vector to a unit vector; returns a new vector.
    * When a vector is normalized, its direction remains the same but the distance from the origin
    * to that vector becomes 1 (unless all its components are 0).
    * A vector is normalized by dividing each of its components
@@ -3815,7 +3815,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.vec3normalizeInPlace([vec[0], vec[1], vec[2]]);
   },
   /**
-   * Converts a 3-element vector to a [unit vector]{@tutorial glmath}.
+   * Converts a 3-element vector to a unit vector.
    * When a vector is normalized, its direction remains the same but the distance from the origin
    * to that vector becomes 1 (unless all its components are 0).
    * A vector is normalized by dividing each of its components
@@ -3840,7 +3840,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Returns an arbitrary 3-element vector that is perpendicular
    * (orthogonal) to the given 3-element vector. The return value
-   * will not be converted to a [unit vector]{@tutorial glmath}.
+   * will not be converted to a unit vector.
    * @param {Array<number>} vec A 3-element vector.
    * @returns {Array<number>} A perpendicular 3-element
    * vector.  Returns (0,0,0) if "vec" is (0,0,0).
@@ -3895,7 +3895,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * a vector headed in the direction of the surface, as a 3-element vector.
    * @param {Array<number>} normal Surface normal vector, or
    * a vector that's perpendicular to the surface, as a 3-element vector.
-   * Should be a [unit vector]{@tutorial glmath}.
+   * Should be a unit vector.
    * @returns {Array<number>} A vector that has the same length
    * as "incident" but is reflected away from the surface.
    */
@@ -4242,7 +4242,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return a;
   },
   /**
-   * Converts a 4-element vector to a [unit vector]{@tutorial glmath}; returns a new vector.
+   * Converts a 4-element vector to a unit vector; returns a new vector.
    * When a vector is normalized, its direction remains the same but the distance from the origin
    * to that vector becomes 1 (unless all its components are 0).
    * A vector is normalized by dividing each of its components
@@ -4255,7 +4255,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.vec4normalizeInPlace([vec[0], vec[1], vec[2], vec[3]]);
   },
   /**
-   * Converts a 4-element vector to a [unit vector]{@tutorial glmath}.
+   * Converts a 4-element vector to a unit vector.
    * When a vector is normalized, its direction remains the same but the distance from the origin
    * to that vector becomes 1 (unless all its components are 0).
    * A vector is normalized by dividing each of its components
@@ -4490,7 +4490,7 @@ MathUtil.interpCubicBezier = function(a, b, c, d, t) {
  */
 MathUtil.quatDot = MathUtil.vec4dot;
 /**
- * Converts a quaternion to a [unit vector]{@tutorial glmath}.
+ * Converts a quaternion to a unit vector.
  * When a quaternion is normalized, it describes the same rotation but the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components
@@ -4505,7 +4505,7 @@ MathUtil.quatDot = MathUtil.vec4dot;
  */
 MathUtil.quatNormalizeInPlace = MathUtil.vec4normalizeInPlace;
 /**
- * Converts a quaternion to a [unit vector]{@tutorial glmath}; returns a new quaternion.
+ * Converts a quaternion to a unit vector; returns a new quaternion.
  * When a quaternion is normalized, the distance from the origin
  * to that quaternion becomes 1 (unless all its components are 0).
  * A quaternion is normalized by dividing each of its components

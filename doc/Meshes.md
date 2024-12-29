@@ -62,6 +62,7 @@ points about the z-axis.
 * [quadsIndices](#Meshes.quadsIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.
 * [recalcNormals](#Meshes.recalcNormals)<br>TODO: Not documented yet.
 * [reverseWinding](#Meshes.reverseWinding)<br>TODO: Not documented yet.
+* [setColor](#Meshes.setColor)<br>TODO: Not documented yet.
 * [triangleFanIndices](#Meshes.triangleFanIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.
 * [triangleStripIndices](#Meshes.triangleStripIndices)<br>Creates an array of vertex indices corresponding to triangles that make up a triangle strip.
 
@@ -619,6 +620,23 @@ TODO: Not documented yet.
 #### Parameters
 
 * `buffer` (Type: *)<br>TODO: Not documented yet.
+
+#### Return Value
+
+TODO: Not documented yet. (Type: *)
+
+<a name='Meshes.setColor'></a>
+### (static) Meshes.setColor(three, buffer, r, g, b)
+
+TODO: Not documented yet.
+
+#### Parameters
+
+* `three` (Type: *)<br>TODO: Not documented yet.
+* `buffer` (Type: *)<br>TODO: Not documented yet.
+* `r` (Type: *)<br>TODO: Not documented yet.
+* `g` (Type: *)<br>TODO: Not documented yet.
+* `b` (Type: *)<br>TODO: Not documented yet.
 
 #### Return Value
 

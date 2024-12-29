@@ -567,11 +567,12 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * @param {number} ymax Greatest value along the y-axis.
  * @param {number} zmin Smallest value along the z-axis.
  * @param {number} zmax Greatest value along the z-axis.
- * @returns {ImplicitSurface} This object.
+ * @returns {*} A mesh buffer.
  */
-ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
+ImplicitSurface.prototype.evalSurfacePoints = function(three, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
+  var mesh=new _Mesh();
   mesh.mode(0); // points
   const xstep = (xmax - xmin) / (xsize - 1);
   const ystep = (ymax - ymin) / (ysize - 1);
@@ -591,7 +592,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
       }
     }
   }
-  return this;
+  return H3DU.Meshes.fromPositionsNormals(three,mesh.vertices);
 };
 /**
  * Evaluates the grid points of the given three-dimensional area and adds to the
@@ -607,10 +608,11 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * @param {number} ymax Greatest value along the y-axis.
  * @param {number} zmin Smallest value along the z-axis.
  * @param {number} zmax Greatest value along the z-axis.
- * @returns {ImplicitSurface} This object.
+ * @returns {*} A mesh buffer.
  */
-ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
+ImplicitSurface.prototype.evalSurface = function(three, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
+  var mesh=new _Mesh();
   mesh.mode(1); // triangles
   const tmpobj = {
     "asCubePosition":[[], [], [], [], [], [], [], []],
@@ -638,7 +640,7 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
       }
     }
   }
-  return this;
+  return H3DU.Meshes.fromPositionsNormals(three,mesh.vertices);
 };
 /**
  * Returns a sampling object for the union of

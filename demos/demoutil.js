@@ -215,9 +215,9 @@ function makeMesh(three, func, resolutionU, resolutionV) {
     // Evaluate the surface and generate a triangle
     // mesh, using resolution+1 different u-coordinates,
     // and resolution+1 different v-coordinates.
-    // Instead of H3DU.Mesh.TRIANGLES, we could use
-    // H3DU.Mesh.LINES to create a wireframe mesh,
-    // or H3DU.Mesh.POINTS to create a point mesh.
+    // Instead of H3DU.MeshBuffer.TRIANGLES, we could use
+    // H3DU.MeshBuffer.LINES to create a wireframe mesh,
+    // or H3DU.MeshBuffer.POINTS to create a point mesh.
     .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
     .toMeshBuffer(three);
 }

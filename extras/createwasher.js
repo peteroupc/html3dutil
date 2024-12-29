@@ -37,7 +37,7 @@ export const createWasher = function(three,inner, outer, height, slices) {
   const base = Meshes.reverseWinding(Meshes.createDisk(three,inner, outer, slices, 2, true));
   const top = Meshes.createDisk(three,inner, outer, slices, 2, false);
   // move the top disk to the top of the cylinder
-  top.applyMatrix(matTo4D(MathUtil.mat4translated(0, 0, height)));
+  top.applyMatrix4(matTo4D(MathUtil.mat4translated(0, 0, height)));
   // merge the base and the top
   return three.BufferGeometryUtils.mergeGeometries([innerCylinder,outerCylinder,base,top],false);
 };

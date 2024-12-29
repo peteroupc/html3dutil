@@ -136,8 +136,8 @@ CubicBody.prototype.integrate = function(timeStep) {
 
 function Particles(scene, count, width, height) {
   "use strict";
-  this.shapeGroup = new H3DU.ShapeGroup();
-  var sphere = new H3DU.Shape(H3DU.Meshes.createSphere(1, 64, 64));
+  this.shapeGroup = [];
+  var sphere = new THREE.Mesh(H3DU.Meshes.createSphere(1, 64, 64));
   this.bodies = [];
   this.bounds = [0, 0, -5000, width, height, 5000];
   for(var i = 0; i < count; i++) {
@@ -149,13 +149,13 @@ function Particles(scene, count, width, height) {
     var scale = width / 100 * mass;
     H3DU.MathUtil.constrainPointToBox(p, scale, 0, this.bounds);
     this.bodies.push(new CubicBody(scale, mass, p[0], p[1], p[2]));
-    var shape = sphere.copy();
-    shape.setScale(scale, scale, scale);
-    shape.setPosition(p);
-    shape.setColor([Math.random(), Math.random(), Math.random()]);
-    this.shapeGroup.addShape(shape);
+    var shape =new THREE.Mesh(sphere.geometry,
+      new THREE.MeshLambertMaterial((Math.random()*0x1000000)|0));
+    shape.scale=new THREE.Vector3(scale,scale,scale);
+    shape.position=new THREE.Vector3(p[0],p[1],p[2]);
+    this.shapeGroup.push(shape);
   }
-  scene.addShape(this.shapeGroup);
+  scene.add(this.shapeGroup);
   this.timeInfo = {};
 }
 Particles.prototype.update = function(time) {
@@ -165,25 +165,19 @@ Particles.prototype.update = function(time) {
     var body = this.bodies[i];
     body.integrate(timeStep);
     body.constrainToBox(this.bounds);
-    this.shapeGroup.getShape(i).setPosition(body.x(), body.y(), body.z());
+    this.shapeGroup[i].position=new THREE.Vector3(body.x(), body.y(), body.z());
   }
 };
 
-  // Create the 3D scene; find the HTML canvas and pass it
-  // to Scene3D.
-var scene = new H3DU.Scene3D(document.getElementById("canvas"))
-   .setClearColor("white");
-var sub = new H3DU.Batch3D();
-sub.getLights().setBasic();
-sub.orthoAspect(0, 12, 0, 9, -5000, 5000);
+//sub.orthoAspect(0, 12, 0, 9, -5000, 5000);
   // 12 meters wide and 9 meters high
 var tris = new Particles(sub, 10, 12, 9);
   // Set up the render loop
-H3DU.renderLoop(function(time) {
+function(time) {
   "use strict";
   tris.update(time);
    // Render the scene
-  scene.render(sub);
+  console.log("TODO")
 });
 // -->
 </script>

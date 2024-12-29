@@ -5,6 +5,8 @@
 <a name='ShapeGroup'></a>
 ### new ShapeGroup()
 
+**Deprecated: It is intended to render this class obsolete and rely on three.js.**
+
 Represents a grouping of shapes. This object
 can hold both Shape objects and
 other <a href="ShapeGroup.md">ShapeGroup</a> objects.

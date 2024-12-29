@@ -5,6 +5,8 @@
 <a name='Transform'></a>
 ### new Transform()
 
+**Deprecated: It is intended to render this class obsolete and rely on three.js.**
+
 A class offering a convenient way to set a transformation
 from one coordinate system to another.
 

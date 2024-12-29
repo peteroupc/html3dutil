@@ -201,7 +201,7 @@ Meshes.setColor=function(three,buffer,r,g,b){
  }
  buffer.setAttribute("color",
     new three["BufferAttribute"](new Float32Array(ret),3))
- return buffergeom
+ return buffer
 }
 
 function normNormals(buffer) {
@@ -661,6 +661,15 @@ Meshes.createLathe = function(three,points, slices, flat, inside) {
   return Meshes.recalcNormals((flat ? mesh["toNonIndexed"]() : mesh),inside);
 };
 
+function matTo4D(three, mat){
+var r=new three["Matrix4"]()
+r.set(mat[0],mat[4],mat[8],mat[12],
+      mat[1],mat[5],mat[9],mat[13],
+      mat[2],mat[6],mat[10],mat[14],
+      mat[3],mat[7],mat[11],mat[15])
+return r
+}
+
 /**
  * Creates a mesh of a closed cylinder or closed cone. The cylinder's base will
  * be centered at the origin and its height will run along the
@@ -698,11 +707,11 @@ Meshes.createLathe = function(three,points, slices, flat, inside) {
  * }
  */
 Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, stacks, flat, inside) {
-  const cylinder = Meshes.createCylinder(three,baseRad, topRad, height, slices, stacks, flat, inside);
-  const base = Meshes.reverseWinding(Meshes.createDisk(three,0.0, baseRad, slices, 2, !inside));
-  const top = Meshes.createDisk(three,0.0, topRad, slices, 2, inside);
+  const cylinder = Meshes.createCylinder(three["THREE"],baseRad, topRad, height, slices, stacks, flat, inside);
+  const base = Meshes.reverseWinding(Meshes.createDisk(three["THREE"],0.0, baseRad, slices, 2, !inside));
+  const top = Meshes.createDisk(three["THREE"],0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
-  top.transform(MathUtil.mat4translated(0, 0, height));
+  top.applyMatrix4(matTo4D(three["THREE"],MathUtil.mat4translated(0, 0, height)));
   // merge the base and the top
   return three["BufferGeometryUtils"]["mergeGeometries"]([cylinder,base,top],false);
 };
@@ -830,11 +839,11 @@ Meshes.createPartialDisk = function(three,inner, outer, slices, loops, start, sw
     vertices = [];
     const indices = [];
     const fan = new TriangleFan(indices);
-    const radius = outer * (i / loops);
+    const radius = outer;
     rso = radius / outer;
     for(k = 0; k < slices; k++) {
-      x = sc[k];
-      y = sc[k + 1];
+      x = sc[k*2];
+      y = sc[k*2 + 1];
       vertices.push(x * radius, y * radius, 0,
         0, 0, normalZ,
         (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);
@@ -850,8 +859,8 @@ Meshes.createPartialDisk = function(three,inner, outer, slices, loops, start, sw
       radius = inner + height * (i / loops);
       rso = radius * invouter;
       for(k = 0; k < slp1; k++) {
-        x = sc[k];
-        y = sc[k + 1];
+        x = sc[k*2];
+        y = sc[k*2 + 1];
         vertices.push(x * radius, y * radius, 0,
           0, 0, normalZ,
           (1 + x * rso) * 0.5, (1 + y * rso) * 0.5);

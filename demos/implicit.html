@@ -62,10 +62,8 @@ canvas { width:100%; height:100%; overflow: hidden; }
   function makeImplicit(func) {
     "use strict";
     var surf = new ImplicitSurface(func);
-    var mesh = new H3DU.Mesh();
-    mesh.color3("blue");
-    surf.evalSurface(mesh, 48, 48, 48, -5, 5, -5, 5, -5, 5);
-    return mesh.toMeshBuffer();
+    var mesh = surf.evalSurface(THREE,mesh, 48, 48, 48, -5, 5, -5, 5, -5, 5);
+    return H3DU.Meshes.setColor(THREE,mesh,"blue");
   }
 
   var shapeGroup = new H3DU.ShapeGroup();
