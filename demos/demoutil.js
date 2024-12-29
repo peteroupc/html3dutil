@@ -193,7 +193,7 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
 }
 
 /* exported makeMesh */
-function makeMesh(func, resolutionU, resolutionV) {
+function makeMesh(three, func, resolutionU, resolutionV) {
   // Default resolution is 50
   "use strict";
   if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
@@ -211,7 +211,7 @@ function makeMesh(func, resolutionU, resolutionV) {
   };
   return new H3DU.SurfaceBuilder()
     .positionNormal(func)
-    .attribute(colorGradient, H3DU.Semantic.COLOR)
+    .attribute(colorGradient, "color")
     // Evaluate the surface and generate a triangle
     // mesh, using resolution+1 different u-coordinates,
     // and resolution+1 different v-coordinates.
@@ -219,7 +219,7 @@ function makeMesh(func, resolutionU, resolutionV) {
     // H3DU.Mesh.LINES to create a wireframe mesh,
     // or H3DU.Mesh.POINTS to create a point mesh.
     .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
-    .toMeshBuffer();
+    .toMeshBuffer(three);
 }
 
 window.addEventListener("load", function() {
@@ -283,5 +283,3 @@ function makeAxisLines(width) {
   return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis)
     .addShape(xaxis2).addShape(yaxis2).addShape(zaxis2);
 }
-
-document.write("<script src='../extras/meshjson.js'></script>");

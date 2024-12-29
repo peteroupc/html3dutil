@@ -4,6 +4,7 @@
 */
 
 import {MathUtil} from "./h3du-math.js";
+import {toGLColor} from "./h3du-misc.js";
 
 /**
  * Contains methods that create meshes
@@ -180,6 +181,28 @@ const TriangleFan = function(indices) {
     }
   };
 };
+/**
+ * TODO: Not documented yet.
+ * @param {*} three TODO: Not documented yet.
+ * @param {*} buffer TODO: Not documented yet.
+ * @param {*} r TODO: Not documented yet.
+ * @param {*} g TODO: Not documented yet.
+ * @param {*} b TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+Meshes.setColor=function(three,buffer,r,g,b){
+ var color=toGLColor(r,g,b)
+ var ret=[]
+ var pos=0
+ for(var i=0;i<buffer.index.count;i++,pos+=3){
+  ret[pos]=color[0]
+  ret[pos+1]=color[1]
+  ret[pos+2]=color[2]
+ }
+ buffer.setAttribute("color",
+    new three["BufferAttribute"](new Float32Array(ret),3))
+ return buffergeom
+}
 
 function normNormals(buffer) {
   buffer["normalizeNormals"]();

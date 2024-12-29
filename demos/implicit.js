@@ -8,6 +8,25 @@
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
 
+function _Mesh() {
+  this.nx=0
+  this.ny=0
+  this.nz=0
+  this.m=0
+  this.vertices=[]
+  this.mode=function(m){
+    this.m=m
+  }
+  this.normal3=function(x,y,z){
+    this.nx=x
+    this.ny=y
+    this.nz=z
+  }
+  this.vertex3=function(x,y,z){
+    this.vertices.push(x,y,z,this.nx,this.ny,this.nz)
+  }
+}
+
 /**
  * An evaluator for implicit surfaces.
  * @param {Object} func A <b>sampling object</b>. This object contains a single property,
@@ -553,8 +572,7 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
 ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
-  mesh.mode(H3DU.MeshBuffer.POINTS);
-
+  mesh.mode(0); // points
   const xstep = (xmax - xmin) / (xsize - 1);
   const ystep = (ymax - ymin) / (ysize - 1);
   const zstep = (zmax - zmin) / (zsize - 1);
@@ -593,7 +611,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  */
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
-  mesh.mode(H3DU.Mesh.TRIANGLES);
+  mesh.mode(1); // triangles
   const tmpobj = {
     "asCubePosition":[[], [], [], [], [], [], [], []],
     "afCubeValue":[],
