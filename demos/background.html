@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <meta charset=utf-8>
 <style>
 body { margin: 0px; }
@@ -170,6 +171,11 @@ CanvasBackground.prototype.animate = function(time) {
     this.drawOne();
     this.count -= 4;
   }
+  for(var i=0;i<this.items.length;i++){
+   if(this.items[i]){
+    this.items[i].rotateX(0.01)
+   }
+  }
 };
 CanvasBackground.prototype.drawOne = function() {
   "use strict";
@@ -182,7 +188,7 @@ CanvasBackground.prototype.drawOne = function() {
   }
   var x = this.constructor.rand(2000) / 1000.0 - 1.0;
   var y = this.constructor.rand(2000) / 1000.0 - 1.0;
-  var z = this.constructor.rand(60) / 60.0 + 0.4;
+  var z = this.constructor.rand(60) / 60.0 + 1;
   var mesh = [this.cubeMesh, this.sphereMesh,
     this.torusMesh, this.cylinderMesh][this.constructor.rand(4)];
   var radius = (16 + this.constructor.rand(100)) / 1000.0;

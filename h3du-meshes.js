@@ -185,13 +185,13 @@ const TriangleFan = function(indices) {
  * TODO: Not documented yet.
  * @param {*} three TODO: Not documented yet.
  * @param {*} buffer TODO: Not documented yet.
- * @param {*} r TODO: Not documented yet.
- * @param {*} g TODO: Not documented yet.
- * @param {*} b TODO: Not documented yet.
+ * @param {number} r TODO: Not documented yet.
+ * @param {number} g TODO: Not documented yet.
+ * @param {number} b TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
 Meshes.setColor=function(three,buffer,r,g,b){
- var color=toGLColor(r,g,b)
+ var color=toGLColor(r,g,b);
  var ret=[]
  var pos=0
  for(var i=0;i<buffer.index.count;i++,pos+=3){
@@ -711,7 +711,7 @@ Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, st
   const base = Meshes.reverseWinding(Meshes.createDisk(three["THREE"],0.0, baseRad, slices, 2, !inside));
   const top = Meshes.createDisk(three["THREE"],0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
-  top.applyMatrix4(matTo4D(three["THREE"],MathUtil.mat4translated(0, 0, height)));
+  top["applyMatrix4"](matTo4D(three["THREE"],MathUtil.mat4translated(0, 0, height)));
   // merge the base and the top
   return three["BufferGeometryUtils"]["mergeGeometries"]([cylinder,base,top],false);
 };

@@ -43,6 +43,7 @@ function bezierCubicDerivative(points, elementsPerValue, t) {
   }
   return ret;
 }
+
 function bezierQuadratic(points, elementsPerValue, t) {
   const ret = [];
   const p0 = points[0];
@@ -828,6 +829,39 @@ BSplineCurve.clamped = function(controlPoints, degree, bits) {
 BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
   return BSplineCurve.clamped(controlPoints, controlPoints.length - 1, bits);
 };
+
+/**
+ * Creates a B-spline curve from the control points of a conic curve as described
+ * in Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
+ * Derivations", 1996.
+ * @param {Array<Array<number>>} controlPoints Same meaning as fromBezierCurve(),
+ * except there must be three control points.
+ * @param {number} lamda Curvature parameter, which must be 0 or greater.
+ * If 1, same as a Bézier quadratic (degree-2)
+ * curve. If 0, same as a straight line segment between the first and third control point.
+ * If less than 1 (elliptical arc), then closer to 0 means closer to that straight line.
+ * If greater than 0 (hyperbola), then the larger, the closer to the
+ * straight-line path between the first and second and then from the second to the
+ * third control point.
+ * @returns {BSplineCurve} Return value.
+ */
+BSplineCurve.fromConicCurve = function(controlPoints, lamda) {
+  if (lamda<0)throw new Error("lamda is less than 0")
+  if(controlPoints.length!=3)throw new Error("there must be three control points");
+  if (lamda==1)return BSplineCurve.fromBezierCurve(controlPoints,0);
+  if (lamda==0)return BSplineCurve.fromBezierCurve([controlPoints[0],controlPoints[2]],0);
+  let cp=[];
+  for(var i=0;i<controlPoints.length;i++){
+     cp[i]=[];
+     for(var j=0;j<controlPoints[i].length;j++){
+       cp[i][j]=controlPoints[i][j];
+       if(i==1)cp[i][j]*=lamda;
+     }
+     // Last coordinate is denominator
+     cp[i][controlPoints[i].length]=(i==1) ? lamda : 1;
+  }
+  return BSplineCurve.fromBezierCurve(cp, BSplineCurve.DIVIDE_BIT);
+}
 
 /**
  * Creates a B-spline curve with uniform knots.

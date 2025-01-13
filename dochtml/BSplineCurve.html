@@ -144,7 +144,9 @@ except that with the knot vector the curve will start and end at the first and l
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.<li><a href='#BSplineCurve_endPoints'>endPoints</a><br>Returns the starting and coordinates of this curve.<li><a href='#BSplineCurve_evaluate'>evaluate</a><br>Evaluates the curve function based on a point
 in a B-spline curve.<li><a href='#BSplineCurve_fitRange'>fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.<li><a href='#BSplineCurve.fromBezierCurve'>fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.<li><a href='#BSplineCurve_getControlPoints'>getControlPoints</a><br>Gets a reference to the array of control points used
+path as this one but has its u-coordinates remapped to fit the given range.<li><a href='#BSplineCurve.fromBezierCurve'>fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.<li><a href='#BSplineCurve.fromConicCurve'>fromConicCurve</a><br>Creates a B-spline curve from the control points of a conic curve as described
+in Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations", 1996.<li><a href='#BSplineCurve_getControlPoints'>getControlPoints</a><br>Gets a reference to the array of control points used
 in this curve object.<li><a href='#BSplineCurve_getKnots'>getKnots</a><br>Gets a reference to the array of knots used
 in this curve object.<li><a href='#BSplineCurve_getLength'>getLength</a><br>Convenience method for getting the total length of this curve.<li><a href='#BSplineCurve_getPoints'>getPoints</a><br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.<li><a href='#BSplineCurve_getPointsAsObjects'>getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
@@ -223,7 +225,10 @@ var np=(i==points.length-1) ? points[0] : points[i+1]
 curves.push(BSplineCurve.fromBezierCurve([cp,np]))
 }
 return new PiecewiseCurve(curves)
-}</pre><a name='BSplineCurve_getControlPoints'></a>
+}</pre><a name='BSplineCurve.fromConicCurve'></a>
+<h3> (static) BSplineCurve.fromConicCurve(controlPoints, lamda)</h3>Creates a B-spline curve from the control points of a conic curve as described
+in Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations", 1996.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number>>)<br>Same meaning as fromBezierCurve(), except there must be three control points.<li><code>lamda</code> (Type: number)<br>Curvature parameter, which must be 0 or greater. If 1, same as a Bézier quadratic (degree-2) curve. If 0, same as a straight line segment between the first and third control point. If less than 1 (elliptical arc), then closer to 0 means closer to that straight line. If greater than 0 (hyperbola), then the larger, the closer to the straight-line path between the first and second and then from the second to the third control point.</ul><h4> Return Value</h4>Return value. (Type: <a href="BSplineCurve.html">BSplineCurve</a>)<a name='BSplineCurve_getControlPoints'></a>
 <h3> BSplineCurve#getControlPoints()</h3>Gets a reference to the array of control points used
 in this curve object.<h4> Return Value</h4>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)<a name='BSplineCurve_getKnots'></a>
 <h3> BSplineCurve#getKnots()</h3>Gets a reference to the array of knots used

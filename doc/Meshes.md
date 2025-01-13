@@ -634,9 +634,9 @@ TODO: Not documented yet.
 
 * `three` (Type: *)<br>TODO: Not documented yet.
 * `buffer` (Type: *)<br>TODO: Not documented yet.
-* `r` (Type: *)<br>TODO: Not documented yet.
-* `g` (Type: *)<br>TODO: Not documented yet.
-* `b` (Type: *)<br>TODO: Not documented yet.
+* `r` (Type: number)<br>TODO: Not documented yet.
+* `g` (Type: number)<br>TODO: Not documented yet.
+* `b` (Type: number)<br>TODO: Not documented yet.
 
 #### Return Value
 
