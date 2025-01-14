@@ -36,7 +36,7 @@ Surface._EPSILON = 0.00001;
  * with respect to the u-axis using the <code>evaluate</code> method.<p>
  * The <b>tangent vector</b> is the vector pointing in the direction of the u-axis,
  * or alternatively, the partial derivative of the <code>evaluate</code> method with respect to <code>u</code>.
- * The tangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * The tangent vector returned by this method <i>should not</i> be "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the surface.
  * @param {number} v The v-coordinate of a point on the surface.
  * @returns {Array<number>} An array describing a tangent vector. It should have at least as many
@@ -62,7 +62,7 @@ Surface.prototype.tangent = function(u, v) {
  * method if it implements it; otherwise, does a numerical differentiation
  * with respect to the v-axis using the <code>evaluate</code> method.<p>
  * The <b>bitangent vector</b> is the vector pointing in the direction of the v-axis, or alternatively,
- * the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>.  The bitangent vector returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * the partial derivative of the <code>evaluate</code> method with respect to <code>v</code>.  The bitangent vector returned by this method <i>should not</i> be "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the surface.
  * @param {number} v The v-coordinate of a point on the surface.
  * @returns {Array<number>} An array describing a bitangent vector. It should have at least as many
@@ -115,7 +115,7 @@ Surface.prototype.normal = function(u, v) {
  * cylinder, or a disk rotated in three dimensions), this can be the cross product
  * of the [tangent vector]{@link Surface#tangent}
  * and [bitangent vector]{@link Surface#bitangent},
- * in that order. The gradient returned by this method <i>should not</i> be "normalized" to a [unit vector]{@tutorial glmath}.
+ * in that order. The gradient returned by this method <i>should not</i> be "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the surface.
  * @param {number} v The v-coordinate of a point on the surface.
  * @returns {Array<number>} An array describing a gradient vector. It should have at least as many

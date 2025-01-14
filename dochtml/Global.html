@@ -1,10 +1,10 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><title>Global</title></head><body><h3> Methods</h3><ul><li><a href='#getPromiseResults'>getPromiseResults</a><br>Utility function that returns a promise that
+<!DOCTYPE html><html><head><meta charset=utf-8><title>Global</title></head><body><h3> Methods</h3><ul><li><a href='#getPromiseResults'>getPromiseResults</a><br>An auxiliary function that returns a promise that
 resolves after the given list of promises finishes
-its work.<li><a href='#getPromiseResultsAll'>getPromiseResultsAll</a><br>Utility function that returns a promise that
+its work.<li><a href='#getPromiseResultsAll'>getPromiseResultsAll</a><br>An auxiliary function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.<li><a href='#getTimePosition'>getTimePosition</a><br>Gets the position of a time value within an interval.<li><a href='#newFrames'>newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame's length is 1/60 of a second.<li><a href='#toGLColor'>toGLColor</a><br>Creates a 4-element array representing a color.</ul><a name='getPromiseResults'></a>
-<h3> getPromiseResults(promises, [progressResolve], [progressReject])</h3>Utility function that returns a promise that
+<h3> getPromiseResults(promises, [progressResolve], [progressReject])</h3>An auxiliary function that returns a promise that
 resolves after the given list of promises finishes
 its work.<h4> Parameters</h4><ul><li><code>promises</code> (Type: Array.&lt;Promise>)<br>an array containing promise objects<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</ul><h4> Return Value</h4>A promise that is never rejected and resolves when
 all of the promises are each resolved or rejected. The result
@@ -17,7 +17,7 @@ promises that failed, in the order in which those promises were listed.
  <li>"results" - contains a list of boolean values for each
 promise, in the order in which the promises were listed.
 True means success, and false means failure.</ul> (Type: Promise)<a name='getPromiseResultsAll'></a>
-<h3> getPromiseResultsAll(promises, [progressResolve], [progressReject])</h3>Utility function that returns a promise that
+<h3> getPromiseResultsAll(promises, [progressResolve], [progressReject])</h3>An auxiliary function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.<h4> Parameters</h4><ul><li><code>promises</code> (Type: Array.&lt;Promise>)<br>an array containing promise objects<li><code>progressResolve</code> (Type: function) (optional)<br>a function called as each individual promise is resolved; optional<li><code>progressReject</code> (Type: function) (optional)<br>a function called as each individual promise is rejected; optional</ul><h4> Return Value</h4>A promise that is resolved when
 all of the promises are each resolved; the result will

@@ -13,7 +13,7 @@
  * @license Unlicense
  */
 /**
- * Utility function that returns a promise that
+ * An auxiliary function that returns a promise that
  * resolves after the given list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects
@@ -92,7 +92,7 @@ export const getPromiseResults = function(promises,
   });
 };
 /**
- * Utility function that returns a promise that
+ * An auxiliary function that returns a promise that
  * resolves or is rejected after the given list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects

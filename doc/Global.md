@@ -1,9 +1,9 @@
 ### Methods
 
-* [getPromiseResults](#getPromiseResults)<br>Utility function that returns a promise that
+* [getPromiseResults](#getPromiseResults)<br>An auxiliary function that returns a promise that
 resolves after the given list of promises finishes
 its work.
-* [getPromiseResultsAll](#getPromiseResultsAll)<br>Utility function that returns a promise that
+* [getPromiseResultsAll](#getPromiseResultsAll)<br>An auxiliary function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.
 * [getTimePosition](#getTimePosition)<br>Gets the position of a time value within an interval.
@@ -14,7 +14,7 @@ the last known time, where a frame's length is 1/60 of a second.
 <a name='getPromiseResults'></a>
 ### getPromiseResults(promises, [progressResolve], [progressReject])
 
-Utility function that returns a promise that
+An auxiliary function that returns a promise that
 resolves after the given list of promises finishes
 its work.
 
@@ -41,7 +41,7 @@ True means success, and false means failure.</ul> (Type: Promise)
 <a name='getPromiseResultsAll'></a>
 ### getPromiseResultsAll(promises, [progressResolve], [progressReject])
 
-Utility function that returns a promise that
+An auxiliary function that returns a promise that
 resolves or is rejected after the given list of promises finishes
 its work.
 

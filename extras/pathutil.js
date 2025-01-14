@@ -14,7 +14,7 @@
 /* global H3DU */
 
 /* exported makeTubeFromPath */
-function makeTubeFromPath(path, flatness, thickness, pathSection) {
+function makeTubeFromPath(three, path, flatness, thickness, pathSection) {
   "use strict";
   const curves = path.getCurves();
   const resolution = Math.ceil(curves.getLength() / flatness / 10);
@@ -22,5 +22,5 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
   return new H3DU.SurfaceBuilder()
     .positionNormal(new H3DU.CurveTube(curves, thickness, curveSection))
     .evalSurface( H3DU.Mesh.TRIANGLES, resolution,
-      Math.ceil(2 * thickness / flatness)).toMeshBuffer();
+      Math.ceil(2 * thickness / flatness)).toMeshBuffer(three);
 }
