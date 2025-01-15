@@ -702,7 +702,7 @@ const clampRgba = function(x) {
  * can range from 0 to 1 and specifies the red, green, blue or alpha
  * component, respectively.
  * If the parameter 'r' is a string, it is specified as follows.
- * # A string that names a color. The letters in the string can be in any combination of basic uppercase letters A to Z (U+0041 to U+005A) and basic lowercase letters. The string can begin with any combination of white space characters (U+0009, U+000A, U+000C, U+000D, U+0020), can end with any combination of those characters, or both.
+ * A string that names a color. The letters in the string can be in any combination of basic uppercase letters A to Z (U+0041 to U+005A) and basic lowercase letters. The string can begin with any combination of white space characters (U+0009, U+000A, U+000C, U+000D, U+0020), can end with any combination of those characters, or both.
  *
  * **What colors can I use?** You can use values like the following as color strings.
  *
