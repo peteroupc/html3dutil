@@ -193,8 +193,8 @@ function drawCurve(three,contours) {
 /**
  * Generates contour lines for two-dimensional data, using Paul Bourke's
  * CONREC algorithm.
- * @param {Function} func A function that takes two parameters--a u-coordinate
- * and a V coordinate--and returns a number at that point.
+ * @param {Function} func A function that takes two parameters, a u-coordinate
+ * and a v-coordinate, and returns a number at that point.
  * @param {Array<number>} levels An array of values at which to draw contour lines.
  * For example, if levels is `[20, 25]`, this function will draw contour
  * lines along the values 20 and 25.
