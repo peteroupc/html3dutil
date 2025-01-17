@@ -27,7 +27,7 @@ CONREC algorithm.
 
 #### Parameters
 
-* `func` (Type: function)<br>A function that takes two parameters--a u-coordinate and a V coordinate--and returns a number at that point.
+* `func` (Type: function)<br>A function that takes two parameters, a u-coordinate and a v-coordinate, and returns a number at that point.
 * `levels` (Type: Array.&lt;number>)<br>An array of values at which to draw contour lines. For example, if levels is `[20, 25]`, this function will draw contour lines along the values 20 and 25.
 * `u1` (Type: number)<br>Starting u-coordinate to sample.
 * `u2` (Type: number)<br>Ending u-coordinate to sample.
