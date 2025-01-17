@@ -425,8 +425,7 @@ SurfaceBuilder.prototype.position = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate texture coordinates.
- * u- and v-coordinates for the given surface correspond to U and V
- * coordinates, respectively, for
+ * u- and v-coordinates for the given surface correspond to U and v-coordinates, respectively, for
  * the surface used to generate vertex positions.
  * @param {number} [size] The number of elements in each value of the attribute. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
@@ -509,8 +508,7 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate attribute values.
- * u- and v-coordinates for the given surface correspond to U and V
- * coordinates, respectively, for
+ * u- and v-coordinates for the given surface correspond to U and v-coordinates, respectively, for
  * the surface used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as "position" or "uv". For more, see CurveBuilder#attribute.

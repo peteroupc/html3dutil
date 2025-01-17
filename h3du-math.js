@@ -824,8 +824,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and Z
-   * coordinates.
+   * and the last three values are the largest X, Y, and z-coordinates.
    * @returns {Array<number>} A 3-element array containing the
    * x-, y-, and z-coordinates, respectively, of the bounding box's
    * center.
@@ -841,8 +840,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and Z
-   * coordinates.
+   * and the last three values are the largest X, Y, and z-coordinates.
    * @returns {Array<number>} A 3-element array containing the
    * width, height, and depth of the bounding box, respectively. If
    * at least one of the minimum coordinates is greater than its
@@ -859,8 +857,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and Z
-   * coordinates.
+   * and the last three values are the largest X, Y, and z-coordinates.
    * @returns {boolean} <code>true</code> if at least one
    * of the minimum coordinates is greater than its
    * corresponding maximum coordinate; otherwise, <code>false</code>.
@@ -918,8 +915,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box in world space, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and Z
-   * coordinates.
+   * and the last three values are the largest X, Y, and z-coordinates.
    * @returns {boolean} <code>true</code> if the box
    * may be partially or totally
    * inside the frustum; <code>false</code> if the box is
@@ -1449,8 +1445,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * if(par<0.00001)upVector=[0,0,1]; // view is almost parallel, so use z-axis
    * var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
    * @example <caption>The following example creates an
-   * isometric projection for a right-handed coordinate system. The Y
-   * axis will point up, the z-axis toward the lower left, and the x-axis toward
+   * isometric projection for a right-handed coordinate system. The y-axis will point up, the z-axis toward the lower left, and the x-axis toward
    * the lower right.</caption>
    * // Assumes an orthographic projection matrix is used. Example:
    * // var projectionMatrix=MathUtil.mat4ortho(-10,10,-10,10,-50,50);
@@ -3632,8 +3627,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * height. Throws an error if the width or height is less than 0.
    * @param {boolean} [yUp] If false, null, undefined, or omitted, reverses the sign of
    * the y-coordinate returned by the {@link MathUtil.mat4projectVec3} method
-   * before converting it to window coordinates. If true, the Y
-   * coordinate will remain unchanged. If window y-coordinates increase
+   * before converting it to window coordinates. If true, the y-coordinate will remain unchanged. If window y-coordinates increase
    * upward, the viewport's starting position is at the lower-left corner. If those
    * coordinates increase downward, the viewport's starting position is
    * at the upper-left corner.
@@ -3991,8 +3985,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * height. Throws an error if the width or height is less than 0.
    * @param {boolean} [yUp] If false, null, undefined, or omitted, reverses the sign of
    * the y-coordinate returned by the {@link MathUtil.mat4projectVec3} method
-   * before converting it to window coordinates. If true, the Y
-   * coordinate will remain unchanged. If window y-coordinates increase
+   * before converting it to window coordinates. If true, the y-coordinate will remain unchanged. If window y-coordinates increase
    * upward, the viewport's starting position is at the lower-left corner. If those
    * coordinates increase downward, the viewport's starting position is
    * at the upper-left corner.
