@@ -824,7 +824,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and z-coordinates.
+   * and the last three values are the largest x-, y-, and z-coordinates.
    * @returns {Array<number>} A 3-element array containing the
    * x-, y-, and z-coordinates, respectively, of the bounding box's
    * center.
@@ -840,7 +840,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and z-coordinates.
+   * and the last three values are the largest x-, y-, and z-coordinates.
    * @returns {Array<number>} A 3-element array containing the
    * width, height, and depth of the bounding box, respectively. If
    * at least one of the minimum coordinates is greater than its
@@ -857,7 +857,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and z-coordinates.
+   * and the last three values are the largest x-, y-, and z-coordinates.
    * @returns {boolean} <code>true</code> if at least one
    * of the minimum coordinates is greater than its
    * corresponding maximum coordinate; otherwise, <code>false</code>.
@@ -915,7 +915,7 @@ const MathUtil = {
    * @param {Array<number>} box An axis-aligned bounding
    * box in world space, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
-   * and the last three values are the largest X, Y, and z-coordinates.
+   * and the last three values are the largest x-, y-, and z-coordinates.
    * @returns {boolean} <code>true</code> if the box
    * may be partially or totally
    * inside the frustum; <code>false</code> if the box is
@@ -1815,8 +1815,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Transforms a 3-element vector with a 4 &times; 4 matrix and returns
    * a perspective-correct version of the vector as a 3D point. <p>
-   * The transformation involves transforming a 4-element vector with the same X,
-   * Y, and z-coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
+   * The transformation involves transforming a 4-element vector with the same x-, y-, and z-coordinates, but with a W coordinate equal to 1, with the 4 &times; 4 matrix, and
    * then dividing X, Y, and Z of the transformed 4-element
    * vector by that vector's W (a <i>perspective divide</i>),
    * then returning that vector's new X, Y, and Z.<p>
@@ -2083,8 +2082,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>|number} v3 Scale factor along the
    * x-axis. A scale factor can be negative, in which case the transformation
    * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
-   * be a 3-element array giving the scale factors along the X, Y, and
-   * z-axes.
+   * be a 3-element array giving the scale factors along the x-, y-, and z-axes.
    * @param {number} v3y Scale factor along the y-axis.
    * @param {number} v3z Scale factor along the z-axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
@@ -2116,8 +2114,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>|number} v3 Scale factor along the
    * x-axis. A scale factor can be negative, in which case the transformation
    * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
-   * be a 3-element array giving the scale factors along the X, Y, and
-   * z-axes.
+   * be a 3-element array giving the scale factors along the x-, y-, and z-axes.
    * @param {number} [v3y] Scale factor along the y-axis.
    * @param {number} [v3z] Scale factor along the z-axis.
    * @returns {Array<number>} The same parameter as "mat".
@@ -2155,8 +2152,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>|number} v3 Scale factor along the
    * x-axis. A scale factor can be negative, in which case the transformation
    * also causes reflection about the corresponding axis.  If "v3y" and "v3z" are omitted, this value can instead
-   * be a 3-element array giving the scale factors along the X, Y, and
-   * z-axes.
+   * be a 3-element array giving the scale factors along the x-, y-, and z-axes.
    * @param {number} v3y Scale factor along the y-axis.
    * @param {number} v3z Scale factor along the z-axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
@@ -2330,8 +2326,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * @param {Array<number>} mat The matrix to multiply.
    * @param {Array<number>|number} v3 Translation along the
    * x-axis.  If "v3y" and "v3z" are omitted, this value can instead
-   * be a 3-element array giving the translations along the X, Y, and
-   * z-axes.
+   * be a 3-element array giving the translations along the x-, y-, and z-axes.
    * @param {number} v3y Translation along the y-axis.
    * @param {number} v3z Translation along the z-axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
@@ -2363,8 +2358,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * Returns a 4 &times; 4 matrix representing a translation.
    * @param {Array<number>|number} v3 Translation along the
    * x-axis.  If "v3y" and "v3z" are omitted, this value can instead
-   * be a 3-element array giving the translations along the X, Y, and
-   * z-axes.
+   * be a 3-element array giving the translations along the x-, y-, and z-axes.
    * @param {number} v3y Translation along the y-axis.
    * @param {number} v3z Translation along the z-axis.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
