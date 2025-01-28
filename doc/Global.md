@@ -1,10 +1,10 @@
 ### Methods
 
 * [getPromiseResults](#getPromiseResults)<br>An auxiliary function that returns a promise that
-resolves after the given list of promises finishes
+resolves after the specified list of promises finishes
 its work.
 * [getPromiseResultsAll](#getPromiseResultsAll)<br>An auxiliary function that returns a promise that
-resolves or is rejected after the given list of promises finishes
+resolves or is rejected after the specified list of promises finishes
 its work.
 * [getTimePosition](#getTimePosition)<br>Gets the position of a time value within an interval.
 * [newFrames](#newFrames)<br>Returns the number of frame-length intervals that occurred since
@@ -15,7 +15,7 @@ the last known time, where a frame's length is 1/60 of a second.
 ### getPromiseResults(promises, [progressResolve], [progressReject])
 
 An auxiliary function that returns a promise that
-resolves after the given list of promises finishes
+resolves after the specified list of promises finishes
 its work.
 
 #### Parameters
@@ -42,7 +42,7 @@ True means success, and false means failure.</ul> (Type: Promise)
 ### getPromiseResultsAll(promises, [progressResolve], [progressReject])
 
 An auxiliary function that returns a promise that
-resolves or is rejected after the given list of promises finishes
+resolves or is rejected after the specified list of promises finishes
 its work.
 
 #### Parameters

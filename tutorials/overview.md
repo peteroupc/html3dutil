@@ -92,9 +92,9 @@ Here are some other built-in methods for creating meshes. This page doesn&#39;t 
 <a href="http://peteroupc.github.io/html3dutil/Meshes.html">Meshes API documentation</a>.
 
   * <dfn>`Meshes.createSphere(radius)`</dfn>
-  <br>Creates a sphere with the given `radius`.
+  <br>Creates a sphere with the specified `radius`.
   * <dfn>`Meshes.createCylinder(base, top, height)`</dfn>
-  <br>Creates a cylinder with the given `base` radius, `top` radius, and `height`. Can be used
+  <br>Creates a cylinder with the specified `base` radius, `top` radius, and `height`. Can be used
   to create a cone if `base` or `top` is `0`.
   * <dfn>`Meshes.createClosedCylinder(base, top, height)`</dfn>
   <br>Like `createCylinder`, except it also covers the base and top.
@@ -126,7 +126,7 @@ The `Shape` constructor method assigns a linear or perspective transformation (i
 Here are details on some of the `Shape` class&#39;s methods.
 
   * <dfn>`shape.setPosition(x, y, z)`</dfn>
-  <br>Sets the shape&#39;s position to the given coordinates.
+  <br>Sets the shape&#39;s position to the specified coordinates.
   * <dfn>`shape.setScale(x, y, z)`</dfn>
   <br>Sets the shape&#39;s scaling along the x-, y-, and z-axes. Examples: (1, 1, 1) means no scaling, (2, 1, 1) means a doubled width, (1, 1, 0.5) means a halved depth.
   * <dfn>`shape.getTransform().setRotation(angle, x, y, z)`</dfn>

@@ -52,9 +52,6 @@ input tracker.
 * [mousePos](#extras_camera_InputTracker_mousePos)<br>Returns the current mouse position, delta
 mouse position, and delta mouse wheel
 position (see the "update" method).
-* [mousewheel](#extras_camera_InputTracker_mousewheel)<br>**Obsolete: Will be removed in the future. Use the
-mousePos method to find out whether the user
-has rotated the mouse wheel.**
 * [update](#extras_camera_InputTracker_update)<br>Retrieves the current position of the mouse within
 the page's client area, as detected by the input
 tracker and calculates the "delta mouse position",
@@ -278,23 +275,6 @@ position.
 </ul>
 If this object's update method wasn't called, all these values
 will be 0. (Type: Object)
-
-<a name='extras_camera_InputTracker_mousewheel'></a>
-### module:extras/camera~InputTracker#mousewheel(func)
-
-**Deprecated: Will be removed in the future. Use the
-mousePos method to find out whether the user
-has rotated the mouse wheel.**
-
-Sets a function to handle mouse wheel events.
-
-#### Parameters
-
-* `func` (Type: function)<br>A function.
-
-#### Return Value
-
-Return value. (Type: Object)
 
 <a name='extras_camera_InputTracker_update'></a>
 ### module:extras/camera~InputTracker#update()

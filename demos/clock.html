@@ -21,7 +21,7 @@ Color: <input type=color value="#FFFFFF" id=colorsetting>
 
 function ClockShape(scene, color) {
   "use strict";
-  var clock = new H3DU.ShapeGroup();
+  var clock = [];
   var border = H3DU.Meshes.createTorus(0.1, 1, 16, 64);
   var frontTransform = H3DU.MathUtil.mat4translated(0, 0, 0.05);
   var front = H3DU.Meshes.createDisk(0, 1, 64).transform(frontTransform);
@@ -54,11 +54,11 @@ function ClockShape(scene, color) {
   hourhand.setColor(colors[3])
   minutehand.setColor(colors[4])
   secondhand.setColor(colors[5])
-  clock.addShape(new H3DU.Shape(clockFace));
-  clock.addShape(new H3DU.Shape(hourhand));
-  clock.addShape(new H3DU.Shape(minutehand));
-  clock.addShape(new H3DU.Shape(secondhand));
-  scene.addShape(clock);
+  clock.push(clockFace)
+  clock.push(hourhand)
+  clock.push(minutehand)
+  clock.push(secondhand)
+  // scene.addShape(clock);
   this.shape = clock;
   this.hour = -1;
   this.minute = -1;

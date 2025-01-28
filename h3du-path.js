@@ -1224,7 +1224,7 @@ GraphicsPath._addSegment = function(a, c) {
  * takes u-coordinates that range from 0 to 1, depending on how far the point is from the start or
  * the end of the path (similar to arc-length parameterization). Each curve
  * returns a 3-element array containing
- * the x-, y-, and z-coordinates of the point lying on the curve at the given
+ * the x-, y-, and z-coordinates of the point lying on the curve at the specified
  * "u" position (however, the z will always be 0 since paths can currently
  * only be 2-dimensional).
  * </ul>
@@ -1471,7 +1471,7 @@ GraphicsPath.prototype.closePath = function() {
 };
 
 /**
- * Moves the current start position and end position to the given position.
+ * Moves the current start position and end position to the specified position.
  * @param {number} x The x-coordinate of the position.
  * @param {number} y The y-coordinate of the position.
  * @returns {GraphicsPath} This object.
@@ -2012,7 +2012,7 @@ GraphicsPath._nextNumber = function(str, index, afterSep) {
 
 /**
  * Returns a modified version of this path that is transformed
- * according to the given affine transformation (a transformation
+ * according to the specified affine transformation (a transformation
  * that keeps straight lines straight and parallel lines parallel).
  * @param {Array<number>} trans An array of six numbers
  * describing a 2-dimensional affine transformation. For each
@@ -2529,9 +2529,9 @@ GraphicsPath.prototype.regularStar = function(cx, cy, points, radiusOut, radiusI
  * <ul>
  * <li>M/m (x y) - Moves the current position to (x, y). Further
  * XY pairs specify line segments.
- * <li>L/l (x y) - Specifies line segments to the given XY points.
- * <li>H/h (x) - Specifies horizontal line segments to the given X points.
- * <li>V/v (y) - Specifies vertical line segments to the given Y points.
+ * <li>L/l (x y) - Specifies line segments to the specified XY points.
+ * <li>H/h (x) - Specifies horizontal line segments to the specified X points.
+ * <li>V/v (y) - Specifies vertical line segments to the specified Y points.
  * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
  * (see quadraticCurveTo).
  * <li>T/t (x y) - Specifies quadratic curves tangent to the previous

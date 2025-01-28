@@ -22,7 +22,7 @@ with maximum radius 1.
 * [icosahedronFaces](#extras_meshes_polyhedra_Polyhedra.icosahedronFaces)<br>Gets the vertices of a regular icosahedron with maximum radius 1.
 * [makeSphere](#extras_meshes_polyhedra_Polyhedra.makeSphere)<br>Modifies the vertices and indices of a solid to
 generate an approximation of a sphere.
-* [normDistances](#extras_meshes_polyhedra_Polyhedra.normDistances)<br>Normalizes the distance from the origin to each vertex in the given
+* [normDistances](#extras_meshes_polyhedra_Polyhedra.normDistances)<br>Normalizes the distance from the origin to each vertex in the specified
 array to a fixed radius.
 * [octahedron](#extras_meshes_polyhedra_Polyhedra.octahedron)<br>Generates a mesh of a regular octahedron or a sphere based on that solid.
 * [octahedronFaces](#extras_meshes_polyhedra_Polyhedra.octahedronFaces)<br>Gets the vertices of a regular octahedron with radius 1.
@@ -162,7 +162,7 @@ The "vi" parameter, which will likely be modified. (Type: Array.&lt;Array.&lt;nu
 <a name='extras_meshes_polyhedra_Polyhedra.normDistances'></a>
 ### (static) module:extras/meshes/polyhedra~Polyhedra.normDistances(vertices, radius)
 
-Normalizes the distance from the origin to each vertex in the given
+Normalizes the distance from the origin to each vertex in the specified
 array to a fixed radius.
 
 #### Parameters

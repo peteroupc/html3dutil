@@ -142,14 +142,23 @@ CanvasBackground.hls2rgb = function(hls) {
     g < 0 ? 0 : g > 255 ? 255 : g,
     bl < 0 ? 0 : bl > 255 ? 255 : bl];
 };
+
+function combine(a,b,bname){
+  var ret={}
+  for(var i in a){ ret[i]=a[i] }
+  ret[bname]=b
+  return ret
+}
+
 CanvasBackground.prototype.start = function() {
   "use strict";
   var rgb = this.constructor.hls2rgb(this.hls);
   this.scene = scene;
-  this.cubeMesh = (H3DU.Meshes.createBox(THREE,2, 2, 2));
-  this.sphereMesh = (H3DU.Meshes.createSphere(THREE));
-  this.torusMesh = (H3DU.Meshes.createTorus(THREE,0.5, 1));
-  this.cylinderMesh = (H3DU.Meshes.createClosedCylinder({"THREE":THREE,"BufferGeometryUtils":BufferGeometryUtils},
+  var threePlusBufferGeom=combine(THREE,BufferGeometryUtils,"BufferGeometryUtils");
+  this.cubeMesh = (H3DU.Meshes.createBox(threePlusBufferGeom,2, 2, 2));
+  this.sphereMesh = (H3DU.Meshes.createSphere(threePlusBufferGeom));
+  this.torusMesh = (H3DU.Meshes.createTorus(threePlusBufferGeom,0.5, 1));
+  this.cylinderMesh = (H3DU.Meshes.createClosedCylinder(threePlusBufferGeom,
     1, 1, 2));
   this.timeInfo = {};
   this.count = 0;

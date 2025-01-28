@@ -129,8 +129,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
  * column <code>(3, 4, 2, 10)</code> describes the polynomial
  * 3xt<sup>3</sup> + 4xt<sup>2</sup> + 2xt + 10x, where <code>x</code>
  * is the input control point. The polynomials
- * are added together to get the final coordinate of the curve at the
- * given <code>t</code> value.<p>
+ * are added together to get the final coordinate of the curve at the specified <code>t</code> value.<p>
  * The following JavaScript code shows an example of a basis matrix -- the
  * cubic B&eacute;zier basis matrix.<br>
  * <pre>var bezierBasisMatrix = [
@@ -526,11 +525,11 @@ BSplineCurve._splitKnots = function(knots, degree, u) {
   return [front, back];
 };
 /**
- * Splits this B-spline curve into two at the given point.
+ * Splits this B-spline curve into two at the specified point.
  * @param {number} u Point on the curve where this curve will be split.
  * @returns {Array<BSplineCurve>} An array containing two B-spline curves: the
- * first is the part of the curve before the given point, and the second
- * is the part of the curve after the given point. The first element
+ * first is the part of the curve before the specified point, and the second
+ * is the part of the curve after the specified point. The first element
  * will be null if <code>u</code> is at or before the start of the curve.
  * The second element
  * will be null if <code>u</code> is at or after the end of the curve.
@@ -647,7 +646,7 @@ BSplineCurve.prototype.getKnots = function() {
 
 /**
  * Finds the velocity (derivative) of
- * this curve at the given point.
+ * this curve at the specified point.
  * @param {number} u Point on the curve to evaluate.
  * @returns {Array<number>} An array giving the velocity vector.
  * It will have as many elements as a control point (or one fewer
@@ -851,9 +850,9 @@ BSplineCurve.fromConicCurve = function(controlPoints, lamda) {
   if (lamda==1)return BSplineCurve.fromBezierCurve(controlPoints,0);
   if (lamda==0)return BSplineCurve.fromBezierCurve([controlPoints[0],controlPoints[2]],0);
   let cp=[];
-  for(var i=0;i<controlPoints.length;i++){
+  for(var i=0;i<controlPoints.length;i++) {
      cp[i]=[];
-     for(var j=0;j<controlPoints[i].length;j++){
+     for(var j=0;j<controlPoints[i].length;j++) {
        cp[i][j]=controlPoints[i][j];
        if(i==1)cp[i][j]*=lamda;
      }
@@ -1038,8 +1037,7 @@ BSplineSurface.prototype.getKnots = function() {
 };
 
 /**
- * Finds the [tangent vector]{@link Surface} at the
- * given point on the surface.
+ * Finds the [tangent vector]{@link Surface} at the specified point on the surface.
  * @param {number} u The u-coordinate of the surface to evaluate.
  * @param {number} v The v-coordinate of the surface to evaluate.
  * @returns {Array<number>} An array giving the tangent vector.
@@ -1083,8 +1081,7 @@ BSplineSurface.prototype.tangent = function(u, v) {
   return ret;
 };
 /**
- * Finds the [bitangent vector]{@link Surface} at the
- * given point on the surface.
+ * Finds the [bitangent vector]{@link Surface} at the specified point on the surface.
  * @param {number} u The u-coordinate of the surface to evaluate.
  * @param {number} v The v-coordinate of the surface to evaluate.
  * @returns {Array<number>} An array giving the bitangent vector.

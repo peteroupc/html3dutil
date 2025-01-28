@@ -14,15 +14,12 @@ for(var i = 0; i < cp.length; i++) {
 ret.push(convertToHomogen(cp[i]));
 }
 return ret;
-};</pre><h3> Methods</h3><ul><li><a href='#BSplineSurface_bitangent'>bitangent</a><br>Finds the <a href="Surface.html">bitangent vector</a> at the
-given point on the surface.<li><a href='#BSplineSurface.clamped'>clamped</a><br>Creates a B-spline surface with uniform knots, except that
+};</pre><h3> Methods</h3><ul><li><a href='#BSplineSurface_bitangent'>bitangent</a><br>Finds the <a href="Surface.html">bitangent vector</a> at the specified point on the surface.<li><a href='#BSplineSurface.clamped'>clamped</a><br>Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.<li><a href='#BSplineSurface_endPoints'>endPoints</a><br>Returns the starting and ending u- and v-coordinates of this surface.<li><a href='#BSplineSurface_evaluate'>evaluate</a><br>Evaluates the surface function based on a point
 in a B-spline surface.<li><a href='#BSplineSurface.fromBezierSurface'>fromBezierSurface</a><br>Creates a B-spline surface from the control points of a B&eacute;zier surface.<li><a href='#BSplineSurface_getControlPoints'>getControlPoints</a><br>Gets a reference to the array of control point arrays used
 in this surface object.<li><a href='#BSplineSurface_getKnots'>getKnots</a><br>Gets a reference to the array of knot vectors used
-in this curve object.<li><a href='#BSplineSurface_gradient'>gradient</a><br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.<li><a href='#BSplineSurface_normal'>normal</a><br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.<li><a href='#BSplineSurface_tangent'>tangent</a><br>Finds the <a href="Surface.html">tangent vector</a> at the
-given point on the surface.<li><a href='#BSplineSurface.uniform'>uniform</a><br>Creates a B-spline surface with uniform knots.</ul><a name='BSplineSurface_bitangent'></a>
-<h3> BSplineSurface#bitangent(u, v)</h3>Finds the <a href="Surface.html">bitangent vector</a> at the
-given point on the surface.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of the surface to evaluate.<li><code>v</code> (Type: number)<br>The v-coordinate of the surface to evaluate.</ul><h4> Return Value</h4>An array giving the bitangent vector.
+in this curve object.<li><a href='#BSplineSurface_gradient'>gradient</a><br>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.<li><a href='#BSplineSurface_normal'>normal</a><br>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.<li><a href='#BSplineSurface_tangent'>tangent</a><br>Finds the <a href="Surface.html">tangent vector</a> at the specified point on the surface.<li><a href='#BSplineSurface.uniform'>uniform</a><br>Creates a B-spline surface with uniform knots.</ul><a name='BSplineSurface_bitangent'></a>
+<h3> BSplineSurface#bitangent(u, v)</h3>Finds the <a href="Surface.html">bitangent vector</a> at the specified point on the surface.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of the surface to evaluate.<li><code>v</code> (Type: number)<br>The v-coordinate of the surface to evaluate.</ul><h4> Return Value</h4>An array giving the bitangent vector.
 It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)<a name='BSplineSurface.clamped'></a>
 <h3> (static) BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])</h3>Creates a B-spline surface with uniform knots, except that
@@ -44,7 +41,7 @@ if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>
 in this surface object.<h4> Return Value</h4>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)<a name='BSplineSurface_getKnots'></a>
 <h3> BSplineSurface#getKnots()</h3>Gets a reference to the array of knot vectors used
 in this curve object.<h4> Return Value</h4>An object described in the constructor to <a href="BSplineSurface.html">BSplineSurface</a>. (Type: Array.&lt;Array.&lt;number>>)<a name='BSplineSurface_gradient'></a>
-<h3> BSplineSurface#gradient(u, v)</h3>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.<p>
+<h3> BSplineSurface#gradient(u, v)</h3>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.<p>
 The implementation in <a href="Surface.html">Surface</a> calls the evaluator's <code>gradient</code>
 method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
 (however, this approach is generally only meaningful for a surface in three-dimensional space).<p>
@@ -78,11 +75,10 @@ Math.cos(u)*-Math.sin(v)*Math.sin(u),
 Math.sin(u)*-Math.sin(v)*Math.sin(u),
 0];
 }})</pre><a name='BSplineSurface_normal'></a>
-<h3> BSplineSurface#normal(u, v)</h3>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+<h3> BSplineSurface#normal(u, v)</h3>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of a point on the surface.<li><code>v</code> (Type: number)<br>The v-coordinate of a point on the surface.</ul><h4> Return Value</h4>An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)<a name='BSplineSurface_tangent'></a>
-<h3> BSplineSurface#tangent(u, v)</h3>Finds the <a href="Surface.html">tangent vector</a> at the
-given point on the surface.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of the surface to evaluate.<li><code>v</code> (Type: number)<br>The v-coordinate of the surface to evaluate.</ul><h4> Return Value</h4>An array giving the tangent vector.
+<h3> BSplineSurface#tangent(u, v)</h3>Finds the <a href="Surface.html">tangent vector</a> at the specified point on the surface.<h4> Parameters</h4><ul><li><code>u</code> (Type: number)<br>The u-coordinate of the surface to evaluate.<li><code>v</code> (Type: number)<br>The v-coordinate of the surface to evaluate.</ul><h4> Return Value</h4>An array giving the tangent vector.
 It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)<a name='BSplineSurface.uniform'></a>
 <h3> (static) BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])</h3>Creates a B-spline surface with uniform knots.<h4> Parameters</h4><ul><li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;number>>>)<br>Array of control point arrays as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.<li><code>degreeU</code> (Type: number) (optional)<br>Degree of the B-spline surface along the u-axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.<li><code>degreeV</code> (Type: number) (optional)<br>Degree of the B-spline surface along the v-axis If null, undefined, or omitted, the default is 3.<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.</ul><h4> Return Value</h4>Return value. The first

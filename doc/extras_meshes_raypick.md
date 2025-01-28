@@ -15,13 +15,13 @@ To import all symbols in this module, either of the following can be used:
 ### Methods
 
 * [raypick](#extras_meshes_raypick.raypick)<br>Finds the three-dimensional shape object and world-space coordinates
-corresponding to the given two-dimensional (X and Y) coordinates.
+corresponding to the specified two-dimensional (X and Y) coordinates.
 
 <a name='extras_meshes_raypick.raypick'></a>
 ### (static) module:extras/meshes/raypick.raypick(x, y, projView, viewport, objects)
 
 Finds the three-dimensional shape object and world-space coordinates
-corresponding to the given two-dimensional (X and Y) coordinates.
+corresponding to the specified two-dimensional (X and Y) coordinates.
 
 #### Parameters
 

@@ -38,8 +38,7 @@ to create a rational B-Spline surface.
 
 ### Methods
 
-* [bitangent](#BSplineSurface_bitangent)<br>Finds the <a href="Surface.md">bitangent vector</a> at the
-given point on the surface.
+* [bitangent](#BSplineSurface_bitangent)<br>Finds the <a href="Surface.md">bitangent vector</a> at the specified point on the surface.
 * [clamped](#BSplineSurface.clamped)<br>Creates a B-spline surface with uniform knots, except that
 the surface's edges lie on the edges of the control point array.
 * [endPoints](#BSplineSurface_endPoints)<br>Returns the starting and ending u- and v-coordinates of this surface.
@@ -50,17 +49,15 @@ in a B-spline surface.
 in this surface object.
 * [getKnots](#BSplineSurface_getKnots)<br>Gets a reference to the array of knot vectors used
 in this curve object.
-* [gradient](#BSplineSurface_gradient)<br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
-* [normal](#BSplineSurface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
-* [tangent](#BSplineSurface_tangent)<br>Finds the <a href="Surface.md">tangent vector</a> at the
-given point on the surface.
+* [gradient](#BSplineSurface_gradient)<br>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.
+* [normal](#BSplineSurface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
+* [tangent](#BSplineSurface_tangent)<br>Finds the <a href="Surface.md">tangent vector</a> at the specified point on the surface.
 * [uniform](#BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
 
 <a name='BSplineSurface_bitangent'></a>
 ### BSplineSurface#bitangent(u, v)
 
-Finds the <a href="Surface.md">bitangent vector</a> at the
-given point on the surface.
+Finds the <a href="Surface.md">bitangent vector</a> at the specified point on the surface.
 
 #### Parameters
 
@@ -160,7 +157,7 @@ An object described in the constructor to <a href="BSplineSurface.md">BSplineSur
 <a name='BSplineSurface_gradient'></a>
 ### BSplineSurface#gradient(u, v)
 
-Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
+Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.
 
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>gradient</code>
 method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
@@ -219,7 +216,7 @@ The result is the gradient, which will point up and away from the surface.
 <a name='BSplineSurface_normal'></a>
 ### BSplineSurface#normal(u, v)
 
-Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.
 
 #### Parameters
@@ -235,8 +232,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='BSplineSurface_tangent'></a>
 ### BSplineSurface#tangent(u, v)
 
-Finds the <a href="Surface.md">tangent vector</a> at the
-given point on the surface.
+Finds the <a href="Surface.md">tangent vector</a> at the specified point on the surface.
 
 #### Parameters
 

@@ -60,7 +60,7 @@ needed to draw text with this font.
 * [measure](#extras_meshes_text_TextFont_measure)<br>Calculates the width and height of a text string when
 drawn using this font.
 * [textShape](#extras_meshes_text_TextFont_textShape)<br>Creates a group of shapes containing the primitives needed to
-draw text in the given position, size, and color.
+draw text in the specified position, size, and color.
 
 <a name='extras_meshes_text_TextFont.loadData'></a>
 ### (static) module:extras/meshes/text~TextFont.loadData(data, fontFileName)
@@ -157,7 +157,7 @@ U+000A, that break lines). (Type: Array.&lt;number>)
 ### module:extras/meshes/text~TextFont#textShape(str, params)
 
 Creates a group of shapes containing the primitives needed to
-draw text in the given position, size, and color.
+draw text in the specified position, size, and color.
 For the text to show upright, the coordinate system should have the
 x-axis pointing right and the y-axis pointing down (for example, an
 orthographic projection where the left and top coordinates are less

@@ -38,9 +38,9 @@ point to the camera's position.
 the same reference point at the same distance.
 * [moveAngleVertical](#extras_camera_Camera_moveAngleVertical)<br>Moves the camera upward or downward so that it faces
 the same reference point at the same distance.
-* [moveClose](#extras_camera_Camera_moveClose)<br>Moves the camera the given distance, but not too close
+* [moveClose](#extras_camera_Camera_moveClose)<br>Moves the camera the specified distance, but not too close
 to the reference point.
-* [moveForward](#extras_camera_Camera_moveForward)<br>Moves the camera forward the given distance.
+* [moveForward](#extras_camera_Camera_moveForward)<br>Moves the camera forward the specified distance.
 * [moveHorizontal](#extras_camera_Camera_moveHorizontal)<br>Moves the camera horizontally relative to the camera's up vector.
 * [moveVertical](#extras_camera_Camera_moveVertical)<br>Moves the camera toward or away from the camera's up vector.
 * [setDistance](#extras_camera_Camera_setDistance)<br>Moves the camera a given distance from the reference
@@ -115,7 +115,7 @@ This object. (Type: Camera)
 <a name='extras_camera_Camera_moveClose'></a>
 ### module:extras/camera~Camera#moveClose(dist)
 
-Moves the camera the given distance, but not too close
+Moves the camera the specified distance, but not too close
 to the reference point.
 
 #### Parameters
@@ -129,7 +129,7 @@ This object. (Type: Camera)
 <a name='extras_camera_Camera_moveForward'></a>
 ### module:extras/camera~Camera#moveForward(dist)
 
-Moves the camera forward the given distance.
+Moves the camera forward the specified distance.
 
 #### Parameters
 

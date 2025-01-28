@@ -836,7 +836,7 @@ const MathUtil = {
   },
   /**
    * Finds the dimensions of a 3D bounding box. This is done by subtracting
-   * the first three values of the given array with its last three values.
+   * the first three values of the specified array with its last three values.
    * @param {Array<number>} box An axis-aligned bounding
    * box, which is an array of six values.
    * The first three values are the smallest x-, y-, and z-coordinates,
@@ -868,13 +868,13 @@ const MathUtil = {
   /**
    * Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
    * a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
-   * by a surface of the given color.
+   * by a surface of the specified color.
    * @param {Array<number>} srgb A three- or four-element vector giving
    * the red, green, and blue components, in that order, of an sRGB color. The alpha component
    * is either the fourth element in the case of a four-element vector, or 1.0
    * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
    * @returns {Array<number>} A three-element vector giving
-   * the red, green, and blue components, in that order, of the given color
+   * the red, green, and blue components, in that order, of the specified color
    * in linear sRGB. The alpha component will be as specified
    * in the "srgb" parameter.
    */
@@ -888,13 +888,13 @@ const MathUtil = {
   /**
    * Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
    * a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
-   * by a surface of the given color.
+   * by a surface of the specified color.
    * @param {Array<number>} lin A three- or four-element vector giving
    * the red, green, and blue components, in that order, of a linear RGB color. The alpha component
    * is either the fourth element in the case of a four-element vector, or 1.0
    * in the case of a three-element vector. Each element in the vector ranges from 0 through 1.
    * @returns {Array<number>} lin A four-element vector giving
-   * the red, green, blue, and alpha components, in that order, of the given color
+   * the red, green, blue, and alpha components, in that order, of the specified color
    * in encoded sRGB. The alpha component will be as specified
    * in the "lin" parameter.
    */
@@ -1037,7 +1037,7 @@ const MathUtil = {
   },
 
   /**
-   * Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.
+   * Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the specified transformation.
    * @param {Array<number>} m A 3 &times; 3 matrix.
    * @returns {Array<number>} The resulting 3 &times; 3 matrix.
    * Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0.
@@ -1221,7 +1221,7 @@ const MathUtil = {
   },
   /**
    * Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
-   * the given 4 &times; 4 matrix.<p>
+   * the specified 4 &times; 4 matrix.<p>
    * This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
    * for transforming surface normals in order to keep them perpendicular
    * to a surface transformed by the model-view matrix. Normals are then
@@ -1861,10 +1861,10 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
-   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath},
+   * by the specified rotation angle and around the specified [axis of rotation]{@tutorial glmath},
    * and returns a new matrix.
    * The effect will be that the rotation transformation will
-   * happen before the transformation described in the given matrix,
+   * happen before the transformation described in the specified matrix,
    * when applied in the global coordinate frame.
    * @param {Array<number>} mat A 4 &times; 4 matrix to multiply.
    * @param {Array<number>|number} angle The desired angle
@@ -1964,7 +1964,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
-   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath}.
+   * by the specified rotation angle and around the specified [axis of rotation]{@tutorial glmath}.
    * @param {Array<number>|number} angle The desired angle
    * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
    * instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle
@@ -1979,7 +1979,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * of rotation.
    * @returns {Array<number>} The resulting 4 &times; 4 matrix.
    * @example <caption>The following example rotates a vector,
-   * "vec", about the z-axis by the given angle, "angle".</caption>
+   * "vec", about the z-axis by the specified angle, "angle".</caption>
    * var newVector = MathUtil.mat4projectVec3(
    * MathUtil.mat4rotated(angle, 0, 0, 1), vec);
    */
@@ -2460,7 +2460,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return plane;
   },
   /**
-   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a unit vector.
+   * Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's [axis of rotation]{@tutorial glmath}). The return value won't necessarily be a unit vector.
    * @param {Array<number>} quat A quaternion, containing four elements.
    * @returns {Array<number>} Return value. */
   "quatConjugate":function(quat) {
@@ -2468,7 +2468,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Generates a quaternion from a rotation transformation that rotates vectors
-   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath},
+   * by the specified rotation angle and around the specified [axis of rotation]{@tutorial glmath},
    * @param {Array<number>|number} angle The desired angle
    * to rotate in degrees.  If "v", "vy", and "vz" are omitted, this can
    * instead be a 4-element array giving the axis
@@ -2754,7 +2754,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [0, 0, 0, 1];
   },
   /**
-   * Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector.
+   * Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation) and is converted to a unit vector.
    * @param {Array<number>} quat A quaternion, containing four elements.
    * @returns {Array<number>} Return value.
    * @see {@link MathUtil.quatConjugate}
@@ -2798,8 +2798,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]];
   },
   /**
-   * Returns a quaternion that lies along the shortest path between the
-   * given two quaternion rotations, using a linear interpolation function, and converts
+   * Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a linear interpolation function, and converts
    * it to a unit vector.
    * This is called a normalized linear interpolation, or "nlerp".<p>
    * Because the shortest path is curved, not straight, this method
@@ -2833,7 +2832,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Multiplies a quaternion by a rotation transformation that rotates vectors
-   * by the given rotation angle and around the given [axis of rotation]{@tutorial glmath}.
+   * by the specified rotation angle and around the specified [axis of rotation]{@tutorial glmath}.
    * The result is such that the angle-axis
    * rotation happens before the quaternion's rotation when applied
    * in the global coordinate frame.<p>
@@ -2861,8 +2860,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
       MathUtil.quatFromAxisAngle(angle, v, vy, vz));
   },
   /**
-   * Returns a quaternion that lies along the shortest path between the
-   * given two quaternion rotations, using a spherical interpolation function.
+   * Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a spherical interpolation function.
    * This is called spherical linear interpolation, or "slerp". (A spherical
    * interpolation finds the shortest angle between the two quaternions -- which
    * are treated as 4D vectors -- and then finds a vector with a smaller angle
@@ -3006,7 +3004,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [Math.abs(a[0]), Math.abs(a[1])];
   },
   /**
-   * Sets each component of the given 2-element
+   * Sets each component of the specified 2-element
    * vector to its absolute value.
    * @param {Array<number>} a A 2-element vector.
    * @returns {Array<number>} The vector "a".
@@ -3022,7 +3020,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * is the same as adding each of their components.
    * The resulting vector:<ul>
    * <li>describes a straight-line path for the
-   * combined paths described by the given vectors, in either order, and
+   * combined paths described by the specified vectors, in either order, and
    * <li>will come "between" the two vectors given (at their shortest angle) if all three start
    * at the same position.</ul>
    * @param {Array<number>} a The first 2-element vector.
@@ -3038,7 +3036,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * is the same as adding each of their components.
    * The resulting vector:<ul>
    * <li>describes a straight-line path for the
-   * combined paths described by the given vectors, in either order, and
+   * combined paths described by the specified vectors, in either order, and
    * <li>will come "between" the two vectors given (at their shortest angle) if all three start
    * at the same position.</ul>
    * @param {Array<number>} a The first 2-element vector.
@@ -3068,7 +3066,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return dst;
   },
   /**
-   * Returns a 2-element vector in which each element of the given 2-element vector is clamped
+   * Returns a 2-element vector in which each element of the specified 2-element vector is clamped
    * so it's not less than one value or greater than another value.
    * @param {Array<number>} a The vector to clamp.
    * @param {number} min Lowest possible value. Should not be greater than "max".
@@ -3078,7 +3076,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.vec2clampInPlace(MathUtil.vec2copy(a), min, max);
   },
   /**
-   * Clamps each element of the given 2-element vector
+   * Clamps each element of the specified 2-element vector
    * so it's not less than one value or greater than another value.
    * @param {Array<number>} a The vector to clamp.
    * @param {number} min Lowest possible value. Should not be greater than "max".
@@ -3258,7 +3256,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Returns an arbitrary 2-element vector that is perpendicular
-   * (orthogonal) to the given 2-element vector. The return value
+   * (orthogonal) to the specified 2-element vector. The return value
    * will not be converted to a unit vector.
    * @param {Array<number>} vec A 2-element vector.
    * @returns {Array<number>} A perpendicular 2-element
@@ -3268,7 +3266,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [-vec[1], vec[0]];
   },
   /**
-   * Returns the projection of a 2-element vector on the given
+   * Returns the projection of a 2-element vector on the specified
    * reference vector. Assuming both vectors
    * start at the same point, the resulting vector
    * will be parallel to the
@@ -3307,7 +3305,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Multiplies each element of a 2-element vector by a factor. Returns
    * a new vector that is parallel to the old vector
-   * but with its length multiplied by the given factor. If the factor
+   * but with its length multiplied by the specified factor. If the factor
    * is positive, the vector will point in the same direction; if negative,
    * in the opposite direction; if zero, the vector's components will all be 0.
    * @param {Array<number>} a A 2-element vector.
@@ -3321,7 +3319,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Multiplies each element of a 2-element vector by a factor, so
    * that the vector is parallel to the old vector
-   * but its length is multiplied by the given factor. If the factor
+   * but its length is multiplied by the specified factor. If the factor
    * is positive, the vector will point in the same direction; if negative,
    * in the opposite direction; if zero, the vector's components will all be 0.
    * @param {Array<number>} a A 2-element vector.
@@ -3373,7 +3371,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2])];
   },
   /**
-   * Sets each component of the given 3-element
+   * Sets each component of the specified 3-element
    * vector to its absolute value.
    * @param {Array<number>} a A 3-element vector.
    * @returns {Array<number>} The vector "a".
@@ -3390,7 +3388,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * is the same as adding each of their components.
    * The resulting vector:<ul>
    * <li>describes a straight-line path for the
-   * combined paths described by the given vectors, in either order, and
+   * combined paths described by the specified vectors, in either order, and
    * <li>will come "between" the two vectors given (at their shortest angle) if all three start
    * at the same position.</ul>
    * @param {Array<number>} a The first 3-element vector.
@@ -3406,7 +3404,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * is the same as adding each of their components.
    * The resulting vector:<ul>
    * <li>describes a straight-line path for the
-   * combined paths described by the given vectors, in either order, and
+   * combined paths described by the specified vectors, in either order, and
    * <li>will come "between" the two vectors given (at their shortest angle) if all three start
    * at the same position.</ul>
    * @param {Array<number>} a The first 3-element vector.
@@ -3440,7 +3438,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return dst;
   },
   /**
-   * Returns a 3-element vector in which each element of the given 3-element vector is clamped
+   * Returns a 3-element vector in which each element of the specified 3-element vector is clamped
    * so it's not less than one value or greater than another value.
    * @param {Array<number>} a The vector to clamp.
    * @param {number} min Lowest possible value. Should not be greater than "max".
@@ -3450,7 +3448,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.vec3clampInPlace(MathUtil.vec3copy(a), min, max);
   },
   /**
-   * Clamps each element of the given 3-element vector
+   * Clamps each element of the specified 3-element vector
    * so it's not less than one value or greater than another value.
    * @param {Array<number>} a The vector to clamp.
    * @param {number} min Lowest possible value. Should not be greater than "max".
@@ -3592,7 +3590,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Unprojects the <i>window coordinates</i> given in a
    * 3-element vector,
-   * using the given transformation matrix and viewport
+   * using the specified transformation matrix and viewport
    * rectangle.<p>
    * In the window coordinate space, x-coordinates increase
    * rightward and y-coordinates increase upward
@@ -3827,7 +3825,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   },
   /**
    * Returns an arbitrary 3-element vector that is perpendicular
-   * (orthogonal) to the given 3-element vector. The return value
+   * (orthogonal) to the specified 3-element vector. The return value
    * will not be converted to a unit vector.
    * @param {Array<number>} vec A 3-element vector.
    * @returns {Array<number>} A perpendicular 3-element
@@ -3855,7 +3853,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return normal;
   },
   /**
-   * Returns the projection of a 3-element vector on the given
+   * Returns the projection of a 3-element vector on the specified
    * reference vector. Assuming both vectors
    * start at the same point, the resulting vector
    * will be parallel to the
@@ -3894,7 +3892,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Multiplies each element of a 3-element vector by a factor. Returns
    * a new vector that is parallel to the old vector
-   * but with its length multiplied by the given factor. If the factor
+   * but with its length multiplied by the specified factor. If the factor
    * is positive, the vector will point in the same direction; if negative,
    * in the opposite direction; if zero, the vector's components will all be 0.
    * @param {Array<number>} a A 3-element vector.
@@ -3908,7 +3906,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Multiplies each element of a 3-element vector by a factor, so
    * that the vector is parallel to the old vector
-   * but its length is multiplied by the given factor. If the factor
+   * but its length is multiplied by the specified factor. If the factor
    * is positive, the vector will point in the same direction; if negative,
    * in the opposite direction; if zero, the vector's components will all be 0.
    * @param {Array<number>} a A 3-element vector.
@@ -3956,7 +3954,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Transforms the 3D point specified in this 3-element vector to its
    * <i>window coordinates</i>
-   * using the given transformation matrix and viewport rectangle.
+   * using the specified transformation matrix and viewport rectangle.
    * @param {Array<number>} vector A 3-element vector giving
    * the x-, y-, and z-coordinates of the 3D point to transform.
    * @param {Array<number>} matrix A 4 &times; 4 matrix to use to transform
@@ -4045,7 +4043,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return [Math.abs(a[0]), Math.abs(a[1]), Math.abs(a[2]), Math.abs(a[3])];
   },
   /**
-   * Sets each component of the given 4-element
+   * Sets each component of the specified 4-element
    * vector to its absolute value.
    * @param {Array<number>} a A 4-element vector.
    * @returns {Array<number>} The vector "a".
@@ -4063,7 +4061,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * is the same as adding each of their components.
    * The resulting vector:<ul>
    * <li>describes a straight-line path for the
-   * combined paths described by the given vectors, in either order, and
+   * combined paths described by the specified vectors, in either order, and
    * <li>will come "between" the two vectors given (at their shortest angle) if all three start
    * at the same position.</ul>
    * @param {Array<number>} a The first 4-element vector.
@@ -4079,7 +4077,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
    * is the same as adding each of their components.
    * The resulting vector:<ul>
    * <li>describes a straight-line path for the
-   * combined paths described by the given vectors, in either order, and
+   * combined paths described by the specified vectors, in either order, and
    * <li>will come "between" the two vectors given (at their shortest angle) if all three start
    * at the same position.</ul>
    * @param {Array<number>} a The first 4-element vector.
@@ -4117,7 +4115,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return dst;
   },
   /**
-   * Returns a 4-element vector in which each element of the given 4-element vector is clamped
+   * Returns a 4-element vector in which each element of the specified 4-element vector is clamped
    * @param {Array<number>} a The vector to clamp.
    * @param {number} min Lowest possible value. Should not be greater than "max".
    * @param {number} max Highest possible value. Should not be less than "min".
@@ -4126,7 +4124,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return MathUtil.vec4clampInPlace(MathUtil.vec4copy(a), min, max);
   },
   /**
-   * Clamps each element of the given 4-element vector
+   * Clamps each element of the specified 4-element vector
    * so it's not less than one value or greater than another value.
    * @param {Array<number>} a The vector to clamp.
    * @param {number} min Lowest possible value. Should not be greater than "max".
@@ -4267,7 +4265,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
     return vec;
   },
   /**
-   * Returns the projection of a 4-element vector on the given
+   * Returns the projection of a 4-element vector on the specified
    * reference vector. Assuming both vectors
    * start at the same point, the resulting vector
    * will be parallel to the
@@ -4292,7 +4290,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Multiplies each element of a 4-element vector by a factor, returning
    * a new vector that is parallel to the old vector
-   * but with its length multiplied by the given factor. If the factor
+   * but with its length multiplied by the specified factor. If the factor
    * is positive, the vector will point in the same direction; if negative,
    * in the opposite direction; if zero, the vector's components will all be 0.
    * @param {Array<number>} a A 4-element vector.
@@ -4306,7 +4304,7 @@ tvar47 * tvar51 + tvar8 * tvar52;
   /**
    * Multiplies each element of a 4-element vector by a factor, so
    * that the vector is parallel to the old vector
-   * but its length is multiplied by the given factor. If the factor
+   * but its length is multiplied by the specified factor. If the factor
    * is positive, the vector will point in the same direction; if negative,
    * in the opposite direction; if zero, the vector's components will all be 0.
    * @param {Array<number>} a A 4-element vector.

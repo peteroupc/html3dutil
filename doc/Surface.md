@@ -27,17 +27,17 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 ### Methods
 
-* [bitangent](#Surface_bitangent)<br>Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.
+* [bitangent](#Surface_bitangent)<br>Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.
 * [endPoints](#Surface_endPoints)<br>Returns the starting and ending u- and v-coordinates of this surface.
-* [evaluate](#Surface_evaluate)<br>Finds the position of this surface at the given u- and v-coordinates.
-* [gradient](#Surface_gradient)<br>Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
-* [normal](#Surface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
-* [tangent](#Surface_tangent)<br>Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
+* [evaluate](#Surface_evaluate)<br>Finds the position of this surface at the specified u- and v-coordinates.
+* [gradient](#Surface_gradient)<br>Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.
+* [normal](#Surface_normal)<br>Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
+* [tangent](#Surface_tangent)<br>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 
 <a name='Surface_bitangent'></a>
 ### Surface#bitangent(u, v)
 
-Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.
+Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.
 
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
@@ -86,7 +86,7 @@ method.
 <a name='Surface_evaluate'></a>
 ### Surface#evaluate(u, v)
 
-Finds the position of this surface at the given u- and v-coordinates.
+Finds the position of this surface at the specified u- and v-coordinates.
 
 #### Parameters
 
@@ -101,7 +101,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='Surface_gradient'></a>
 ### Surface#gradient(u, v)
 
-Finds an approximate gradient vector of this surface at the given u- and v-coordinates.
+Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.
 
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>gradient</code>
 method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
@@ -160,7 +160,7 @@ The result is the gradient, which will point up and away from the surface.
 <a name='Surface_normal'></a>
 ### Surface#normal(u, v)
 
-Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
 The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.
 
 #### Parameters
@@ -176,7 +176,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <a name='Surface_tangent'></a>
 ### Surface#tangent(u, v)
 
-Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
+Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 The implementation in <a href="Surface.md">Surface</a> calls the evaluator's <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the u-axis using the <code>evaluate</code> method.

@@ -611,7 +611,7 @@ testfunctions.push(function() {
     ok(isApproxVec(q, q2), "angleaxis=" + [angle, "["+axis+"]", "["+aa+"]"]);
   }
 });
-function qftb(x,y,z){
+function qftb(x,y,z) {
  var q=[0,0,0,1]
  var qx=H3DU.MathUtil.quatFromAxisAngle(z,0,0,1)
  q=H3DU.MathUtil.quatMultiply(qx,q);
@@ -623,7 +623,7 @@ function qftb(x,y,z){
 }
 // TODO: Fix logic error in quatToTaitBryan
 testfunctions.push(function() {
-  if(!H3DU.MathUtil.quatToTaitBryan){
+  if(!H3DU.MathUtil.quatToTaitBryan) {
     console.warn("can't test quatToTaitBryan since its current implementation may have a logic error."+
        " https://github.com/peteroupc/html3dutil/issues/8")
     return

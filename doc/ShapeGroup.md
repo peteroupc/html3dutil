@@ -21,7 +21,7 @@ in it.
 * [getMatrix](#ShapeGroup_getMatrix)<br>Gets a copy of the transformation needed to transform
 this shape group's-coordinates to world coordinates.
 * [getShape](#ShapeGroup_getShape)<br>Gets the shape or shape group located
-in this shape group at the given index.
+in this shape group at the specified index.
 * [getTransform](#ShapeGroup_getTransform)<br>Gets a reference to the transform used by this shape group object.
 * [getVisible](#ShapeGroup_getVisible)<br>Gets whether this shape group will be drawn on rendering.
 * [primitiveCount](#ShapeGroup_primitiveCount)<br>Gets the number of primitives (triangles, lines,
@@ -32,9 +32,9 @@ from their original position.
 * [setQuaternion](#ShapeGroup_setQuaternion)<br>Sets this shape group's rotation in the form of a glmath.
 * [setScale](#ShapeGroup_setScale)<br>Sets the scale of this shape group relative to its original
 size.
-* [setShape](#ShapeGroup_setShape)<br>Sets a shape or shape group at the given index in this shape group.
+* [setShape](#ShapeGroup_setShape)<br>Sets a shape or shape group at the specified index in this shape group.
 * [setTransform](#ShapeGroup_setTransform)<br>Sets the transform used by this shape group to a copy
-of the given transform.
+of the specified transform.
 * [setVisible](#ShapeGroup_setVisible)<br>Sets whether this shape group will be drawn on rendering.
 * [shapeCount](#ShapeGroup_shapeCount)<br>Returns the number of shapes and/or shape groups that
 are direct children of this shape group.
@@ -100,7 +100,7 @@ A 4 &times; 4 matrix. (Type: <a href="Transform.md">Transform</a>)
 ### ShapeGroup#getShape(index)
 
 Gets the shape or shape group located
-in this shape group at the given index.
+in this shape group at the specified index.
 
 #### Parameters
 
@@ -109,7 +109,7 @@ in this shape group at the given index.
 #### Return Value
 
 The shape or shape group located
-in this shape group at the given index, or null if none is found there. (Type: <a href="ShapeGroup.md">ShapeGroup</a>)
+in this shape group at the specified index, or null if none is found there. (Type: <a href="ShapeGroup.md">ShapeGroup</a>)
 
 <a name='ShapeGroup_getTransform'></a>
 ### ShapeGroup#getTransform()
@@ -208,12 +208,12 @@ This object. (Type: <a href="ShapeGroup.md">ShapeGroup</a>)
 <a name='ShapeGroup_setShape'></a>
 ### ShapeGroup#setShape(index, shape)
 
-Sets a shape or shape group at the given index in this shape group.
+Sets a shape or shape group at the specified index in this shape group.
 
 #### Parameters
 
 * `index` (Type: number)<br>Integer index, starting from 0, to set the shape or shape group at.
-* `shape` (Type: <a href="ShapeGroup.md">ShapeGroup</a>)<br>Shape object to set at the given index.
+* `shape` (Type: <a href="ShapeGroup.md">ShapeGroup</a>)<br>Shape object to set at the specified index.
 
 #### Return Value
 
@@ -223,7 +223,7 @@ This object. (Type: <a href="ShapeGroup.md">ShapeGroup</a>)
 ### ShapeGroup#setTransform(transform)
 
 Sets the transform used by this shape group to a copy
-of the given transform. Child
+of the specified transform. Child
 shapes can set their own transforms, in which case the
 rendering process will multiply this shape group's transform
 with the child shape's transform as it renders the child shape.

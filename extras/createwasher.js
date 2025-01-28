@@ -13,8 +13,8 @@
 
 import {MathUtil, Meshes} from "../h3du-module.js";
 
-function matTo4D(three, mat){
-var r=new three.Matrix4()
+function matTo4D(three, mat) {
+var r=new three["Matrix4"]()
 r.set(mat[0],mat[4],mat[8],mat[12],
       mat[1],mat[5],mat[9],mat[13],
       mat[2],mat[6],mat[10],mat[14],
@@ -37,7 +37,7 @@ export const createWasher = function(three,inner, outer, height, slices) {
   const base = Meshes.reverseWinding(Meshes.createDisk(three,inner, outer, slices, 2, true));
   const top = Meshes.createDisk(three,inner, outer, slices, 2, false);
   // move the top disk to the top of the cylinder
-  top.applyMatrix4(matTo4D(MathUtil.mat4translated(0, 0, height)));
+  top["applyMatrix4"](matTo4D(MathUtil.mat4translated(0, 0, height)));
   // merge the base and the top
-  return three.BufferGeometryUtils.mergeGeometries([innerCylinder,outerCylinder,base,top],false);
+  return three["BufferGeometryUtils"]["mergeGeometries"]([innerCylinder,outerCylinder,base,top],false);
 };

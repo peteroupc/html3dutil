@@ -12,7 +12,6 @@ export {SurfaceBuilder} from "./h3du-meshbuilder.js";
 export {PiecewiseCurve} from "./h3du-piecewisecurve.js";
 export {BSplineCurve, BSplineSurface} from "./h3du-bspline.js";
 export {GraphicsPath} from "./h3du-path.js";
-export {ShapeGroup} from "./h3du-shapegroup.js";
 export {Transform} from "./h3du-transform.js";
 export {Meshes} from "./h3du-meshes.js";
 export {MeshBuffer} from "./h3du-meshbuffer.js";

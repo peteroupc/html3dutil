@@ -20,18 +20,18 @@ This object generates two-dimensional curves, which are returned by the <code>ev
 
 ### Methods
 
-* [accel](#extras_evaluators.Roulette_accel)<br>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+* [accel](#extras_evaluators.Roulette_accel)<br>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 * [arcLength](#extras_evaluators.Roulette_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 * [changeEnds](#extras_evaluators.Roulette_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 * [endPoints](#extras_evaluators.Roulette_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
 * [epitrochoid](#extras_evaluators_Roulette.epitrochoid)<br>Creates a <a href="Curve.md">curve evaluator object</a> for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outer edge
 of another circle, whose position is fixed, with a center of (0,0).
-* [evaluate](#extras_evaluators.Roulette_evaluate)<br>Finds the position of this curve at the given u-coordinate.
+* [evaluate](#extras_evaluators.Roulette_evaluate)<br>Finds the position of this curve at the specified u-coordinate.
 * [fitRange](#extras_evaluators.Roulette_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 * [getLength](#extras_evaluators.Roulette_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#extras_evaluators.Roulette_getPoints)<br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.
@@ -39,27 +39,27 @@ of u-coordinates.
 of u-coordinates.
 * [hypotrochoid](#extras_evaluators_Roulette.hypotrochoid)<br>Creates a <a href="Curve.md">curve evaluator object</a> for a <i>hypotrochoid</i>, a curve drawn by a circle that rolls along the inside
 of another circle, whose position is fixed, with a center of (0,0).
-* [jerk](#extras_evaluators.Roulette_jerk)<br>Finds an approximate jerk vector at the given u-coordinate of this curve.
-* [normal](#extras_evaluators.Roulette_normal)<br>Finds an approximate principal normal vector at the given u-coordinate of this curve.
+* [jerk](#extras_evaluators.Roulette_jerk)<br>Finds an approximate jerk vector at the specified u-coordinate of this curve.
+* [normal](#extras_evaluators.Roulette_normal)<br>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 * [rose](#extras_evaluators_Roulette.rose)<br>Creates a <a href="Curve.md">curve evaluator object</a> for a rose, a special
 form of hypotrochoid (roulette curve generated when one circle rolls
 inside another fixed circle).
-* [tangent](#extras_evaluators.Roulette_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+* [tangent](#extras_evaluators.Roulette_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 * [toArcLengthParam](#extras_evaluators.Roulette_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.
 * [trochoid](#extras_evaluators_Roulette.trochoid)<br>Creates a <a href="Curve.md">curve evaluator object</a> for a <i>trochoid</i>, a curve drawn by a circle that rolls along the x-axis.
-* [velocity](#extras_evaluators.Roulette_velocity)<br>Finds an approximate velocity vector at the given u-coordinate of this curve.
+* [velocity](#extras_evaluators.Roulette_velocity)<br>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 
 <a name='extras_evaluators.Roulette_accel'></a>
 ### module:extras/evaluators.Roulette#accel(u)
 
-Finds an approximate acceleration vector at the given u-coordinate of this curve.
+Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
-The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 
@@ -74,7 +74,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### module:extras/evaluators.Roulette#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
@@ -86,7 +86,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Return Value
 
-The approximate arc length of this curve at the given u-coordinate. (Type: number)
+The approximate arc length of this curve at the specified u-coordinate. (Type: number)
 
 <a name='extras_evaluators.Roulette_changeEnds'></a>
 ### module:extras/evaluators.Roulette#changeEnds(ep1, ep2)
@@ -161,7 +161,7 @@ and D = <code>distFromRollerCenter</code>).<ul>
 <a name='extras_evaluators.Roulette_evaluate'></a>
 ### module:extras/evaluators.Roulette#evaluate(u)
 
-Finds the position of this curve at the given u-coordinate.
+Finds the position of this curve at the specified u-coordinate.
 
 #### Parameters
 
@@ -176,7 +176,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### module:extras/evaluators.Roulette#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.
@@ -278,12 +278,12 @@ and height abs(R-D)\*2.</li>
 <a name='extras_evaluators.Roulette_jerk'></a>
 ### module:extras/evaluators.Roulette#jerk(u)
 
-Finds an approximate jerk vector at the given u-coordinate of this curve.
+Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
 
-The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 
@@ -297,7 +297,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='extras_evaluators.Roulette_normal'></a>
 ### module:extras/evaluators.Roulette#normal(u)
 
-Finds an approximate principal normal vector at the given u-coordinate of this curve.
+Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
@@ -335,7 +335,7 @@ The resulting curve evaluator object. (Type: Roulette)
 <a name='extras_evaluators.Roulette_tangent'></a>
 ### module:extras/evaluators.Roulette#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters
@@ -401,12 +401,12 @@ and D = <code>distFromCenter</code>).<ul>
 <a name='extras_evaluators.Roulette_velocity'></a>
 ### module:extras/evaluators.Roulette#velocity(u)
 
-Finds an approximate velocity vector at the given u-coordinate of this curve.
+Finds an approximate velocity vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).
 
-The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 

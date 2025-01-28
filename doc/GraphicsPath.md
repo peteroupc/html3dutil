@@ -88,7 +88,7 @@ because of an error in parsing the curve string.
 at the path's end position, then
 sets the end position to the end of the segment.
 * [merge](#GraphicsPath_merge)<br>Merges the path segments in another path onto this one.
-* [moveTo](#GraphicsPath_moveTo)<br>Moves the current start position and end position to the given position.
+* [moveTo](#GraphicsPath_moveTo)<br>Moves the current start position and end position to the specified position.
 * [pathLength](#GraphicsPath_pathLength)<br>Finds the approximate length of this path.
 * [polyline](#GraphicsPath_polyline)<br>Adds path segments to this path that form a polygon or a connected line segment strand.
 * [quadraticCurveTo](#GraphicsPath_quadraticCurveTo)<br>Adds a quadratic B&eacute;zier curve to this path starting
@@ -104,7 +104,7 @@ to cubic B&eacute;zier curves (which will approximate those arcs).
 to line segments.
 * [toString](#GraphicsPath_toString)<br>Returns this path in the form of a string in SVG path format.
 * [transform](#GraphicsPath_transform)<br>Returns a modified version of this path that is transformed
-according to the given affine transformation (a transformation
+according to the specified affine transformation (a transformation
 that keeps straight lines straight and parallel lines parallel).
 * [union](#GraphicsPath_union)<br>Computes the combination of this path's shape with another
 path's shape.
@@ -339,7 +339,7 @@ the SVG (Scalable Vector Graphics) specification.
 
 #### Parameters
 
-* `str` (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). "largeArc" and "sweep" are flags, "0" for false and "1" for true. "rot" is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lowercase letters mean any x- and y-coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn't introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed). Examples of this parameter are "M50,50L100,100,100,150,150,200", "M50,20C230,245,233,44,22,44", and "M50,50H80V60H50V70H50"
+* `str` (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the specified XY points. <li>H/h (x) - Specifies horizontal line segments to the specified X points. <li>V/v (y) - Specifies vertical line segments to the specified Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). "largeArc" and "sweep" are flags, "0" for false and "1" for true. "rot" is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lowercase letters mean any x- and y-coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn't introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed). Examples of this parameter are "M50,50L100,100,100,150,150,200", "M50,20C230,245,233,44,22,44", and "M50,50H80V60H50V70H50"
 
 #### Return Value
 
@@ -399,7 +399,7 @@ one curve object. And if the path is empty, the list will be empty too. Each cur
 takes u-coordinates that range from 0 to 1, depending on how far the point is from the start or
 the end of the path (similar to arc-length parameterization). Each curve
 returns a 3-element array containing
-the x-, y-, and z-coordinates of the point lying on the curve at the given
+the x-, y-, and z-coordinates of the point lying on the curve at the specified
 "u" position (however, the z will always be 0 since paths can currently
 only be 2-dimensional).
 </ul> (Type: Object)
@@ -637,7 +637,7 @@ This object. (Type: <a href="GraphicsPath.md">GraphicsPath</a>)
 <a name='GraphicsPath_moveTo'></a>
 ### GraphicsPath#moveTo(x, y)
 
-Moves the current start position and end position to the given position.
+Moves the current start position and end position to the specified position.
 
 #### Parameters
 
@@ -815,7 +815,7 @@ format. (Type: string)
 ### GraphicsPath#transform(trans)
 
 Returns a modified version of this path that is transformed
-according to the given affine transformation (a transformation
+according to the specified affine transformation (a transformation
 that keeps straight lines straight and parallel lines parallel).
 
 #### Parameters

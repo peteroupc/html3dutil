@@ -153,7 +153,7 @@ Here is sample code for using a graphics filter.
       // The first pass renders to a frame buffer
       new H3DU.RenderPass(subScene,{"frameBuffer":fbo}),
       // The second pass renders the frame buffer to the main canvas,
-      // using the given graphics filter
+      // using the specified graphics filter
       new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo,currentFilter))
     ]
     // Then, each time the scene needs to be rendered, call

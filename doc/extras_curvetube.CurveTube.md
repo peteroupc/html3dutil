@@ -20,7 +20,7 @@ library.
 ### Methods
 
 * [endPoints](#extras_curvetube_CurveTube_endPoints)<br>Returns the starting and ending u- and v-coordinates of this surface.
-* [evaluate](#extras_curvetube_CurveTube_evaluate)<br>Generates a point on the extruded tube from the given u- and v-coordinates.
+* [evaluate](#extras_curvetube_CurveTube_evaluate)<br>Generates a point on the extruded tube from the specified u- and v-coordinates.
 
 <a name='extras_curvetube_CurveTube_endPoints'></a>
 ### module:extras/curvetube~CurveTube#endPoints()
@@ -41,7 +41,7 @@ if it doesn't implement an <code>endPoints</code> method).
 <a name='extras_curvetube_CurveTube_evaluate'></a>
 ### module:extras/curvetube~CurveTube#evaluate(u, v)
 
-Generates a point on the extruded tube from the given u- and v-coordinates.
+Generates a point on the extruded tube from the specified u- and v-coordinates.
 
 #### Parameters
 

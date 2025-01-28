@@ -30,7 +30,7 @@ export const Surface = function(surface) {
 Surface._EPSILON = 0.00001;
 
 /**
- * Finds an approximate tangent vector of this surface at the given u- and v-coordinates.
+ * Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
  * The implementation in {@link Surface} calls the evaluator's <code>tangent</code>
  * method if it implements it; otherwise, does a numerical differentiation
  * with respect to the u-axis using the <code>evaluate</code> method.<p>
@@ -57,7 +57,7 @@ Surface.prototype.tangent = function(u, v) {
   }
 };
 /**
- * Finds an approximate bitangent vector of this surface at the given u- and v-coordinates.<p>
+ * Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.<p>
  * The implementation in {@link Surface} calls the evaluator's <code>bitangent</code>
  * method if it implements it; otherwise, does a numerical differentiation
  * with respect to the v-axis using the <code>evaluate</code> method.<p>
@@ -93,7 +93,7 @@ Surface.prototype.bitangent = function(u, v) {
 };
 
 /**
- * Convenience method for finding an approximate normal vector of this surface at the given u- and v-coordinates.
+ * Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
  * The <b>normal vector</b> is the same as the gradient vector, but "normalized" to a unit vector.
  * @param {number} u The u-coordinate of a point on the surface.
  * @param {number} v The v-coordinate of a point on the surface.
@@ -105,7 +105,7 @@ Surface.prototype.normal = function(u, v) {
 };
 
 /**
- * Finds an approximate gradient vector of this surface at the given u- and v-coordinates.<p>
+ * Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.<p>
  * The implementation in {@link Surface} calls the evaluator's <code>gradient</code>
  * method if it implements it; otherwise uses the surface's tangent and bitangent vectors to implement the gradient
  * (however, this approach is generally only meaningful for a surface in three-dimensional space).<p>
@@ -174,7 +174,7 @@ Surface.prototype.gradient = function(u, v) {
   }
 };
 /**
- * Finds the position of this surface at the given u- and v-coordinates.
+ * Finds the position of this surface at the specified u- and v-coordinates.
  * @param {number} u The u-coordinate of a point on the surface.
  * @param {number} v The v-coordinate of a point on the surface.
  * @returns {Array<number>} An array describing a position. It should have at least as many

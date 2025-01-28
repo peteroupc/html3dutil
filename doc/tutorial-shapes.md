@@ -52,8 +52,7 @@ then translating (shifting) the shape in 3D space.
 
         batch3d.addShape(shape);
 
-    Now, the next time `scene3d.render(batch)` is called, the `H3DU.Scene3D` will render the
-given shape to the scene through the 3D batch.
+    Now, the next time `scene3d.render(batch)` is called, the `H3DU.Scene3D` will render the specified shape to the scene through the 3D batch.
 
 <a id=Shape_Groups></a>
 

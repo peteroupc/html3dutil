@@ -63,16 +63,15 @@ function prepareMeshBuffer(context,shaderProgram,mesh,attributes,buffers){
    context.bufferData(context.ARRAY_BUFFER,accessorBuffer(accessor),
      context.STATIC_DRAW)
    context.enableVertexAttribArray(attrLoc)
-   //console.log([attributes[x],accessorCountPerValue(accessor),
-   //  accessorStride(accessor)*4,
-   //  accessorOffset(accessor)*4])
+   console.log([attributes[x],accessorCountPerValue(accessor),
+     accessorStride(accessor)*4,
+     accessorOffset(accessor)*4])
    context.vertexAttribPointer(attrLoc,
      accessorCountPerValue(accessor),context.FLOAT,false,
      accessorStride(accessor)*4,accessorOffset(accessor)*4)
   }
  })
  var indices=meshIndices(mesh)
- console.log(indices)
  if(indices==null){
   context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
  } else {
@@ -129,7 +128,9 @@ var vertexShader=[
 "uniform mat4 proj;",
 "varying vec3 colorVar;",
 "void main(){",
-"colorVar=color;gl_Position=(proj)*vec4(position+instancePosition,1.0); }"
+"colorVar=color;",
+//"colorVar=vec3(1.0,1.0,1.0,1.0);",
+"gl_Position=(proj)*vec4(position+instancePosition,1.0); }"
 ].join("\n")
 
 var fragmentShader=[
@@ -210,6 +211,8 @@ context.uniformMatrix4fv(projUniform,false,matrix)
 // refresh instances and draw
 refreshInstanceBuffer(context,ext,sp,sf.instances,ibdata);
 //console.log(""+[meshVertexCount(sf.star),meshVertexCount(sf.instances)])
+// TODO: Address warning: "WebGL warning: drawArraysInstanced: Vertex fetch
+// requires 1536, but attribs only supply 289."
 ext.drawArraysInstancedANGLE(
   context.TRIANGLES,0,
   meshVertexCount(sf.star),

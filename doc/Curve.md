@@ -24,7 +24,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 #### Parameters
 
 * `curve` (Type: Object)<br>A <b>curve evaluator object</b>, which is an object that must contain an <code>evaluate</code> method and may contain an <code>endPoints</code>, <code>velocity</code>, <code>accel</code>, <code>jerk</code>, <code>normal</code>, and/or <code>arcLength</code> method, as described in the corresponding methods of this class.
-* `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as <a href="Curve.md#Curve_endPoints">Curve#endPoints</a> and whose return value takes precedence over the given curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a u-coordinate in the old parameterization to a u-coordinate in the new parameterization.
+* `curveParam` (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as <a href="Curve.md#Curve_endPoints">Curve#endPoints</a> and whose return value takes precedence over the specified curve's <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a u-coordinate in the old parameterization to a u-coordinate in the new parameterization.
 
 #### Examples
 
@@ -90,38 +90,38 @@ with the getPoints method.
 
 ### Methods
 
-* [accel](#Curve_accel)<br>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+* [accel](#Curve_accel)<br>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 * [arcLength](#Curve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 * [changeEnds](#Curve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 * [endPoints](#Curve_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
-* [evaluate](#Curve_evaluate)<br>Finds the position of this curve at the given u-coordinate.
+* [evaluate](#Curve_evaluate)<br>Finds the position of this curve at the specified u-coordinate.
 * [fitRange](#Curve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 * [getLength](#Curve_getLength)<br>Convenience method for getting the total length of this curve.
 * [getPoints](#Curve_getPoints)<br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.
 * [getPointsAsObjects](#Curve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.
-* [jerk](#Curve_jerk)<br>Finds an approximate jerk vector at the given u-coordinate of this curve.
-* [normal](#Curve_normal)<br>Finds an approximate principal normal vector at the given u-coordinate of this curve.
-* [tangent](#Curve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+* [jerk](#Curve_jerk)<br>Finds an approximate jerk vector at the specified u-coordinate of this curve.
+* [normal](#Curve_normal)<br>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
+* [tangent](#Curve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 * [toArcLengthParam](#Curve_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.
-* [velocity](#Curve_velocity)<br>Finds an approximate velocity vector at the given u-coordinate of this curve.
+* [velocity](#Curve_velocity)<br>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 
 <a name='Curve_accel'></a>
 ### Curve#accel(u)
 
-Finds an approximate acceleration vector at the given u-coordinate of this curve.
+Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
-The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 
@@ -136,7 +136,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### Curve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>arcLength</code>
 method if it implements it; otherwise, calculates a numerical integral using the velocity vector.
 
@@ -148,7 +148,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 
 #### Return Value
 
-The approximate arc length of this curve at the given u-coordinate. (Type: number)
+The approximate arc length of this curve at the specified u-coordinate. (Type: number)
 
 <a name='Curve_changeEnds'></a>
 ### Curve#changeEnds(ep1, ep2)
@@ -193,7 +193,7 @@ method.
 <a name='Curve_evaluate'></a>
 ### Curve#evaluate(u)
 
-Finds the position of this curve at the given u-coordinate.
+Finds the position of this curve at the specified u-coordinate.
 
 #### Parameters
 
@@ -208,7 +208,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### Curve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.
@@ -280,12 +280,12 @@ The following example initializes a three.js BufferGeometry with the points retr
 <a name='Curve_jerk'></a>
 ### Curve#jerk(u)
 
-Finds an approximate jerk vector at the given u-coordinate of this curve.
+Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
 
-The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 
@@ -299,7 +299,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='Curve_normal'></a>
 ### Curve#normal(u)
 
-Finds an approximate principal normal vector at the given u-coordinate of this curve.
+Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
@@ -319,7 +319,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='Curve_tangent'></a>
 ### Curve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters
@@ -367,12 +367,12 @@ on a curve.
 <a name='Curve_velocity'></a>
 ### Curve#velocity(u)
 
-Finds an approximate velocity vector at the given u-coordinate of this curve.
+Finds an approximate velocity vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>velocity</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the position (from the <code>evaluate</code> method).
 
-The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>velocity</b> of a curve is a vector which is the derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 

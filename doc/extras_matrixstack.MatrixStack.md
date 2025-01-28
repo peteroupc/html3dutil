@@ -17,9 +17,9 @@ only element is the identity matrix.
 a frustum matrix.
 * [get](#extras_matrixstack_MatrixStack_get)<br>Gets a copy of the matrix at the top of this stack.
 * [loadIdentity](#extras_matrixstack_MatrixStack_loadIdentity)<br>Modifies the matrix at the top of this stack by replacing it with the identity matrix.
-* [loadMatrix](#extras_matrixstack_MatrixStack_loadMatrix)<br>Modifies the matrix at the top of this stack by replacing it with the given matrix.
+* [loadMatrix](#extras_matrixstack_MatrixStack_loadMatrix)<br>Modifies the matrix at the top of this stack by replacing it with the specified matrix.
 * [loadTransposeMatrix](#extras_matrixstack_MatrixStack_loadTransposeMatrix)<br>Modifies the matrix at the top of this stack by replacing it with the
-transpose of the given matrix.
+transpose of the specified matrix.
 * [lookAt](#extras_matrixstack_MatrixStack_lookAt)<br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a "camera" view.
 * [multMatrix](#extras_matrixstack_MatrixStack_multMatrix)<br>Modifies the matrix at the top of this stack by multiplying it by another matrix.
@@ -84,7 +84,7 @@ This object. (Type: MatrixStack)
 <a name='extras_matrixstack_MatrixStack_loadMatrix'></a>
 ### module:extras/matrixstack~MatrixStack#loadMatrix(mat)
 
-Modifies the matrix at the top of this stack by replacing it with the given matrix.
+Modifies the matrix at the top of this stack by replacing it with the specified matrix.
 
 #### Parameters
 
@@ -98,7 +98,7 @@ This object. (Type: MatrixStack)
 ### module:extras/matrixstack~MatrixStack#loadTransposeMatrix(mat)
 
 Modifies the matrix at the top of this stack by replacing it with the
-transpose of the given matrix.
+transpose of the specified matrix.
 
 #### Parameters
 

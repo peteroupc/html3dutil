@@ -14,7 +14,7 @@
  */
 /**
  * An auxiliary function that returns a promise that
- * resolves after the given list of promises finishes
+ * resolves after the specified list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects
  * @param {Function} [progressResolve] A function called as each
@@ -93,7 +93,7 @@ export const getPromiseResults = function(promises,
 };
 /**
  * An auxiliary function that returns a promise that
- * resolves or is rejected after the given list of promises finishes
+ * resolves or is rejected after the specified list of promises finishes
  * its work.
  * @param {Array<Promise>} promises - an array containing promise objects
  * @param {Function} [progressResolve] - a function called as each

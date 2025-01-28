@@ -248,7 +248,7 @@ function meshAddLine(three, mesh, point1, point2, thickness) {
   matrix[13] = midPoint[1];
   matrix[14] = midPoint[2];
   line = line.transform(matrix);
-  return three.BufferGeometryUtils.mergeGeometries([mesh,line],0);
+  return three["BufferGeometryUtils"]["mergeGeometries"]([mesh,line],0);
 }
 function meshAddLineStrip(three, mesh, strip, thickness) {
   "use strict";

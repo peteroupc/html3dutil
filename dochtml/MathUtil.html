@@ -683,12 +683,12 @@ partially inside a view frustum.<li><a href='#MathUtil.interpCubicBezier'>interp
 cubic B&eacute;zier
 curve with end points (0, 0) and (1, 1) and with two
 configurable control points.<li><a href='#MathUtil.mat3copy'>mat3copy</a><br>Returns a copy of a 3 &times; 3 matrix.<li><a href='#MathUtil.mat3identity'>mat3identity</a><br>Returns the identity 3 &times; 3 matrix (a matrix that keeps
-vectors unchanged when they are transformed with this matrix).<li><a href='#MathUtil.mat3invert'>mat3invert</a><br>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.<li><a href='#MathUtil.mat3multiply'>mat3multiply</a><br>Multiplies two 3 &times; 3 matrices.<li><a href='#MathUtil.mat3transform'>mat3transform</a><br>Transforms a 3-element vector with a 3 &times; 3 matrix and returns
+vectors unchanged when they are transformed with this matrix).<li><a href='#MathUtil.mat3invert'>mat3invert</a><br>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the specified transformation.<li><a href='#MathUtil.mat3multiply'>mat3multiply</a><br>Multiplies two 3 &times; 3 matrices.<li><a href='#MathUtil.mat3transform'>mat3transform</a><br>Transforms a 3-element vector with a 3 &times; 3 matrix and returns
 the transformed vector.<li><a href='#MathUtil.mat3transpose'>mat3transpose</a><br>Returns the transpose of a 3 &times; 3 matrix.<li><a href='#MathUtil.mat3transposeInPlace'>mat3transposeInPlace</a><br>Transposes a 3 &times; 3 matrix in place without creating
 a new matrix.<li><a href='#MathUtil.mat4copy'>mat4copy</a><br>Returns a copy of a 4 &times; 4 matrix.<li><a href='#MathUtil.mat4frustum'>mat4frustum</a><br>Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>
 in the form of a view frustum, or the limits in the "eye"'s view.<li><a href='#MathUtil.mat4identity'>mat4identity</a><br>Returns the identity 4 &times; 4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).<li><a href='#MathUtil.mat4inverseTranspose3'>mat4inverseTranspose3</a><br>Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
-the given 4 &times; 4 matrix.<li><a href='#MathUtil.mat4invert'>mat4invert</a><br>Finds the inverse of a 4 &times; 4 matrix.<li><a href='#MathUtil.mat4isIdentity'>mat4isIdentity</a><br>Returns whether a 4 &times; 4 matrix is the identity matrix.<li><a href='#MathUtil.mat4lookat'>mat4lookat</a><br>Returns a 4 &times; 4 matrix that represents a "camera" view,
+the specified 4 &times; 4 matrix.<li><a href='#MathUtil.mat4invert'>mat4invert</a><br>Finds the inverse of a 4 &times; 4 matrix.<li><a href='#MathUtil.mat4isIdentity'>mat4isIdentity</a><br>Returns whether a 4 &times; 4 matrix is the identity matrix.<li><a href='#MathUtil.mat4lookat'>mat4lookat</a><br>Returns a 4 &times; 4 matrix that represents a "camera" view,
 transforming world space coordinates, shared by every object in a scene, to coordinates in <i>eye space</i>
 (also called <i>camera space</i> or <i>view space</i>).<li><a href='#MathUtil.mat4multiply'>mat4multiply</a><br>Multiplies two 4 &times; 4 matrices.<li><a href='#MathUtil.mat4oblique'>mat4oblique</a><br>Returns a 4 &times; 4 view matrix representing an oblique "eye" view,
 when used in conjunction with an <a href="MathUtil.html#MathUtil.mat4ortho">orthographic projection</a>.<li><a href='#MathUtil.mat4ortho'>mat4ortho</a><br>Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.html">orthographic projection</a>.<li><a href='#MathUtil.mat4ortho2d'>mat4ortho2d</a><br>Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>.<li><a href='#MathUtil.mat4ortho2dAspect'>mat4ortho2dAspect</a><br>Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.html">orthographic projection</a>,
@@ -696,9 +696,9 @@ retaining the view rectangle's aspect ratio.<li><a href='#MathUtil.mat4orthoAspe
 retaining the view rectangle's aspect ratio.<li><a href='#MathUtil.mat4perspective'>mat4perspective</a><br>Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.<li><a href='#MathUtil.mat4perspectiveHorizontal'>mat4perspectiveHorizontal</a><br>Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
 given an x-axis field of view.<li><a href='#MathUtil.mat4pickMatrix'>mat4pickMatrix</a><br>Returns a 4 &times; 4 matrix that transforms the view to the center of the viewport.<li><a href='#MathUtil.mat4projectVec3'>mat4projectVec3</a><br>Transforms a 3-element vector with a 4 &times; 4 matrix and returns
 a perspective-correct version of the vector as a 3D point.<li><a href='#MathUtil.mat4rotate'>mat4rotate</a><br>Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath,
+by the specified rotation angle and around the specified glmath,
 and returns a new matrix.<li><a href='#MathUtil.mat4rotated'>mat4rotated</a><br>Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath.<li><a href='#MathUtil.mat4scale'>mat4scale</a><br>Multiplies a 4 &times; 4 matrix by a scaling transformation.<li><a href='#MathUtil.mat4scaleInPlace'>mat4scaleInPlace</a><br>Modifies a 4 &times; 4 matrix by multiplying it by a
+by the specified rotation angle and around the specified glmath.<li><a href='#MathUtil.mat4scale'>mat4scale</a><br>Multiplies a 4 &times; 4 matrix by a scaling transformation.<li><a href='#MathUtil.mat4scaleInPlace'>mat4scaleInPlace</a><br>Modifies a 4 &times; 4 matrix by multiplying it by a
 scaling transformation.<li><a href='#MathUtil.mat4scaled'>mat4scaled</a><br>Returns a 4 &times; 4 matrix representing a scaling transformation.<li><a href='#MathUtil.mat4toFrustumPlanes'>mat4toFrustumPlanes</a><br>Finds the six clipping planes of a view frustum defined
 by a 4 &times; 4 matrix.<li><a href='#MathUtil.mat4toMat3'>mat4toMat3</a><br>Returns the upper-left part of a 4 &times; 4 matrix as a new
 3 &times; 3 matrix.<li><a href='#MathUtil.mat4transform'>mat4transform</a><br>Transforms a 4-element vector with a 4 &times; 4 matrix and returns
@@ -706,25 +706,23 @@ the transformed vector.<li><a href='#MathUtil.mat4transformVec3'>mat4transformVe
 an affine transformation matrix (without perspective) and returns the transformed vector.<li><a href='#MathUtil.mat4translate'>mat4translate</a><br>Multiplies a 4 &times; 4 matrix by a translation transformation.<li><a href='#MathUtil.mat4translated'>mat4translated</a><br>Returns a 4 &times; 4 matrix representing a translation.<li><a href='#MathUtil.mat4transpose'>mat4transpose</a><br>Returns the transpose of a 4 &times; 4 matrix.<li><a href='#MathUtil.mat4transposeInPlace'>mat4transposeInPlace</a><br>Transposes a 4 &times; 4 matrix in place without creating
 a new matrix.<li><a href='#MathUtil.planeFromNormalAndPoint'>planeFromNormalAndPoint</a><br>Creates a plane from a normal vector and a point on the plane.<li><a href='#MathUtil.planeNormalize'>planeNormalize</a><br>Normalizes this plane so that its normal is a unit vector,
 unless all the normal's components are 0, and returns a new plane with the result.<li><a href='#MathUtil.planeNormalizeInPlace'>planeNormalizeInPlace</a><br>Normalizes this plane so that its normal is a unit vector,
-unless all the normal's components are 0, and sets this plane to the result.<li><a href='#MathUtil.quatConjugate'>quatConjugate</a><br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath).<li><a href='#MathUtil.quatCopy'>quatCopy</a><br>Returns a copy of a quaternion.<li><a href='#MathUtil.quatDot'>quatDot</a><br>Finds the dot product of two quaternions.<li><a href='#MathUtil.quatFromAxisAngle'>quatFromAxisAngle</a><br>Generates a quaternion from a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath,<li><a href='#MathUtil.quatFromMat4'>quatFromMat4</a><br>Generates a quaternion from the vector rotation described in a 4 &times; 4 matrix.<li><a href='#MathUtil.quatFromVectors'>quatFromVectors</a><br>Generates a quaternion describing a rotation between
-two 3-element vectors.<li><a href='#MathUtil.quatIdentity'>quatIdentity</a><br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).<li><a href='#MathUtil.quatInvert'>quatInvert</a><br>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector.<li><a href='#MathUtil.quatIsIdentity'>quatIsIdentity</a><br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).<li><a href='#MathUtil.quatLength'>quatLength</a><br>Returns the distance of this quaternion from the origin.<li><a href='#MathUtil.quatMultiply'>quatMultiply</a><br>Multiplies two quaternions, creating a composite rotation.<li><a href='#MathUtil.quatNlerp'>quatNlerp</a><br>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a linear interpolation function, and converts
+unless all the normal's components are 0, and sets this plane to the result.<li><a href='#MathUtil.quatConjugate'>quatConjugate</a><br>Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath).<li><a href='#MathUtil.quatCopy'>quatCopy</a><br>Returns a copy of a quaternion.<li><a href='#MathUtil.quatDot'>quatDot</a><br>Finds the dot product of two quaternions.<li><a href='#MathUtil.quatFromAxisAngle'>quatFromAxisAngle</a><br>Generates a quaternion from a rotation transformation that rotates vectors
+by the specified rotation angle and around the specified glmath,<li><a href='#MathUtil.quatFromMat4'>quatFromMat4</a><br>Generates a quaternion from the vector rotation described in a 4 &times; 4 matrix.<li><a href='#MathUtil.quatFromVectors'>quatFromVectors</a><br>Generates a quaternion describing a rotation between
+two 3-element vectors.<li><a href='#MathUtil.quatIdentity'>quatIdentity</a><br>Returns the identity quaternion of multiplication, (0, 0, 0, 1).<li><a href='#MathUtil.quatInvert'>quatInvert</a><br>Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation) and is converted to a unit vector.<li><a href='#MathUtil.quatIsIdentity'>quatIsIdentity</a><br>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).<li><a href='#MathUtil.quatLength'>quatLength</a><br>Returns the distance of this quaternion from the origin.<li><a href='#MathUtil.quatMultiply'>quatMultiply</a><br>Multiplies two quaternions, creating a composite rotation.<li><a href='#MathUtil.quatNlerp'>quatNlerp</a><br>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a linear interpolation function, and converts
 it to a unit vector.<li><a href='#MathUtil.quatNormalize'>quatNormalize</a><br>Converts a quaternion to a unit vector; returns a new quaternion.<li><a href='#MathUtil.quatNormalizeInPlace'>quatNormalizeInPlace</a><br>Converts a quaternion to a unit vector.<li><a href='#MathUtil.quatRotate'>quatRotate</a><br>Multiplies a quaternion by a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath.<li><a href='#MathUtil.quatScale'>quatScale</a><br>Multiplies each element of a quaternion by a factor
+by the specified rotation angle and around the specified glmath.<li><a href='#MathUtil.quatScale'>quatScale</a><br>Multiplies each element of a quaternion by a factor
 and returns the result as a new quaternion.<li><a href='#MathUtil.quatScaleInPlace'>quatScaleInPlace</a><br>Multiplies each element of a quaternion by a factor
-and stores the result in that quaternion.<li><a href='#MathUtil.quatSlerp'>quatSlerp</a><br>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a spherical interpolation function.<li><a href='#MathUtil.quatToAxisAngle'>quatToAxisAngle</a><br>Calculates the vector rotation for this quaternion in the form
+and stores the result in that quaternion.<li><a href='#MathUtil.quatSlerp'>quatSlerp</a><br>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a spherical interpolation function.<li><a href='#MathUtil.quatToAxisAngle'>quatToAxisAngle</a><br>Calculates the vector rotation for this quaternion in the form
 of the angle to rotate the vector by and an glmath to
 rotate that vector around.<li><a href='#MathUtil.quatToMat4'>quatToMat4</a><br>Generates a 4 &times; 4 matrix describing the rotation
 described by this quaternion.<li><a href='#MathUtil.quatTransform'>quatTransform</a><br>Transforms a 3- or 4-element vector using a
 quaternion's vector rotation.<li><a href='#MathUtil.vec2abs'>vec2abs</a><br>Returns a new 2-element
-vector with the absolute value of each of its components.<li><a href='#MathUtil.vec2absInPlace'>vec2absInPlace</a><br>Sets each component of the given 2-element
+vector with the absolute value of each of its components.<li><a href='#MathUtil.vec2absInPlace'>vec2absInPlace</a><br>Sets each component of the specified 2-element
 vector to its absolute value.<li><a href='#MathUtil.vec2add'>vec2add</a><br>Adds two 2-element vectors and returns a new
 vector with the result.<li><a href='#MathUtil.vec2addInPlace'>vec2addInPlace</a><br>Adds two 2-element vectors and stores
 the result in the first vector.<li><a href='#MathUtil.vec2assign'>vec2assign</a><br>Assigns the values of a 2-element vector into another
-2-element vector.<li><a href='#MathUtil.vec2clamp'>vec2clamp</a><br>Returns a 2-element vector in which each element of the given 2-element vector is clamped
-so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec2clampInPlace'>vec2clampInPlace</a><br>Clamps each element of the given 2-element vector
+2-element vector.<li><a href='#MathUtil.vec2clamp'>vec2clamp</a><br>Returns a 2-element vector in which each element of the specified 2-element vector is clamped
+so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec2clampInPlace'>vec2clampInPlace</a><br>Clamps each element of the specified 2-element vector
 so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec2copy'>vec2copy</a><br>Returns a copy of a 2-element vector.<li><a href='#MathUtil.vec2dist'>vec2dist</a><br>Finds the straight-line distance from one three-element vector
 to another, treating both as 3D points.<li><a href='#MathUtil.vec2dot'>vec2dot</a><br>Finds the dot product of two 2-element vectors.<li><a href='#MathUtil.vec2length'>vec2length</a><br>Returns the distance of this 2-element vector from the origin,
 also known as its <i>length</i> or <i>magnitude</i>.<li><a href='#MathUtil.vec2lerp'>vec2lerp</a><br>Does a linear interpolation between two 2-element vectors;
@@ -734,22 +732,22 @@ the result in the first vector.<li><a href='#MathUtil.vec2negate'>vec2negate</a>
 vector with the result, which is generally a vector with
 the same length but opposite direction.<li><a href='#MathUtil.vec2negateInPlace'>vec2negateInPlace</a><br>Negates a 2-element vector in place, generally resulting in a vector with
 the same length but opposite direction.<li><a href='#MathUtil.vec2normalize'>vec2normalize</a><br>Converts a 2-element vector to a unit vector; returns a new vector.<li><a href='#MathUtil.vec2normalizeInPlace'>vec2normalizeInPlace</a><br>Converts a 2-element vector to a unit vector.<li><a href='#MathUtil.vec2perp'>vec2perp</a><br>Returns an arbitrary 2-element vector that is perpendicular
-(orthogonal) to the given 2-element vector.<li><a href='#MathUtil.vec2proj'>vec2proj</a><br>Returns the projection of a 2-element vector on the given
+(orthogonal) to the specified 2-element vector.<li><a href='#MathUtil.vec2proj'>vec2proj</a><br>Returns the projection of a 2-element vector on the specified
 reference vector.<li><a href='#MathUtil.vec2reflect'>vec2reflect</a><br>Returns a vector that reflects off a surface.<li><a href='#MathUtil.vec2scale'>vec2scale</a><br>Multiplies each element of a 2-element vector by a factor.<li><a href='#MathUtil.vec2scaleInPlace'>vec2scaleInPlace</a><br>Multiplies each element of a 2-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor.<li><a href='#MathUtil.vec2sub'>vec2sub</a><br>Subtracts the second vector from the first vector and returns a new
+but its length is multiplied by the specified factor.<li><a href='#MathUtil.vec2sub'>vec2sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.<li><a href='#MathUtil.vec2subInPlace'>vec2subInPlace</a><br>Subtracts the second vector from the first vector and stores
 the result in the first vector.<li><a href='#MathUtil.vec3abs'>vec3abs</a><br>Returns a new 3-element
-vector with the absolute value of each of its components.<li><a href='#MathUtil.vec3absInPlace'>vec3absInPlace</a><br>Sets each component of the given 3-element
+vector with the absolute value of each of its components.<li><a href='#MathUtil.vec3absInPlace'>vec3absInPlace</a><br>Sets each component of the specified 3-element
 vector to its absolute value.<li><a href='#MathUtil.vec3add'>vec3add</a><br>Adds two 3-element vectors and returns a new
 vector with the result.<li><a href='#MathUtil.vec3addInPlace'>vec3addInPlace</a><br>Adds two 3-element vectors and stores
 the result in the first vector.<li><a href='#MathUtil.vec3assign'>vec3assign</a><br>Assigns the values of a 3-element vector into another
-3-element vector.<li><a href='#MathUtil.vec3clamp'>vec3clamp</a><br>Returns a 3-element vector in which each element of the given 3-element vector is clamped
-so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec3clampInPlace'>vec3clampInPlace</a><br>Clamps each element of the given 3-element vector
+3-element vector.<li><a href='#MathUtil.vec3clamp'>vec3clamp</a><br>Returns a 3-element vector in which each element of the specified 3-element vector is clamped
+so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec3clampInPlace'>vec3clampInPlace</a><br>Clamps each element of the specified 3-element vector
 so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec3copy'>vec3copy</a><br>Returns a copy of a 3-element vector.<li><a href='#MathUtil.vec3cross'>vec3cross</a><br>Finds the cross product of two 3-element vectors (called A and B).<li><a href='#MathUtil.vec3dist'>vec3dist</a><br>Finds the straight-line distance from one three-element vector
 to another, treating both as 3D points.<li><a href='#MathUtil.vec3dot'>vec3dot</a><br>Finds the dot product of two 3-element vectors.<li><a href='#MathUtil.vec3fromWindowPoint'>vec3fromWindowPoint</a><br>Unprojects the <i>window coordinates</i> given in a
 3-element vector,
-using the given transformation matrix and viewport
+using the specified transformation matrix and viewport
 rectangle.<li><a href='#MathUtil.vec3length'>vec3length</a><br>Returns the distance of this 3-element vector from the origin,
 also known as its <i>length</i> or <i>magnitude</i>.<li><a href='#MathUtil.vec3lerp'>vec3lerp</a><br>Does a linear interpolation between two 3-element vectors;
 returns a new vector.<li><a href='#MathUtil.vec3mul'>vec3mul</a><br>Multiplies each of the components of two 3-element vectors and returns a new
@@ -758,30 +756,30 @@ the result in the first vector.<li><a href='#MathUtil.vec3negate'>vec3negate</a>
 vector with the result, which is generally a vector with
 the same length but opposite direction.<li><a href='#MathUtil.vec3negateInPlace'>vec3negateInPlace</a><br>Negates a 3-element vector in place, generally resulting in a vector with
 the same length but opposite direction.<li><a href='#MathUtil.vec3normalize'>vec3normalize</a><br>Converts a 3-element vector to a unit vector; returns a new vector.<li><a href='#MathUtil.vec3normalizeInPlace'>vec3normalizeInPlace</a><br>Converts a 3-element vector to a unit vector.<li><a href='#MathUtil.vec3perp'>vec3perp</a><br>Returns an arbitrary 3-element vector that is perpendicular
-(orthogonal) to the given 3-element vector.<li><a href='#MathUtil.vec3proj'>vec3proj</a><br>Returns the projection of a 3-element vector on the given
+(orthogonal) to the specified 3-element vector.<li><a href='#MathUtil.vec3proj'>vec3proj</a><br>Returns the projection of a 3-element vector on the specified
 reference vector.<li><a href='#MathUtil.vec3reflect'>vec3reflect</a><br>Returns a vector that reflects off a surface.<li><a href='#MathUtil.vec3scale'>vec3scale</a><br>Multiplies each element of a 3-element vector by a factor.<li><a href='#MathUtil.vec3scaleInPlace'>vec3scaleInPlace</a><br>Multiplies each element of a 3-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor.<li><a href='#MathUtil.vec3sub'>vec3sub</a><br>Subtracts the second vector from the first vector and returns a new
+but its length is multiplied by the specified factor.<li><a href='#MathUtil.vec3sub'>vec3sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.<li><a href='#MathUtil.vec3subInPlace'>vec3subInPlace</a><br>Subtracts the second vector from the first vector and stores
 the result in the first vector.<li><a href='#MathUtil.vec3toWindowPoint'>vec3toWindowPoint</a><br>Transforms the 3D point specified in this 3-element vector to its
 <i>window coordinates</i>
-using the given transformation matrix and viewport rectangle.<li><a href='#MathUtil.vec3triple'>vec3triple</a><br>Finds the scalar triple product of three vectors (A, B, and C).<li><a href='#MathUtil.vec4abs'>vec4abs</a><br>Returns a new 4-element
-vector with the absolute value of each of its components.<li><a href='#MathUtil.vec4absInPlace'>vec4absInPlace</a><br>Sets each component of the given 4-element
+using the specified transformation matrix and viewport rectangle.<li><a href='#MathUtil.vec3triple'>vec3triple</a><br>Finds the scalar triple product of three vectors (A, B, and C).<li><a href='#MathUtil.vec4abs'>vec4abs</a><br>Returns a new 4-element
+vector with the absolute value of each of its components.<li><a href='#MathUtil.vec4absInPlace'>vec4absInPlace</a><br>Sets each component of the specified 4-element
 vector to its absolute value.<li><a href='#MathUtil.vec4add'>vec4add</a><br>Adds two 4-element vectors and returns a new
 vector with the result.<li><a href='#MathUtil.vec4addInPlace'>vec4addInPlace</a><br>Adds two 4-element vectors and stores
 the result in the first vector.<li><a href='#MathUtil.vec4assign'>vec4assign</a><br>Assigns the values of a 4-element vector into another
-4-element vector.<li><a href='#MathUtil.vec4clamp'>vec4clamp</a><br>Returns a 4-element vector in which each element of the given 4-element vector is clamped<li><a href='#MathUtil.vec4clampInPlace'>vec4clampInPlace</a><br>Clamps each element of the given 4-element vector
+4-element vector.<li><a href='#MathUtil.vec4clamp'>vec4clamp</a><br>Returns a 4-element vector in which each element of the specified 4-element vector is clamped<li><a href='#MathUtil.vec4clampInPlace'>vec4clampInPlace</a><br>Clamps each element of the specified 4-element vector
 so it's not less than one value or greater than another value.<li><a href='#MathUtil.vec4copy'>vec4copy</a><br>Returns a copy of a 4-element vector.<li><a href='#MathUtil.vec4dot'>vec4dot</a><br>Finds the dot product of two 4-element vectors.<li><a href='#MathUtil.vec4length'>vec4length</a><br>Returns the distance of this 4-element vector from the origin,
 also known as its <i>length</i> or <i>magnitude</i>.<li><a href='#MathUtil.vec4lerp'>vec4lerp</a><br>Does a linear interpolation between two 4-element vectors;
 returns a new vector.<li><a href='#MathUtil.vec4negate'>vec4negate</a><br>Negates a 4-element vector and returns a new
 vector with the result, which is generally a vector with
 the same length but opposite direction.<li><a href='#MathUtil.vec4negateInPlace'>vec4negateInPlace</a><br>Negates a 4-element vector in place, generally resulting in a vector with
-the same length but opposite direction.<li><a href='#MathUtil.vec4normalize'>vec4normalize</a><br>Converts a 4-element vector to a unit vector; returns a new vector.<li><a href='#MathUtil.vec4normalizeInPlace'>vec4normalizeInPlace</a><br>Converts a 4-element vector to a unit vector.<li><a href='#MathUtil.vec4proj'>vec4proj</a><br>Returns the projection of a 4-element vector on the given
+the same length but opposite direction.<li><a href='#MathUtil.vec4normalize'>vec4normalize</a><br>Converts a 4-element vector to a unit vector; returns a new vector.<li><a href='#MathUtil.vec4normalizeInPlace'>vec4normalizeInPlace</a><br>Converts a 4-element vector to a unit vector.<li><a href='#MathUtil.vec4proj'>vec4proj</a><br>Returns the projection of a 4-element vector on the specified
 reference vector.<li><a href='#MathUtil.vec4scale'>vec4scale</a><br>Multiplies each element of a 4-element vector by a factor, returning
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor.<li><a href='#MathUtil.vec4scaleInPlace'>vec4scaleInPlace</a><br>Multiplies each element of a 4-element vector by a factor, so
+but with its length multiplied by the specified factor.<li><a href='#MathUtil.vec4scaleInPlace'>vec4scaleInPlace</a><br>Multiplies each element of a 4-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor.<li><a href='#MathUtil.vec4sub'>vec4sub</a><br>Subtracts the second vector from the first vector and returns a new
+but its length is multiplied by the specified factor.<li><a href='#MathUtil.vec4sub'>vec4sub</a><br>Subtracts the second vector from the first vector and returns a new
 vector with the result.<li><a href='#MathUtil.vec4subInPlace'>vec4subInPlace</a><br>Subtracts the second vector from the first vector and stores
 the result in the first vector.</ul><a name='MathUtil.GlobalPitchRollYaw'></a>
 <h3> MathUtil.GlobalPitchRollYaw (constant)
@@ -888,7 +886,7 @@ of radians in a degree. Multiply by this number to convert degrees to radians.
 x-, y-, and z-coordinates, respectively, of the bounding box's
 center. (Type: Array.&lt;number>)<a name='MathUtil.boxDimensions'></a>
 <h3> (static) MathUtil.boxDimensions(box)</h3>Finds the dimensions of a 3D bounding box. This is done by subtracting
-the first three values of the given array with its last three values.<h4> Parameters</h4><ul><li><code>box</code> (Type: Array.&lt;number>)<br>An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest x-, y-, and z-coordinates.</ul><h4> Return Value</h4>A 3-element array containing the
+the first three values of the specified array with its last three values.<h4> Parameters</h4><ul><li><code>box</code> (Type: Array.&lt;number>)<br>An axis-aligned bounding box, which is an array of six values. The first three values are the smallest x-, y-, and z-coordinates, and the last three values are the largest x-, y-, and z-coordinates.</ul><h4> Return Value</h4>A 3-element array containing the
 width, height, and depth of the bounding box, respectively. If
 at least one of the minimum coordinates is greater than its
 corresponding maximum coordinate, the array can contain
@@ -900,14 +898,14 @@ of the minimum coordinates is greater than its
 corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)<a name='MathUtil.colorToLinear'></a>
 <h3> (static) MathUtil.colorToLinear(srgb)</h3>Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
 a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
-by a surface of the given color.<h4> Parameters</h4><ul><li><code>srgb</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of an sRGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>A three-element vector giving
-the red, green, and blue components, in that order, of the given color
+by a surface of the specified color.<h4> Parameters</h4><ul><li><code>srgb</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of an sRGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>A three-element vector giving
+the red, green, and blue components, in that order, of the specified color
 in linear sRGB. The alpha component will be as specified
 in the "srgb" parameter. (Type: Array.&lt;number>)<a name='MathUtil.colorTosRGB'></a>
 <h3> (static) MathUtil.colorTosRGB(lin)</h3>Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
 a new vector with the result.<p>Linear RGB is linear because of its linear relationship of light emitted
-by a surface of the given color.<h4> Parameters</h4><ul><li><code>lin</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of a linear RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>lin A four-element vector giving
-the red, green, blue, and alpha components, in that order, of the given color
+by a surface of the specified color.<h4> Parameters</h4><ul><li><code>lin</code> (Type: Array.&lt;number>)<br>A three- or four-element vector giving the red, green, and blue components, in that order, of a linear RGB color. The alpha component is either the fourth element in the case of a four-element vector, or 1.0 in the case of a three-element vector. Each element in the vector ranges from 0 through 1.</ul><h4> Return Value</h4>lin A four-element vector giving
+the red, green, blue, and alpha components, in that order, of the specified color
 in encoded sRGB. The alpha component will be as specified
 in the "lin" parameter. (Type: Array.&lt;number>)<a name='MathUtil.frustumHasBox'></a>
 <h3> (static) MathUtil.frustumHasBox(frustum, box)</h3>Determines whether an axis-aligned bounding box
@@ -934,7 +932,7 @@ is 0 or less, and 1 if <code>t</code> is 1 or greater. (Type: number)<a name='Ma
 <h3> (static) MathUtil.mat3copy(mat)</h3>Returns a copy of a 3 &times; 3 matrix.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A 3 &times; 3atrix.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.mat3identity'></a>
 <h3> (static) MathUtil.mat3identity()</h3>Returns the identity 3 &times; 3 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.mat3invert'></a>
-<h3> (static) MathUtil.mat3invert(m)</h3>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the given transformation.<h4> Parameters</h4><ul><li><code>m</code> (Type: Array.&lt;number>)<br>A 3 &times; 3 matrix.</ul><h4> Return Value</h4>The resulting 3 &times; 3 matrix.
+<h3> (static) MathUtil.mat3invert(m)</h3>Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the specified transformation.<h4> Parameters</h4><ul><li><code>m</code> (Type: Array.&lt;number>)<br>A 3 &times; 3 matrix.</ul><h4> Return Value</h4>The resulting 3 &times; 3 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.mat3multiply'></a>
 <h3> (static) MathUtil.mat3multiply(a, b)</h3>Multiplies two 3 &times; 3 matrices. A new matrix is returned.
 The matrices are multiplied such that the transformations
@@ -973,7 +971,7 @@ The transformed coordinates have the meanings given earlier assuming that the ey
 <h3> (static) MathUtil.mat4identity()</h3>Returns the identity 4 &times; 4 matrix (a matrix that keeps
 vectors unchanged when they are transformed with this matrix).<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.mat4inverseTranspose3'></a>
 <h3> (static) MathUtil.mat4inverseTranspose3(m4)</h3>Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
-the given 4 &times; 4 matrix.<p>
+the specified 4 &times; 4 matrix.<p>
 This is usually used to convert a model-view matrix (view matrix multiplied by model or world matrix) to a matrix
 for transforming surface normals in order to keep them perpendicular
 to a surface transformed by the model-view matrix. Normals are then
@@ -1161,14 +1159,14 @@ then returning that vector's new X, Y, and Z.<p><h4> Parameters</h4><ul><li><cod
 The elements, in order, are
 the transformed vector's x-, y-, and z-coordinates. (Type: Array.&lt;number>)<a name='MathUtil.mat4rotate'></a>
 <h3> (static) MathUtil.mat4rotate(mat, angle, v, vy, vz)</h3>Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath,
+by the specified rotation angle and around the specified glmath,
 and returns a new matrix.
 The effect will be that the rotation transformation will
-happen before the transformation described in the given matrix,
+happen before the transformation described in the specified matrix,
 when applied in the global coordinate frame.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix to multiply.<li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the glmath as the first three elements, followed by the angle in degrees as the fourth element.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)<a name='MathUtil.mat4rotated'></a>
 <h3> (static) MathUtil.mat4rotated(angle, v, vy, vz)</h3>Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath.<h4> Parameters</h4><ul><li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)<h4> Examples</h4><p>The following example rotates a vector,
-"vec", about the z-axis by the given angle, "angle".</p><pre>
+by the specified rotation angle and around the specified glmath.<h4> Parameters</h4><ul><li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)<h4> Examples</h4><p>The following example rotates a vector,
+"vec", about the z-axis by the specified angle, "angle".</p><pre>
 var newVector = MathUtil.mat4projectVec3(
 MathUtil.mat4rotated(angle, 0, 0, 1), vec);</pre><a name='MathUtil.mat4scale'></a>
 <h3> (static) MathUtil.mat4scale(mat, v3, v3y, v3z)</h3>Multiplies a 4 &times; 4 matrix by a scaling transformation.<h4> Parameters</h4><ul><li><code>mat</code> (Type: Array.&lt;number>)<br>4 &times; 4 matrix to multiply.<li><code>v3</code> (Type: Array.&lt;number> | number)<br>Scale factor along the x-axis. A scale factor can be negative, in which case the transformation also causes reflection about the corresponding axis. If "v3y" and "v3z" are omitted, this value can instead be a 3-element array giving the scale factors along the x-, y-, and z-axes.<li><code>v3y</code> (Type: number)<br>Scale factor along the y-axis.<li><code>v3z</code> (Type: number)<br>Scale factor along the z-axis.</ul><h4> Return Value</h4>The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)<a name='MathUtil.mat4scaleInPlace'></a>
@@ -1225,13 +1223,13 @@ Note that due to rounding error, the length of the plane's normal might not be e
 unless all the normal's components are 0, and sets this plane to the result.
 The plane's distance will be divided by the
 current normal's length.<p><h4> Parameters</h4><ul><li><code>plane</code> (Type: Array.&lt;number>)<br>A four-element array defining the plane. The first three elements of the array are the X, Y, and Z components of the plane's normal vector, and the fourth element is the shortest distance from the plane to the origin, or if negative, from the origin to the plane, divided by the normal's length.</ul><h4> Return Value</h4>The parameter "plane". (Type: Array.&lt;number>)<a name='MathUtil.quatConjugate'></a>
-<h3> (static) MathUtil.quatConjugate(quat)</h3>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath). The return value won't necessarily be a unit vector.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A quaternion, containing four elements.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.quatCopy'></a>
+<h3> (static) MathUtil.quatConjugate(quat)</h3>Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath). The return value won't necessarily be a unit vector.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A quaternion, containing four elements.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.quatCopy'></a>
 <h3> (static) MathUtil.quatCopy(a)</h3>Returns a copy of a quaternion.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A quaternion.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<h4> See Also</h4><a href="MathUtil.html#MathUtil.vec4copy">MathUtil.vec4copy</a><a name='MathUtil.quatDot'></a>
 <h3> (static) MathUtil.quatDot(a, b)</h3>Finds the dot product of two quaternions.
 It's equal to the sum of the products of
 their components (for example, <b>a</b>'s X times <b>b</b>'s X).<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first quaternion.<li><code>b</code> (Type: Array.&lt;number>)<br>The second quaternion.</ul><h4> Return Value</h4>Return value. (Type: number)<h4> See Also</h4><a href="MathUtil.html#MathUtil.vec4dot">MathUtil.vec4dot</a><a name='MathUtil.quatFromAxisAngle'></a>
 <h3> (static) MathUtil.quatFromAxisAngle(angle, v, vy, vz)</h3>Generates a quaternion from a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath,<h4> Parameters</h4><ul><li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>The generated quaternion.
+by the specified rotation angle and around the specified glmath,<h4> Parameters</h4><ul><li><code>angle</code> (Type: Array.&lt;number> | number)<br>The desired angle to rotate in degrees. If "v", "vy", and "vz" are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element.<li><code>v</code> (Type: Array.&lt;number> | number)<br>X-component of the point lying on the axis of rotation. If "vy" and "vz" are omitted, this can instead be a 3-element array giving the axis of rotation.<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</ul><h4> Return Value</h4>The generated quaternion.
 A quaternion's first three elements (X, Y, Z) describe an
 glmath whose length is the sine of half of "angle",
 and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;number>)<a name='MathUtil.quatFromMat4'></a>
@@ -1246,7 +1244,7 @@ the ray described in the first vector toward the ray described
 in the second vector. The vectors need not be unit vectors.<h4> Parameters</h4><ul><li><code>vec1</code> (Type: Array.&lt;number>)<br>The first 3-element vector.<li><code>vec2</code> (Type: Array.&lt;number>)<br>The second 3-element vector.</ul><h4> Return Value</h4>The generated quaternion, which
 will be a unit vector. (Type: Array.&lt;number>)<a name='MathUtil.quatIdentity'></a>
 <h3> (static) MathUtil.quatIdentity()</h3>Returns the identity quaternion of multiplication, (0, 0, 0, 1).<h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.quatInvert'></a>
-<h3> (static) MathUtil.quatInvert(quat)</h3>Returns a quaternion that describes a rotation that undoes the given rotation (an "inverted" rotation) and is converted to a unit vector.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A quaternion, containing four elements.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<h4> See Also</h4><a href="MathUtil.html#MathUtil.quatConjugate">MathUtil.quatConjugate</a><a name='MathUtil.quatIsIdentity'></a>
+<h3> (static) MathUtil.quatInvert(quat)</h3>Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation) and is converted to a unit vector.<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A quaternion, containing four elements.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<h4> See Also</h4><a href="MathUtil.html#MathUtil.quatConjugate">MathUtil.quatConjugate</a><a name='MathUtil.quatIsIdentity'></a>
 <h3> (static) MathUtil.quatIsIdentity(quat)</h3>Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).<h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A quaternion, containing four elements.</ul><h4> Return Value</h4>Return value. (Type: boolean)<a name='MathUtil.quatLength'></a>
 <h3> (static) MathUtil.quatLength(quat)</h3>Returns the distance of this quaternion from the origin.
 It's the same as the square root of the sum of the squares
@@ -1264,8 +1262,7 @@ Quaternion multiplication is not commutative except in the last component
 of the resulting quaternion, since the definition of quaternion multiplication
 includes taking a cross product of <code>a</code>'s and <code>b</code>'s first three components,
 in that order, and the cross product is not commutative (see also <a href="MathUtil.html#MathUtil.vec3cross">MathUtil.vec3cross</a>).<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first quaternion.<li><code>b</code> (Type: Array.&lt;number>)<br>The second quaternion.</ul><h4> Return Value</h4>The resulting quaternion. (Type: Array.&lt;number>)<a name='MathUtil.quatNlerp'></a>
-<h3> (static) MathUtil.quatNlerp(q1, q2, factor)</h3>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a linear interpolation function, and converts
+<h3> (static) MathUtil.quatNlerp(q1, q2, factor)</h3>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a linear interpolation function, and converts
 it to a unit vector.
 This is called a normalized linear interpolation, or "nlerp".<p>
 Because the shortest path is curved, not straight, this method
@@ -1287,7 +1284,7 @@ A quaternion is normalized by dividing each of its components
 by its <a href="MathUtil.html#MathUtil.quatLength">length</a>.<p><h4> Parameters</h4><ul><li><code>quat</code> (Type: Array.&lt;number>)<br>A quaternion, containing four elements.</ul><h4> Return Value</h4>The parameter "quat".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)<h4> See Also</h4><a href="MathUtil.html#MathUtil.vec4normalizeInPlace">MathUtil.vec4normalizeInPlace</a><a name='MathUtil.quatRotate'></a>
 <h3> (static) MathUtil.quatRotate(quat, angle, v, vy, vz)</h3>Multiplies a quaternion by a rotation transformation that rotates vectors
-by the given rotation angle and around the given glmath.
+by the specified rotation angle and around the specified glmath.
 The result is such that the angle-axis
 rotation happens before the quaternion's rotation when applied
 in the global coordinate frame.<p>
@@ -1298,8 +1295,7 @@ return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
 and returns the result as a new quaternion.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A quaternion.<li><code>scalar</code> (Type: number)<br>A factor to multiply.</ul><h4> Return Value</h4>The resulting quaternion. (Type: Array.&lt;number>)<h4> See Also</h4><a href="MathUtil.html#MathUtil.vec4scaleInPlace">MathUtil.vec4scaleInPlace</a><a name='MathUtil.quatScaleInPlace'></a>
 <h3> (static) MathUtil.quatScaleInPlace(a, scalar)</h3>Multiplies each element of a quaternion by a factor
 and stores the result in that quaternion.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A quaternion.<li><code>scalar</code> (Type: number)<br>A factor to multiply.</ul><h4> Return Value</h4>The parameter "a". (Type: Array.&lt;number>)<h4> See Also</h4><a href="MathUtil.html#MathUtil.vec4scaleInPlace">MathUtil.vec4scaleInPlace</a><a name='MathUtil.quatSlerp'></a>
-<h3> (static) MathUtil.quatSlerp(q1, q2, factor)</h3>Returns a quaternion that lies along the shortest path between the
-given two quaternion rotations, using a spherical interpolation function.
+<h3> (static) MathUtil.quatSlerp(q1, q2, factor)</h3>Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a spherical interpolation function.
 This is called spherical linear interpolation, or "slerp". (A spherical
 interpolation finds the shortest angle between the two quaternions -- which
 are treated as 4D vectors -- and then finds a vector with a smaller angle
@@ -1327,14 +1323,14 @@ If the input vector has 3 elements, a 3-element vector will
 be returned instead. (Type: Array.&lt;number>)<a name='MathUtil.vec2abs'></a>
 <h3> (static) MathUtil.vec2abs(a)</h3>Returns a new 2-element
 vector with the absolute value of each of its components.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 2-element vector.</ul><h4> Return Value</h4>The resulting 2-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec2absInPlace'></a>
-<h3> (static) MathUtil.vec2absInPlace(a)</h3>Sets each component of the given 2-element
+<h3> (static) MathUtil.vec2absInPlace(a)</h3>Sets each component of the specified 2-element
 vector to its absolute value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 2-element vector.</ul><h4> Return Value</h4>The vector "a". (Type: Array.&lt;number>)<a name='MathUtil.vec2add'></a>
 <h3> (static) MathUtil.vec2add(a, b)</h3>Adds two 2-element vectors and returns a new
 vector with the result. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come "between" the two vectors given (at their shortest angle) if all three start
 at the same position.</ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 2-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 2-element vector.</ul><h4> Return Value</h4>The resulting 2-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec2addInPlace'></a>
 <h3> (static) MathUtil.vec2addInPlace(a, b)</h3>Adds two 2-element vectors and stores
@@ -1342,14 +1338,14 @@ the result in the first vector. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come "between" the two vectors given (at their shortest angle) if all three start
 at the same position.</ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 2-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 2-element vector.</ul><h4> Return Value</h4>The parameter "a" (Type: Array.&lt;number>)<a name='MathUtil.vec2assign'></a>
 <h3> (static) MathUtil.vec2assign(dst, src)</h3>Assigns the values of a 2-element vector into another
 2-element vector.<h4> Parameters</h4><ul><li><code>dst</code> (Type: Array.&lt;number>)<br>The 2-element vector to assign to.<li><code>src</code> (Type: Array.&lt;number>)<br>The 2-element vector whose values will be copied.</ul><h4> Return Value</h4>The parameter "dst" (Type: Array.&lt;number>)<a name='MathUtil.vec2clamp'></a>
-<h3> (static) MathUtil.vec2clamp(a, min, max)</h3>Returns a 2-element vector in which each element of the given 2-element vector is clamped
+<h3> (static) MathUtil.vec2clamp(a, min, max)</h3>Returns a 2-element vector in which each element of the specified 2-element vector is clamped
 so it's not less than one value or greater than another value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec2clampInPlace'></a>
-<h3> (static) MathUtil.vec2clampInPlace(a, min, max)</h3>Clamps each element of the given 2-element vector
+<h3> (static) MathUtil.vec2clampInPlace(a, min, max)</h3>Clamps each element of the specified 2-element vector
 so it's not less than one value or greater than another value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec2copy'></a>
 <h3> (static) MathUtil.vec2copy(vec)</h3>Returns a copy of a 2-element vector.<h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 2-element vector.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.vec2dist'></a>
 <h3> (static) MathUtil.vec2dist(vecFrom, vecTo)</h3>Finds the straight-line distance from one three-element vector
@@ -1409,10 +1405,10 @@ A vector is normalized by dividing each of its components
 by its <a href="MathUtil.html#MathUtil.vec2length">length</a>.<p><h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 2-element vector.</ul><h4> Return Value</h4>The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.vec2perp'></a>
 <h3> (static) MathUtil.vec2perp(vec)</h3>Returns an arbitrary 2-element vector that is perpendicular
-(orthogonal) to the given 2-element vector. The return value
+(orthogonal) to the specified 2-element vector. The return value
 will not be converted to a unit vector.<h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 2-element vector.</ul><h4> Return Value</h4>A perpendicular 2-element
 vector. Returns (0,0) if "vec" is (0,0). (Type: Array.&lt;number>)<a name='MathUtil.vec2proj'></a>
-<h3> (static) MathUtil.vec2proj(vec, refVec)</h3>Returns the projection of a 2-element vector on the given
+<h3> (static) MathUtil.vec2proj(vec, refVec)</h3>Returns the projection of a 2-element vector on the specified
 reference vector. Assuming both vectors
 start at the same point, the resulting vector
 will be parallel to the
@@ -1427,12 +1423,12 @@ length is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.
 as "incident" but is reflected away from the surface. (Type: Array.&lt;number>)<a name='MathUtil.vec2scale'></a>
 <h3> (static) MathUtil.vec2scale(a, scalar)</h3>Multiplies each element of a 2-element vector by a factor. Returns
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor. If the factor
+but with its length multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector's components will all be 0.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 2-element vector.<li><code>scalar</code> (Type: number)<br>A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</ul><h4> Return Value</h4>The parameter "a". (Type: Array.&lt;number>)<a name='MathUtil.vec2scaleInPlace'></a>
 <h3> (static) MathUtil.vec2scaleInPlace(a, scalar)</h3>Multiplies each element of a 2-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor. If the factor
+but its length is multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector's components will all be 0.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 2-element vector.<li><code>scalar</code> (Type: number)<br>A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</ul><h4> Return Value</h4>The parameter "a". (Type: Array.&lt;number>)<a name='MathUtil.vec2sub'></a>
 <h3> (static) MathUtil.vec2sub(a, b)</h3>Subtracts the second vector from the first vector and returns a new
@@ -1445,14 +1441,14 @@ is the same as subtracting each of their components.<h4> Parameters</h4><ul><li>
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)<a name='MathUtil.vec3abs'></a>
 <h3> (static) MathUtil.vec3abs(a)</h3>Returns a new 3-element
 vector with the absolute value of each of its components.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 3-element vector.</ul><h4> Return Value</h4>The resulting 3-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec3absInPlace'></a>
-<h3> (static) MathUtil.vec3absInPlace(a)</h3>Sets each component of the given 3-element
+<h3> (static) MathUtil.vec3absInPlace(a)</h3>Sets each component of the specified 3-element
 vector to its absolute value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 3-element vector.</ul><h4> Return Value</h4>The vector "a". (Type: Array.&lt;number>)<a name='MathUtil.vec3add'></a>
 <h3> (static) MathUtil.vec3add(a, b)</h3>Adds two 3-element vectors and returns a new
 vector with the result. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come "between" the two vectors given (at their shortest angle) if all three start
 at the same position.</ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 3-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 3-element vector.</ul><h4> Return Value</h4>The resulting 3-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec3addInPlace'></a>
 <h3> (static) MathUtil.vec3addInPlace(a, b)</h3>Adds two 3-element vectors and stores
@@ -1460,14 +1456,14 @@ the result in the first vector. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come "between" the two vectors given (at their shortest angle) if all three start
 at the same position.</ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 3-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 3-element vector.</ul><h4> Return Value</h4>The parameter "a" (Type: Array.&lt;number>)<a name='MathUtil.vec3assign'></a>
 <h3> (static) MathUtil.vec3assign(dst, src)</h3>Assigns the values of a 3-element vector into another
 3-element vector.<h4> Parameters</h4><ul><li><code>dst</code> (Type: Array.&lt;number>)<br>The 3-element vector to assign to.<li><code>src</code> (Type: Array.&lt;number>)<br>The 3-element vector whose values will be copied.</ul><h4> Return Value</h4>The parameter "dst" (Type: Array.&lt;number>)<a name='MathUtil.vec3clamp'></a>
-<h3> (static) MathUtil.vec3clamp(a, min, max)</h3>Returns a 3-element vector in which each element of the given 3-element vector is clamped
+<h3> (static) MathUtil.vec3clamp(a, min, max)</h3>Returns a 3-element vector in which each element of the specified 3-element vector is clamped
 so it's not less than one value or greater than another value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec3clampInPlace'></a>
-<h3> (static) MathUtil.vec3clampInPlace(a, min, max)</h3>Clamps each element of the given 3-element vector
+<h3> (static) MathUtil.vec3clampInPlace(a, min, max)</h3>Clamps each element of the specified 3-element vector
 so it's not less than one value or greater than another value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec3copy'></a>
 <h3> (static) MathUtil.vec3copy(vec)</h3>Returns a copy of a 3-element vector.<h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 3-element vector.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.vec3cross'></a>
 <h3> (static) MathUtil.vec3cross(a, b)</h3>Finds the cross product of two 3-element vectors (called A and B).
@@ -1560,7 +1556,7 @@ if(MathUtil.vec3dot(vector, vector)<20*20) {
 }</pre><a name='MathUtil.vec3fromWindowPoint'></a>
 <h3> (static) MathUtil.vec3fromWindowPoint(vector, matrix, viewport, [yUp])</h3>Unprojects the <i>window coordinates</i> given in a
 3-element vector,
-using the given transformation matrix and viewport
+using the specified transformation matrix and viewport
 rectangle.<p>
 In the window coordinate space, x-coordinates increase
 rightward and y-coordinates increase upward
@@ -1630,10 +1626,10 @@ A vector is normalized by dividing each of its components
 by its <a href="MathUtil.html#MathUtil.vec3length">length</a>.<p><h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 3-element vector.</ul><h4> Return Value</h4>The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.vec3perp'></a>
 <h3> (static) MathUtil.vec3perp(vec)</h3>Returns an arbitrary 3-element vector that is perpendicular
-(orthogonal) to the given 3-element vector. The return value
+(orthogonal) to the specified 3-element vector. The return value
 will not be converted to a unit vector.<h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 3-element vector.</ul><h4> Return Value</h4>A perpendicular 3-element
 vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;number>)<a name='MathUtil.vec3proj'></a>
-<h3> (static) MathUtil.vec3proj(vec, refVec)</h3>Returns the projection of a 3-element vector on the given
+<h3> (static) MathUtil.vec3proj(vec, refVec)</h3>Returns the projection of a 3-element vector on the specified
 reference vector. Assuming both vectors
 start at the same point, the resulting vector
 will be parallel to the
@@ -1648,12 +1644,12 @@ length is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.
 as "incident" but is reflected away from the surface. (Type: Array.&lt;number>)<a name='MathUtil.vec3scale'></a>
 <h3> (static) MathUtil.vec3scale(a, scalar)</h3>Multiplies each element of a 3-element vector by a factor. Returns
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor. If the factor
+but with its length multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector's components will all be 0.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 3-element vector.<li><code>scalar</code> (Type: number)<br>A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</ul><h4> Return Value</h4>The parameter "a". (Type: Array.&lt;number>)<a name='MathUtil.vec3scaleInPlace'></a>
 <h3> (static) MathUtil.vec3scaleInPlace(a, scalar)</h3>Multiplies each element of a 3-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor. If the factor
+but its length is multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector's components will all be 0.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 3-element vector.<li><code>scalar</code> (Type: number)<br>A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</ul><h4> Return Value</h4>The parameter "a". (Type: Array.&lt;number>)<a name='MathUtil.vec3sub'></a>
 <h3> (static) MathUtil.vec3sub(a, b)</h3>Subtracts the second vector from the first vector and returns a new
@@ -1666,7 +1662,7 @@ is the same as subtracting each of their components.<h4> Parameters</h4><ul><li>
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)<a name='MathUtil.vec3toWindowPoint'></a>
 <h3> (static) MathUtil.vec3toWindowPoint(vector, matrix, viewport, [yUp])</h3>Transforms the 3D point specified in this 3-element vector to its
 <i>window coordinates</i>
-using the given transformation matrix and viewport rectangle.<h4> Parameters</h4><ul><li><code>vector</code> (Type: Array.&lt;number>)<br>A 3-element vector giving the x-, y-, and z-coordinates of the 3D point to transform.<li><code>matrix</code> (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the x-, y-, and z-coordinates within the view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, y-coordinates increase in the opposite direction), and z-coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such z-coordinates range from -1 to 1.<li><code>viewport</code> (Type: Array.&lt;number>)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's x-coordinate, its y-coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.<li><code>yUp</code> (Type: boolean) (optional)<br>If false, null, undefined, or omitted, reverses the sign of the y-coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the y-coordinate will remain unchanged. If window y-coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upper-left corner.</ul><h4> Return Value</h4>A 3-element array giving the window
+using the specified transformation matrix and viewport rectangle.<h4> Parameters</h4><ul><li><code>vector</code> (Type: Array.&lt;number>)<br>A 3-element vector giving the x-, y-, and z-coordinates of the 3D point to transform.<li><code>matrix</code> (Type: Array.&lt;number>)<br>A 4 &times; 4 matrix to use to transform the vector according to the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method, before the transformed vector is converted to window coordinates. <br>This parameter will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the x-, y-, and z-coordinates within the view volume will increase in the direction given in those methods' documentation (except that if "yUp" is false, null, undefined, or omitted, y-coordinates increase in the opposite direction), and z-coordinates in the view volume will range from 0 to 1 in <card>window coordinates</card>, assuming <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> made such z-coordinates range from -1 to 1.<li><code>viewport</code> (Type: Array.&lt;number>)<br>A 4-element array specifying the starting position and size of the viewport in window units (such as pixels). In order, the four elements are the starting position's x-coordinate, its y-coordinate, the viewport's width, and the viewport's height. Throws an error if the width or height is less than 0.<li><code>yUp</code> (Type: boolean) (optional)<br>If false, null, undefined, or omitted, reverses the sign of the y-coordinate returned by the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method before converting it to window coordinates. If true, the y-coordinate will remain unchanged. If window y-coordinates increase upward, the viewport's starting position is at the lower-left corner. If those coordinates increase downward, the viewport's starting position is at the upper-left corner.</ul><h4> Return Value</h4>A 3-element array giving the window
 coordinates, in that order. (Type: Array.&lt;number>)<a name='MathUtil.vec3triple'></a>
 <h3> (static) MathUtil.vec3triple(a, b, c)</h3>Finds the scalar triple product of three vectors (A, B, and C). The triple
 product is the <a href="MathUtil.html#MathUtil.vec3dot">dot product</a> of both A and the
@@ -1694,14 +1690,14 @@ opposite direction from that cross product, and that angle is negative.
 </ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 3-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 3-element vector, or the first parameter to the cross product.<li><code>c</code> (Type: Array.&lt;number>)<br>The third 3-element vector, or the second parameter to the cross product.</ul><h4> Return Value</h4>A number giving the triple product. (Type: number)<a name='MathUtil.vec4abs'></a>
 <h3> (static) MathUtil.vec4abs(a)</h3>Returns a new 4-element
 vector with the absolute value of each of its components.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 4-element vector.</ul><h4> Return Value</h4>The resulting 4-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec4absInPlace'></a>
-<h3> (static) MathUtil.vec4absInPlace(a)</h3>Sets each component of the given 4-element
+<h3> (static) MathUtil.vec4absInPlace(a)</h3>Sets each component of the specified 4-element
 vector to its absolute value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 4-element vector.</ul><h4> Return Value</h4>The vector "a". (Type: Array.&lt;number>)<a name='MathUtil.vec4add'></a>
 <h3> (static) MathUtil.vec4add(a, b)</h3>Adds two 4-element vectors and returns a new
 vector with the result. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come "between" the two vectors given (at their shortest angle) if all three start
 at the same position.</ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 4-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 4-element vector.</ul><h4> Return Value</h4>The resulting 4-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec4addInPlace'></a>
 <h3> (static) MathUtil.vec4addInPlace(a, b)</h3>Adds two 4-element vectors and stores
@@ -1709,14 +1705,14 @@ the result in the first vector. Adding two vectors
 is the same as adding each of their components.
 The resulting vector:<ul>
 <li>describes a straight-line path for the
-combined paths described by the given vectors, in either order, and
+combined paths described by the specified vectors, in either order, and
 <li>will come "between" the two vectors given (at their shortest angle) if all three start
 at the same position.</ul><h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The first 4-element vector.<li><code>b</code> (Type: Array.&lt;number>)<br>The second 4-element vector.</ul><h4> Return Value</h4>The parameter "a".
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)<a name='MathUtil.vec4assign'></a>
 <h3> (static) MathUtil.vec4assign(dst, src)</h3>Assigns the values of a 4-element vector into another
 4-element vector.<h4> Parameters</h4><ul><li><code>dst</code> (Type: Array.&lt;number>)<br>The 4-element vector to copy the source values to.<li><code>src</code> (Type: Array.&lt;number>)<br>The 4-element vector whose values will be copied.</ul><h4> Return Value</h4>The parameter "dst". (Type: Array.&lt;number>)<a name='MathUtil.vec4clamp'></a>
-<h3> (static) MathUtil.vec4clamp(a, min, max)</h3>Returns a 4-element vector in which each element of the given 4-element vector is clamped<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec4clampInPlace'></a>
-<h3> (static) MathUtil.vec4clampInPlace(a, min, max)</h3>Clamps each element of the given 4-element vector
+<h3> (static) MathUtil.vec4clamp(a, min, max)</h3>Returns a 4-element vector in which each element of the specified 4-element vector is clamped<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec4clampInPlace'></a>
+<h3> (static) MathUtil.vec4clampInPlace(a, min, max)</h3>Clamps each element of the specified 4-element vector
 so it's not less than one value or greater than another value.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>The vector to clamp.<li><code>min</code> (Type: number)<br>Lowest possible value. Should not be greater than "max".<li><code>max</code> (Type: number)<br>Highest possible value. Should not be less than "min".</ul><h4> Return Value</h4>The resulting vector. (Type: Array.&lt;number>)<a name='MathUtil.vec4copy'></a>
 <h3> (static) MathUtil.vec4copy(vec)</h3>Returns a copy of a 4-element vector.<h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 4-element vector.</ul><h4> Return Value</h4>Return value. (Type: Array.&lt;number>)<a name='MathUtil.vec4dot'></a>
 <h3> (static) MathUtil.vec4dot(a, b)</h3>Finds the dot product of two 4-element vectors. It's the
@@ -1752,7 +1748,7 @@ to that vector becomes 1 (unless all its components are 0).
 A vector is normalized by dividing each of its components
 by its <a href="MathUtil.html#MathUtil.vec4length">length</a>.<p><h4> Parameters</h4><ul><li><code>vec</code> (Type: Array.&lt;number>)<br>A 4-element vector.</ul><h4> Return Value</h4>The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.vec4proj'></a>
-<h3> (static) MathUtil.vec4proj(vec, refVec)</h3>Returns the projection of a 4-element vector on the given
+<h3> (static) MathUtil.vec4proj(vec, refVec)</h3>Returns the projection of a 4-element vector on the specified
 reference vector. Assuming both vectors
 start at the same point, the resulting vector
 will be parallel to the
@@ -1765,12 +1761,12 @@ to the reference vector.<h4> Parameters</h4><ul><li><code>vec</code> (Type: Arra
 length is 0 or extremely close to 0. (Type: Array.&lt;number>)<a name='MathUtil.vec4scale'></a>
 <h3> (static) MathUtil.vec4scale(a, scalar)</h3>Multiplies each element of a 4-element vector by a factor, returning
 a new vector that is parallel to the old vector
-but with its length multiplied by the given factor. If the factor
+but with its length multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector's components will all be 0.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 4-element vector.<li><code>scalar</code> (Type: number)<br>A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</ul><h4> Return Value</h4>The resulting 4-element vector. (Type: Array.&lt;number>)<a name='MathUtil.vec4scaleInPlace'></a>
 <h3> (static) MathUtil.vec4scaleInPlace(a, scalar)</h3>Multiplies each element of a 4-element vector by a factor, so
 that the vector is parallel to the old vector
-but its length is multiplied by the given factor. If the factor
+but its length is multiplied by the specified factor. If the factor
 is positive, the vector will point in the same direction; if negative,
 in the opposite direction; if zero, the vector's components will all be 0.<h4> Parameters</h4><ul><li><code>a</code> (Type: Array.&lt;number>)<br>A 4-element vector.<li><code>scalar</code> (Type: number)<br>A factor to multiply. To divide a vector by a number, the factor will be 1 divided by that number.</ul><h4> Return Value</h4>The parameter "a". (Type: Array.&lt;number>)<a name='MathUtil.vec4sub'></a>
 <h3> (static) MathUtil.vec4sub(a, b)</h3>Subtracts the second vector from the first vector and returns a new

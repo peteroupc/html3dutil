@@ -22,7 +22,7 @@ function SwatchSvg() {
     this.slack += HEIGHT / 2;
   };
   this.addSwatch = function(color, name) {
-    const cname = name !== null && typeof name !== "undefined" ? name : color;
+    const cname = (typeof name !== "undefined" && name !== null) ? name : color;
     const svgx = this.x * this.width;
     let svgy;
     if (typeof cname === "undefined" || cname === null || cname == color) {

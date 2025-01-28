@@ -190,16 +190,16 @@ const TriangleFan = function(indices) {
  * @param {number} b TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
-Meshes.setColor=function(three,buffer,r,g,b){
+Meshes.setColor=function(three,buffer,r,g,b) {
  var color=toGLColor(r,g,b);
  var ret=[]
  var pos=0
- for(var i=0;i<buffer.index.count;i++,pos+=3){
+ for(var i=0;i<buffer.index.count;i++,pos+=3) {
   ret[pos]=color[0]
   ret[pos+1]=color[1]
   ret[pos+2]=color[2]
  }
- buffer.setAttribute("color",
+ buffer["setAttribute"]("color",
     new three["BufferAttribute"](new Float32Array(ret),3))
  return buffer
 }
@@ -213,10 +213,10 @@ function normNormals(buffer) {
  * @param {*} buffer TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
  */
-Meshes.reverseWinding=function(buffer){
-  var arr=buffer["index"]["array"]
+Meshes.reverseWinding=function(buffer) {
+  var arr=buffer.index["array"]
   if(arr.length%3!=0)throw new Error()
-  for(var pos=0;pos<arr.length;pos+=3){
+  for(var pos=0;pos<arr.length;pos+=3) {
     var t=arr[pos+1]
     arr[pos+1]=arr[pos+2]
     arr[pos+2]=t
@@ -232,10 +232,10 @@ Meshes.reverseWinding=function(buffer){
  */
 Meshes.recalcNormals=function(buffer,inside) {
  buffer["computeVectorNormals"]();
- if(inside){
+ if(inside) {
   var attr=buffer.getAttribute("normal")
-  if(attr){
-  for(var i=0;i<attr.count;i++){
+  if(attr) {
+  for(var i=0;i<attr.count;i++) {
    attr.setX(i,-attr.getX(i))
    attr.setY(i,-attr.getY(i))
    attr.setZ(i,-attr.getZ(i))
@@ -253,9 +253,9 @@ Meshes.recalcNormals=function(buffer,inside) {
  */
 Meshes.fromPositions=function(three,vertices,indices) {
   if(!three["BufferGeometry"])return null;
-  if(!indices){
+  if(!indices) {
     indices=[]
-    for(var i=0;i<(vertices.length/3)|0;i++){
+    for(var i=0;i<(vertices.length/3)|0;i++) {
        indices[i]=i
     }
   }
@@ -280,9 +280,9 @@ Meshes.fromPositionsAutoNormals=function(three,vertices,indices) {
 
 function fromVertsTwoAttr(three,vertices,indices, a1, a2) {
   if(!three["BufferGeometry"])return null;
-  if(!indices){
+  if(!indices) {
     indices=[]
-    for(var i=0;i<(vertices.length/6)|0;i++){
+    for(var i=0;i<(vertices.length/6)|0;i++) {
        indices[i]=i
     }
   }
@@ -421,7 +421,7 @@ Meshes.createBox = function(three,xSize, ySize, zSize, inward) {
  * method will point inward; otherwise, outward. Should normally be false
  * unless the box will be viewed from the inside.
  * @returns {*} A buffer geometry. The generated mesh.  Throws an error if "box" is null or contains negative dimensions along any of its axes.
- * @example <caption>The following example creates a wire-frame box of the given corner coordinates (<code>box</code>) and color (<code>color</code>).</caption>
+ * @example <caption>The following example creates a wire-frame box of the specified corner coordinates (<code>box</code>) and color (<code>color</code>).</caption>
  * var boxMesh=Meshes.createBoxEx(box)
  * .setColor(color).wireFrame()
  */
@@ -589,7 +589,7 @@ Meshes.createCylinder = function(three,baseRad, topRad, height, slices, stacks, 
  * Texture coordinates will
  * be generated such that the V (vertical)
  * coordinates start from the bottom of the texture and increase along the z-axis in the direction
- * of the given path, and the U (horizontal) coordinates start from the left of the
+ * of the specified path, and the U (horizontal) coordinates start from the left of the
  * texture and increase from the positive X to positive Y to negative X to negative
  * Y to positive x-axis. Texture coordinates are generated assuming that the coordinate (0,0)
  * is at the lower-left corner of the texture and (1,1) is at the upper-right
@@ -660,7 +660,7 @@ Meshes.createLathe = function(three,points, slices, flat, inside) {
   return Meshes.recalcNormals((flat ? mesh["toNonIndexed"]() : mesh),inside);
 };
 
-function matTo4D(three, mat){
+function matTo4D(three, mat) {
 var r=new three["Matrix4"]()
 r.set(mat[0],mat[4],mat[8],mat[12],
       mat[1],mat[5],mat[9],mat[13],
@@ -706,11 +706,11 @@ return r
  * }
  */
 Meshes.createClosedCylinder = function(three,baseRad, topRad, height, slices, stacks, flat, inside) {
-  const cylinder = Meshes.createCylinder(three["THREE"],baseRad, topRad, height, slices, stacks, flat, inside);
-  const base = Meshes.reverseWinding(Meshes.createDisk(three["THREE"],0.0, baseRad, slices, 2, !inside));
-  const top = Meshes.createDisk(three["THREE"],0.0, topRad, slices, 2, inside);
+  const cylinder = Meshes.createCylinder(three,baseRad, topRad, height, slices, stacks, flat, inside);
+  const base = Meshes.reverseWinding(Meshes.createDisk(three,0.0, baseRad, slices, 2, !inside));
+  const top = Meshes.createDisk(three,0.0, topRad, slices, 2, inside);
   // move the top disk to the top of the cylinder
-  top["applyMatrix4"](matTo4D(three["THREE"],MathUtil.mat4translated(0, 0, height)));
+  top["applyMatrix4"](matTo4D(three,MathUtil.mat4translated(0, 0, height)));
   // merge the base and the top
   return three["BufferGeometryUtils"]["mergeGeometries"]([cylinder,base,top],false);
 };

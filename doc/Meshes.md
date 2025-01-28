@@ -115,7 +115,7 @@ A buffer geometry. The generated mesh. Throws an error if "box" is null or conta
 
 #### Examples
 
-The following example creates a wire-frame box of the given corner coordinates (<code>box</code>) and color (<code>color</code>).
+The following example creates a wire-frame box of the specified corner coordinates (<code>box</code>) and color (<code>color</code>).
 
     var boxMesh=Meshes.createBoxEx(box)
     .setColor(color).wireFrame()
@@ -295,7 +295,7 @@ points about the z-axis.
 Texture coordinates will
 be generated such that the V (vertical)
 coordinates start from the bottom of the texture and increase along the z-axis in the direction
-of the given path, and the U (horizontal) coordinates start from the left of the
+of the specified path, and the U (horizontal) coordinates start from the left of the
 texture and increase from the positive X to positive Y to negative X to negative
 Y to positive x-axis. Texture coordinates are generated assuming that the coordinate (0,0)
 is at the lower-left corner of the texture and (1,1) is at the upper-right

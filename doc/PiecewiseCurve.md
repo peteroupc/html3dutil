@@ -40,16 +40,16 @@ the piecewise curve.
 
 ### Methods
 
-* [accel](#PiecewiseCurve_accel)<br>Finds an approximate acceleration vector at the given u-coordinate of this curve.
+* [accel](#PiecewiseCurve_accel)<br>Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 * [arcLength](#PiecewiseCurve_arcLength)<br>Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 * [changeEnds](#PiecewiseCurve_changeEnds)<br>Creates a curve evaluator object for a curve that is generated using
 the same formula as this one (and uses the same u-coordinates),
 but has a different set of end points.
 * [endPoints](#PiecewiseCurve_endPoints)<br>Returns the starting and ending u-coordinates of this curve.
-* [evaluate](#PiecewiseCurve_evaluate)<br>Finds the position of this curve at the given u-coordinate.
+* [evaluate](#PiecewiseCurve_evaluate)<br>Finds the position of this curve at the specified u-coordinate.
 * [fitRange](#PiecewiseCurve_fitRange)<br>Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 * [fromCatmullRomSpline](#PiecewiseCurve.fromCatmullRomSpline)<br>Creates a piecewise curve made up of B-spline curves from the control points of a
 cubic Catmull&ndash;Rom spline.
 * [fromEllipseArc](#PiecewiseCurve.fromEllipseArc)<br>Creates a piecewise curve that describes an arc running along an axis-aligned
@@ -65,23 +65,23 @@ cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;B
 of u-coordinates.
 * [getPointsAsObjects](#PiecewiseCurve_getPointsAsObjects)<br>Gets an array of positions on the curve at fixed intervals
 of u-coordinates.
-* [jerk](#PiecewiseCurve_jerk)<br>Finds an approximate jerk vector at the given u-coordinate of this curve.
-* [normal](#PiecewiseCurve_normal)<br>Finds an approximate principal normal vector at the given u-coordinate of this curve.
-* [tangent](#PiecewiseCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+* [jerk](#PiecewiseCurve_jerk)<br>Finds an approximate jerk vector at the specified u-coordinate of this curve.
+* [normal](#PiecewiseCurve_normal)<br>Finds an approximate principal normal vector at the specified u-coordinate of this curve.
+* [tangent](#PiecewiseCurve_tangent)<br>Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 * [toArcLengthParam](#PiecewiseCurve_toArcLengthParam)<br>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its u-coordinates remapped to
 an <i>arc length parameterization</i>.
-* [velocity](#PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the given u-coordinate of this curve.
+* [velocity](#PiecewiseCurve_velocity)<br>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 
 <a name='PiecewiseCurve_accel'></a>
 ### PiecewiseCurve#accel(u)
 
-Finds an approximate acceleration vector at the given u-coordinate of this curve.
+Finds an approximate acceleration vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>accel</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the velocity vector.
 
-The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 
@@ -96,7 +96,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
-curve and the point at the given u-coordinate of this curve.
+curve and the point at the specified u-coordinate of this curve.
 
 #### Parameters
 
@@ -104,7 +104,7 @@ curve and the point at the given u-coordinate of this curve.
 
 #### Return Value
 
-The approximate arc length of this curve at the given u-coordinate. (Type: number)
+The approximate arc length of this curve at the specified u-coordinate. (Type: number)
 
 <a name='PiecewiseCurve_changeEnds'></a>
 ### PiecewiseCurve#changeEnds(ep1, ep2)
@@ -149,7 +149,7 @@ of curves that make up this piecewise curve.
 <a name='PiecewiseCurve_evaluate'></a>
 ### PiecewiseCurve#evaluate(u)
 
-Finds the position of this curve at the given u-coordinate.
+Finds the position of this curve at the specified u-coordinate.
 
 #### Parameters
 
@@ -164,7 +164,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 ### PiecewiseCurve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
-path as this one but has its u-coordinates remapped to fit the given range.
+path as this one but has its u-coordinates remapped to fit the specified range.
 For example, this method can be used to shrink the range of u-coordinates
 from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
 Here, -&pi; now maps to 0, and &pi; now maps to 1.
@@ -328,12 +328,12 @@ The following example initializes a three.js BufferGeometry with the points retr
 <a name='PiecewiseCurve_jerk'></a>
 ### PiecewiseCurve#jerk(u)
 
-Finds an approximate jerk vector at the given u-coordinate of this curve.
+Finds an approximate jerk vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>jerk</code>
 method if it implements it; otherwise, does a numerical differentiation using
 the acceleration vector.
 
-The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the given coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
+The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve's position at the specified coordinate. The vector returned by this method <i>should not</i> be "normalized" to a unit vector.
 
 #### Parameters
 
@@ -347,7 +347,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='PiecewiseCurve_normal'></a>
 ### PiecewiseCurve#normal(u)
 
-Finds an approximate principal normal vector at the given u-coordinate of this curve.
+Finds an approximate principal normal vector at the specified u-coordinate of this curve.
 The implementation in <a href="Curve.md">Curve</a> calls the evaluator's <code>normal</code>
 method if it implements it; otherwise, does a numerical differentiation using the velocity vector.
 
@@ -367,7 +367,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 <a name='PiecewiseCurve_tangent'></a>
 ### PiecewiseCurve#tangent(u)
 
-Convenience method for finding an approximate tangent vector of this curve at the given u-coordinate.
+Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
 The <b>tangent vector</b> is the same as the velocity vector, but "normalized" to a unit vector.
 
 #### Parameters
@@ -415,7 +415,7 @@ on a curve.
 <a name='PiecewiseCurve_velocity'></a>
 ### PiecewiseCurve#velocity(u)
 
-Finds an approximate velocity vector at the given u-coordinate of this curve.
+Finds an approximate velocity vector at the specified u-coordinate of this curve.
 
 #### Parameters
 

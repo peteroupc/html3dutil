@@ -46,7 +46,7 @@ CurveBuilder._toMeshBuffer = function(three, attributes, indices, mode) {
   for (i = 0; i < attributes.length; i++) {
     const a = attributes[i];
     if(a[1]!==0)throw new Error();
-    switch(a[0]){
+    switch(a[0]) {
       case "POSITION":
       case "position":
         var attr=new three["InterleavedBufferAttribute"](new Float32Array(a[3]),a[2],0)
@@ -260,7 +260,7 @@ CurveBuilder.prototype.position = function(curve, size) {
  * Sets the parametric curve used to generate vertex attribute values.
  * @param {Object} curve A [curve evaluator object]{@link Curve} that
  * describes the parametric curve used to generate attribute values.
- * u-coordinates for the given curve correspond to u-coordinates for
+ * u-coordinates for the specified curve correspond to u-coordinates for
  * the curve used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as "position" or "uv".
@@ -293,7 +293,7 @@ CurveBuilder.prototype.position = function(curve, size) {
  * bitangent vector, respectively.
  * In general, the vector consists of three components.
  * @param {number} [semanticIndex] The set index of the attribute
- * for the given semantic.
+ * for the specified semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. If null, undefined, or omitted, the default is 0.
  * @param {number} [size] The number of elements in each position value. For
@@ -314,7 +314,7 @@ CurveBuilder.prototype.attribute = function(curve, semantic, semanticIndex, size
  * @param {number|string} semantic An attribute semantic, such
  * as "position" or "uv".
  * @param {number} [semanticIndex] The set index of the attribute
- * for the given semantic.
+ * for the specified semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. If null, undefined, or omitted, the default is 0.
  * @returns {CurveBuilder} This object.
@@ -348,7 +348,7 @@ CurveBuilder.prototype.constantAttribute = function(
  * @param {Array<number>|number|string} color A [color vector or string]{@link toGLColor}
  * identifying the constant color value. The alpha channel of the resulting color will be ignored.
  * @param {number} [semanticIndex] The set index of the attribute
- * for the given semantic.
+ * for the specified semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on. If null, undefined, or omitted, the default is 0.
  * @returns {CurveBuilder} This object.
  * @example <caption>This example sets the color to use for future
@@ -364,7 +364,7 @@ CurveBuilder.prototype.constantColor = function(color, semanticIndex) {
 /**
  * Convenience method for creating a mesh buffer from a parametric
  * curve. The mesh buffer will contain positions and vertex normals that
- * cover the given surface.
+ * cover the specified surface.
  * @param {Object} curve A [curve evaluator object]{@link Curve} that
  * describes the parametric curve used to generate positions.
  * @param {number} [mode] If this value is {@link MeshBuffer.LINES}, or is null, undefined, or omitted, generates
@@ -425,7 +425,7 @@ SurfaceBuilder.prototype.position = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate texture coordinates.
- * u- and v-coordinates for the given surface correspond to u- and v-coordinates, respectively, for
+ * u- and v-coordinates for the specified surface correspond to u- and v-coordinates, respectively, for
  * the surface used to generate vertex positions.
  * @param {number} [size] The number of elements in each value of the attribute. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
@@ -471,7 +471,7 @@ SurfaceBuilder._TexCoord = function(s) {
  * used to generate positions.
  * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
  * correspond to u- and v-coordinates, respectively, for
- * the given surface.
+ * the specified surface.
  * @param {number} [size] The number of elements in each position. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3. The texture coordinates will be 2-dimensional. Throws an error if this value is 0 or less.
@@ -491,7 +491,7 @@ SurfaceBuilder.prototype.positionTexCoord = function(surface, size) {
  * used to generate positions.
  * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
  * correspond to u- and v-coordinates, respectively, for
- * the given surface.
+ * the specified surface.
  * @param {number} [size] The number of elements in each position and normal. For
  * example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default
  * is 3. The texture coordinates will be 2-dimensional.
@@ -508,12 +508,12 @@ SurfaceBuilder.prototype.positionNormalTexCoord = function(surface, size) {
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate attribute values.
- * u- and v-coordinates for the given surface correspond to u- and v-coordinates, respectively, for
+ * u- and v-coordinates for the specified surface correspond to u- and v-coordinates, respectively, for
  * the surface used to generate vertex positions.
  * @param {number|string} semantic An attribute semantic, such
  * as "position" or "uv". For more, see CurveBuilder#attribute.
  * @param {number} [semanticIndex] The set index of the attribute
- * for the given semantic.
+ * for the specified semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. If null, undefined, or omitted, the default is 0.
  * @param {number} [size] The number of elements in each position and normal. For
@@ -540,7 +540,7 @@ SurfaceBuilder.prototype.attribute = function(surface, semantic, semanticIndex, 
  * @param {number|string} semantic An attribute semantic, such
  * as "position" or "uv". For more, see CurveBuilder#attribute.
  * @param {number} [semanticIndex] The set index of the attribute
- * for the given semantic.
+ * for the specified semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on.
  * This is ignored if "name" is a string. If null, undefined, or omitted, the default is 0.
  * @returns {SurfaceBuilder} This object.
@@ -572,7 +572,7 @@ SurfaceBuilder.prototype.constantAttribute = function(constantValue, semantic, s
  * @param {Array<number>|number|string} color A [color vector or string]{@link toGLColor}
  * identifying the constant color value. The alpha channel of the resulting color will be ignored.
  * @param {number} [semanticIndex] The set index of the attribute
- * for the given semantic.
+ * for the specified semantic.
  * 0 is the first index of the attribute, 1 is the second, and so on. If null, undefined, or omitted, the default is 0.
  * @returns {SurfaceBuilder} This object.
  * @example <caption>This example sets the color to use for future
@@ -589,13 +589,13 @@ SurfaceBuilder.prototype.constantColor = function(color, semanticIndex) {
 /**
  * Convenience method for creating a mesh buffer from a parametric
  * surface. The mesh buffer will contain positions, vertex normals, and
- * texture coordinates that cover the given surface.
+ * texture coordinates that cover the specified surface.
  * @param {Object} surface A [surface evaluator object]{@link Surface} that
  * describes the parametric surface
  * used to generate positions.
  * U and V texture coordinates, which will each be in the interval [0, 1] by this method,
  * correspond to u- and v-coordinates, respectively, for
- * the given surface.
+ * the specified surface.
  * @param {number} [mode] If this value is {@link MeshBuffer.TRIANGLES}, or is null, undefined, or omitted, generates a series of triangles defining the surface. If
  * this value is {@link MeshBuffer.LINES}, generates
  * a series of lines defining the surface. If this value is {@link MeshBuffer.POINTS},

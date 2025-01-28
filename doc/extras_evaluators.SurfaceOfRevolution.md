@@ -24,7 +24,7 @@ library.
 ### Methods
 
 * [endPoints](#extras_evaluators_SurfaceOfRevolution_endPoints)
-* [evaluate](#extras_evaluators_SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the given point of this surface.
+* [evaluate](#extras_evaluators_SurfaceOfRevolution_evaluate)<br>Finds the coordinates of the specified point of this surface.
 * [fromFunction](#extras_evaluators_SurfaceOfRevolution.fromFunction)<br>Creates a <a href="Surface.md">surface evaluator object</a> for a surface of revolution
 whose curve is the graph of a single-variable function.
 * [torus](#extras_evaluators_SurfaceOfRevolution.torus)<br>A <a href="Surface.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
@@ -35,7 +35,7 @@ whose curve is the graph of a single-variable function.
 <a name='extras_evaluators_SurfaceOfRevolution_evaluate'></a>
 ### module:extras/evaluators~SurfaceOfRevolution#evaluate(u, v)
 
-Finds the coordinates of the given point of this surface.
+Finds the coordinates of the specified point of this surface.
 
 #### Parameters
 
@@ -45,7 +45,7 @@ Finds the coordinates of the given point of this surface.
 #### Return Value
 
 An array containing the coordinates
-of the position at the given point. It will have three elements. (Type: Array.&lt;number>)
+of the position at the specified point. It will have three elements. (Type: Array.&lt;number>)
 
 <a name='extras_evaluators_SurfaceOfRevolution.fromFunction'></a>
 ### (static) module:extras/evaluators~SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
