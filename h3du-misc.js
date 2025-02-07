@@ -744,7 +744,7 @@ const clampRgba = function(x) {
  * <li>An array of four color components, each of which ranges from 0 to 1.
  * The three components are red, green, blue, and alpha in that order.</li>
  * <li>A string specifying an HTML or CSS color, in one of the formats mentioned
- * above in the method description.</li></ul></li>
+ * in the method description.</li></ul></li>
  * <li>A number specifying the red component. Must range from 0 to 1.</li>
  * </ul>
  * Returns (0,0,0,0) if this value is null.
