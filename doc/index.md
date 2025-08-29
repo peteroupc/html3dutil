@@ -56,7 +56,7 @@ and other polyhedra.
 * <a href="extras_meshes_starfield.StarField.md">module:extras/meshes/starfield.StarField</a><br>TODO: Not documented yet.
 * <a href="extras_meshes_stl.md">module:extras/meshes/stl</a><br>The <code>extras/meshes/stl.js</code> module.
 * <a href="extras_meshes_text.md">module:extras/meshes/text</a><br>The <code>extras/meshes/text.js</code> module.
-* <a href="extras_meshes_text.TextFont.md">module:extras/meshes/text.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
+* <a href="extras_meshes_text.TextFont.md">module:extras/meshes/text.TextFont</a><br>Represents an image font, which supports drawing two-dimensional
 text.
 * <a href="extras_moresurfaces.md">module:extras/moresurfaces</a><br>The <code>extras/moresurfaces.js</code> module.
 * <a href="extras_moresurfaces.KleinBottle.md">module:extras/moresurfaces.KleinBottle</a><br>Surface evaluator object for the Klein surface, also known as the "Klein bottle".

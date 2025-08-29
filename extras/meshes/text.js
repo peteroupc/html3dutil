@@ -14,10 +14,10 @@
 /* global DataView, H3DU, MeshBuffer, Promise, console */
 
 /**
- * Represents a bitmap font, which supports drawing two-dimensional
+ * Represents an image font, which supports drawing two-dimensional
  * text. This class supports
- * traditional bitmap fonts and signed distance field fonts.<p>
- * Bitmap fonts consist of a font definition file and one
+ * traditional image fonts, also known as BMFONT, and signed distance field fonts.<p>
+ * Image fonts consist of a font definition file and one
  * or more textures containing the shape of each font glyph. The glyphs
  * are packed so that the glyphs don't overlap each other.<p>
  * In a signed distance field font, each pixel's alpha value depends on the
@@ -37,7 +37,7 @@
  * page</a>.
  * <p>
  * See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
- * for a list of bitmap font generation tools. (No one tool is recommended over any
+ * for a list of image font generation tools. (No one tool is recommended over any
  * other, and the mention of this link is not an endorsement or sponsorship
  * of any particular tool.)<p>
  * NOTE: The constructor should not be called directly by applications.
@@ -272,9 +272,9 @@ TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * Can also contain the following keys:<ul>
  * <li><code>color</code> - A [color vector or string]{@link toGLColor} giving
  * the color to draw the text with.
- * If this value is given, the bitmap font is assumed to be a signed distance field
+ * If this value is given, the image font is assumed to be a signed distance field
  * font.
- * <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field
+ * <li><code>msdf</code> - Treat the image font as a multichannel signed distance field
  * font.
  * <li><code>texture</code> - An array of textures ({@link Texture}) to use with this font,
  * or a single {@link Texture} if only one texture page is used.
@@ -809,7 +809,7 @@ TextFont._loadTextFontInner = function(data) {
   return new TextFont(fontinfo, chars, pages, kernings, common, data.url);
 };
 /**
- * Loads a bitmap font definition from a file along with the textures
+ * Loads an image font definition from a file along with the textures
  * used by that font.
  * @param {string} fontFileName The URL of the font data file
  * to load. The following file extensions are read as the following formats:<ul>
@@ -870,10 +870,10 @@ TextFont.prototype.loadTextures = function(textureLoader) {
 };
 
 /**
- * Loads a bitmap font definition from a file.
- * Note that this method only loads the font data and not the bitmaps
+ * Loads an image font definition from a file.
+ * Note that this method only loads the font data and not the images
  * used to represent the font.
- * @param {ArrayBuffer} data The data containing a bitmap font definition.
+ * @param {ArrayBuffer} data The data containing an image font definition.
  * @param {string} fontFileName The URL of the font data file
  * to load. The following file extensions are read as the following formats:<ul>
  * <li>".xml": XML</li>
@@ -1332,7 +1332,7 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
 };
 /**
  * Loads a texture atlas definition from a file.
- * Note that this method only loads the texture atlas data and not the bitmaps
+ * Note that this method only loads the texture atlas data and not the images
  * used by the texture atlas.
  * @param {ArrayBuffer} data Data containing a texture atlas definition.
  * @param {string} atlasFileName The URL of the texture atlas to load.

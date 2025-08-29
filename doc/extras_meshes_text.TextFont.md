@@ -5,11 +5,11 @@
 <a name='extras_meshes_text.TextFont'></a>
 ### new module:extras/meshes/text.TextFont()
 
-Represents a bitmap font, which supports drawing two-dimensional
+Represents an image font, which supports drawing two-dimensional
 text. This class supports
-traditional bitmap fonts and signed distance field fonts.
+traditional image fonts, also known as BMFONT, and signed distance field fonts.
 
-Bitmap fonts consist of a font definition file and one
+Image fonts consist of a font definition file and one
 or more textures containing the shape of each font glyph. The glyphs
 are packed so that the glyphs don't overlap each other.
 
@@ -31,7 +31,7 @@ The JSON format is described at
 page</a>.
 
 See <a href="https://github.com/mattdesl/text-modules#bitmap-text">this page</a>
-for a list of bitmap font generation tools. (No one tool is recommended over any
+for a list of image font generation tools. (No one tool is recommended over any
 other, and the mention of this link is not an endorsement or sponsorship
 of any particular tool.)
 
@@ -51,9 +51,9 @@ the HTML 3D Library. Example:
 
 ### Methods
 
-* [loadData](#extras_meshes_text_TextFont.loadData)<br>Loads a bitmap font definition from a file.
+* [loadData](#extras_meshes_text_TextFont.loadData)<br>Loads an image font definition from a file.
 * [loadTextures](#extras_meshes_text_TextFont_loadTextures)<br>Loads the texture files used by this font object.
-* [loadWithTextures](#extras_meshes_text_TextFont.loadWithTextures)<br>Loads a bitmap font definition from a file along with the textures
+* [loadWithTextures](#extras_meshes_text_TextFont.loadWithTextures)<br>Loads an image font definition from a file along with the textures
 used by that font.
 * [makeTextMeshes](#extras_meshes_text_TextFont_makeTextMeshes)<br>Creates an array of meshes containing the primitives
 needed to draw text with this font.
@@ -65,13 +65,13 @@ draw text in the specified position, size, and color.
 <a name='extras_meshes_text_TextFont.loadData'></a>
 ### (static) module:extras/meshes/text~TextFont.loadData(data, fontFileName)
 
-Loads a bitmap font definition from a file.
-Note that this method only loads the font data and not the bitmaps
+Loads an image font definition from a file.
+Note that this method only loads the font data and not the images
 used to represent the font.
 
 #### Parameters
 
-* `data` (Type: ArrayBuffer)<br>The data containing a bitmap font definition.
+* `data` (Type: ArrayBuffer)<br>The data containing an image font definition.
 * `fontFileName` (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>".xml": XML</li> <li>".json": JSON</li> <li>".bin": Binary</li> <li>".fnt": Text or binary</li> <li>All others: Text</li></ul>
 
 #### Return Value
@@ -97,7 +97,7 @@ Texture object. (Type: Promise.&lt;H3DU.Texture>)
 <a name='extras_meshes_text_TextFont.loadWithTextures'></a>
 ### (static) module:extras/meshes/text~TextFont.loadWithTextures(fontFileName, textureLoader)
 
-Loads a bitmap font definition from a file along with the textures
+Loads an image font definition from a file along with the textures
 used by that font.
 
 #### Parameters
@@ -166,7 +166,7 @@ than the right and bottom coordinates, respectively).
 #### Parameters
 
 * `str` (Type: string)<br>The text to draw. Line breaks ("\n", "\r", "\r\n") are recognized by this method.
-* `params` (Type: Object)<br>An object described in TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="toGLColor.md">color vector or string</a> giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (Texture) to use with this font, or a single Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
+* `params` (Type: Object)<br>An object described in TextFont#makeTextMeshes. Can also contain the following keys:<ul> <li><code>color</code> - A <a href="toGLColor.md">color vector or string</a> giving the color to draw the text with. If this value is given, the image font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the image font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (Texture) to use with this font, or a single Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul>
 
 #### Return Value
 
