@@ -81,7 +81,7 @@ The `textureEffect` function takes these parameters:
 * `vec2 textureSize`: Size of the screenshot, pointed to by `sampler`, in pixels. `textureSize.x` is the
   width, and `textureSize.y` is the height.
 
-The `textureEffect` function returns a `vec4` (4-element vector) giving the color that the current pixel should be. The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color with that shade of gray.
+The `textureEffect` function returns a `vec4` (4-element vector) giving the color that the current pixel should be. The example above reads the current pixel's color, turns it to a shade of gray, and returns a new color with that shade of gray. Thus, the filter will convert the screen to grayscale tones.
 
 The shader can also define custom parameters called "uniforms", so called because their values are uniform for every run of the shader within a given draw call. Uniforms are declared by using a line like `uniform [type] [name];` at the top of the shader. Example: `uniform float time;` Uniforms, once declared, can be used in the `textureEffect` function.
 
