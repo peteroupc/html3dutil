@@ -20,11 +20,12 @@
  * Image fonts consist of a font definition file and one
  * or more textures containing the shape of each font glyph. The glyphs
  * are packed so that the glyphs don't overlap each other.<p>
- * In a signed distance field font, each pixel's alpha value depends on the
- * distance from that location to the edge of the glyph. A pixel alpha less
- * than 0.5 (127 in most image formats) means the pixel is outside the
- * glyph, greater than 0.5 means the pixel is inside the glyph, and 0 (for
- * outside the glyph) and 1 (for inside the glyph) means the pixel is
+ * In a signed distance field font, the point where each pixel lies has integer coordinates, and
+ * each pixel's alpha value depends on the
+ * distance from that location to the edge of the glyph. An alpha value less
+ * than 0.5 (127 in most image formats) means the point where the pixel is found is outside the
+ * glyph, greater than 0.5 means that point is inside the glyph, and 0 (for
+ * outside the glyph) and 1 (for inside the glyph) means that point is
  * outside a buffer zone formed by the glyph's outline. Each glyph is usually
  * given extra space to accommodate the signed distance field information.<p>
  * The font definition file formats supported are text (".fnt"),
@@ -40,6 +41,7 @@
  * for a list of image font generation tools. (No one tool is recommended over any
  * other, and the mention of this link is not an endorsement or sponsorship
  * of any particular tool.)<p>
+
  * NOTE: The constructor should not be called directly by applications.
  * Use the {@link TextFont.load} method to get an TextFont object. This
  * constructor's parameters are undocumented and are subject to change.
@@ -1014,7 +1016,7 @@ H3DU.TextureAtlas = function() {
  * orthographic projection where the left and top coordinates are less
  * than the right and bottom coordinates, respectively). The size of each
  * sprite will be in pixels; therefore, for best results, the coordinate system
- * should be scaled so that one unit equals one pixel.
+ * should be scaled so that one unit equals the spacing between pixels.
  * @param {Array<Object>} sprites An array of objects whose keys have
  * the possibilities given later, and whose values are those
  * allowed for each key.<ul>
