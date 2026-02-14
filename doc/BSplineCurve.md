@@ -203,8 +203,8 @@ in a B-spline curve.
 path as this one but has its u-coordinates remapped to fit the specified range.
 * [fromBezierCurve](#BSplineCurve.fromBezierCurve)<br>Creates a B-spline curve from the control points of a B&eacute;zier curve.
 * [fromConicCurve](#BSplineCurve.fromConicCurve)<br>Creates a B-spline curve from the control points of a conic curve as described
-in Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
-Derivations", 1996.
+in [Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations", 1996](https://developer.apple.com/library/archive/technotes/tn/tn1052.html).
 * [getControlPoints](#BSplineCurve_getControlPoints)<br>Gets a reference to the array of control points used
 in this curve object.
 * [getKnots](#BSplineCurve_getKnots)<br>Gets a reference to the array of knots used
@@ -429,13 +429,13 @@ curves.
 ### (static) BSplineCurve.fromConicCurve(controlPoints, lamda)
 
 Creates a B-spline curve from the control points of a conic curve as described
-in Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
-Derivations", 1996.
+in [Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
+Derivations", 1996](https://developer.apple.com/library/archive/technotes/tn/tn1052.html).
 
 #### Parameters
 
 * `controlPoints` (Type: Array.&lt;Array.&lt;number>>)<br>Same meaning as fromBezierCurve(), except there must be three control points.
-* `lamda` (Type: number)<br>Curvature parameter, which must be 0 or greater. If 1, same as a Bézier quadratic (degree-2) curve. If 0, same as a straight line segment between the first and third control point. If less than 1 (elliptical arc), then closer to 0 means closer to that straight line. If greater than 0 (hyperbola), then the larger, the closer to the straight-line path between the first and second and then from the second to the third control point.
+* `lamda` (Type: number)<br>Curvature parameter, which must be 0 or greater. If 1, same as a Bézier quadratic (degree-2) curve. If 0, same as a straight line segment between the first and third control point. If less than 1 (elliptical arc), then closer to 0 means closer to that straight line. If greater than 1 (hyperbola), then the larger, the closer to the straight-line path between the first and second and then from the second to the third control point.
 
 #### Return Value
 

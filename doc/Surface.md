@@ -20,6 +20,13 @@ and z(u, v) returns a z-coordinate.
 
 Classes or JavaScript objects defining parametric surfaces should implement
 the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
+<b>A note on trimming regions</b>
+
+A <i>trimming region</i> is a set of (u, v) points where a surface will be evaluated ("drawn"). Normally, the surface is "drawn" in the rectangular area in (u, v) space where 0&le;u&le;1 and 0&le;v&le;1. But with a trimming region, the surface is "drawn" only where the u- and v-coordinates are inside that region.
+
+The OpenGL Utility Library (GLU), as well as IRIS GL, implements a trimming region as a set of closed loops (made of one or more 2-D <a href="BSplineCurve.md">B-spline curves</a>) that don't intersect themselves or each other. Some of these loops may contain <i>rational</i> B-spline curves. The orientation of each loop determines whether it helps set the inside of the trimming region or whether it "pokes a hole" in that region. (In GLU, loops of the former kind run counterclockwise and others clockwise, assuming the positive u-axis runs to the right and the positive v-axis up.
+
+One way to approximate a surface using a trimming region is to "flatten" the curves on the trimming region (approximate them with line segments), then break the resulting shape into triangles, then evaluate ("draw") the surface within each triangle. This library currently does not have explicit support for trimming regions.
 
 #### Parameters
 

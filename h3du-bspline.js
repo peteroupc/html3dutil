@@ -714,6 +714,7 @@ BSplineCurve._fromHomogen = function(cp) {
   cp = cp.slice(0, cplen - 1);
   return cp;
 };
+
 /**
  * A [surface evaluator object]{@link Surface} for a B-spline (basis spline) surface,
  * whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
@@ -831,15 +832,15 @@ BSplineCurve.fromBezierCurve = function(controlPoints, bits) {
 
 /**
  * Creates a B-spline curve from the control points of a conic curve as described
- * in Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
- * Derivations", 1996.
+ * in [Apple TN1052, "QuickDraw GX ConicLibrary.c in Detail: Description and
+ * Derivations", 1996](https://developer.apple.com/library/archive/technotes/tn/tn1052.html).
  * @param {Array<Array<number>>} controlPoints Same meaning as fromBezierCurve(),
  * except there must be three control points.
  * @param {number} lamda Curvature parameter, which must be 0 or greater.
  * If 1, same as a Bézier quadratic (degree-2)
  * curve. If 0, same as a straight line segment between the first and third control point.
  * If less than 1 (elliptical arc), then closer to 0 means closer to that straight line.
- * If greater than 0 (hyperbola), then the larger, the closer to the
+ * If greater than 1 (hyperbola), then the larger, the closer to the
  * straight-line path between the first and second and then from the second to the
  * third control point.
  * @returns {BSplineCurve} Return value.
