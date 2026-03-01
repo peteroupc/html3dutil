@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_camera.Camera'></a>
+
 ### new module:extras/camera.Camera(fov, nearZ, farZ)
 
 A class for controlling the projection and
@@ -54,6 +55,7 @@ the same distance from a reference point.
 on the state of an input tracker.
 
 <a name='extras_camera_Camera_getDistance'></a>
+
 ### module:extras/camera~Camera#getDistance()
 
 Finds the distance from the camera's position to the reference point.
@@ -63,6 +65,7 @@ Finds the distance from the camera's position to the reference point.
 Return value. (Type: number)
 
 <a name='extras_camera_Camera_getPosition'></a>
+
 ### module:extras/camera~Camera#getPosition()
 
 Gets the position of the camera.
@@ -73,6 +76,7 @@ An array of three numbers giving
 the x-, y-, and z-coordinates of the camera's position, respectively. (Type: Array.&lt;number>)
 
 <a name='extras_camera_Camera_getVectorFromCenter'></a>
+
 ### module:extras/camera~Camera#getVectorFromCenter()
 
 Gets the 3-element vector that points from the reference
@@ -85,6 +89,7 @@ vector (a <a href="MathUtil.md#MathUtil.vec3normalize">"normalized" vector</a> w
 Returns (0,0,0) if the reference point is the same as the camera's position. (Type: Array.&lt;number>)
 
 <a name='extras_camera_Camera_moveAngleHorizontal'></a>
+
 ### module:extras/camera~Camera#moveAngleHorizontal(angleDegrees)
 
 Moves the camera to the left or right so that it faces
@@ -99,6 +104,7 @@ the same reference point at the same distance.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_moveAngleVertical'></a>
+
 ### module:extras/camera~Camera#moveAngleVertical(angleDegrees)
 
 Moves the camera upward or downward so that it faces
@@ -113,6 +119,7 @@ the same reference point at the same distance.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_moveClose'></a>
+
 ### module:extras/camera~Camera#moveClose(dist)
 
 Moves the camera the specified distance, but not too close
@@ -127,6 +134,7 @@ to the reference point.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_moveForward'></a>
+
 ### module:extras/camera~Camera#moveForward(dist)
 
 Moves the camera forward the specified distance.
@@ -140,6 +148,7 @@ Moves the camera forward the specified distance.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_moveHorizontal'></a>
+
 ### module:extras/camera~Camera#moveHorizontal(dist)
 
 Moves the camera horizontally relative to the camera's up vector.
@@ -153,6 +162,7 @@ Moves the camera horizontally relative to the camera's up vector.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_moveVertical'></a>
+
 ### module:extras/camera~Camera#moveVertical(dist)
 
 Moves the camera toward or away from the camera's up vector.
@@ -166,6 +176,7 @@ Moves the camera toward or away from the camera's up vector.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_setDistance'></a>
+
 ### module:extras/camera~Camera#setDistance(dist)
 
 Moves the camera a given distance from the reference
@@ -180,6 +191,7 @@ point without changing its orientation.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_setPosition'></a>
+
 ### module:extras/camera~Camera#setPosition(cx, [cy], [cz])
 
 Sets the position of the camera.
@@ -195,6 +207,7 @@ Sets the position of the camera.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_turnAngleHorizontal'></a>
+
 ### module:extras/camera~Camera#turnAngleHorizontal(angleDegrees)
 
 Turns the camera to the left or right so that it faces
@@ -209,6 +222,7 @@ the same distance from a reference point.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_turnAngleVertical'></a>
+
 ### module:extras/camera~Camera#turnAngleVertical(angleDegrees)
 
 Turns the camera upward or downward so that it faces
@@ -223,6 +237,7 @@ the same distance from a reference point.
 This object. (Type: Camera)
 
 <a name='extras_camera_Camera_update'></a>
+
 ### module:extras/camera~Camera#update([input])
 
 Updates information about this camera based

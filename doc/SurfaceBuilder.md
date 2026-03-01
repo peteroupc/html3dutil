@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='SurfaceBuilder'></a>
+
 ### new SurfaceBuilder()
 
 An evaluator of surface evaluator objects for generating
@@ -33,6 +34,7 @@ surface.
 generated so far.
 
 <a name='SurfaceBuilder_attribute'></a>
+
 ### SurfaceBuilder#attribute(surface, semantic, [semanticIndex], [size])
 
 Sets the parametric surface used to generate vertex attribute values.
@@ -59,6 +61,7 @@ texture coordinates.
     "use strict"; return [u,v] }},"uv");
 
 <a name='SurfaceBuilder_clearVertices'></a>
+
 ### SurfaceBuilder#clearVertices()
 
 Clears the arrays of attribute values (such as positions and normals)
@@ -69,6 +72,7 @@ and vertex indices generated so far. The attributes themselves will remain.
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder_constantAttribute'></a>
+
 ### SurfaceBuilder#constantAttribute(constantValue, semantic, [semanticIndex])
 
 Sets a value for an attribute semantic that will be the same for all
@@ -93,6 +97,7 @@ vertices to be generated for the surface.
     surface.constantAttribute([1,0,0],"COLOR");
 
 <a name='SurfaceBuilder_constantColor'></a>
+
 ### SurfaceBuilder#constantColor(color, [semanticIndex])
 
 Sets a value for a color attribute that will be the same for all
@@ -116,6 +121,7 @@ vertices to be generated for the surface.
     surface.constantColor("red");
 
 <a name='SurfaceBuilder_evalSurface'></a>
+
 ### SurfaceBuilder#evalSurface([mode], [un], [vn], [u1], [u2], [v1], [v2])
 
 Generates the vertex attributes of the parametric surfaces.
@@ -135,6 +141,7 @@ Generates the vertex attributes of the parametric surfaces.
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder_position'></a>
+
 ### SurfaceBuilder#position(surface, [size])
 
 Sets the parametric surface used to generate vertex positions.
@@ -149,6 +156,7 @@ Sets the parametric surface used to generate vertex positions.
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder_positionNormal'></a>
+
 ### SurfaceBuilder#positionNormal(surface, [size])
 
 Sets the parametric surface used to generate vertex positions and normals.
@@ -163,6 +171,7 @@ Sets the parametric surface used to generate vertex positions and normals.
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder_positionNormalTexCoord'></a>
+
 ### SurfaceBuilder#positionNormalTexCoord(surface, [size])
 
 Sets the parametric surface used to generate vertex positions and normals, and
@@ -178,6 +187,7 @@ sets a surface evaluator that generates texture coordinates in the interval [0, 
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder_positionTexCoord'></a>
+
 ### SurfaceBuilder#positionTexCoord(surface, [size])
 
 Sets the parametric surface used to generate vertex positions, and
@@ -193,6 +203,7 @@ sets a surface evaluator that generates texture coordinates in the interval [0, 
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder.surfaceToBuffer'></a>
+
 ### (static) SurfaceBuilder.surfaceToBuffer(surface, [mode], [un], [vn], [u1], [u2], [v1], [v2])
 
 Convenience method for creating a mesh buffer from a parametric
@@ -215,6 +226,7 @@ texture coordinates that cover the specified surface.
 The generated mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 <a name='SurfaceBuilder_texCoord'></a>
+
 ### SurfaceBuilder#texCoord(surface, [size])
 
 Sets the parametric surface used to generate texture coordinates.
@@ -229,6 +241,7 @@ Sets the parametric surface used to generate texture coordinates.
 This object. (Type: <a href="SurfaceBuilder.md">SurfaceBuilder</a>)
 
 <a name='SurfaceBuilder_toMeshBuffer'></a>
+
 ### SurfaceBuilder#toMeshBuffer()
 
 Generates a mesh buffer containing the vertex attributes

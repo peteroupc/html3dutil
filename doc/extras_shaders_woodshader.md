@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_woodshader'></a>
+
 ### module:extras/shaders/woodshader()
 
 The <code>extras/shaders/woodshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [woodShader](#extras_shaders_woodshader.woodShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_woodshader.woodShader'></a>
+
 ### module:extras/shaders/woodshader.woodShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

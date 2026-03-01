@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='BSplineSurface'></a>
+
 ### new BSplineSurface(controlPoints, knotsU, knotsV, [bits])
 
 **Augments:** <a href="Surface.md">Surface</a>
@@ -55,6 +56,7 @@ in this curve object.
 * [uniform](#BSplineSurface.uniform)<br>Creates a B-spline surface with uniform knots.
 
 <a name='BSplineSurface_bitangent'></a>
+
 ### BSplineSurface#bitangent(u, v)
 
 Finds the <a href="Surface.md">bitangent vector</a> at the specified point on the surface.
@@ -71,6 +73,7 @@ It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
 <a name='BSplineSurface.clamped'></a>
+
 ### (static) BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])
 
 Creates a B-spline surface with uniform knots, except that
@@ -89,6 +92,7 @@ Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSplineSurface.md">BSplineSurface</a>)
 
 <a name='BSplineSurface_endPoints'></a>
+
 ### BSplineSurface#endPoints()
 
 Returns the starting and ending u- and v-coordinates of this surface.
@@ -104,6 +108,7 @@ Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn't implement an <code>en
 method.
 
 <a name='BSplineSurface_evaluate'></a>
+
 ### BSplineSurface#evaluate(u, v)
 
 Evaluates the surface function based on a point
@@ -121,6 +126,7 @@ the evaluation. It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
 <a name='BSplineSurface.fromBezierSurface'></a>
+
 ### (static) BSplineSurface.fromBezierSurface(controlPoints, [bits])
 
 Creates a B-spline surface from the control points of a B&eacute;zier surface.
@@ -135,6 +141,7 @@ Creates a B-spline surface from the control points of a B&eacute;zier surface.
 Return value. (Type: <a href="BSplineSurface.md">BSplineSurface</a>)
 
 <a name='BSplineSurface_getControlPoints'></a>
+
 ### BSplineSurface#getControlPoints()
 
 Gets a reference to the array of control point arrays used
@@ -145,6 +152,7 @@ in this surface object.
 An object described in the constructor to <a href="BSplineCurve.md">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='BSplineSurface_getKnots'></a>
+
 ### BSplineSurface#getKnots()
 
 Gets a reference to the array of knot vectors used
@@ -155,6 +163,7 @@ in this curve object.
 An object described in the constructor to <a href="BSplineSurface.md">BSplineSurface</a>. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='BSplineSurface_gradient'></a>
+
 ### BSplineSurface#gradient(u, v)
 
 Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.
@@ -214,6 +223,7 @@ The result is the gradient, which will point up and away from the surface.
     }})
 
 <a name='BSplineSurface_normal'></a>
+
 ### BSplineSurface#normal(u, v)
 
 Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
@@ -230,6 +240,7 @@ An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
 <a name='BSplineSurface_tangent'></a>
+
 ### BSplineSurface#tangent(u, v)
 
 Finds the <a href="Surface.md">tangent vector</a> at the specified point on the surface.
@@ -246,6 +257,7 @@ It will have as many elements as a control point (or one fewer
 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number>)
 
 <a name='BSplineSurface.uniform'></a>
+
 ### (static) BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])
 
 Creates a B-spline surface with uniform knots.

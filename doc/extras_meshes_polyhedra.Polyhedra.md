@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_polyhedra.Polyhedra'></a>
+
 ### new module:extras/meshes/polyhedra.Polyhedra()
 
 Contains helper methods for generating the five platonic solids
@@ -30,6 +31,7 @@ array to a fixed radius.
 * [tetrahedronFaces](#extras_meshes_polyhedra_Polyhedra.tetrahedronFaces)<br>Gets the vertices of a tetrahedron with radius 1.
 
 <a name='extras_meshes_polyhedra_Polyhedra.dodecahedron'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.dodecahedron(radius, level)
 
 Generates a mesh of a regular dodecahedron or a sphere based on that solid.
@@ -44,6 +46,7 @@ Generates a mesh of a regular dodecahedron or a sphere based on that solid.
 The generated solid. (Type: THREE.BufferGeometry)
 
 <a name='extras_meshes_polyhedra_Polyhedra.dodecahedronFaces'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.dodecahedronFaces()
 
 Gets the vertices of a dodecahedron with maximum radius 1.
@@ -58,6 +61,7 @@ each element by 3 will get the index to the first coordinate of the correspondin
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.dodecahedronFacesCompact'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.dodecahedronFacesCompact()
 
 Gets a more compact representation of the vertices of a dodecahedron
@@ -73,6 +77,7 @@ each element by 3 will get the index to the first coordinate of the correspondin
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.hexahedron'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.hexahedron(radius, level)
 
 Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
@@ -87,6 +92,7 @@ Generates a mesh of a regular hexahedron (cube) or a sphere based on that solid.
 The generated solid. (Type: THREE.BufferGeometry)
 
 <a name='extras_meshes_polyhedra_Polyhedra.hexahedronFaces'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.hexahedronFaces()
 
 Gets the vertices of a hexahedron (cube) with maximum radius 1.
@@ -101,6 +107,7 @@ each element by 3 will get the index to the first coordinate of the correspondin
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.hexahedronFacesCompact'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.hexahedronFacesCompact()
 
 Gets a more compact representation of the vertices of a hexahedron
@@ -116,6 +123,7 @@ each element by 3 will get the index to the first coordinate of the correspondin
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.icosahedron'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.icosahedron(radius, level)
 
 Generates a mesh of a regular icosahedron or a sphere based on that solid.
@@ -130,6 +138,7 @@ Generates a mesh of a regular icosahedron or a sphere based on that solid.
 The generated solid. (Type: THREE.BufferGeometry)
 
 <a name='extras_meshes_polyhedra_Polyhedra.icosahedronFaces'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.icosahedronFaces()
 
 Gets the vertices of a regular icosahedron with maximum radius 1.
@@ -144,6 +153,7 @@ each element by 3 will get the index to the first coordinate of the correspondin
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.makeSphere'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.makeSphere(vi, radius, level)
 
 Modifies the vertices and indices of a solid to
@@ -160,6 +170,7 @@ generate an approximation of a sphere.
 The "vi" parameter, which will likely be modified. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.normDistances'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.normDistances(vertices, radius)
 
 Normalizes the distance from the origin to each vertex in the specified
@@ -175,6 +186,7 @@ array to a fixed radius.
 Return value. (Type: Object)
 
 <a name='extras_meshes_polyhedra_Polyhedra.octahedron'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.octahedron(radius, level)
 
 Generates a mesh of a regular octahedron or a sphere based on that solid.
@@ -189,6 +201,7 @@ Generates a mesh of a regular octahedron or a sphere based on that solid.
 The generated solid. (Type: THREE.BufferGeometry)
 
 <a name='extras_meshes_polyhedra_Polyhedra.octahedronFaces'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.octahedronFaces()
 
 Gets the vertices of a regular octahedron with radius 1.
@@ -203,6 +216,7 @@ each element by 3 will get the index to the first coordinate of the correspondin
 vertex in the first array). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='extras_meshes_polyhedra_Polyhedra.tetrahedron'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.tetrahedron(radius, level)
 
 Generates a mesh of a regular tetrahedron or a sphere based on that solid.
@@ -217,6 +231,7 @@ Generates a mesh of a regular tetrahedron or a sphere based on that solid.
 The generated solid. (Type: THREE.BufferGeometry)
 
 <a name='extras_meshes_polyhedra_Polyhedra.tetrahedronFaces'></a>
+
 ### (static) module:extras/meshes/polyhedra~Polyhedra.tetrahedronFaces()
 
 Gets the vertices of a tetrahedron with radius 1.

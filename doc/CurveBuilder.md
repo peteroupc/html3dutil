@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='CurveBuilder'></a>
+
 ### new CurveBuilder()
 
 An evaluator of curve evaluator objects for generating
@@ -27,6 +28,7 @@ curve.
 generated so far.
 
 <a name='CurveBuilder_attribute'></a>
+
 ### CurveBuilder#attribute(curve, semantic, [semanticIndex], [size])
 
 Sets the parametric curve used to generate vertex attribute values.
@@ -57,6 +59,7 @@ Sets the parametric curve used to generate vertex attribute values.
 This object. (Type: <a href="CurveBuilder.md">CurveBuilder</a>)
 
 <a name='CurveBuilder_clearVertices'></a>
+
 ### CurveBuilder#clearVertices()
 
 Clears the arrays of attribute values (such as positions and normals)
@@ -67,6 +70,7 @@ and vertex indices generated so far. The attributes themselves will remain.
 This object. (Type: <a href="CurveBuilder.md">CurveBuilder</a>)
 
 <a name='CurveBuilder_constantAttribute'></a>
+
 ### CurveBuilder#constantAttribute(constantValue, semantic, [semanticIndex])
 
 Sets a value for an attribute semantic that will be the same for all
@@ -91,6 +95,7 @@ vertices to be generated for the curve.
     curve.constantAttribute([1,0,0],"COLOR");
 
 <a name='CurveBuilder_constantColor'></a>
+
 ### CurveBuilder#constantColor(color, [semanticIndex])
 
 Sets a value for a color attribute that will be the same for all
@@ -114,6 +119,7 @@ vertices to be generated for the curve.
     curve.constantColor("red");
 
 <a name='CurveBuilder.curveToBuffer'></a>
+
 ### (static) CurveBuilder.curveToBuffer(curve, [mode], [n], [u1], [u2])
 
 Convenience method for creating a mesh buffer from a parametric
@@ -133,6 +139,7 @@ cover the specified surface.
 The generated mesh buffer. (Type: <a href="MeshBuffer.md">MeshBuffer</a>)
 
 <a name='CurveBuilder_evalCurve'></a>
+
 ### CurveBuilder#evalCurve([mode], [n], [u1], [u2])
 
 Generates the vertex attributes of the parametric curves.
@@ -149,6 +156,7 @@ Generates the vertex attributes of the parametric curves.
 This object. (Type: <a href="CurveBuilder.md">CurveBuilder</a>)
 
 <a name='CurveBuilder_position'></a>
+
 ### CurveBuilder#position(curve, [size])
 
 Sets the parametric curve used to generate vertex positions.
@@ -163,6 +171,7 @@ Sets the parametric curve used to generate vertex positions.
 This object. (Type: <a href="CurveBuilder.md">CurveBuilder</a>)
 
 <a name='CurveBuilder_toMeshBuffer'></a>
+
 ### CurveBuilder#toMeshBuffer()
 
 Generates a mesh buffer containing the vertex attributes

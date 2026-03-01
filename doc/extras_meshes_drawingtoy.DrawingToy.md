@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_drawingtoy.DrawingToy'></a>
+
 ### new module:extras/meshes/drawingtoy.DrawingToy()
 
 Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels. Curves generated currently assume that the radius of each ring and wheel is equal to its tooth count divided by 5.
@@ -16,6 +17,7 @@ Generates curves similar to those possible using commercially available drawing 
 * [toMeshBuffer](#extras_meshes_drawingtoy_DrawingToy_toMeshBuffer)<br>TODO: Not documented yet.
 
 <a name='extras_meshes_drawingtoy_DrawingToy_continuousHypo'></a>
+
 ### module:extras/meshes/drawingtoy~DrawingToy#continuousHypo(ringTeeth, wheelTeeth, hole, [phase], offset, holeStep, offsetStep, count)
 
 Adds line segments that approximate one or more curves drawn by rolling a wheel inside a fixed ring (<i>hypotrochoids</i>), where each additional curve may be drawn from a different hole position, a different ring position, or both.
@@ -36,6 +38,7 @@ Adds line segments that approximate one or more curves drawn by rolling a wheel 
 This object. (Type: DrawingToy)
 
 <a name='extras_meshes_drawingtoy_DrawingToy_epi'></a>
+
 ### module:extras/meshes/drawingtoy~DrawingToy#epi(ringTeeth, wheelTeeth, hole, [phase])
 
 Adds line segments that approximate a curve drawn by rolling a wheel outside a fixed ring (an <i>epitrochoid</i>).
@@ -52,6 +55,7 @@ Adds line segments that approximate a curve drawn by rolling a wheel outside a f
 This object. (Type: DrawingToy)
 
 <a name='extras_meshes_drawingtoy_DrawingToy_hypo'></a>
+
 ### module:extras/meshes/drawingtoy~DrawingToy#hypo(ringTeeth, wheelTeeth, hole, [phase], [offset])
 
 Adds line segments that approximate a curve drawn by rolling a wheel inside a fixed ring (a <i>hypotrochoid</i>).
@@ -69,6 +73,7 @@ Adds line segments that approximate a curve drawn by rolling a wheel inside a fi
 This object. (Type: DrawingToy)
 
 <a name='extras_meshes_drawingtoy_DrawingToy_setColor'></a>
+
 ### module:extras/meshes/drawingtoy~DrawingToy#setColor(color)
 
 Sets the color to apply when drawing future curves with this object.
@@ -82,6 +87,7 @@ Sets the color to apply when drawing future curves with this object.
 This object. (Type: DrawingToy)
 
 <a name='extras_meshes_drawingtoy_DrawingToy_toMeshBuffer'></a>
+
 ### module:extras/meshes/drawingtoy~DrawingToy#toMeshBuffer()
 
 TODO: Not documented yet.

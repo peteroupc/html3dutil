@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_curvetube'></a>
+
 ### module:extras/curvetube()
 
 The <code>extras/curvetube.js</code> module.

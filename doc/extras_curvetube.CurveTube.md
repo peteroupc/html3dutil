@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_curvetube.CurveTube'></a>
+
 ### new module:extras/curvetube.CurveTube(func, [thickness], [sweptCurve])
 
 A <a href="Surface.md">surface evaluator object</a> for a tube extruded from a parametric curve.
@@ -23,6 +24,7 @@ library.
 * [evaluate](#extras_curvetube_CurveTube_evaluate)<br>Generates a point on the extruded tube from the specified u- and v-coordinates.
 
 <a name='extras_curvetube_CurveTube_endPoints'></a>
+
 ### module:extras/curvetube~CurveTube#endPoints()
 
 Returns the starting and ending u- and v-coordinates of this surface.
@@ -39,6 +41,7 @@ section curve is defined, those v-coordinates will be that curve's end points (o
 if it doesn't implement an <code>endPoints</code> method).
 
 <a name='extras_curvetube_CurveTube_evaluate'></a>
+
 ### module:extras/curvetube~CurveTube#evaluate(u, v)
 
 Generates a point on the extruded tube from the specified u- and v-coordinates.

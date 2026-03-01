@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_fragmentshaderlib'></a>
+
 ### module:extras/shaders/fragmentshaderlib()
 
 The <code>extras/shaders/fragmentshaderlib.js</code> module.
@@ -18,6 +19,7 @@ To import all symbols in this module, either of the following can be used:
 for shaders, especially fragment shaders.
 
 <a name='extras_shaders_fragmentshaderlib.fragmentShaderLib'></a>
+
 ### (static) module:extras/shaders/fragmentshaderlib.fragmentShaderLib()
 
 Returns GLSL shader code for several useful functions

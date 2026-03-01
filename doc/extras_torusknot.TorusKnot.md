@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_torusknot.TorusKnot'></a>
+
 ### new module:extras/torusknot.TorusKnot(revolutions, r, q, s1, m1)
 
 A curve evaluator object for a torus knot or torus-knot-like curve.
@@ -23,6 +24,7 @@ by L. D. Taylor, 2011.
 * [simple](#extras_torusknot_TorusKnot.simple)<br>Generates a torus knot with simple parameters.
 
 <a name='extras_torusknot_TorusKnot.interlaced'></a>
+
 ### (static) module:extras/torusknot~TorusKnot.interlaced(p, q, r1, s1)
 
 TODO: Not documented yet.
@@ -39,6 +41,7 @@ TODO: Not documented yet.
 The resulting torus knot evaluator. (Type: TorusKnot)
 
 <a name='extras_torusknot_TorusKnot.simple'></a>
+
 ### (static) module:extras/torusknot~TorusKnot.simple(p, q, r1)
 
 Generates a torus knot with simple parameters.

@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_waterpaintshader'></a>
+
 ### module:extras/shaders/waterpaintshader()
 
 The <code>extras/shaders/waterpaintshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [waterpaintShader](#extras_shaders_waterpaintshader.waterpaintShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_waterpaintshader.waterpaintShader'></a>
+
 ### module:extras/shaders/waterpaintshader.waterpaintShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

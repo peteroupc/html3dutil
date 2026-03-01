@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_evaluators.SurfaceOfRevolution'></a>
+
 ### new module:extras/evaluators.SurfaceOfRevolution(curve, minval, maxval, [axis])
 
 A <a href="Surface.md">surface evaluator object</a> for a surface of revolution,
@@ -30,9 +31,11 @@ whose curve is the graph of a single-variable function.
 * [torus](#extras_evaluators_SurfaceOfRevolution.torus)<br>A <a href="Surface.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.
 
 <a name='extras_evaluators_SurfaceOfRevolution_endPoints'></a>
+
 ### module:extras/evaluators~SurfaceOfRevolution#endPoints()
 
 <a name='extras_evaluators_SurfaceOfRevolution_evaluate'></a>
+
 ### module:extras/evaluators~SurfaceOfRevolution#evaluate(u, v)
 
 Finds the coordinates of the specified point of this surface.
@@ -48,6 +51,7 @@ An array containing the coordinates
 of the position at the specified point. It will have three elements. (Type: Array.&lt;number>)
 
 <a name='extras_evaluators_SurfaceOfRevolution.fromFunction'></a>
+
 ### (static) module:extras/evaluators~SurfaceOfRevolution.fromFunction(func, minval, maxval, [axis])
 
 Creates a <a href="Surface.md">surface evaluator object</a> for a surface of revolution
@@ -96,6 +100,7 @@ which runs from 5 to 10 units, and with a radius of 2 units.
     5, 10);
 
 <a name='extras_evaluators_SurfaceOfRevolution.torus'></a>
+
 ### (static) module:extras/evaluators~SurfaceOfRevolution.torus(outerRadius, innerRadius, [curve], [axis])
 
 A <a href="Surface.md">surface evaluator object</a> for a torus, a special case of a surface of revolution.

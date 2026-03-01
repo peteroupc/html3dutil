@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_randompolygon'></a>
+
 ### module:extras/randompolygon()
 
 Contains a method to generate a simple polygon at random.
@@ -18,6 +19,7 @@ To import all symbols in this module, either of the following can be used:
 * [randomPolygon](#extras_randompolygon.randomPolygon)<br>Generates a simple polygon at random.
 
 <a name='extras_randompolygon.randomPolygon'></a>
+
 ### (static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, [irregular], [spiky])
 
 Generates a simple polygon at random.

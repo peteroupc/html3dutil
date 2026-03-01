@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_horgradshader'></a>
+
 ### module:extras/shaders/horgradshader()
 
 Horizontal gradient shader.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [horGradientShader](#extras_shaders_horgradshader.horGradientShader)<br>GLSL shader code for a screen-space horizontal gradient.
 
 <a name='extras_shaders_horgradshader.horGradientShader'></a>
+
 ### module:extras/shaders/horgradshader.horGradientShader (constant)
 
 GLSL shader code for a screen-space horizontal gradient.

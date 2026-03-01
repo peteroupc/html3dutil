@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='Curve'></a>
+
 ### new Curve(curve, [curveParam])
 
 A curve evaluator object for a parametric curve.
@@ -114,6 +115,7 @@ an <i>arc length parameterization</i>.
 * [velocity](#Curve_velocity)<br>Finds an approximate velocity vector at the specified u-coordinate of this curve.
 
 <a name='Curve_accel'></a>
+
 ### Curve#accel(u)
 
 Finds an approximate acceleration vector at the specified u-coordinate of this curve.
@@ -133,6 +135,7 @@ An array describing an acceleration vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='Curve_arcLength'></a>
+
 ### Curve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
@@ -151,6 +154,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 The approximate arc length of this curve at the specified u-coordinate. (Type: number)
 
 <a name='Curve_changeEnds'></a>
+
 ### Curve#changeEnds(ep1, ep2)
 
 Creates a curve evaluator object for a curve that is generated using
@@ -179,6 +183,7 @@ also be used to grow the path of the curve.
 Return value. (Type: <a href="Curve.md">Curve</a>)
 
 <a name='Curve_endPoints'></a>
+
 ### Curve#endPoints()
 
 Returns the starting and ending u-coordinates of this curve.
@@ -191,6 +196,7 @@ Returns <code>[0, 1]</code> if the evaluator doesn't implement an <code>endPoint
 method.
 
 <a name='Curve_evaluate'></a>
+
 ### Curve#evaluate(u)
 
 Finds the position of this curve at the specified u-coordinate.
@@ -205,6 +211,7 @@ An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='Curve_fitRange'></a>
+
 ### Curve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
@@ -223,6 +230,7 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.
 Return value. (Type: <a href="Curve.md">Curve</a>)
 
 <a name='Curve_getLength'></a>
+
 ### Curve#getLength()
 
 Convenience method for getting the total length of this curve.
@@ -232,6 +240,7 @@ Convenience method for getting the total length of this curve.
 The distance from the start of the curve to its end. (Type: number)
 
 <a name='Curve_getPoints'></a>
+
 ### Curve#getPoints(count)
 
 Gets an array of positions on the curve at fixed intervals
@@ -250,6 +259,7 @@ element will be the start of the curve. If "count" is 2 or greater, the last ele
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
 
 <a name='Curve_getPointsAsObjects'></a>
+
 ### Curve#getPointsAsObjects(count)
 
 Gets an array of positions on the curve at fixed intervals
@@ -278,6 +288,7 @@ The following example initializes a three.js BufferGeometry with the points retr
     .setFromPoints(points);
 
 <a name='Curve_jerk'></a>
+
 ### Curve#jerk(u)
 
 Finds an approximate jerk vector at the specified u-coordinate of this curve.
@@ -297,6 +308,7 @@ An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='Curve_normal'></a>
+
 ### Curve#normal(u)
 
 Finds an approximate principal normal vector at the specified u-coordinate of this curve.
@@ -317,6 +329,7 @@ An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='Curve_tangent'></a>
+
 ### Curve#tangent(u)
 
 Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
@@ -332,6 +345,7 @@ An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='Curve_toArcLengthParam'></a>
+
 ### Curve#toArcLengthParam()
 
 Gets a curve evaluator object for a curve that follows the same
@@ -365,6 +379,7 @@ on a curve.
     var point = arclen.evaluate(Math.random()*arclen.getLength())
 
 <a name='Curve_velocity'></a>
+
 ### Curve#velocity(u)
 
 Finds an approximate velocity vector at the specified u-coordinate of this curve.

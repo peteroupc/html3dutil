@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_starpolygon'></a>
+
 ### module:extras/starpolygon()
 
 The <code>extras/starpolygon.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [starPolygon](#extras_starpolygon.starPolygon)<br>Generates a star polygon <code>{points/jump}</code>.
 
 <a name='extras_starpolygon.starPolygon'></a>
+
 ### (static) module:extras/starpolygon.starPolygon(x, y, radius, points, jump, [phaseInDegrees])
 
 Generates a star polygon <code>{points/jump}</code>.

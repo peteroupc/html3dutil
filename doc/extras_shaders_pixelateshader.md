@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_pixelateshader'></a>
+
 ### module:extras/shaders/pixelateshader()
 
 The <code>extras/shaders/pixelateshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [pixelateShader](#extras_shaders_pixelateshader.pixelateShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_pixelateshader.pixelateShader'></a>
+
 ### module:extras/shaders/pixelateshader.pixelateShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

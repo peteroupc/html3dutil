@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_camera'></a>
+
 ### module:extras/camera()
 
 The <code>extras/camera.js</code> module.

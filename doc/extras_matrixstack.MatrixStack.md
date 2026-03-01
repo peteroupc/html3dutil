@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_matrixstack.MatrixStack'></a>
+
 ### new module:extras/matrixstack.MatrixStack()
 
 This class implements a stack
@@ -43,6 +44,7 @@ scaling transformation.
 translation transformation.
 
 <a name='extras_matrixstack_MatrixStack_frustum'></a>
+
 ### module:extras/matrixstack~MatrixStack#frustum(l, r, b, t, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -64,6 +66,7 @@ For more information on the frustum matrix and the parameters, see <a href="Math
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_get'></a>
+
 ### module:extras/matrixstack~MatrixStack#get()
 
 Gets a copy of the matrix at the top of this stack.
@@ -73,6 +76,7 @@ Gets a copy of the matrix at the top of this stack.
 . (Type: Array.&lt;number>)
 
 <a name='extras_matrixstack_MatrixStack_loadIdentity'></a>
+
 ### module:extras/matrixstack~MatrixStack#loadIdentity()
 
 Modifies the matrix at the top of this stack by replacing it with the identity matrix.
@@ -82,6 +86,7 @@ Modifies the matrix at the top of this stack by replacing it with the identity m
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_loadMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#loadMatrix(mat)
 
 Modifies the matrix at the top of this stack by replacing it with the specified matrix.
@@ -95,6 +100,7 @@ Modifies the matrix at the top of this stack by replacing it with the specified 
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_loadTransposeMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#loadTransposeMatrix(mat)
 
 Modifies the matrix at the top of this stack by replacing it with the
@@ -109,6 +115,7 @@ transpose of the specified matrix.
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_lookAt'></a>
+
 ### module:extras/matrixstack~MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -133,6 +140,7 @@ For more information on that matrix and the parameters, see <a href="MathUtil.md
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_multMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#multMatrix(mat)
 
 Modifies the matrix at the top of this stack by multiplying it by another matrix.
@@ -151,6 +159,7 @@ the effect of scaling then translation.
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_multTransposeMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#multTransposeMatrix(mat)
 
 Modifies the matrix at the top of this stack by multiplying it by the transpose of another matrix. Both matrices are multiplied such that the transformation described
@@ -169,6 +178,7 @@ the effect of translation than scaling.
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_ortho'></a>
+
 ### module:extras/matrixstack~MatrixStack#ortho(l, r, b, t, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -190,6 +200,7 @@ For more information on the projection matrix and the parameters, see <a href="M
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_ortho2d'></a>
+
 ### module:extras/matrixstack~MatrixStack#ortho2d(l, r, b, t)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -209,6 +220,7 @@ For more information on that matrix and the parameters, see <a href="MathUtil.md
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_perspective'></a>
+
 ### module:extras/matrixstack~MatrixStack#perspective(fov, aspect, n, f)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -228,6 +240,7 @@ For more information on that matrix and the parameters, see <a href="MathUtil.md
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_pickMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#pickMatrix(wx, wy, ww, wh, vp)
 
 Modifies the matrix at the top of this stack by multiplying it by
@@ -248,6 +261,7 @@ For more information on that matrix and the parameters, see <a href="MathUtil.md
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_popMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#popMatrix()
 
 Removes the matrix at the top of this stack, making
@@ -259,6 +273,7 @@ effect if the stack has only one matrix.
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_pushMatrix'></a>
+
 ### module:extras/matrixstack~MatrixStack#pushMatrix()
 
 Makes a copy of the matrix at the top of this stack
@@ -269,6 +284,7 @@ and puts the copy on top of the stack.
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_rotate'></a>
+
 ### module:extras/matrixstack~MatrixStack#rotate(angle, x, y, z)
 
 Modifies the matrix at the top of this stack by multiplying it by a rotation transformation matrix. For more information on that matrix and the parameters, see <a href="MathUtil.md#MathUtil.mat4rotate">MathUtil.mat4rotate</a>.
@@ -285,6 +301,7 @@ Modifies the matrix at the top of this stack by multiplying it by a rotation tra
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_scale'></a>
+
 ### module:extras/matrixstack~MatrixStack#scale(x, y, z)
 
 Modifies the matrix at the top of this stack by multiplying it by a
@@ -301,6 +318,7 @@ scaling transformation.
 This object. (Type: MatrixStack)
 
 <a name='extras_matrixstack_MatrixStack_translate'></a>
+
 ### module:extras/matrixstack~MatrixStack#translate(x, y, z)
 
 Modifies the matrix at the top of this stack by multiplying it by a

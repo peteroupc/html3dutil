@@ -109,7 +109,7 @@ TextWriter.prototype.breaktext = function(x) {
 };
 /** @ignore */
 TextWriter.prototype.anchor = function(x) {
-  return "<a name='" + x + "'></a>\n";
+  return "<a name='" + x + "'></a>\n\n";
 };
 /** @ignore */
 TextWriter.prototype.normspace = function(x) {

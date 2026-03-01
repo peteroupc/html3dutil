@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_stripesbackshader'></a>
+
 ### module:extras/shaders/stripesbackshader()
 
 The <code>extras/shaders/stripesbackshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [stripesBackShader](#extras_shaders_stripesbackshader.stripesBackShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_stripesbackshader.stripesBackShader'></a>
+
 ### module:extras/shaders/stripesbackshader.stripesBackShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

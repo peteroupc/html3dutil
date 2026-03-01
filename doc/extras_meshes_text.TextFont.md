@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_text.TextFont'></a>
+
 ### new module:extras/meshes/text.TextFont()
 
 Represents an image font, which supports drawing two-dimensional
@@ -64,6 +65,7 @@ drawn using this font.
 draw text in the specified position, size, and color.
 
 <a name='extras_meshes_text_TextFont.loadData'></a>
+
 ### (static) module:extras/meshes/text~TextFont.loadData(data, fontFileName)
 
 Loads an image font definition from a file.
@@ -80,6 +82,7 @@ used to represent the font.
 Text font data, or null if an error occurs. (Type: TextFont | null)
 
 <a name='extras_meshes_text_TextFont_loadTextures'></a>
+
 ### module:extras/meshes/text~TextFont#loadTextures(textureLoader)
 
 Loads the texture files used by this font object.
@@ -96,6 +99,7 @@ resolves, each item in the resulting array will be a loaded
 Texture object. (Type: Promise.&lt;H3DU.Texture>)
 
 <a name='extras_meshes_text_TextFont.loadWithTextures'></a>
+
 ### (static) module:extras/meshes/text~TextFont.loadWithTextures(fontFileName, textureLoader)
 
 Loads an image font definition from a file along with the textures
@@ -120,6 +124,7 @@ in the order in which they are declared in the font data file.
 </ul> (Type: Promise)
 
 <a name='extras_meshes_text_TextFont_makeTextMeshes'></a>
+
 ### module:extras/meshes/text~TextFont#makeTextMeshes(str, params)
 
 Creates an array of meshes containing the primitives
@@ -137,6 +142,7 @@ There is one mesh for each texture page of the font. If none of the
 text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;H3DU.MeshBuffer>)
 
 <a name='extras_meshes_text_TextFont_measure'></a>
+
 ### module:extras/meshes/text~TextFont#measure(str, params)
 
 Calculates the width and height of a text string when
@@ -155,6 +161,7 @@ height of the string (taking into account line feed characters,
 U+000A, that break lines). (Type: Array.&lt;number>)
 
 <a name='extras_meshes_text_TextFont_textShape'></a>
+
 ### module:extras/meshes/text~TextFont#textShape(str, params)
 
 Creates a group of shapes containing the primitives needed to

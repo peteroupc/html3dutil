@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_convex'></a>
+
 ### module:extras/meshes/convex()
 
 The <code>extras/meshes/convex.js</code> module.
@@ -21,6 +22,7 @@ of several planes.
 * [randomConvexPolyhedron](#extras_meshes_convex.randomConvexPolyhedron)<br>Generates a mesh buffer of a convex polyhedron at random.
 
 <a name='extras_meshes_convex.createConvexHull'></a>
+
 ### (static) module:extras/meshes/convex.createConvexHull(points)
 
 Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
@@ -35,6 +37,7 @@ that contains all the points given.
 A buffer geometry. The generated convex hull. (Type: *)
 
 <a name='extras_meshes_convex.planePointsToConvexHull'></a>
+
 ### (static) module:extras/meshes/convex.planePointsToConvexHull(planepoints)
 
 Generates a convex hull of the half-space representation
@@ -49,6 +52,7 @@ of several planes. Each plane is defined by the triangle it lies on.
 A buffer geometry. The generated convex hull. (Type: *)
 
 <a name='extras_meshes_convex.randomConvexPolyhedron'></a>
+
 ### (static) module:extras/meshes/convex.randomConvexPolyhedron(avgsize, maxfaces)
 
 Generates a mesh buffer of a convex polyhedron at random.

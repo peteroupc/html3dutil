@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='BSplineCurve'></a>
+
 ### new BSplineCurve(controlPoints, knots, [bits])
 
 **Augments:** <a href="Curve.md">Curve</a>
@@ -228,6 +229,7 @@ passed to the <a href="BSplineCurve.md">BSplineCurve</a> or <a href="BSplineSurf
 this curve at the specified point.
 
 <a name='BSplineCurve.DIVIDE_BIT'></a>
+
 ### BSplineCurve.DIVIDE_BIT (constant)
 
 Indicates to divide each other coordinate of the returned point
@@ -242,6 +244,7 @@ A B-spline curve that has control points whose last coordinate is other than
 Default Value: `2`
 
 <a name='BSplineCurve_accel'></a>
+
 ### BSplineCurve#accel(u)
 
 Finds an approximate acceleration vector at the specified u-coordinate of this curve.
@@ -261,6 +264,7 @@ An array describing an acceleration vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_arcLength'></a>
+
 ### BSplineCurve#arcLength(u)
 
 Finds an approximate arc length (distance) between the start of this
@@ -279,6 +283,7 @@ The <b>arc length</b> function returns a number; if the curve is "smooth", this 
 The approximate arc length of this curve at the specified u-coordinate. (Type: number)
 
 <a name='BSplineCurve_changeEnds'></a>
+
 ### BSplineCurve#changeEnds(ep1, ep2)
 
 Creates a curve evaluator object for a curve that is generated using
@@ -307,6 +312,7 @@ also be used to grow the path of the curve.
 Return value. (Type: <a href="Curve.md">Curve</a>)
 
 <a name='BSplineCurve.clamped'></a>
+
 ### (static) BSplineCurve.clamped(controlPoints, [degree], [bits])
 
 Creates a B-spline curve with uniform knots, except that
@@ -326,6 +332,7 @@ Return value. The first
 knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSplineCurve.md">BSplineCurve</a>)
 
 <a name='BSplineCurve.clampedKnots'></a>
+
 ### (static) BSplineCurve.clampedKnots(controlPoints, [degree])
 
 Generates a knot vector with uniform knots, to be
@@ -345,6 +352,7 @@ A clamped uniform knot vector.
 The first knot will be 0 and the last knot will be 1. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_endPoints'></a>
+
 ### BSplineCurve#endPoints()
 
 Returns the starting and coordinates of this curve.
@@ -355,6 +363,7 @@ A two-element array containing
 the starting and ending u-coordinates, respectively, of the curve. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_evaluate'></a>
+
 ### BSplineCurve#evaluate(u)
 
 Evaluates the curve function based on a point
@@ -379,6 +388,7 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
     }
 
 <a name='BSplineCurve_fitRange'></a>
+
 ### BSplineCurve#fitRange(ep1, ep2)
 
 Creates a curve evaluator object for a curve that follows the same
@@ -397,6 +407,7 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.
 Return value. (Type: <a href="Curve.md">Curve</a>)
 
 <a name='BSplineCurve.fromBezierCurve'></a>
+
 ### (static) BSplineCurve.fromBezierCurve(controlPoints, [bits])
 
 Creates a B-spline curve from the control points of a B&eacute;zier curve.
@@ -426,6 +437,7 @@ curves.
     }
 
 <a name='BSplineCurve.fromConicCurve'></a>
+
 ### (static) BSplineCurve.fromConicCurve(controlPoints, lamda)
 
 Creates a B-spline curve from the control points of a conic curve as described
@@ -442,6 +454,7 @@ Derivations", 1996](https://developer.apple.com/library/archive/technotes/tn/tn1
 Return value. (Type: <a href="BSplineCurve.md">BSplineCurve</a>)
 
 <a name='BSplineCurve_getControlPoints'></a>
+
 ### BSplineCurve#getControlPoints()
 
 Gets a reference to the array of control points used
@@ -452,6 +465,7 @@ in this curve object.
 An object described in the constructor to <a href="BSplineCurve.md">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='BSplineCurve_getKnots'></a>
+
 ### BSplineCurve#getKnots()
 
 Gets a reference to the array of knots used
@@ -462,6 +476,7 @@ in this curve object.
 An object described in the constructor to <a href="BSplineCurve.md">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='BSplineCurve_getLength'></a>
+
 ### BSplineCurve#getLength()
 
 Convenience method for getting the total length of this curve.
@@ -471,6 +486,7 @@ Convenience method for getting the total length of this curve.
 The distance from the start of the curve to its end. (Type: number)
 
 <a name='BSplineCurve_getPoints'></a>
+
 ### BSplineCurve#getPoints(count)
 
 Gets an array of positions on the curve at fixed intervals
@@ -489,6 +505,7 @@ element will be the start of the curve. If "count" is 2 or greater, the last ele
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number>> | Array.&lt;Object>)
 
 <a name='BSplineCurve_getPointsAsObjects'></a>
+
 ### BSplineCurve#getPointsAsObjects(count)
 
 Gets an array of positions on the curve at fixed intervals
@@ -517,6 +534,7 @@ The following example initializes a three.js BufferGeometry with the points retr
     .setFromPoints(points);
 
 <a name='BSplineCurve_jerk'></a>
+
 ### BSplineCurve#jerk(u)
 
 Finds an approximate jerk vector at the specified u-coordinate of this curve.
@@ -536,6 +554,7 @@ An array describing a jerk vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_normal'></a>
+
 ### BSplineCurve#normal(u)
 
 Finds an approximate principal normal vector at the specified u-coordinate of this curve.
@@ -556,6 +575,7 @@ An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_split'></a>
+
 ### BSplineCurve#split(u)
 
 Splits this B-spline curve into two at the specified point.
@@ -574,6 +594,7 @@ The second element
 will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="BSplineCurve.md">BSplineCurve</a>>)
 
 <a name='BSplineCurve_tangent'></a>
+
 ### BSplineCurve#tangent(u)
 
 Convenience method for finding an approximate tangent vector of this curve at the specified u-coordinate.
@@ -589,6 +610,7 @@ An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_toArcLengthParam'></a>
+
 ### BSplineCurve#toArcLengthParam()
 
 Gets a curve evaluator object for a curve that follows the same
@@ -622,6 +644,7 @@ on a curve.
     var point = arclen.evaluate(Math.random()*arclen.getLength())
 
 <a name='BSplineCurve.uniform'></a>
+
 ### (static) BSplineCurve.uniform(controlPoints, [degree], [bits])
 
 Creates a B-spline curve with uniform knots.
@@ -639,6 +662,7 @@ knot of the curve will be 0 and the last knot will be 1. (This is a change from 
 versions.) (Type: <a href="BSplineCurve.md">BSplineCurve</a>)
 
 <a name='BSplineCurve.uniformKnots'></a>
+
 ### (static) BSplineCurve.uniformKnots(controlPoints, [degree])
 
 Generates a knot vector with uniform knots, to be
@@ -656,6 +680,7 @@ knot will be 0 and the last knot will be 1. (This is a change from previous
 versions.) (Type: Array.&lt;number>)
 
 <a name='BSplineCurve_velocity'></a>
+
 ### BSplineCurve#velocity(u)
 
 Finds the velocity (derivative) of

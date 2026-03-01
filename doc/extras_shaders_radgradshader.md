@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_radgradshader'></a>
+
 ### module:extras/shaders/radgradshader()
 
 The <code>extras/shaders/radgradshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [radialGradientShader](#extras_shaders_radgradshader.radialGradientShader)<br>GLSL shader code for a screen-space radial gradient.
 
 <a name='extras_shaders_radgradshader.radialGradientShader'></a>
+
 ### module:extras/shaders/radgradshader.radialGradientShader (constant)
 
 GLSL shader code for a screen-space radial gradient.

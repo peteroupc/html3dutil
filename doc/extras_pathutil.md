@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_pathutil'></a>
+
 ### module:extras/pathutil()
 
 The <code>extras/pathutil.js</code> module.

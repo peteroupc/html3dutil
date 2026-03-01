@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_superellipsoid.Supershape'></a>
+
 ### new module:extras/superellipsoid.Supershape(m, n1, n2, n3, a, b, rx, ry, phase)
 
 TODO: Not documented yet.
@@ -36,6 +37,7 @@ equation but raising all sines and cosines to a power of n1 or n2).
 * [supershape3D](#extras_superellipsoid.Supershape.supershape3D)<br>TODO: Not documented yet.
 
 <a name='extras_superellipsoid.Supershape.roundedPolygon'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.roundedPolygon(sides, rounding, rx, ry)
 
 TODO: Not documented yet.
@@ -52,6 +54,7 @@ TODO: Not documented yet.
 TODO: Not documented yet. (Type: *)
 
 <a name='extras_superellipsoid.Supershape.supercircle'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.supercircle(n, rx)
 
 TODO: Not documented yet.
@@ -66,6 +69,7 @@ TODO: Not documented yet.
 TODO: Not documented yet. (Type: *)
 
 <a name='extras_superellipsoid.Supershape.superellipse'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.superellipse(n, rx, ry)
 
 TODO: Not documented yet.
@@ -81,6 +85,7 @@ TODO: Not documented yet.
 TODO: Not documented yet. (Type: *)
 
 <a name='extras_superellipsoid.Supershape.superellipse2'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.superellipse2(n, rx, ry)
 
 Creates a curve evaluator object for a superellipse (a special
@@ -99,6 +104,7 @@ equation but raising all sines and cosines to a power of n).
 Curve evaluator object for a superellipse curve. (Type: Object)
 
 <a name='extras_superellipsoid.Supershape.superellipsoid'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.superellipsoid(n1, n2, rx, ry, rz, phase)
 
 TODO: Not documented yet.
@@ -117,6 +123,7 @@ TODO: Not documented yet.
 TODO: Not documented yet. (Type: *)
 
 <a name='extras_superellipsoid.Supershape.superellipsoid2'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.superellipsoid2(n1, n2, rx, ry, rz)
 
 Creates a surface evaluator object for a superellipsoid (a special
@@ -137,6 +144,7 @@ equation but raising all sines and cosines to a power of n1 or n2).
 Surface evaluator object for a superellipsoid. (Type: Object)
 
 <a name='extras_superellipsoid.Supershape.supershape3D'></a>
+
 ### (static) module:extras/superellipsoid.Supershape.supershape3D(m, n1, n2, n3, a, b, rx, ry, phase)
 
 TODO: Not documented yet.

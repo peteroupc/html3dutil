@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_arrow'></a>
+
 ### module:extras/meshes/arrow()
 
 The <code>extras/meshes/arrow.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [createMultiColoredArrow](#extras_meshes_arrow.createMultiColoredArrow)<br>TODO: Not documented yet.
 
 <a name='extras_meshes_arrow.createMultiColoredArrow'></a>
+
 ### (static) module:extras/meshes/arrow.createMultiColoredArrow(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor)
 
 TODO: Not documented yet.

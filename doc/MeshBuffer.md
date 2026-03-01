@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='MeshBuffer'></a>
+
 ### new MeshBuffer()
 
 **Deprecated: It is planned to render this class obsolete and rely on three.js's BufferGeometry.**
@@ -21,6 +22,7 @@ buffer stores each point using one vertex.
 buffer stores each triangle using three consecutive vertices.
 
 <a name='MeshBuffer.LINES'></a>
+
 ### MeshBuffer.LINES (constant)
 
 Indicates that a mesh buffer contains line segments; the mesh
@@ -29,6 +31,7 @@ buffer stores each line segment using two consecutive vertices.
 Default Value: `1`
 
 <a name='MeshBuffer.POINTS'></a>
+
 ### MeshBuffer.POINTS (constant)
 
 Indicates that a mesh buffer contains points; the mesh
@@ -37,6 +40,7 @@ buffer stores each point using one vertex.
 Default Value: `0`
 
 <a name='MeshBuffer.TRIANGLES'></a>
+
 ### MeshBuffer.TRIANGLES (constant)
 
 Indicates that a mesh buffer contains triangles; the mesh

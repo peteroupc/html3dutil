@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_pathtomesh'></a>
+
 ### module:extras/meshes/pathtomesh()
 
 The <code>extras/meshes/pathtomesh.js</code> module.
@@ -20,6 +21,7 @@ To import all symbols in this module, either of the following can be used:
 buffer with those triangles.
 
 <a name='extras_meshes_pathtomesh.toExtrudedMeshBuffer'></a>
+
 ### (static) module:extras/meshes/pathtomesh.toExtrudedMeshBuffer(zStart, zEnd, [flatness], [closed])
 
 Generates a mesh buffer consisting of "walls" that follow this graphics path approximately, and, optionally, a base and top.
@@ -36,6 +38,7 @@ Generates a mesh buffer consisting of "walls" that follow this graphics path app
 The resulting mesh buffer. (Type: *)
 
 <a name='extras_meshes_pathtomesh.toLineMeshBuffer'></a>
+
 ### (static) module:extras/meshes/pathtomesh.toLineMeshBuffer([z], [flatness])
 
 Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.
@@ -50,6 +53,7 @@ Generates a mesh buffer consisting of the approximate line segments that make up
 The resulting mesh buffer. (Type: *)
 
 <a name='extras_meshes_pathtomesh.toMeshBuffer'></a>
+
 ### (static) module:extras/meshes/pathtomesh.toMeshBuffer([z], [flatness])
 
 Decomposes this path into triangles and generates a mesh

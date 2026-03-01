@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_moresurfaces.MoebiusStrip'></a>
+
 ### new module:extras/moresurfaces.MoebiusStrip(radius, width)
 
 Surface evaluator object for a M&ouml;bius strip.

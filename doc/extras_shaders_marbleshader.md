@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_marbleshader'></a>
+
 ### module:extras/shaders/marbleshader()
 
 The <code>extras/shaders/marbleshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [marbleShader](#extras_shaders_marbleshader.marbleShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_marbleshader.marbleShader'></a>
+
 ### module:extras/shaders/marbleshader.marbleShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

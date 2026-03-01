@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_colormatrixshader'></a>
+
 ### module:extras/shaders/colormatrixshader()
 
 The <code>extras/shaders/colormatrixshader.js</code> module.
@@ -22,6 +23,7 @@ To import all symbols in this module, either of the following can be used:
 matrix shader.
 
 <a name='extras_shaders_colormatrixshader.colorMatrixShader'></a>
+
 ### module:extras/shaders/colormatrixshader.colorMatrixShader (constant)
 
 GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4 &times; 4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
@@ -29,6 +31,7 @@ is the texture to which the filter is to be applied, "t", a value from 0 to 1 in
 apply the color matrix, and "matrix", which is the 4 &times; 4 matrix just described.
 
 <a name='extras_shaders_colormatrixshader.getColorMatrix'></a>
+
 ### (static) module:extras/shaders/colormatrixshader.getColorMatrix(kind)
 
 Gets a specific kind of color matrix for the color

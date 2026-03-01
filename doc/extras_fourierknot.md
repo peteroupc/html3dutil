@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_fourierknot'></a>
+
 ### module:extras/fourierknot()
 
 The <code>extras/fourierknot.js</code> module.
@@ -19,6 +20,7 @@ To import all symbols in this module, either of the following can be used:
 <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).
 
 <a name='extras_fourierknot.FourierKnot'></a>
+
 ### (static) module:extras/fourierknot.FourierKnot(a, b)
 
 A curve evaluator object that calculates a knot in the form of the Fourier series

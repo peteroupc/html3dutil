@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_sunburstbackshader'></a>
+
 ### module:extras/shaders/sunburstbackshader()
 
 The <code>extras/shaders/sunburstbackshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [sunburstBackShader](#extras_shaders_sunburstbackshader.sunburstBackShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_sunburstbackshader.sunburstBackShader'></a>
+
 ### module:extras/shaders/sunburstbackshader.sunburstBackShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

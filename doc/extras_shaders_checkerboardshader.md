@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_checkerboardshader'></a>
+
 ### module:extras/shaders/checkerboardshader()
 
 The <code>extras/shaders/checkerboardshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [checkerboardShader](#extras_shaders_checkerboardshader.checkerboardShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_checkerboardshader.checkerboardShader'></a>
+
 ### module:extras/shaders/checkerboardshader.checkerboardShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

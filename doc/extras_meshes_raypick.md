@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_raypick'></a>
+
 ### module:extras/meshes/raypick()
 
 The <code>extras/meshes/raypick.js</code> module.
@@ -18,6 +19,7 @@ To import all symbols in this module, either of the following can be used:
 corresponding to the specified two-dimensional (X and Y) coordinates.
 
 <a name='extras_meshes_raypick.raypick'></a>
+
 ### (static) module:extras/meshes/raypick.raypick(x, y, projView, viewport, objects)
 
 Finds the three-dimensional shape object and world-space coordinates

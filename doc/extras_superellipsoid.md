@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_superellipsoid'></a>
+
 ### module:extras/superellipsoid()
 
 The <code>extras/superellipsoid.js</code> module.

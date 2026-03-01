@@ -12,6 +12,7 @@ the last known time, where a frame's length is 1/60 of a second.
 * [toGLColor](#toGLColor)<br>Creates a 4-element array representing a color.
 
 <a name='getPromiseResults'></a>
+
 ### getPromiseResults(promises, [progressResolve], [progressReject])
 
 An auxiliary function that returns a promise that
@@ -39,6 +40,7 @@ promise, in the order in which the promises were listed.
 True means success, and false means failure.</ul> (Type: Promise)
 
 <a name='getPromiseResultsAll'></a>
+
 ### getPromiseResultsAll(promises, [progressResolve], [progressReject])
 
 An auxiliary function that returns a promise that
@@ -61,6 +63,7 @@ Will be rejected if any of the promises is rejected; the result
 will be an object as specified in <a href="getPromiseResults.md">getPromiseResults</a>.</ul> (Type: Promise)
 
 <a name='getTimePosition'></a>
+
 ### getTimePosition(timer, timeInMs, intervalInMs)
 
 Gets the position of a time value within an interval.
@@ -93,6 +96,7 @@ value in milliseconds, such as the parameter of a
     var angle = 360 * getTimePosition(timer, time, 5000);
 
 <a name='newFrames'></a>
+
 ### newFrames(timer, timeInMs)
 
 Returns the number of frame-length intervals that occurred since
@@ -112,6 +116,7 @@ The number can include fractional frames. If an
 initial time or last known time wasn't set, returns 0. (Type: number)
 
 <a name='toGLColor'></a>
+
 ### toGLColor(r, [g], [b], [a])
 
 Creates a 4-element array representing a color. Each element

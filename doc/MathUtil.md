@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='MathUtil'></a>
+
 ### new MathUtil()
 
 A collection of math functions for working
@@ -404,7 +405,7 @@ sines and cosines, see the end of this section.)
 <figcaption>Rotation about the z-axis.</figcaption></figure>
 Note that:
 When we rotate a point about the x-axis, the x-coordinate is unchanged
-and the y- and z-coordinates are adjusted in the rotation. For rotations about the
+and the y- and z-coordinates adjust in the rotation. For rotations about the
 y-axis or the z-axis, the Y or z-coordinate, respectively, is likewise unchanged.
 If the axis of rotation points backward from the "eye", positive rotations mean
 counterclockwise rotation in right-handed coordinate systems. For example,
@@ -959,36 +960,43 @@ vector with the result.
 the result in the first vector.
 
 <a name='MathUtil.GlobalPitchRollYaw'></a>
+
 ### MathUtil.GlobalPitchRollYaw (constant)
 
 Indicates that a vector's rotation occurs as a pitch, then roll, then yaw (each rotation around the original axes).
 
 <a name='MathUtil.GlobalPitchYawRoll'></a>
+
 ### MathUtil.GlobalPitchYawRoll (constant)
 
 Indicates that a vector's rotation occurs as a pitch, then yaw, then roll (each rotation around the original axes).
 
 <a name='MathUtil.GlobalRollPitchYaw'></a>
+
 ### MathUtil.GlobalRollPitchYaw (constant)
 
 Indicates that a vector's rotation occurs as a roll, then pitch, then yaw (each rotation around the original axes).
 
 <a name='MathUtil.GlobalRollYawPitch'></a>
+
 ### MathUtil.GlobalRollYawPitch (constant)
 
 Indicates that a vector's rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).
 
 <a name='MathUtil.GlobalYawPitchRoll'></a>
+
 ### MathUtil.GlobalYawPitchRoll (constant)
 
 Indicates that a vector's rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).
 
 <a name='MathUtil.GlobalYawRollPitch'></a>
+
 ### MathUtil.GlobalYawRollPitch (constant)
 
 Indicates that a vector's rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).
 
 <a name='MathUtil.HalfPi'></a>
+
 ### MathUtil.HalfPi (constant)
 
 Closest approximation to pi divided by 2, or a 90-degree turn in radians.
@@ -996,42 +1004,49 @@ Closest approximation to pi divided by 2, or a 90-degree turn in radians.
 Default Value: `1.5707963267948966`
 
 <a name='MathUtil.LocalPitchRollYaw'></a>
+
 ### MathUtil.LocalPitchRollYaw (constant)
 
 Indicates that a vector's rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a name='MathUtil.LocalPitchYawRoll'></a>
+
 ### MathUtil.LocalPitchYawRoll (constant)
 
 Indicates that a vector's rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a name='MathUtil.LocalRollPitchYaw'></a>
+
 ### MathUtil.LocalRollPitchYaw (constant)
 
 Indicates that a vector's rotation occurs as a roll, then pitch, then yaw, where the pitch and yaw
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a name='MathUtil.LocalRollYawPitch'></a>
+
 ### MathUtil.LocalRollYawPitch (constant)
 
 Indicates that a vector's rotation occurs as a roll, then yaw, then pitch, where the yaw and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a name='MathUtil.LocalYawPitchRoll'></a>
+
 ### MathUtil.LocalYawPitchRoll (constant)
 
 Indicates that a vector's rotation occurs as a yaw, then pitch, then roll, where the pitch and roll
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a name='MathUtil.LocalYawRollPitch'></a>
+
 ### MathUtil.LocalYawRollPitch (constant)
 
 Indicates that a vector's rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object's new axes and not necessarily the original axes.
 
 <a name='MathUtil.Num180DividedByPi'></a>
+
 ### MathUtil.Num180DividedByPi (constant)
 
 Closest approximation to 180 divided by pi, or the number of
@@ -1040,6 +1055,7 @@ degrees in a radian. Multiply by this number to convert radians to degrees.
 Default Value: `57.29577951308232`
 
 <a name='MathUtil.PiDividedBy180'></a>
+
 ### MathUtil.PiDividedBy180 (constant)
 
 Closest approximation to pi divided by 180, or the number
@@ -1048,6 +1064,7 @@ of radians in a degree. Multiply by this number to convert degrees to radians.
 Default Value: `0.017453292519943295`
 
 <a name='MathUtil.PiTimes2'></a>
+
 ### MathUtil.PiTimes2 (constant)
 
 Closest approximation to pi times 2, or a 360-degree turn in radians.
@@ -1055,18 +1072,21 @@ Closest approximation to pi times 2, or a 360-degree turn in radians.
 Default Value: `6.283185307179586`
 
 <a name='MathUtil.ToDegrees'></a>
+
 ### MathUtil.ToDegrees (constant)
 
 Closest approximation to 180 divided by pi, or the number of
 degrees in a radian. Multiply by this number to convert radians to degrees.
 
 <a name='MathUtil.ToRadians'></a>
+
 ### MathUtil.ToRadians (constant)
 
 Closest approximation to pi divided by 180, or the number
 of radians in a degree. Multiply by this number to convert degrees to radians.
 
 <a name='MathUtil.boxCenter'></a>
+
 ### (static) MathUtil.boxCenter(box)
 
 Finds the center of a 3D bounding box.
@@ -1082,6 +1102,7 @@ x-, y-, and z-coordinates, respectively, of the bounding box's
 center. (Type: Array.&lt;number>)
 
 <a name='MathUtil.boxDimensions'></a>
+
 ### (static) MathUtil.boxDimensions(box)
 
 Finds the dimensions of a 3D bounding box. This is done by subtracting
@@ -1100,6 +1121,7 @@ corresponding maximum coordinate, the array can contain
 negative values. (Type: Array.&lt;number>)
 
 <a name='MathUtil.boxIsEmpty'></a>
+
 ### (static) MathUtil.boxIsEmpty(box)
 
 Determines whether a 3D bounding box is empty.
@@ -1117,6 +1139,7 @@ of the minimum coordinates is greater than its
 corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 
 <a name='MathUtil.colorToLinear'></a>
+
 ### (static) MathUtil.colorToLinear(srgb)
 
 Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
@@ -1137,6 +1160,7 @@ in linear sRGB. The alpha component will be as specified
 in the "srgb" parameter. (Type: Array.&lt;number>)
 
 <a name='MathUtil.colorTosRGB'></a>
+
 ### (static) MathUtil.colorTosRGB(lin)
 
 Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
@@ -1157,6 +1181,7 @@ in encoded sRGB. The alpha component will be as specified
 in the "lin" parameter. (Type: Array.&lt;number>)
 
 <a name='MathUtil.frustumHasBox'></a>
+
 ### (static) MathUtil.frustumHasBox(frustum, box)
 
 Determines whether an axis-aligned bounding box
@@ -1176,6 +1201,7 @@ definitely outside the frustum, or if the box is empty
 (see "boxIsEmpty"). (Type: boolean)
 
 <a name='MathUtil.frustumHasPoint'></a>
+
 ### (static) MathUtil.frustumHasPoint(frustum, x, y, z)
 
 Determines whether a point is
@@ -1194,6 +1220,7 @@ true if the point is inside;
 otherwise false; (Type: boolean)
 
 <a name='MathUtil.frustumHasSphere'></a>
+
 ### (static) MathUtil.frustumHasSphere(frustum, x, y, z, radius)
 
 Determines whether a sphere is at least
@@ -1214,6 +1241,7 @@ is partially or totally
 inside the frustum; <code>false</code> otherwise. (Type: boolean)
 
 <a name='MathUtil.interpCubicBezier'></a>
+
 ### (static) MathUtil.interpCubicBezier(a, b, c, d, t)
 
 An interpolation timing function based on the path of a
@@ -1238,6 +1266,7 @@ how far the interpolation has reached. Returns 0 if <code>t</code>
 is 0 or less, and 1 if <code>t</code> is 1 or greater. (Type: number)
 
 <a name='MathUtil.mat3copy'></a>
+
 ### (static) MathUtil.mat3copy(mat)
 
 Returns a copy of a 3 &times; 3 matrix.
@@ -1251,6 +1280,7 @@ Returns a copy of a 3 &times; 3 matrix.
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat3identity'></a>
+
 ### (static) MathUtil.mat3identity()
 
 Returns the identity 3 &times; 3 matrix (a matrix that keeps
@@ -1261,6 +1291,7 @@ vectors unchanged when they are transformed with this matrix).
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat3invert'></a>
+
 ### (static) MathUtil.mat3invert(m)
 
 Finds the inverse of a 3 &times; 3 matrix, describing a transformation that undoes the specified transformation.
@@ -1275,6 +1306,7 @@ The resulting 3 &times; 3 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat3multiply'></a>
+
 ### (static) MathUtil.mat3multiply(a, b)
 
 Multiplies two 3 &times; 3 matrices. A new matrix is returned.
@@ -1299,6 +1331,7 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 The resulting 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat3transform'></a>
+
 ### (static) MathUtil.mat3transform(mat, v, [vy], [vz])
 
 Transforms a 3-element vector with a 3 &times; 3 matrix and returns
@@ -1323,6 +1356,7 @@ get the transformed vector.
 The transformed vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat3transpose'></a>
+
 ### (static) MathUtil.mat3transpose(m3)
 
 Returns the transpose of a 3 &times; 3 matrix. (A transpose is a
@@ -1337,6 +1371,7 @@ matrix whose rows are converted to columns and vice versa.)
 The resulting 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat3transposeInPlace'></a>
+
 ### (static) MathUtil.mat3transposeInPlace(mat)
 
 Transposes a 3 &times; 3 matrix in place without creating
@@ -1352,6 +1387,7 @@ are converted to columns and vice versa.)
 The parameter "mat". (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4copy'></a>
+
 ### (static) MathUtil.mat4copy(mat)
 
 Returns a copy of a 4 &times; 4 matrix.
@@ -1365,6 +1401,7 @@ Returns a copy of a 4 &times; 4 matrix.
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4frustum'></a>
+
 ### (static) MathUtil.mat4frustum(l, r, b, t, near, far)
 
 Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>
@@ -1393,6 +1430,7 @@ The transformed coordinates have the meanings given earlier assuming that the ey
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4identity'></a>
+
 ### (static) MathUtil.mat4identity()
 
 Returns the identity 4 &times; 4 matrix (a matrix that keeps
@@ -1403,6 +1441,7 @@ vectors unchanged when they are transformed with this matrix).
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4inverseTranspose3'></a>
+
 ### (static) MathUtil.mat4inverseTranspose3(m4)
 
 Returns the transposed result of the inverted 3 &times; 3 upper-left corner of
@@ -1426,6 +1465,7 @@ The resulting 3 &times; 3 matrix. If the matrix
 can't be inverted, returns the identity 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4invert'></a>
+
 ### (static) MathUtil.mat4invert(m)
 
 Finds the inverse of a 4 &times; 4 matrix.
@@ -1476,6 +1516,7 @@ The resulting 4 &times; 4 matrix.
 Returns the identity matrix if this matrix's determinant, or overall scaling factor, is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4isIdentity'></a>
+
 ### (static) MathUtil.mat4isIdentity(mat)
 
 Returns whether a 4 &times; 4 matrix is the identity matrix.
@@ -1489,6 +1530,7 @@ Returns whether a 4 &times; 4 matrix is the identity matrix.
 Return value. (Type: boolean)
 
 <a name='MathUtil.mat4lookat'></a>
+
 ### (static) MathUtil.mat4lookat(cameraPos, [lookingAt], [up])
 
 Returns a 4 &times; 4 matrix that represents a "camera" view,
@@ -1561,6 +1603,7 @@ viewer position, the viewing direction, and the up vector (a "look-to" matrix):
     var matrix=MathUtil.mat4lookat(cameraPos,lookingAt,upVector);
 
 <a name='MathUtil.mat4multiply'></a>
+
 ### (static) MathUtil.mat4multiply(a, b)
 
 Multiplies two 4 &times; 4 matrices. A new matrix is returned.
@@ -1585,6 +1628,7 @@ matrix <code>a</code>, and putting the vectors back together into a new matrix.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4oblique'></a>
+
 ### (static) MathUtil.mat4oblique(alpha, phi)
 
 Returns a 4 &times; 4 view matrix representing an oblique "eye" view,
@@ -1603,6 +1647,7 @@ coordinate systems.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4ortho'></a>
+
 ### (static) MathUtil.mat4ortho(l, r, b, t, n, f)
 
 Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>.
@@ -1635,6 +1680,7 @@ The transformed coordinates have the meanings given earlier assuming that the ey
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4ortho2d'></a>
+
 ### (static) MathUtil.mat4ortho2d(l, r, b, t)
 
 Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>.
@@ -1657,6 +1703,7 @@ when using this matrix and on adjusting the matrix for different coordinate syst
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4ortho2dAspect'></a>
+
 ### (static) MathUtil.mat4ortho2dAspect(l, r, b, t, aspect)
 
 Returns a 4 &times; 4 matrix representing a 2D <a href="tutorial-camera.md">orthographic projection</a>,
@@ -1695,6 +1742,7 @@ retrieved from the HTML DOM.
     window.innerWidth/Math.max(1,window.innerHeight));
 
 <a name='MathUtil.mat4orthoAspect'></a>
+
 ### (static) MathUtil.mat4orthoAspect(l, r, b, t, n, f, aspect)
 
 Returns a 4 &times; 4 matrix representing an <a href="tutorial-camera.md">orthographic projection</a>,
@@ -1736,6 +1784,7 @@ retrieved from the HTML DOM.
     window.innerWidth/Math.max(1,window.innerHeight));
 
 <a name='MathUtil.mat4perspective'></a>
+
 ### (static) MathUtil.mat4perspective(fovY, aspectRatio, near, far)
 
 Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>.
@@ -1771,6 +1820,7 @@ retrieved from the HTML DOM.
     0.01,100);
 
 <a name='MathUtil.mat4perspectiveHorizontal'></a>
+
 ### (static) MathUtil.mat4perspectiveHorizontal(fovX, aspectRatio, near, far)
 
 Returns a 4 &times; 4 matrix representing a <a href="tutorial-camera.md">perspective projection</a>,
@@ -1801,6 +1851,7 @@ retrieved from the HTML DOM.
     0.01,100);
 
 <a name='MathUtil.mat4pickMatrix'></a>
+
 ### (static) MathUtil.mat4pickMatrix(wx, wy, ww, wh, vp)
 
 Returns a 4 &times; 4 matrix that transforms the view to the center of the viewport. The resulting matrix should be multiplied by a projection matrix (such as that returned by <a href="MathUtil.md#MathUtil.mat4perspective">MathUtil.mat4perspective</a>), a projection-view matrix (projection matrix multiplied
@@ -1821,6 +1872,7 @@ by the model [world] matrix, in that order).
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4projectVec3'></a>
+
 ### (static) MathUtil.mat4projectVec3(mat, v, [vy], [vz])
 
 Transforms a 3-element vector with a 4 &times; 4 matrix and returns
@@ -1845,6 +1897,7 @@ The elements, in order, are
 the transformed vector's x-, y-, and z-coordinates. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4rotate'></a>
+
 ### (static) MathUtil.mat4rotate(mat, angle, v, vy, vz)
 
 Multiplies a 4 &times; 4 matrix by a rotation transformation that rotates vectors
@@ -1867,6 +1920,7 @@ when applied in the global coordinate frame.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4rotated'></a>
+
 ### (static) MathUtil.mat4rotated(angle, v, vy, vz)
 
 Returns a 4 &times; 4 matrix representing a rotation transformation that rotates vectors
@@ -1892,6 +1946,7 @@ The following example rotates a vector,
     MathUtil.mat4rotated(angle, 0, 0, 1), vec);
 
 <a name='MathUtil.mat4scale'></a>
+
 ### (static) MathUtil.mat4scale(mat, v3, v3y, v3z)
 
 Multiplies a 4 &times; 4 matrix by a scaling transformation.
@@ -1908,6 +1963,7 @@ Multiplies a 4 &times; 4 matrix by a scaling transformation.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4scaleInPlace'></a>
+
 ### (static) MathUtil.mat4scaleInPlace(mat, v3, [v3y], [v3z])
 
 Modifies a 4 &times; 4 matrix by multiplying it by a
@@ -1925,6 +1981,7 @@ scaling transformation.
 The same parameter as "mat". (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4scaled'></a>
+
 ### (static) MathUtil.mat4scaled(v3, v3y, v3z)
 
 Returns a 4 &times; 4 matrix representing a scaling transformation.
@@ -1940,6 +1997,7 @@ Returns a 4 &times; 4 matrix representing a scaling transformation.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4toFrustumPlanes'></a>
+
 ### (static) MathUtil.mat4toFrustumPlanes(matrix)
 
 Finds the six clipping planes of a view frustum defined
@@ -1965,6 +2023,7 @@ bottom, near, and far clipping planes. All six planes
 will be normalized (see <a href="MathUtil.md#MathUtil.planeNormalizeInPlace">MathUtil.planeNormalizeInPlace</a>). (Type: Array.&lt;Array.&lt;number>>)
 
 <a name='MathUtil.mat4toMat3'></a>
+
 ### (static) MathUtil.mat4toMat3(m4)
 
 Returns the upper-left part of a 4 &times; 4 matrix as a new
@@ -1979,6 +2038,7 @@ Returns the upper-left part of a 4 &times; 4 matrix as a new
 The resulting 3 &times; 3 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4transform'></a>
+
 ### (static) MathUtil.mat4transform(mat, v, [vy], [vz], [vw])
 
 Transforms a 4-element vector with a 4 &times; 4 matrix and returns
@@ -2004,6 +2064,7 @@ get the transformed vector.
 The transformed vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4transformVec3'></a>
+
 ### (static) MathUtil.mat4transformVec3(mat, v, [vy], [vz])
 
 Transforms a 3-element vector with a 4 &times; 4 matrix as though it were
@@ -2030,6 +2091,7 @@ projection (whose last row is not necessarily (0, 0, 0, 1)).
 The transformed 3-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4translate'></a>
+
 ### (static) MathUtil.mat4translate(mat, v3, v3y, v3z)
 
 Multiplies a 4 &times; 4 matrix by a translation transformation.
@@ -2046,6 +2108,7 @@ Multiplies a 4 &times; 4 matrix by a translation transformation.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4translated'></a>
+
 ### (static) MathUtil.mat4translated(v3, v3y, v3z)
 
 Returns a 4 &times; 4 matrix representing a translation.
@@ -2061,6 +2124,7 @@ Returns a 4 &times; 4 matrix representing a translation.
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4transpose'></a>
+
 ### (static) MathUtil.mat4transpose(m4)
 
 Returns the transpose of a 4 &times; 4 matrix. (A transpose is a
@@ -2075,6 +2139,7 @@ matrix whose rows are converted to columns and vice versa.)
 The resulting 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.mat4transposeInPlace'></a>
+
 ### (static) MathUtil.mat4transposeInPlace(mat)
 
 Transposes a 4 &times; 4 matrix in place without creating
@@ -2090,6 +2155,7 @@ are converted to columns and vice versa.)
 The parameter "mat". (Type: Array.&lt;number>)
 
 <a name='MathUtil.planeFromNormalAndPoint'></a>
+
 ### (static) MathUtil.planeFromNormalAndPoint(normal, point)
 
 Creates a plane from a normal vector and a point on the plane.
@@ -2104,6 +2170,7 @@ Creates a plane from a normal vector and a point on the plane.
 A four-element array describing the plane. (Type: Array.&lt;number>)
 
 <a name='MathUtil.planeNormalize'></a>
+
 ### (static) MathUtil.planeNormalize(plane)
 
 Normalizes this plane so that its normal is a unit vector,
@@ -2122,6 +2189,7 @@ the plane.
 Note that due to rounding error, the length of the plane's normal might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.planeNormalizeInPlace'></a>
+
 ### (static) MathUtil.planeNormalizeInPlace(plane)
 
 Normalizes this plane so that its normal is a unit vector,
@@ -2138,6 +2206,7 @@ current normal's length.
 The parameter "plane". (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatConjugate'></a>
+
 ### (static) MathUtil.quatConjugate(quat)
 
 Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation); this is done by reversing the sign of the X, Y, and Z components (which describe the quaternion's glmath). The return value won't necessarily be a unit vector.
@@ -2151,6 +2220,7 @@ Returns a quaternion that describes a rotation that undoes the specified rotatio
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatCopy'></a>
+
 ### (static) MathUtil.quatCopy(a)
 
 Returns a copy of a quaternion.
@@ -2168,6 +2238,7 @@ Return value. (Type: Array.&lt;number>)
 <a href="MathUtil.md#MathUtil.vec4copy">MathUtil.vec4copy</a>
 
 <a name='MathUtil.quatDot'></a>
+
 ### (static) MathUtil.quatDot(a, b)
 
 Finds the dot product of two quaternions.
@@ -2188,6 +2259,7 @@ Return value. (Type: number)
 <a href="MathUtil.md#MathUtil.vec4dot">MathUtil.vec4dot</a>
 
 <a name='MathUtil.quatFromAxisAngle'></a>
+
 ### (static) MathUtil.quatFromAxisAngle(angle, v, vy, vz)
 
 Generates a quaternion from a rotation transformation that rotates vectors
@@ -2208,6 +2280,7 @@ glmath whose length is the sine of half of "angle",
 and its fourth element (W) is the cosine of half of "angle". (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatFromMat4'></a>
+
 ### (static) MathUtil.quatFromMat4(m)
 
 Generates a quaternion from the vector rotation described in a 4 &times; 4 matrix.
@@ -2224,6 +2297,7 @@ other than rotation.
 The resulting quaternion. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatFromVectors'></a>
+
 ### (static) MathUtil.quatFromVectors(vec1, vec2)
 
 Generates a quaternion describing a rotation between
@@ -2243,6 +2317,7 @@ The generated quaternion, which
 will be a unit vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatIdentity'></a>
+
 ### (static) MathUtil.quatIdentity()
 
 Returns the identity quaternion of multiplication, (0, 0, 0, 1).
@@ -2252,6 +2327,7 @@ Returns the identity quaternion of multiplication, (0, 0, 0, 1).
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatInvert'></a>
+
 ### (static) MathUtil.quatInvert(quat)
 
 Returns a quaternion that describes a rotation that undoes the specified rotation (an "inverted" rotation) and is converted to a unit vector.
@@ -2269,6 +2345,7 @@ Return value. (Type: Array.&lt;number>)
 <a href="MathUtil.md#MathUtil.quatConjugate">MathUtil.quatConjugate</a>
 
 <a name='MathUtil.quatIsIdentity'></a>
+
 ### (static) MathUtil.quatIsIdentity(quat)
 
 Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
@@ -2282,6 +2359,7 @@ Returns whether this quaternion is the identity quaternion, (0, 0, 0, 1).
 Return value. (Type: boolean)
 
 <a name='MathUtil.quatLength'></a>
+
 ### (static) MathUtil.quatLength(quat)
 
 Returns the distance of this quaternion from the origin.
@@ -2301,6 +2379,7 @@ Return value. (Type: number)
 <a href="MathUtil.md#MathUtil.vec4length">MathUtil.vec4length</a>
 
 <a name='MathUtil.quatMultiply'></a>
+
 ### (static) MathUtil.quatMultiply(a, b)
 
 Multiplies two quaternions, creating a composite rotation.
@@ -2329,6 +2408,7 @@ in that order, and the cross product is not commutative (see also <a href="MathU
 The resulting quaternion. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatNlerp'></a>
+
 ### (static) MathUtil.quatNlerp(q1, q2, factor)
 
 Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a linear interpolation function, and converts
@@ -2353,6 +2433,7 @@ The interpolated quaternion,
 which will be a unit vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatNormalize'></a>
+
 ### (static) MathUtil.quatNormalize(quat)
 
 Converts a quaternion to a unit vector; returns a new quaternion.
@@ -2375,6 +2456,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 <a href="MathUtil.md#MathUtil.vec4normalize">MathUtil.vec4normalize</a>
 
 <a name='MathUtil.quatNormalizeInPlace'></a>
+
 ### (static) MathUtil.quatNormalizeInPlace(quat)
 
 Converts a quaternion to a unit vector.
@@ -2397,6 +2479,7 @@ Note that due to rounding error, the vector's length might not be exactly equal 
 <a href="MathUtil.md#MathUtil.vec4normalizeInPlace">MathUtil.vec4normalizeInPlace</a>
 
 <a name='MathUtil.quatRotate'></a>
+
 ### (static) MathUtil.quatRotate(quat, angle, v, vy, vz)
 
 Multiplies a quaternion by a rotation transformation that rotates vectors
@@ -2422,6 +2505,7 @@ This method is equivalent to the following (see also <a href="MathUtil.md#MathUt
 The resulting quaternion. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatScale'></a>
+
 ### (static) MathUtil.quatScale(a, scalar)
 
 Multiplies each element of a quaternion by a factor
@@ -2441,6 +2525,7 @@ The resulting quaternion. (Type: Array.&lt;number>)
 <a href="MathUtil.md#MathUtil.vec4scaleInPlace">MathUtil.vec4scaleInPlace</a>
 
 <a name='MathUtil.quatScaleInPlace'></a>
+
 ### (static) MathUtil.quatScaleInPlace(a, scalar)
 
 Multiplies each element of a quaternion by a factor
@@ -2460,6 +2545,7 @@ The parameter "a". (Type: Array.&lt;number>)
 <a href="MathUtil.md#MathUtil.vec4scaleInPlace">MathUtil.vec4scaleInPlace</a>
 
 <a name='MathUtil.quatSlerp'></a>
+
 ### (static) MathUtil.quatSlerp(q1, q2, factor)
 
 Returns a quaternion that lies along the shortest path between the specified two quaternion rotations, using a spherical interpolation function.
@@ -2492,6 +2578,7 @@ The interpolated quaternion. (Type: Array.&lt;number>)
 for additional background
 
 <a name='MathUtil.quatToAxisAngle'></a>
+
 ### (static) MathUtil.quatToAxisAngle(a)
 
 Calculates the vector rotation for this quaternion in the form
@@ -2510,6 +2597,7 @@ in degrees as the fourth element. If "a" is a unit vector, the axis
 of rotation will be a unit vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatToMat4'></a>
+
 ### (static) MathUtil.quatToMat4(quat)
 
 Generates a 4 &times; 4 matrix describing the rotation
@@ -2524,6 +2612,7 @@ described by this quaternion.
 The generated 4 &times; 4 matrix. (Type: Array.&lt;number>)
 
 <a name='MathUtil.quatTransform'></a>
+
 ### (static) MathUtil.quatTransform(q, v)
 
 Transforms a 3- or 4-element vector using a
@@ -2542,6 +2631,7 @@ If the input vector has 3 elements, a 3-element vector will
 be returned instead. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2abs'></a>
+
 ### (static) MathUtil.vec2abs(a)
 
 Returns a new 2-element
@@ -2556,6 +2646,7 @@ vector with the absolute value of each of its components.
 The resulting 2-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2absInPlace'></a>
+
 ### (static) MathUtil.vec2absInPlace(a)
 
 Sets each component of the specified 2-element
@@ -2570,6 +2661,7 @@ vector to its absolute value.
 The vector "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2add'></a>
+
 ### (static) MathUtil.vec2add(a, b)
 
 Adds two 2-element vectors and returns a new
@@ -2591,6 +2683,7 @@ at the same position.</ul>
 The resulting 2-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2addInPlace'></a>
+
 ### (static) MathUtil.vec2addInPlace(a, b)
 
 Adds two 2-element vectors and stores
@@ -2612,6 +2705,7 @@ at the same position.</ul>
 The parameter "a" (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2assign'></a>
+
 ### (static) MathUtil.vec2assign(dst, src)
 
 Assigns the values of a 2-element vector into another
@@ -2627,6 +2721,7 @@ Assigns the values of a 2-element vector into another
 The parameter "dst" (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2clamp'></a>
+
 ### (static) MathUtil.vec2clamp(a, min, max)
 
 Returns a 2-element vector in which each element of the specified 2-element vector is clamped
@@ -2643,6 +2738,7 @@ so it's not less than one value or greater than another value.
 The resulting vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2clampInPlace'></a>
+
 ### (static) MathUtil.vec2clampInPlace(a, min, max)
 
 Clamps each element of the specified 2-element vector
@@ -2659,6 +2755,7 @@ so it's not less than one value or greater than another value.
 The resulting vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2copy'></a>
+
 ### (static) MathUtil.vec2copy(vec)
 
 Returns a copy of a 2-element vector.
@@ -2672,6 +2769,7 @@ Returns a copy of a 2-element vector.
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2dist'></a>
+
 ### (static) MathUtil.vec2dist(vecFrom, vecTo)
 
 Finds the straight-line distance from one three-element vector
@@ -2687,6 +2785,7 @@ to another, treating both as 3D points.
 The distance between the two vectors. (Type: number)
 
 <a name='MathUtil.vec2dot'></a>
+
 ### (static) MathUtil.vec2dot(a, b)
 
 Finds the dot product of two 2-element vectors. It's the
@@ -2715,6 +2814,7 @@ a vector's length using the dot product.
     }
 
 <a name='MathUtil.vec2length'></a>
+
 ### (static) MathUtil.vec2length(a)
 
 Returns the distance of this 2-element vector from the origin,
@@ -2737,6 +2837,7 @@ passing the same vector as both of its arguments).
 Return value. (Type: number)
 
 <a name='MathUtil.vec2lerp'></a>
+
 ### (static) MathUtil.vec2lerp(v1, v2, factor)
 
 Does a linear interpolation between two 2-element vectors;
@@ -2753,6 +2854,7 @@ returns a new vector.
 The interpolated vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2mul'></a>
+
 ### (static) MathUtil.vec2mul(a, b)
 
 Multiplies each of the components of two 2-element vectors and returns a new
@@ -2768,6 +2870,7 @@ vector with the result.
 The resulting 2-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2mulInPlace'></a>
+
 ### (static) MathUtil.vec2mulInPlace(a, b)
 
 Multiplies each of the components of two 2-element vectors and stores
@@ -2783,6 +2886,7 @@ the result in the first vector.
 The parameter "a" (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2negate'></a>
+
 ### (static) MathUtil.vec2negate(a)
 
 Negates a 2-element vector and returns a new
@@ -2799,6 +2903,7 @@ is the same as reversing the sign of each of its components.
 The resulting 2-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2negateInPlace'></a>
+
 ### (static) MathUtil.vec2negateInPlace(a)
 
 Negates a 2-element vector in place, generally resulting in a vector with
@@ -2815,6 +2920,7 @@ is the same as reversing the sign of each of its components.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2normalize'></a>
+
 ### (static) MathUtil.vec2normalize(vec)
 
 Converts a 2-element vector to a unit vector; returns a new vector.
@@ -2849,6 +2955,7 @@ length of a line segment.
     endPt=MathUtil.vec2add(startPt,deltaNorm);
 
 <a name='MathUtil.vec2normalizeInPlace'></a>
+
 ### (static) MathUtil.vec2normalizeInPlace(vec)
 
 Converts a 2-element vector to a unit vector.
@@ -2867,6 +2974,7 @@ The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2perp'></a>
+
 ### (static) MathUtil.vec2perp(vec)
 
 Returns an arbitrary 2-element vector that is perpendicular
@@ -2883,6 +2991,7 @@ A perpendicular 2-element
 vector. Returns (0,0) if "vec" is (0,0). (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2proj'></a>
+
 ### (static) MathUtil.vec2proj(vec, refVec)
 
 Returns the projection of a 2-element vector on the specified
@@ -2907,6 +3016,7 @@ The projection of
 length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2reflect'></a>
+
 ### (static) MathUtil.vec2reflect(incident, normal)
 
 Returns a vector that reflects off a surface.
@@ -2922,6 +3032,7 @@ A vector that has the same length
 as "incident" but is reflected away from the surface. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2scale'></a>
+
 ### (static) MathUtil.vec2scale(a, scalar)
 
 Multiplies each element of a 2-element vector by a factor. Returns
@@ -2940,6 +3051,7 @@ in the opposite direction; if zero, the vector's components will all be 0.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2scaleInPlace'></a>
+
 ### (static) MathUtil.vec2scaleInPlace(a, scalar)
 
 Multiplies each element of a 2-element vector by a factor, so
@@ -2958,6 +3070,7 @@ in the opposite direction; if zero, the vector's components will all be 0.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2sub'></a>
+
 ### (static) MathUtil.vec2sub(a, b)
 
 Subtracts the second vector from the first vector and returns a new
@@ -2975,6 +3088,7 @@ The resulting 2-element vector.
 This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec2subInPlace'></a>
+
 ### (static) MathUtil.vec2subInPlace(a, b)
 
 Subtracts the second vector from the first vector and stores
@@ -2992,6 +3106,7 @@ The parameter "a".
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3abs'></a>
+
 ### (static) MathUtil.vec3abs(a)
 
 Returns a new 3-element
@@ -3006,6 +3121,7 @@ vector with the absolute value of each of its components.
 The resulting 3-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3absInPlace'></a>
+
 ### (static) MathUtil.vec3absInPlace(a)
 
 Sets each component of the specified 3-element
@@ -3020,6 +3136,7 @@ vector to its absolute value.
 The vector "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3add'></a>
+
 ### (static) MathUtil.vec3add(a, b)
 
 Adds two 3-element vectors and returns a new
@@ -3041,6 +3158,7 @@ at the same position.</ul>
 The resulting 3-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3addInPlace'></a>
+
 ### (static) MathUtil.vec3addInPlace(a, b)
 
 Adds two 3-element vectors and stores
@@ -3062,6 +3180,7 @@ at the same position.</ul>
 The parameter "a" (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3assign'></a>
+
 ### (static) MathUtil.vec3assign(dst, src)
 
 Assigns the values of a 3-element vector into another
@@ -3077,6 +3196,7 @@ Assigns the values of a 3-element vector into another
 The parameter "dst" (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3clamp'></a>
+
 ### (static) MathUtil.vec3clamp(a, min, max)
 
 Returns a 3-element vector in which each element of the specified 3-element vector is clamped
@@ -3093,6 +3213,7 @@ so it's not less than one value or greater than another value.
 The resulting vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3clampInPlace'></a>
+
 ### (static) MathUtil.vec3clampInPlace(a, min, max)
 
 Clamps each element of the specified 3-element vector
@@ -3109,6 +3230,7 @@ so it's not less than one value or greater than another value.
 The resulting vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3copy'></a>
+
 ### (static) MathUtil.vec3copy(vec)
 
 Returns a copy of a 3-element vector.
@@ -3122,6 +3244,7 @@ Returns a copy of a 3-element vector.
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3cross'></a>
+
 ### (static) MathUtil.vec3cross(a, b)
 
 Finds the cross product of two 3-element vectors (called A and B).
@@ -3189,6 +3312,7 @@ the angle between two unit vectors and the orthogonal unit vector of both.
     var sine=MathUtil.vec3length(cr);
 
 <a name='MathUtil.vec3dist'></a>
+
 ### (static) MathUtil.vec3dist(vecFrom, vecTo)
 
 Finds the straight-line distance from one three-element vector
@@ -3204,6 +3328,7 @@ to another, treating both as 3D points.
 The distance between the two vectors. (Type: number)
 
 <a name='MathUtil.vec3dot'></a>
+
 ### (static) MathUtil.vec3dot(a, b)
 
 Finds the dot product of two 3-element vectors. It's the
@@ -3263,6 +3388,7 @@ a vector's length using the dot product.
     }
 
 <a name='MathUtil.vec3fromWindowPoint'></a>
+
 ### (static) MathUtil.vec3fromWindowPoint(vector, matrix, viewport, [yUp])
 
 Unprojects the <i>window coordinates</i> given in a
@@ -3290,6 +3416,7 @@ A 3-element array giving the coordinates
 of the unprojected point, in that order. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3length'></a>
+
 ### (static) MathUtil.vec3length(a)
 
 Returns the distance of this 3-element vector from the origin,
@@ -3312,6 +3439,7 @@ passing the same vector as both of its arguments).
 Return value. (Type: number)
 
 <a name='MathUtil.vec3lerp'></a>
+
 ### (static) MathUtil.vec3lerp(v1, v2, factor)
 
 Does a linear interpolation between two 3-element vectors;
@@ -3353,6 +3481,7 @@ and end, and speeds up in the middle.
     var newVector = MathUtil.vec3lerp(vector1, vector2, factor);
 
 <a name='MathUtil.vec3mul'></a>
+
 ### (static) MathUtil.vec3mul(a, b)
 
 Multiplies each of the components of two 3-element vectors and returns a new
@@ -3368,6 +3497,7 @@ vector with the result.
 The resulting 3-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3mulInPlace'></a>
+
 ### (static) MathUtil.vec3mulInPlace(a, b)
 
 Multiplies each of the components of two 3-element vectors and stores
@@ -3383,6 +3513,7 @@ the result in the first vector.
 The parameter "a" (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3negate'></a>
+
 ### (static) MathUtil.vec3negate(a)
 
 Negates a 3-element vector and returns a new
@@ -3399,6 +3530,7 @@ is the same as reversing the sign of each of its components.
 The resulting 3-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3negateInPlace'></a>
+
 ### (static) MathUtil.vec3negateInPlace(a)
 
 Negates a 3-element vector in place, generally resulting in a vector with
@@ -3415,6 +3547,7 @@ is the same as reversing the sign of each of its components.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3normalize'></a>
+
 ### (static) MathUtil.vec3normalize(vec)
 
 Converts a 3-element vector to a unit vector; returns a new vector.
@@ -3449,6 +3582,7 @@ length of a line segment.
     endPt=MathUtil.vec3add(startPt,deltaNorm);
 
 <a name='MathUtil.vec3normalizeInPlace'></a>
+
 ### (static) MathUtil.vec3normalizeInPlace(vec)
 
 Converts a 3-element vector to a unit vector.
@@ -3467,6 +3601,7 @@ The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3perp'></a>
+
 ### (static) MathUtil.vec3perp(vec)
 
 Returns an arbitrary 3-element vector that is perpendicular
@@ -3483,6 +3618,7 @@ A perpendicular 3-element
 vector. Returns (0,0,0) if "vec" is (0,0,0). (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3proj'></a>
+
 ### (static) MathUtil.vec3proj(vec, refVec)
 
 Returns the projection of a 3-element vector on the specified
@@ -3507,6 +3643,7 @@ The projection of
 length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3reflect'></a>
+
 ### (static) MathUtil.vec3reflect(incident, normal)
 
 Returns a vector that reflects off a surface.
@@ -3522,6 +3659,7 @@ A vector that has the same length
 as "incident" but is reflected away from the surface. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3scale'></a>
+
 ### (static) MathUtil.vec3scale(a, scalar)
 
 Multiplies each element of a 3-element vector by a factor. Returns
@@ -3540,6 +3678,7 @@ in the opposite direction; if zero, the vector's components will all be 0.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3scaleInPlace'></a>
+
 ### (static) MathUtil.vec3scaleInPlace(a, scalar)
 
 Multiplies each element of a 3-element vector by a factor, so
@@ -3558,6 +3697,7 @@ in the opposite direction; if zero, the vector's components will all be 0.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3sub'></a>
+
 ### (static) MathUtil.vec3sub(a, b)
 
 Subtracts the second vector from the first vector and returns a new
@@ -3575,6 +3715,7 @@ The resulting 3-element vector.
 This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3subInPlace'></a>
+
 ### (static) MathUtil.vec3subInPlace(a, b)
 
 Subtracts the second vector from the first vector and stores
@@ -3592,6 +3733,7 @@ The parameter "a".
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3toWindowPoint'></a>
+
 ### (static) MathUtil.vec3toWindowPoint(vector, matrix, viewport, [yUp])
 
 Transforms the 3D point specified in this 3-element vector to its
@@ -3611,6 +3753,7 @@ A 3-element array giving the window
 coordinates, in that order. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec3triple'></a>
+
 ### (static) MathUtil.vec3triple(a, b, c)
 
 Finds the scalar triple product of three vectors (A, B, and C). The triple
@@ -3649,6 +3792,7 @@ opposite direction from that cross product, and that angle is negative.
 A number giving the triple product. (Type: number)
 
 <a name='MathUtil.vec4abs'></a>
+
 ### (static) MathUtil.vec4abs(a)
 
 Returns a new 4-element
@@ -3663,6 +3807,7 @@ vector with the absolute value of each of its components.
 The resulting 4-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4absInPlace'></a>
+
 ### (static) MathUtil.vec4absInPlace(a)
 
 Sets each component of the specified 4-element
@@ -3677,6 +3822,7 @@ vector to its absolute value.
 The vector "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4add'></a>
+
 ### (static) MathUtil.vec4add(a, b)
 
 Adds two 4-element vectors and returns a new
@@ -3698,6 +3844,7 @@ at the same position.</ul>
 The resulting 4-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4addInPlace'></a>
+
 ### (static) MathUtil.vec4addInPlace(a, b)
 
 Adds two 4-element vectors and stores
@@ -3720,6 +3867,7 @@ The parameter "a".
 This is the vector <i>to the previous <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4assign'></a>
+
 ### (static) MathUtil.vec4assign(dst, src)
 
 Assigns the values of a 4-element vector into another
@@ -3735,6 +3883,7 @@ Assigns the values of a 4-element vector into another
 The parameter "dst". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4clamp'></a>
+
 ### (static) MathUtil.vec4clamp(a, min, max)
 
 Returns a 4-element vector in which each element of the specified 4-element vector is clamped
@@ -3750,6 +3899,7 @@ Returns a 4-element vector in which each element of the specified 4-element vect
 The resulting vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4clampInPlace'></a>
+
 ### (static) MathUtil.vec4clampInPlace(a, min, max)
 
 Clamps each element of the specified 4-element vector
@@ -3766,6 +3916,7 @@ so it's not less than one value or greater than another value.
 The resulting vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4copy'></a>
+
 ### (static) MathUtil.vec4copy(vec)
 
 Returns a copy of a 4-element vector.
@@ -3779,6 +3930,7 @@ Returns a copy of a 4-element vector.
 Return value. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4dot'></a>
+
 ### (static) MathUtil.vec4dot(a, b)
 
 Finds the dot product of two 4-element vectors. It's the
@@ -3795,6 +3947,7 @@ For properties of the dot product, see <a href="MathUtil.md#MathUtil.vec3dot">Ma
 Return value. (Type: number)
 
 <a name='MathUtil.vec4length'></a>
+
 ### (static) MathUtil.vec4length(a)
 
 Returns the distance of this 4-element vector from the origin,
@@ -3816,6 +3969,7 @@ passing the same vector as both of its arguments).
 Return value. (Type: number)
 
 <a name='MathUtil.vec4lerp'></a>
+
 ### (static) MathUtil.vec4lerp(v1, v2, factor)
 
 Does a linear interpolation between two 4-element vectors;
@@ -3832,6 +3986,7 @@ returns a new vector.
 The interpolated vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4negate'></a>
+
 ### (static) MathUtil.vec4negate(a)
 
 Negates a 4-element vector and returns a new
@@ -3848,6 +4003,7 @@ is the same as reversing the sign of each of its components.
 The resulting 4-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4negateInPlace'></a>
+
 ### (static) MathUtil.vec4negateInPlace(a)
 
 Negates a 4-element vector in place, generally resulting in a vector with
@@ -3864,6 +4020,7 @@ is the same as reversing the sign of each of its components.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4normalize'></a>
+
 ### (static) MathUtil.vec4normalize(vec)
 
 Converts a 4-element vector to a unit vector; returns a new vector.
@@ -3882,6 +4039,7 @@ The resulting vector.
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4normalizeInPlace'></a>
+
 ### (static) MathUtil.vec4normalizeInPlace(vec)
 
 Converts a 4-element vector to a unit vector.
@@ -3900,6 +4058,7 @@ The parameter "vec".
 Note that due to rounding error, the vector's length might not be exactly equal to 1, and that the vector will remain unchanged if its length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4proj'></a>
+
 ### (static) MathUtil.vec4proj(vec, refVec)
 
 Returns the projection of a 4-element vector on the specified
@@ -3924,6 +4083,7 @@ The projection of
 length is 0 or extremely close to 0. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4scale'></a>
+
 ### (static) MathUtil.vec4scale(a, scalar)
 
 Multiplies each element of a 4-element vector by a factor, returning
@@ -3942,6 +4102,7 @@ in the opposite direction; if zero, the vector's components will all be 0.
 The resulting 4-element vector. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4scaleInPlace'></a>
+
 ### (static) MathUtil.vec4scaleInPlace(a, scalar)
 
 Multiplies each element of a 4-element vector by a factor, so
@@ -3960,6 +4121,7 @@ in the opposite direction; if zero, the vector's components will all be 0.
 The parameter "a". (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4sub'></a>
+
 ### (static) MathUtil.vec4sub(a, b)
 
 Subtracts the second vector from the first vector and returns a new
@@ -3977,6 +4139,7 @@ The resulting 4-element vector.
 This is the vector <i>to <code>a</code> from <code>b</code></i>. (Type: Array.&lt;number>)
 
 <a name='MathUtil.vec4subInPlace'></a>
+
 ### (static) MathUtil.vec4subInPlace(a, b)
 
 Subtracts the second vector from the first vector and stores

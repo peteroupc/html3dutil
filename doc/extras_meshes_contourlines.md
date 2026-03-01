@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_contourlines'></a>
+
 ### module:extras/meshes/contourlines()
 
 The <code>extras/meshes/contourlines.js</code> module.
@@ -20,6 +21,7 @@ CONREC algorithm.
 contour lines along the surface of a 3-dimensional triangle mesh.
 
 <a name='extras_meshes_contourlines.contourLines'></a>
+
 ### (static) module:extras/meshes/contourlines.contourLines(func, levels, u1, u2, v1, v2, usize, vsize)
 
 Generates contour lines for two-dimensional data, using Paul Bourke's
@@ -50,6 +52,7 @@ function. This method samples the function at integer grid points.
     0,10,0,10,10,10);
 
 <a name='extras_meshes_contourlines.contourLines3D'></a>
+
 ### (static) module:extras/meshes/contourlines.contourLines3D(mesh, planes)
 
 Generates a mesh buffer of

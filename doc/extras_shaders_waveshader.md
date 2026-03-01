@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_waveshader'></a>
+
 ### module:extras/shaders/waveshader()
 
 The <code>extras/shaders/waveshader.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [waveShader](#extras_shaders_waveshader.waveShader)<br>GLSL shader code for TODO: Not documented yet.
 
 <a name='extras_shaders_waveshader.waveShader'></a>
+
 ### module:extras/shaders/waveshader.waveShader (constant)
 
 GLSL shader code for TODO: Not documented yet.

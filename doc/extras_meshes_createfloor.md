@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_meshes_createfloor'></a>
+
 ### module:extras/meshes/createfloor()
 
 The <code>extras/meshes/createfloor.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [createFloor](#extras_meshes_createfloor.createFloor)<br>Generates a mesh buffer of a tiled floor.
 
 <a name='extras_meshes_createfloor.createFloor'></a>
+
 ### (static) module:extras/meshes/createfloor.createFloor(three, xStart, yStart, width, height, tileSize, [z])
 
 Generates a mesh buffer of a tiled floor. Texture coordinates

@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_shaders_kernelmatrixshader'></a>
+
 ### module:extras/shaders/kernelmatrixshader()
 
 The <code>extras/shaders/kernelmatrixshader.js</code> module.
@@ -24,6 +25,7 @@ as the "matrix" uniform of the kernel matrix shader.
 * [normalizeKernelInPlace](#extras_shaders_kernelmatrixshader.normalizeKernelInPlace)<br>TODO: Not documented yet.
 
 <a name='extras_shaders_kernelmatrixshader.kernelMatrixShader'></a>
+
 ### module:extras/shaders/kernelmatrixshader.kernelMatrixShader (constant)
 
 GLSL shader code for a family of image processing filters, such as blurring, sharpening,
@@ -43,6 +45,7 @@ This shader program takes three uniforms: "sample", the source texture;
 "matrix", the 3 &times; 3 convolution kernel.
 
 <a name='extras_shaders_kernelmatrixshader.getKernelMatrix'></a>
+
 ### (static) module:extras/shaders/kernelmatrixshader.getKernelMatrix(kind)
 
 Creates a 3 &times; 3 (9-element) kernel matrix for using
@@ -57,6 +60,7 @@ as the "matrix" uniform of the kernel matrix shader.
 The created matrix. (Type: Array.&lt;number>)
 
 <a name='extras_shaders_kernelmatrixshader.normalizeKernelInPlace'></a>
+
 ### (static) module:extras/shaders/kernelmatrixshader.normalizeKernelInPlace(matrix)
 
 TODO: Not documented yet.

@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='extras_moresurfaces'></a>
+
 ### module:extras/moresurfaces()
 
 The <code>extras/moresurfaces.js</code> module.
@@ -17,6 +18,7 @@ To import all symbols in this module, either of the following can be used:
 * [MoebiusLikeStrip](#extras_moresurfaces.MoebiusLikeStrip)<br>TODO: Not documented yet.
 
 <a name='extras_moresurfaces.MoebiusLikeStrip'></a>
+
 ### (static) module:extras/moresurfaces.MoebiusLikeStrip(maj, a, b)
 
 TODO: Not documented yet.

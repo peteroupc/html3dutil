@@ -3,6 +3,7 @@
 [Back to documentation index.](index.md)
 
 <a name='Surface'></a>
+
 ### new Surface(surface)
 
 A surface evaluator object for a parametric surface.
@@ -20,13 +21,14 @@ and z(u, v) returns a z-coordinate.
 
 Classes or JavaScript objects defining parametric surfaces should implement
 the <code>evaluate</code> method and, optionally, the other methods mentioned in the "surface" parameter below.
+
 <b>A note on trimming regions</b>
 
-A <i>trimming region</i> is a set of (u, v) points where a surface will be evaluated ("drawn"). Normally, the surface is "drawn" in the rectangular area in (u, v) space where 0&le;u&le;1 and 0&le;v&le;1. But with a trimming region, the surface is "drawn" only where the u- and v-coordinates are inside that region.
+A <i>trimming region</i> is a set of (u, v) points where a surface will be evaluated ("drawn"). Normally, the surface is "drawn" in the entire area where the surface is defined, for example, the rectangular area in (u, v) space where 0&le;u&le;1 and 0&le;v&le;1. But with a trimming region, the surface is "drawn" only where the u- and v-coordinates are inside that region.
 
-The OpenGL Utility Library (GLU), as well as IRIS GL, implements a trimming region as a set of closed loops (made of one or more 2-D <a href="BSplineCurve.md">B-spline curves</a>) that don't intersect themselves or each other. Some of these loops may contain <i>rational</i> B-spline curves. The orientation of each loop determines whether it helps set the inside of the trimming region or whether it "pokes a hole" in that region. (In GLU, loops of the former kind run counterclockwise and others clockwise, assuming the positive u-axis runs to the right and the positive v-axis up.
+The OpenGL Utility Library (GLU), as well as IRIS GL, implements a trimming region as a set of closed loops that don't intersect themselves or each other. Each loop is made of one or more 2-D <a href="BSplineCurve.md">B-spline curves</a>, rational or not. The orientation of each loop determines whether it helps set the inside of the trimming region or whether it "punches a hole" out of that region. (In GLU and IRIS GL, loops of the former kind run counterclockwise and others clockwise, assuming the positive u-axis runs to the right and the positive v-axis up.)
 
-One way to approximate a surface using a trimming region is to "flatten" the curves on the trimming region (approximate them with line segments), then break the resulting shape into triangles, then evaluate ("draw") the surface within each triangle. This library currently does not have explicit support for trimming regions.
+One way to approximate a surface using a trimming region is to "flatten" the curves on the region (approximate them with line segments), then break the resulting shape into triangles, then evaluate ("draw") the surface within each triangle. This library currently does not have explicit support for trimming regions.
 
 #### Parameters
 
@@ -42,6 +44,7 @@ One way to approximate a surface using a trimming region is to "flatten" the cur
 * [tangent](#Surface_tangent)<br>Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
 
 <a name='Surface_bitangent'></a>
+
 ### Surface#bitangent(u, v)
 
 Finds an approximate bitangent vector of this surface at the specified u- and v-coordinates.
@@ -76,6 +79,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
     });
 
 <a name='Surface_endPoints'></a>
+
 ### Surface#endPoints()
 
 Returns the starting and ending u- and v-coordinates of this surface.
@@ -91,6 +95,7 @@ Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn't implement an <code>en
 method.
 
 <a name='Surface_evaluate'></a>
+
 ### Surface#evaluate(u, v)
 
 Finds the position of this surface at the specified u- and v-coordinates.
@@ -106,6 +111,7 @@ An array describing a position. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
 <a name='Surface_gradient'></a>
+
 ### Surface#gradient(u, v)
 
 Finds an approximate gradient vector of this surface at the specified u- and v-coordinates.
@@ -165,6 +171,7 @@ The result is the gradient, which will point up and away from the surface.
     }})
 
 <a name='Surface_normal'></a>
+
 ### Surface#normal(u, v)
 
 Convenience method for finding an approximate normal vector of this surface at the specified u- and v-coordinates.
@@ -181,6 +188,7 @@ An array describing a normal vector. It should have at least as many
 elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number>)
 
 <a name='Surface_tangent'></a>
+
 ### Surface#tangent(u, v)
 
 Finds an approximate tangent vector of this surface at the specified u- and v-coordinates.
