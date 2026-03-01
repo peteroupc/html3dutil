@@ -405,7 +405,7 @@ sines and cosines, see the end of this section.)
 <figcaption>Rotation about the z-axis.</figcaption></figure>
 Note that:
 When we rotate a point about the x-axis, the x-coordinate is unchanged
-and the y- and z-coordinates are adjusted in the rotation. For rotations about the
+and the y- and z-coordinates adjust in the rotation. For rotations about the
 y-axis or the z-axis, the Y or z-coordinate, respectively, is likewise unchanged.
 If the axis of rotation points backward from the "eye", positive rotations mean
 counterclockwise rotation in right-handed coordinate systems. For example,

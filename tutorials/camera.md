@@ -49,7 +49,7 @@ and their transformed _window coordinates_ when rendering things on the screen.
 A _projection transform_ (usually in the form of a _projection matrix_) transforms coordinates in eye space to _clip space_.
 
 Two commonly used projections in 3D graphics are the perspective projection and
-orthographic projection, described below. (Other kinds of projections, such as oblique projections, isometric projections, and nonlinear projection functions, are not treated here.)
+orthographic projection, described later. (Other kinds of projections, such as oblique projections, isometric projections, and nonlinear projection functions, are not treated here.)
 
 <a id=Perspective_Projection></a>
 
