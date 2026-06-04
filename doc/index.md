@@ -1,7 +1,7 @@
 # Documentation Index
 
-* <a href="BSplineCurve.md">BSplineCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a B-spline (basis spline) curve.
-* <a href="BSplineSurface.md">BSplineSurface</a><br>A <a href="Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
+* <a href="BSplineCurve.md">BSplineCurve</a><br>A <a href="Curve.md">curve evaluator object</a> for a B-spline (basic spline) curve.
+* <a href="BSplineSurface.md">BSplineSurface</a><br>A <a href="Surface.md">surface evaluator object</a> for a B-spline (basic spline) surface,
 whose edges are made up of B-spline curves.
 * <a href="Curve.md">Curve</a><br>A curve evaluator object for a parametric curve.
 * <a href="CurveBuilder.md">CurveBuilder</a><br>An evaluator of curve evaluator objects for generating

@@ -67,7 +67,7 @@ function bezierQuadraticDerivative(points, elementsPerValue, t) {
   return ret;
 }
 /**
- * A [curve evaluator object]{@link Curve} for a B-spline (basis spline) curve.
+ * A [curve evaluator object]{@link Curve} for a B-spline (basic spline) curve.
  * A B-spline curve is a parametric curve based on polynomial functions.
  * Each polynomial is generated using one or more
  * <i>control points</i>, which more or less follow the path of the curve,
@@ -716,7 +716,7 @@ BSplineCurve._fromHomogen = function(cp) {
 };
 
 /**
- * A [surface evaluator object]{@link Surface} for a B-spline (basis spline) surface,
+ * A [surface evaluator object]{@link Surface} for a B-spline (basic spline) surface,
  * whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
  * for {@link BSplineCurve}.
  * @constructor

@@ -8,7 +8,7 @@
 
 **Augments:** <a href="Surface.md">Surface</a>
 
-A <a href="Surface.md">surface evaluator object</a> for a B-spline (basis spline) surface,
+A <a href="Surface.md">surface evaluator object</a> for a B-spline (basic spline) surface,
 whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
 for <a href="BSplineCurve.md">BSplineCurve</a>.
 
